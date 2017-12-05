@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.BetDetail.Voidbridge", "Modules\Fanex.NAP..BetDetail.Voidbridge\Fanex.NAP.BetDetail.Voidbridge.csproj", "{DAA5A14E-2DB9-42D0-8115-D6C84E323E6C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Voidbridge.BetDetail", "Modules\Fanex.NAP..BetDetail.Voidbridge\Fanex.NAP.Voidbridge.BetDetail.csproj", "{DAA5A14E-2DB9-42D0-8115-D6C84E323E6C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CloneSetting", "Modules\Fanex.NAP..CloneSetting\Fanex.NAP.CloneSetting.csproj", "{37A65793-85E8-4AC4-9254-F5F35BBC2E35}"
 EndProject
