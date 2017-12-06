@@ -12,6 +12,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
     using System;
     using System.Collections;
     using System.Configuration;
+    using System.Diagnostics;
     using System.Threading;
     using System.Web.Mvc;
     using Casino.Services.Impl;
@@ -25,14 +26,14 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
     using Fanex.CustomerSetting.Module.SearchCopy.ViewModels;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.Logging;
-    using Fanex.Module.Logs;
-    using Fanex.Module.Logs.Services;
     using Fanex.Module.NG2.Entities;
     using Fanex.Module.NG2.Services;
     using Fanex.NAP.Framework.Data;
     using LiveCasino.CoreSetting.Models;
+    using Logging.Extensions.Web;
     using Services;
     using ICommandResults = Fanex.LiveCasino.CoreSetting.DTO.CommandResult.ICommandResults;
+
     public class SuperController : BaseCloneController
     {
         /// <summary>
@@ -274,13 +275,13 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
             {
                 result.Code = -1;
                 result.Message = casinoEx.Message;
-                casinoEx.WriteCasinoException();
+                ExceptionHandler.Handle(new Exception(casinoEx.Message));
             }
             catch (Exception ex)
             {
                 result.Code = -1;
                 result.Message = Constants.FailedSyncMessage.Casino;
-                ex.Write();
+                ExceptionHandler.Handle(ex);
             }
 
             return result;
@@ -371,7 +372,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
             catch (ErrorException casinoEx)
             {
                 errMsg = casinoEx.Message;
-                casinoEx.WriteCasinoException(Formater.LogType.Warning);
+                ExceptionHandler.Handle(new Exception(errMsg), TraceEventType.Warning);
             }
             catch (Exception e)
             {
@@ -488,7 +489,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
             {
                 result.Code = -1;
                 result.Message = Constants.FailedSyncMessage.Bingo;
-                ex.Write();
+                ExceptionHandler.Handle(ex);
             }
 
             return result;
@@ -548,7 +549,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
             {
                 result.Code = -1;
                 result.Message = Constants.FailedSyncMessage.LiveCasino;
-                ex.Write();
+                ExceptionHandler.Handle(ex);
             }
 
             return result;

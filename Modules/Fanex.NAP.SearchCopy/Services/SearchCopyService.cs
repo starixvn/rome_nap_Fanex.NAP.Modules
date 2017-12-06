@@ -22,7 +22,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
     using Fanex.CustomerSetting.Module.SearchCopy.Criteria;
     using Fanex.CustomerSetting.Module.SearchCopy.Entities;
     using Fanex.CustomerSetting.Module.SearchCopy.Repositories;
-    using Fanex.Module.Logs.Services;
     using Fanex.NAP.Framework.Data;
     using GoldDeluxe.CoreSetting.CommandResult;
     using GoldDeluxe.CoreSetting.ParameterObjects;
@@ -30,6 +29,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
     using GoldDeluxe.CoreSetting.ViewModels;
     using Keno.KenoSetting.Services;
     using Keno.KenoSetting.ViewModels;
+    using Logging.Extensions.Web;
     using PTEngine.BusinessObjects;
     using PTVirtualSports.BusinessObjects;
     using PTVirtualSports.Services;
@@ -220,7 +220,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             }
             catch (Exception ex)
             {
-                ex.Write();
+                ExceptionHandler.Handle(ex);
             }
 
             return result;
@@ -321,7 +321,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             {
                 foreach (var ex in ae.InnerExceptions)
                 {
-                    ex.Write();
+                    ExceptionHandler.Handle(ex);
                 }
             }
 
@@ -381,7 +381,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             {
                 foreach (var ex in ae.InnerExceptions)
                 {
-                    ex.Write();
+                    ExceptionHandler.Handle(ex);
                 }
             }
 

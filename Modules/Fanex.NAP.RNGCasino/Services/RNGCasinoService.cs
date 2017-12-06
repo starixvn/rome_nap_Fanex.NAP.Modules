@@ -1,8 +1,10 @@
-﻿using Fanex.Result.Core.GlobalGaming;
-using Fanex.Result.Core.GlobalGaming.DTO;
-
-namespace Fanex.Module.RNGCasino.Services
+﻿namespace Fanex.Module.RNGCasino.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Net;
+    using System.Web;
     using Common;
     using Configurations;
     using Constants;
@@ -13,19 +15,16 @@ namespace Fanex.Module.RNGCasino.Services
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
     using Fanex.BetList.Core.TicketHelper;
-    using Fanex.Module.Logs.Services;
+    using Fanex.Result.Core.GlobalGaming;
+    using Fanex.Result.Core.GlobalGaming.DTO;
     using Helpers;
+    using Logging.Extensions.Web;
     using Models;
     using Models.HandHistory;
     using Newtonsoft.Json;
     using Repositories;
     using Resources;
     using Result.Core.Voidbridge;
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Net;
-    using System.Web;
 
     public class RNGCasinoService : IRNGCasinoService
     {
@@ -204,7 +203,7 @@ namespace Fanex.Module.RNGCasino.Services
             }
             catch (Exception exception)
             {
-                exception.Write();
+                ExceptionHandler.Handle(exception);
             }
 
             return null;
