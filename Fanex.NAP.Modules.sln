@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sunplus.Accounting.Core", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.Web.Models", "Modules\Fanex.Taurus\Fanex.Tarus.Web.Models\Fanex.Tarus.Web.Models.csproj", "{3ADA1C70-FD55-4C89-BFEF-1B695B1042CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.DataAccess.Interface", "Modules\Fanex.Taurus\Fanex.Tarus.DataAccess.Interface\Fanex.Tarus.DataAccess.Interface.csproj", "{1EE1DE7D-1D0D-4443-A82A-B1EADE5E8F14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{3ADA1C70-FD55-4C89-BFEF-1B695B1042CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3ADA1C70-FD55-4C89-BFEF-1B695B1042CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3ADA1C70-FD55-4C89-BFEF-1B695B1042CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EE1DE7D-1D0D-4443-A82A-B1EADE5E8F14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EE1DE7D-1D0D-4443-A82A-B1EADE5E8F14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EE1DE7D-1D0D-4443-A82A-B1EADE5E8F14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EE1DE7D-1D0D-4443-A82A-B1EADE5E8F14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,5 +103,6 @@ Global
 		{4D443BD2-6287-4427-8AFD-CABFF55E2D6F} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 		{09B74F02-6C21-4C5E-A52C-B6D56595A262} = {1931C90B-D1BD-431A-B40A-7EF2DF9A2A76}
 		{3ADA1C70-FD55-4C89-BFEF-1B695B1042CD} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
+		{1EE1DE7D-1D0D-4443-A82A-B1EADE5E8F14} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 	EndGlobalSection
 EndGlobal
