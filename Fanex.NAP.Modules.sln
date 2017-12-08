@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sunplus.Accounting.Entities
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.AuthenticationFilter", "Modules\Fanex.Taurus\Fanex.AuthenticationFilter\Fanex.AuthenticationFilter.csproj", "{9E60FAEF-0C05-4506-BE45-8A1C8FDD0AD3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.Excels", "Modules\Fanex.Taurus\Fanex.Tarus.Excels\Fanex.Tarus.Excels.csproj", "{4D443BD2-6287-4427-8AFD-CABFF55E2D6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sunplus.Accounting.Core", "Modules\Sunplus.Accounting\Sunplus.Accounting.Core\Sunplus.Accounting.Core.csproj", "{09B74F02-6C21-4C5E-A52C-B6D56595A262}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{9E60FAEF-0C05-4506-BE45-8A1C8FDD0AD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E60FAEF-0C05-4506-BE45-8A1C8FDD0AD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E60FAEF-0C05-4506-BE45-8A1C8FDD0AD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D443BD2-6287-4427-8AFD-CABFF55E2D6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D443BD2-6287-4427-8AFD-CABFF55E2D6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D443BD2-6287-4427-8AFD-CABFF55E2D6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D443BD2-6287-4427-8AFD-CABFF55E2D6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09B74F02-6C21-4C5E-A52C-B6D56595A262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09B74F02-6C21-4C5E-A52C-B6D56595A262}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09B74F02-6C21-4C5E-A52C-B6D56595A262}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09B74F02-6C21-4C5E-A52C-B6D56595A262}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,5 +88,7 @@ Global
 		{0D0F3C0D-F85C-4B0D-B033-16424E1AE5E0} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 		{C2043B3C-AF85-4334-8542-F9AC2B031D79} = {1931C90B-D1BD-431A-B40A-7EF2DF9A2A76}
 		{9E60FAEF-0C05-4506-BE45-8A1C8FDD0AD3} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
+		{4D443BD2-6287-4427-8AFD-CABFF55E2D6F} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
+		{09B74F02-6C21-4C5E-A52C-B6D56595A262} = {1931C90B-D1BD-431A-B40A-7EF2DF9A2A76}
 	EndGlobalSection
 EndGlobal
