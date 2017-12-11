@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sunplus.Data.DataAbstract",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sunplus.Accounting.DataAccess", "Modules\Sunplus.Accounting\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj", "{27984FEE-40DC-40DC-B3B9-3A8776C5511D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.BetList.Accounting", "Modules\Fanex.Taurus\Fanex.BetList.Accounting\Fanex.BetList.Accounting.csproj", "{DCEA602C-2786-45B3-B3C4-1D3241F40F09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,10 @@ Global
 		{27984FEE-40DC-40DC-B3B9-3A8776C5511D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27984FEE-40DC-40DC-B3B9-3A8776C5511D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27984FEE-40DC-40DC-B3B9-3A8776C5511D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCEA602C-2786-45B3-B3C4-1D3241F40F09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCEA602C-2786-45B3-B3C4-1D3241F40F09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCEA602C-2786-45B3-B3C4-1D3241F40F09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCEA602C-2786-45B3-B3C4-1D3241F40F09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,5 +159,6 @@ Global
 		{06EBADAA-AC59-41B0-B7DB-AFD65C89D790} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 		{1B2228C6-443E-48FF-90EF-A122810D77E7} = {1931C90B-D1BD-431A-B40A-7EF2DF9A2A76}
 		{27984FEE-40DC-40DC-B3B9-3A8776C5511D} = {1931C90B-D1BD-431A-B40A-7EF2DF9A2A76}
+		{DCEA602C-2786-45B3-B3C4-1D3241F40F09} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 	EndGlobalSection
 EndGlobal
