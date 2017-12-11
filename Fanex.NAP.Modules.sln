@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.LiveCasino", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.Statements", "Modules\Fanex.Taurus\Fanex.Tarus.Statements\Fanex.Tarus.Statements.csproj", "{5D529C91-CACF-4ECD-87FD-41BBEC2D85BF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.SpecialDelete.SendEmail", "Modules\Fanex.Taurus\Fanex.Tarus.SpecialDelete.SendEmail\Fanex.Tarus.SpecialDelete.SendEmail.csproj", "{03F0B48D-0F0D-448C-A014-30FE5FDE7F85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +155,10 @@ Global
 		{5D529C91-CACF-4ECD-87FD-41BBEC2D85BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D529C91-CACF-4ECD-87FD-41BBEC2D85BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D529C91-CACF-4ECD-87FD-41BBEC2D85BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03F0B48D-0F0D-448C-A014-30FE5FDE7F85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03F0B48D-0F0D-448C-A014-30FE5FDE7F85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03F0B48D-0F0D-448C-A014-30FE5FDE7F85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03F0B48D-0F0D-448C-A014-30FE5FDE7F85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -181,5 +187,6 @@ Global
 		{3C9E433C-4C0D-4CED-8FE7-26BC80894B0F} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 		{C7489BA0-A2D2-4414-997F-FD0EFF4C2835} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 		{5D529C91-CACF-4ECD-87FD-41BBEC2D85BF} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
+		{03F0B48D-0F0D-448C-A014-30FE5FDE7F85} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 	EndGlobalSection
 EndGlobal
