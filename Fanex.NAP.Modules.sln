@@ -41,6 +41,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.DataAccess.Impl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.Business.Implement", "Modules\Fanex.Taurus\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj", "{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.Web.Controllers", "Modules\Fanex.Taurus\Fanex.Tarus.Web.Controller\Fanex.Tarus.Web.Controllers.csproj", "{F3FE623F-A32F-4DB4-8306-64C166FC4488}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.Security", "Modules\Fanex.Taurus\Fanex.Tarus.Security\Fanex.Tarus.Security.csproj", "{06EBADAA-AC59-41B0-B7DB-AFD65C89D790}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sunplus.Data.DataAbstract", "Modules\Sunplus.Accounting\Sunplus.Data.DataAbstract\Sunplus.Data.DataAbstract.csproj", "{1B2228C6-443E-48FF-90EF-A122810D77E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +117,18 @@ Global
 		{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3FE623F-A32F-4DB4-8306-64C166FC4488}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3FE623F-A32F-4DB4-8306-64C166FC4488}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3FE623F-A32F-4DB4-8306-64C166FC4488}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3FE623F-A32F-4DB4-8306-64C166FC4488}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06EBADAA-AC59-41B0-B7DB-AFD65C89D790}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06EBADAA-AC59-41B0-B7DB-AFD65C89D790}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06EBADAA-AC59-41B0-B7DB-AFD65C89D790}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06EBADAA-AC59-41B0-B7DB-AFD65C89D790}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B2228C6-443E-48FF-90EF-A122810D77E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B2228C6-443E-48FF-90EF-A122810D77E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B2228C6-443E-48FF-90EF-A122810D77E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B2228C6-443E-48FF-90EF-A122810D77E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,5 +150,8 @@ Global
 		{CCC0446A-42E7-4850-B09C-4DAC278F23B3} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 		{9780010A-7EEC-4726-959B-D2CFFB1875EE} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 		{BE4A5642-A3B6-4329-BB8F-4973446E7FA9} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
+		{F3FE623F-A32F-4DB4-8306-64C166FC4488} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
+		{06EBADAA-AC59-41B0-B7DB-AFD65C89D790} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
+		{1B2228C6-443E-48FF-90EF-A122810D77E7} = {1931C90B-D1BD-431A-B40A-7EF2DF9A2A76}
 	EndGlobalSection
 EndGlobal
