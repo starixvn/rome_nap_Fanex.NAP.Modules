@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.Infrastructure"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.DataAccess.Implement", "Modules\Fanex.Taurus\Fanex.Tarus.DataAccess.Implement\Fanex.Tarus.DataAccess.Implement.csproj", "{9780010A-7EEC-4726-959B-D2CFFB1875EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.Business.Implement", "Modules\Fanex.Taurus\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj", "{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{9780010A-7EEC-4726-959B-D2CFFB1875EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9780010A-7EEC-4726-959B-D2CFFB1875EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9780010A-7EEC-4726-959B-D2CFFB1875EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,5 +131,6 @@ Global
 		{98993382-DB96-4EF7-932B-0C384A31199F} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 		{CCC0446A-42E7-4850-B09C-4DAC278F23B3} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 		{9780010A-7EEC-4726-959B-D2CFFB1875EE} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
+		{BE4A5642-A3B6-4329-BB8F-4973446E7FA9} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 	EndGlobalSection
 EndGlobal
