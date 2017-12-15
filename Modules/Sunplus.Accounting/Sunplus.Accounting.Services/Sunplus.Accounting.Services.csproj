@@ -76,6 +76,10 @@
       <HintPath>..\..\..\packages\Fanex.LiveCasino.CoreSetting.NAP.1.2.2.6\lib\net40\Fanex.LiveCasino.CoreSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Logging, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Logging.1.0.4\lib\net40\Fanex.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Module.NG2, Version=1.0.1.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Module.NG2.NAP.1.0.1.4\lib\net40\Fanex.Module.NG2.dll</HintPath>
       <Private>True</Private>
