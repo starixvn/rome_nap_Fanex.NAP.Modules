@@ -267,7 +267,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
                 result.CommandResultsList.Add(goldDeluxeService.UpdateStatus(new UpdateDisableStatusParameters()
                 {
                     CustId = custId,
-                    Disable = custInfoIBC.GoldDeluxeDisabled,
+                    Disable = custInfoIBC.GeneralInfo.GoldDeluxeDisabled,
                     EnableDownlines = false,
                     ActorId = actorId,
                     SubAccId = 0,
