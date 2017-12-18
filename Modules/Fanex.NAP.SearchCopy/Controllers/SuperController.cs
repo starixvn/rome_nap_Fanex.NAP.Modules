@@ -341,23 +341,23 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
             {
                 success = casinoCustomer.AutoInsertAccount(
                     "01",
-                    custInfo.IBCCustID,
-                    custInfo.UserName,
-                    custInfo.UserName2,
-                    custInfo.FirstName,
-                    custInfo.LastName,
+                    custInfo.GeneralInfo.IBCCustID,
+                    custInfo.GeneralInfo.UserName,
+                    custInfo.GeneralInfo.UserName2,
+                    custInfo.GeneralInfo.FirstName,
+                    custInfo.GeneralInfo.LastName,
                     custInfo.UserPwd,
-                    custInfo.Phone,
-                    custInfo.MobilePhone,
-                    custInfo.Currency,
-                    custInfo.Fax,
-                    custInfo.Closed,
-                    custInfo.Suspend,
-                    custInfo.IsEnablePT,
+                    custInfo.GeneralInfo.Phone,
+                    custInfo.GeneralInfo.MobilePhone,
+                    custInfo.GeneralInfo.Currency,
+                    custInfo.GeneralInfo.Fax,
+                    custInfo.GeneralInfo.Closed,
+                    custInfo.GeneralInfo.Suspend,
+                    custInfo.GeneralInfo.IsEnablePT,
                     custInfo.SIBCCustID,
                     custInfo.MIBCCustID,
                     custInfo.AIBCCustID,
-                    custInfo.RoleId.ToString(),
+                    custInfo.GeneralInfo.RoleId.ToString(),
                     false,
                     false,
                     false,
@@ -386,15 +386,15 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
                 //bool isEnableCasino = !custInfo.CasinoDisabled || !custInfo.CasinoSync;
 
                 var casinoApiCustomer = new CasinoLibrary.SBAgent.Customer();
-                if (custInfo.CasinoSync)
+                if (custInfo.GeneralInfo.CasinoSync)
                 {
                     casinoApiCustomer.UpdateMaxTransferMisc(
-                      custInfo.IBCCustID,
+                      custInfo.GeneralInfo.IBCCustID,
                       customer.DisableCasino,
                       true,
                        true,
                        (decimal)winLimit.MaximumLossLimit,
-                        custInfo.IsAutoReset,
+                        custInfo.GeneralInfo.IsAutoReset,
                         false,
                         customer.IP,
                         customer.Creator,
@@ -403,27 +403,27 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
                     );
                 }
 
-                var settingModel = casinoManager.MemberCasinoModel(customer.ExistingCustId, custInfo.UpperCustID);
+                var settingModel = casinoManager.MemberCasinoModel(customer.ExistingCustId, custInfo.GeneralInfo.UpperCustID);
 
                 casinoManager.UpdateCSStatus(
-                    custInfo.IBCCustID,
+                    custInfo.GeneralInfo.IBCCustID,
                     true,
-                    custInfo.UplineDisabledCasino ? true : custInfo.CasinoDisabled,
-                    !custInfo.CasinoDisabledDownline,
-                    custInfo.UpperCustID,
+                    custInfo.GeneralInfo.UplineDisabledCasino ? true : custInfo.GeneralInfo.CasinoDisabled,
+                    !custInfo.GeneralInfo.CasinoDisabledDownline,
+                    custInfo.GeneralInfo.UpperCustID,
                     string.Empty,
                     0,
                     SystemId,
                     "en",
-                    custInfo.UserName,
+                    custInfo.GeneralInfo.UserName,
                     string.Empty,
                     out errMsg);
 
                 casinoManager.UpdateMemberSettings(
-                    custInfo.IBCCustID,
-                    custInfo.RoleId,
-                    custInfo.UpperCustID,
-                    custInfo.UplineRoleId,
+                    custInfo.GeneralInfo.IBCCustID,
+                    custInfo.GeneralInfo.RoleId,
+                    custInfo.GeneralInfo.UpperCustID,
+                    custInfo.GeneralInfo.UplineRoleId,
                     customer.IP,
                     customer.Creator,
                     customer.CreatorName,
@@ -435,20 +435,20 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
             else
             {
                 casinoManager.UpdateCSStatus(
-                    custInfo.IBCCustID,
+                    custInfo.GeneralInfo.IBCCustID,
                     false,
-                    custInfo.UplineDisabledCasino ? true : customer.DisableCasino,
+                    custInfo.GeneralInfo.UplineDisabledCasino ? true : customer.DisableCasino,
                     false,
-                    custInfo.UpperCustID,
+                    custInfo.GeneralInfo.UpperCustID,
                     string.Empty,
                     0,
                     SystemId,
                     "en",
-                    custInfo.UserName,
+                    custInfo.GeneralInfo.UserName,
                     string.Empty,
                     out errMsg);
 
-                casinoCustomer.RemoveAccount(custInfo.UserName, customer.IP, custInfo.IBCCustID, custInfo.UserName, AppSession.CurrentSession.FromSystem);
+                casinoCustomer.RemoveAccount(custInfo.GeneralInfo.UserName, customer.IP, custInfo.GeneralInfo.IBCCustID, custInfo.GeneralInfo.UserName, AppSession.CurrentSession.FromSystem);
             }
 
             return success;
