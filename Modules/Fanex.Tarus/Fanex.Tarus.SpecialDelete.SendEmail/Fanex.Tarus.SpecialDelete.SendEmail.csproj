@@ -55,7 +55,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="IBCUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\IBCUtils.1.0.0.1\lib\net40\IBCUtils.dll</HintPath>
+      <HintPath>..\..\..\packages\Fanex.Tarus.IBCUtils.1.0.0.0\lib\net40\IBCUtils.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
