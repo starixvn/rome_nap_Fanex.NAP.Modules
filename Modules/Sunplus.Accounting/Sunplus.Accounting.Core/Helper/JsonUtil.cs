@@ -100,7 +100,7 @@ namespace Sunplus.Accounting.Core.Helper
     /// </summary>
     public class DataRowConverter : JsonConverter
     {
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }
@@ -123,6 +123,11 @@ namespace Sunplus.Accounting.Core.Helper
         public override bool CanConvert(Type objectType)
         {
             return typeof(DataRow).IsAssignableFrom(objectType);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
         }
     }
 
