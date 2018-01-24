@@ -54,8 +54,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Criteria
 
         public bool IsSyncBingo { get; set; }
 
-        public bool IsSyncLiveCasino { get; set; }
-
         public int Creator { get; set; }
 
         public string CreatorName { get; set; }
@@ -65,8 +63,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Criteria
         public string IP { get; set; }
 
         public bool DisableCasino { get; set; }
-
-        public bool DisableLiveCasino { get; set; }
 
         public bool DisableBingo { get; set; }
 

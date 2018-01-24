@@ -90,26 +90,6 @@
       <HintPath>..\..\..\packages\Fanex.Tarus.IBCUtils.1.0.0.0\lib\net40\IBCUtils.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LVAPIDBLibrary, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\LVAPIDBLibrary.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LVAPILibrary, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\LVAPILibrary.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LVAPILibrary_GameRule, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\LVAPILibrary_GameRule.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LVCasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\LVCasinoSetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LVCasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\LVCasinoUtility.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.Practices.EnterpriseLibrary.Caching.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
       <Private>True</Private>
@@ -138,14 +118,6 @@
       <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NotifyPropertyChanged, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\NotifyPropertyChanged.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Onelab.Sb.Admin.LiveCasino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\Onelab.Sb.Admin.LiveCasino.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.0.9\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
@@ -156,14 +128,6 @@
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.11\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Sunplus.RemoteBetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\Sunplus.RemoteBetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SunplusBettingLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.LiveCasinoLibary.1.0.0.4\lib\net40\SunplusBettingLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

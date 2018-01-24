@@ -21,7 +21,6 @@ namespace Fanex.Tarus.Infrastructure.Constants
 
         public const int OtherSports_2h = 2;
         public const int NumberGame = 161;
-        public const int LiveCasino = 162;
 
         public const int Basketball = 2;
         public const int Netball = 32;

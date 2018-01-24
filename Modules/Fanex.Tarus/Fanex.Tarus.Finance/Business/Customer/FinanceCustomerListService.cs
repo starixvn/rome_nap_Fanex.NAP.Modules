@@ -77,7 +77,6 @@ namespace Fanex.Tarus.Finance.Business.Customer
                 DisableCS = WebSettings.disableCS,
                 DisabledFI = WebSettings.disabledFI,
                 BingoGameEnabled = BingoSettings.BingoGame.Enabled,
-                EnableLiveCasino = WebSettings.EnableLiveCasino,
                 VisibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value)
             };
             if (custInfo.RoleId == 2)

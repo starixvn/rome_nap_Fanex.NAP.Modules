@@ -18,7 +18,6 @@ using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Accounting.Entities;
-using Fanex.LiveCasino.CoreSetting.Services;
 using Fanex.Module.NG2.Services;
 using Sunplus.Accounting.Core.Configurations;
 
@@ -380,8 +379,6 @@ namespace Sunplus.Accounting.Business.Customer
                 customer.IsUplineSyncCasino = uplineDetail.CasinoSync;
                 customer.IsUplineDisableCasino = uplineDetail.CasinoDisabled;
                 customer.IsUplineSyncBingo = uplineDetail.SyncBingo;
-                customer.IsUplineSyncLiveCasino = uplineDetail.LiveCasinoSync;
-                customer.IsUplineDisableLiveCasino = uplineDetail.LiveCasinoDisabled;
             }
 
             customer.FirstName = data["txtFirstname"] ?? data["txtFName"];
@@ -425,12 +422,6 @@ namespace Sunplus.Accounting.Business.Customer
                 //custInfo.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(custInfo.IBCCustID);                
 
                 csService.AutoInsertCasinoAccount(custInfo, userId, userName, ip);
-            }
-
-            if (uplineInfo.IsUplineSyncLiveCasino && WebSettings.EnableLiveCasino)
-            {
-                SettingService liveCasinoSettingService = new SettingService();
-                var results = liveCasinoSettingService.AutoInsertAccount(custInfo.IBCCustID, AppSession.AccId, AppSession.AccUserName, 0, string.Empty, ip, "E");
             }
 
             if (uplineInfo.IsUplineSyncNG2)

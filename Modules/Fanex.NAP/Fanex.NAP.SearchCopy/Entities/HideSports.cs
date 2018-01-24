@@ -31,7 +31,5 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Entities
         public bool HideVirtualSports { get; set; }
 
         public bool HideBingo { get; set; }
-
-        public bool HideLiveCasino { get; set; }
     }
 }

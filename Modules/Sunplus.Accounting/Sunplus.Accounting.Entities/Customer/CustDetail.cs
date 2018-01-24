@@ -94,10 +94,6 @@ namespace Sunplus.Accounting.Entities.Customer
 
         public bool IsUplineSyncBingo { get; set; }
 
-        public bool IsUplineSyncLiveCasino { get; set; }
-
-        public bool IsUplineDisableLiveCasino { get; set; }
-
         [DataMember]
         public int ErrorCode { get; set; }
 

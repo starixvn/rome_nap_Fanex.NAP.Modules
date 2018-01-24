@@ -80,9 +80,6 @@ namespace Sunplus.Accounting.Entities.Customer.PT.ViewPT
         public bool IsCasino { get; set; }
 
         [DataMember]
-        public bool IsLiveCasino { get; set; }
-
-        [DataMember]
         public bool IsGoldDeluxe { get; set; }
 
         [DataMember]
@@ -295,11 +292,6 @@ namespace Sunplus.Accounting.Entities.Customer.PT.ViewPT
 
         [DataMember]
         public AllowViewSport GameComm { get; set; }
-
-        //[DataMember]
-        //public string GameComm { get; set; }
-        [DataMember]
-        public AllowViewSport LiveCasinoComm { get; set; }
 
         [DataMember]
         public AllowViewSport MyanmarOdds { get; set; }

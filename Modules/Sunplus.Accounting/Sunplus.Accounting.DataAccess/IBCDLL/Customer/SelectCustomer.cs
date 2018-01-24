@@ -969,35 +969,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             return result;
         }
-
-        public static DbResult GetLiveCasinoPt(string username, int? sportType, int? bettype)
-        {
-            DbResult dr = null;
-            try
-            {
-                var p = new Hashtable();
-                p.Add("username", username);
-                p.Add("sporttype", sportType);
-                p.Add("bettype", bettype);
-
-                using (ObjectDb db = new ObjectDb("GetLiveCSPT", 600))
-                {
-                    db.AssignParamValues(p);
-
-                    var ds = db.ExecuteDataSet();
-                    var output = db.GetOuputParams();
-
-                    dr = new DbResult(output, ds);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-            return dr;
-        }
-
     }
 
     public class SelectCustomerAdapter : DataAccess

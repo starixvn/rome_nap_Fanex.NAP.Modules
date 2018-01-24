@@ -124,7 +124,7 @@ namespace Sunplus.Accounting.Core.Configurations
                         if (acction != null) NotAuthenticateAction.Add(acction.ToLower());
                     }
                 }
-                EnableLiveCasino = (ConfigurationManager.AppSettings["EnableLiveCasino"] == "1");
+
                 EnableAbnormal = (ConfigurationManager.AppSettings["EnableAbnormal"] == "1");
                 _maxTransIdPerBatch = CastAide.AsInt32(ConfigurationManager.AppSettings["MaxTransIdPerBatch"], 150);
                 _hiddenCurrencies = CastAide.AsString(ConfigurationManager.AppSettings["HiddenCurrencies"], "");
@@ -372,8 +372,6 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get { return _maxTransLength; }
         }
-
-        public static bool EnableLiveCasino { get; set; }
 
         public static bool EnableAbnormal { get; set; }
 

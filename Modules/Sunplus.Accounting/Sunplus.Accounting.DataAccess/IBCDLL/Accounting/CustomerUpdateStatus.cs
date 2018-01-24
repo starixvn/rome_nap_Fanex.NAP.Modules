@@ -611,40 +611,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
         }
 
-        public void CustomerUpdateDisabledLiveCasino(int accid, int custid, bool disabledLiveCS, string ip, bool isEnableDownlines)
-        {
-            try
-            {
-                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableLiveCS", 300))
-                {
-                    Hashtable param = new Hashtable();
-                    param.Add("userid", accid);
-                    param.Add("custid", custid);
-                    param.Add("disabledlivecs", disabledLiveCS);
-                    param.Add("language", "E");
-                    param.Add("ip", ip);
-                    param.Add("enabledownlineslivecs", isEnableDownlines);
-                    param.Add("errcode", 0);
-                    param.Add("errmsg", string.Empty);
-
-                    db.AssignParamValues(param);
-                    db.ExecuteNonQuery();
-
-                    if (CastAide.AsInt32(db.GetParameterValue("errcode")) > 0)
-                        throw new AccException(CastAide.AsString(db.GetParameterValue("errmsg")));
-                }
-            }
-            catch (AccException accException)
-            {
-                throw accException;
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-                throw ex;
-            }
-        }
-
         public void CustomerUpdateDisabledVirtualSports(int accid, int custid, bool disabled, string ip, bool isDisableDownlines)
         {
             try

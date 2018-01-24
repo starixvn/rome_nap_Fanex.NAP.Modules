@@ -300,7 +300,6 @@
     <Compile Include="Filters\LogExceptionFilter.cs" />
     <Compile Include="CustomRouteHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Report\LiveCasinoWinLossController.cs" />
     <Compile Include="Report\MatchAnalysisController.cs" />
     <Compile Include="Report\RedirectController\ReportRedirectController.cs" />
   </ItemGroup>

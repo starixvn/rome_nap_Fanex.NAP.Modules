@@ -18,7 +18,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
     using Fanex.CustomerSetting.Module.SearchCopy.Criteria;
     using Fanex.CustomerSetting.Module.SearchCopy.Entities;
     using Fanex.CustomerSetting.Module.SearchCopy.Services;
-    using Fanex.LiveCasino.CoreSetting.Services;
     using Core.Web;
     using Core.Attributes;
     /// <summary>
@@ -27,17 +26,15 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
     public class BaseCloneController : BaseController
     {
         protected static ISearchCopyService _searchCopyService;
-        protected ISettingService _settingService;
 
         public BaseCloneController()
-            : this(null, null)
+            : this(null)
         {
         }
 
-        public BaseCloneController(ISearchCopyService searchCopyService, ISettingService settingService)
+        public BaseCloneController(ISearchCopyService searchCopyService)
         {
             _searchCopyService = searchCopyService ?? new SearchCopyService();
-            _settingService = settingService ?? new SettingService();
         }
 
         protected ISearchCopyService SearchCopyServiceInstance

@@ -70,8 +70,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     _custSetting.UserPwd = CastAide.AsString(row["userpwd"]);
                     _custSetting.CurrencyName = CastAide.AsString(row["currencyname"]);
                     _custSetting.SyncBingo = CastAide.AsBoolean(row["syncbingo"]);
-                    _custSetting.LiveCasinoDisabled = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row["disablelivecasino"]) : true;
-                    _custSetting.LiveCasinoSync = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row["synclivecasino"]) : false;
                     _custSetting.IsSyncNG2 = WebSettings.IsShowNG2 ? CastAide.AsBoolean(row["syncedng2"]) : false;
 
                     _custSetting.NoIBCData = false;
@@ -358,13 +356,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 {
                     _cust.CasinoDisabled = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableCasino"], true);
                     _cust.CasinoSync = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["SyncCasino"], false);
-                    _cust.LiveCasinoSync = WebSettings.EnableLiveCasino
-                                               ? CastAide.AsBoolean(
-                                                   drCustomer.ResultSet.Tables[0].Rows[0]["SyncLiveCasino"], false)
-                                               : false;
-                    _cust.LiveCasinoDisabled =
-                        WebSettings.EnableLiveCasino
-                        ? CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableLiveCasino"], true) : true;
                 }
 
                 return _cust;
@@ -412,18 +403,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 _cust.SelectedBetting = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["SelectedBetting"], false);
 
                 _cust.LimitPerIP = CastAide.AsInt32(drCustomer.ResultSet.Tables[0].Rows[0]["LimitPerIP"]);
-
-
-
-                _cust.IsLiveCasinoSync = WebSettings.EnableLiveCasino
-                                             ? CastAide.AsBoolean(
-                                                 drCustomer.ResultSet.Tables[0].Rows[0]["SyncLiveCasino"], false)
-                                             : false;
-                _cust.IsDisableLiveCasino = WebSettings.EnableLiveCasino
-                                                ? CastAide.AsBoolean(
-                                                    drCustomer.ResultSet.Tables[0].Rows[0]["DisableLiveCasino"], false)
-                                                : true;
-
                 _cust.IsHideVirtualSports = WebSettings.EnableVirtualSports ?
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["hidevirtualsports"], false) : false;
                 _cust.IsDisableVirtualSports = WebSettings.EnableVirtualSports ?
@@ -491,7 +470,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     _cust.SuperUserName = CastAide.AsString(drCustomer.ResultSet.Tables[0].Rows[0]["supername"], "");
                     _cust.MasterUserName = CastAide.AsString(drCustomer.ResultSet.Tables[0].Rows[0]["mastername"], "");
 
-                    _cust.IsLiveCasinoSync = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["SyncLiveCasino"], false);
                     _cust.SuperId = CastAide.AsInt32(drCustomer.ResultSet.Tables[0].Rows[0]["SuperId"], 0);
                     _cust.MasterId = CastAide.AsInt32(drCustomer.ResultSet.Tables[0].Rows[0]["MasterId"], 0);
                 }

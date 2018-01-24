@@ -183,7 +183,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report\CacheUtils.cs" />
     <Compile Include="Report\Common\RMReportUtils.cs" />
-    <Compile Include="Report\LiveCasinoWinLossService.cs" />
     <Compile Include="Report\MatchAnalysisService.cs" />
     <Compile Include="SpecialDelete\SpecialDeleteBase.cs" />
     <Compile Include="Utilities.cs" />

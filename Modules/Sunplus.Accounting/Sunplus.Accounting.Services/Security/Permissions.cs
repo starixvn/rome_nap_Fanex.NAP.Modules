@@ -384,15 +384,6 @@ namespace Sunplus.Accounting.Business.Security
             }
         }
 
-        public static bool IsAllowEditLiveCasino(int parentId, bool syncLiveCasino)
-        {
-            if (parentId == 0)
-                return true;
-            if (!WebSettings.EnableLiveCasino || !syncLiveCasino)
-                return false;
-            return true;
-        }
-
         public static bool IsAllowEditVirtualSports(int parentId, bool hideVirtualSports)
         {
             if (parentId == 0)
@@ -404,7 +395,7 @@ namespace Sunplus.Accounting.Business.Security
 
         public static bool IsAllowEditGoldDeluxe(int parentId)
         {
-            return parentId == 0 || WebSettings.EnableLiveCasino;
+            return parentId == 0 || WebSettings.EnableGoldDeluxe;
         }
 
         #region Settlement

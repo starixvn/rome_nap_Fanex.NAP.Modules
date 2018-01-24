@@ -201,7 +201,6 @@
     <Compile Include="Configurations\ConfigSection.cs" />
     <Compile Include="Configurations\SportsSection.cs" />
     <Compile Include="Configurations\RMSection.cs" />
-    <Compile Include="Configurations\LiveCasinoSection.cs" />
     <Compile Include="Configurations\CustomerSection.cs" />
     <Compile Include="Configurations\ExternalSection.cs" />
     <Compile Include="Configurations\PokerSection.cs" />

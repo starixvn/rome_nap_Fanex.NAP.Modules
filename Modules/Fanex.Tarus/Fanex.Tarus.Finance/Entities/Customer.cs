@@ -33,8 +33,6 @@ namespace Fanex.Tarus.Finance.Entities
 
         public bool BingoGameEnabled { get; set; }
 
-        public bool EnableLiveCasino { get; set; }
-
         public bool VisibleP2PSetting { get; set; }
 
         public bool IsDirectMaster { get; set; }
