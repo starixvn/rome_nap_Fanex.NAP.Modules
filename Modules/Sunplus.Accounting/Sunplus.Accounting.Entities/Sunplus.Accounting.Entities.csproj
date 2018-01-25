@@ -132,7 +132,6 @@
     <Compile Include="Customer\ForexAccount.cs" />
     <Compile Include="Customer\MasterList.cs" />
     <Compile Include="Customer\PT\ViewPT\DCSProduct.cs" />
-    <Compile Include="Customer\Racing\EnableRacebooksStatus.cs" />
     <Compile Include="ErrorBO.cs" />
     <Compile Include="ErrorDetail.cs" />
     <Compile Include="ExchangeRate.cs" />
@@ -150,12 +149,6 @@
     <Compile Include="PositionTaking\Poker\GameTypeSetting.cs" />
     <Compile Include="PositionTaking\Poker\PokerSetting.cs" />
     <Compile Include="PositionTaking\Poker\StakeLevel.cs" />
-    <Compile Include="PositionTaking\Racing\Data.cs" />
-    <Compile Include="PositionTaking\Racing\Bettype.cs" />
-    <Compile Include="PositionTaking\Racing\MeetingComm.cs" />
-    <Compile Include="PositionTaking\Racing\Setting.cs" />
-    <Compile Include="PositionTaking\Racing\Sport.cs" />
-    <Compile Include="PositionTaking\Racing\Tote.cs" />
     <Compile Include="BetAggregator\LicenseeDTO.cs" />
     <Compile Include="BetAggregator\LicenseeRow.cs" />
     <Compile Include="Report\DailyWL\DailyWLDTO.cs" />

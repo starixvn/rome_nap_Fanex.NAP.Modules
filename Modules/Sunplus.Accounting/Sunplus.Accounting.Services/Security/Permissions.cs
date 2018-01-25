@@ -210,11 +210,6 @@ namespace Sunplus.Accounting.Business.Security
             return IsTransfer;
         }
 
-        public static bool AllowSaTote(string currencyName)
-        {
-            return HRPositionTakingManager.AllowSaTote(currencyName);
-        }
-
         public static int CheckPermission<T>(int custId, T function, ref string errmsg)
         {
             int errcode = 0;

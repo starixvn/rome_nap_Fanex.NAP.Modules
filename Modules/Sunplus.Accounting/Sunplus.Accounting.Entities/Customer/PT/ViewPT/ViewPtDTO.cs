@@ -32,22 +32,6 @@ namespace Sunplus.Accounting.Entities.Customer.PT.ViewPT
     }
 
     [DataContract]
-    public class IbcAutoPtForRacebook
-    {
-        [DataMember]
-        public int ToteId { get; set; }
-
-        [DataMember]
-        public string ToteName { get; set; }
-
-        [DataMember]
-        public string IbcAutoPt { get; set; }
-
-        [DataMember]
-        public ActualIbcPtOnMember ActualIbcPtOnMember { get; set; }
-    }
-
-    [DataContract]
     public class ActualIbcPtOnMember
     {
         [DataMember]
@@ -61,13 +45,6 @@ namespace Sunplus.Accounting.Entities.Customer.PT.ViewPT
 
         [DataMember]
         public string EPlace { get; set; }
-    }
-
-    [DataContract]
-    public class RacebookIbcPt
-    {
-        [DataMember]
-        public List<IbcAutoPtForRacebook> IbcPtForRacebook { get; set; }
     }
 
     [DataContract]
@@ -87,9 +64,6 @@ namespace Sunplus.Accounting.Entities.Customer.PT.ViewPT
 
         [DataMember]
         public bool IsAGCasino { get; set; }
-
-        [DataMember]
-        public RacebookIbcPt IBCPt { get; set; }
 
         [DataMember]
         public List<PositionTakingDTO> PotionTakingDetail { get; set; }
@@ -137,15 +111,6 @@ namespace Sunplus.Accounting.Entities.Customer.PT.ViewPT
     {
         [DataMember]
         public AllowViewSport OnexTwo { get; set; }
-
-        [DataMember]
-        public AllowViewSport HorseRacing { get; set; }
-
-        [DataMember]
-        public AllowViewSport Greyhound { get; set; }
-
-        [DataMember]
-        public AllowViewSport Harness { get; set; }
 
         [DataMember]
         public AllowViewSport Finance { get; set; }
@@ -252,43 +217,7 @@ namespace Sunplus.Accounting.Entities.Customer.PT.ViewPT
         public AllowViewSport OneXTwo { get; set; }
 
         [DataMember]
-        public AllowViewSport HRFixedOdds { get; set; }
-
-        //[DataMember]
-        //public string OneXTwo { get; set; }
-        [DataMember]
-        public AllowViewSport HorseRacing { get; set; }
-
-        //[DataMember]
-        //public string RacingSa { get; set; }
-        //[DataMember]
-        //public AllowViewTote RacingSa { get; set; }
-        //[DataMember]
-        //public string RacingUk { get; set; }
-        //[DataMember]
-        //public string RacingAu { get; set; }
-        [DataMember]
-        public AllowViewSport Greyhound { get; set; }
-
-        //[DataMember]
-        //public string GreyhoundUk { get; set; }
-        //[DataMember]
-        //public string GreyhoundAu { get; set; }
-        [DataMember]
-        public AllowViewSport Harness { get; set; }
-
-        //[DataMember]
-        //public string HarnessAu { get; set; }
-        [DataMember]
         public AllowViewSport FiComm { get; set; }
-
-        //[DataMember]
-        //public string FiComm { get; set; }
-        [DataMember]
-        public AllowViewSport P2PGameComm { get; set; }
-
-        [DataMember]
-        public AllowViewSport P2PPrivateGameComm { get; set; }
 
         [DataMember]
         public AllowViewSport GameComm { get; set; }

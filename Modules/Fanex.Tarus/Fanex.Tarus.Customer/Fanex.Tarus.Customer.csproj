@@ -494,13 +494,6 @@
     <Compile Include="Controller\Credit\EditSuperController.cs" />
     <Compile Include="Controller\CustomerList\CustomerListController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerSecurityCodeController.cs" />
-    <Compile Include="Controller\Racing\EditAgentPTRacingController.cs" />
-    <Compile Include="Controller\Racing\EditMasterPTRacingController.cs" />
-    <Compile Include="Controller\Racing\EditMemberPTRacingController.cs" />
-    <Compile Include="Controller\Racing\EditSuperPTRacingController.cs" />
-    <Compile Include="Controller\Racing\MasterEditMemberPTRacingController.cs" />
-    <Compile Include="Controller\Racing\PTRacingSettingBaseController.cs" />
-    <Compile Include="Controller\Racing\SuperEditMemberPTRacingController.cs" />
     <Compile Include="Controller\Setting\AbnormalBetController.cs" />
     <Compile Include="Controller\Setting\CustomerSettingController.cs" />
     <Compile Include="Controller\Setting\SMATurnoverController.cs" />

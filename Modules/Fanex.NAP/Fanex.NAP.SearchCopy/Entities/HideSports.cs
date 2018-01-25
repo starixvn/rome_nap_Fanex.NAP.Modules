@@ -22,10 +22,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Entities
 
         public bool HideSportsbookMinPT { get; set; }
 
-        public bool HideRacing { get; set; }
-
-        public bool HideRacingMinPT { get; set; }
-
         public bool HideCasino { get; set; }
 
         public bool HideVirtualSports { get; set; }

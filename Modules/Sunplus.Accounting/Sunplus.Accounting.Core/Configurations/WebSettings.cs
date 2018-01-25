@@ -24,24 +24,16 @@ namespace Sunplus.Accounting.Core.Configurations
         private static readonly string _getCountry;
         private static readonly string _virtualDir;
         private static readonly bool _isSslLogin;
-        private static readonly bool _disabledHR;
         private static readonly bool _disabledFI;
-
-        private static double _UkMeetingMax = 0.03;
-        private static double _OtherMeetingMax = 0.05;
-        private static double _UkMeeting = 0.03;
-        private static double _OtherMeeting = 0.05;
+        
         private static readonly bool _disableAutoM;
         private static readonly bool _disableAutoMasterFI;
-        private static readonly bool _disableAutoMasterHR;
         private static readonly bool _disableCS;
         private static readonly bool _disableOR;
         private static readonly bool _disableInternal;
         private static readonly bool _IncludeAccuBalInStatement;
         private static readonly bool _Disable1x2Comm;
         private static readonly double _Group1x2Max = 0.0025;
-        private static readonly bool _DisableHRPT_Tote;
-        private static readonly bool _DisableHRPT_OpenTote;
         private static readonly int _CacheExpire;
 
         private static readonly string _calendarTheme;
@@ -91,17 +83,13 @@ namespace Sunplus.Accounting.Core.Configurations
                 _ipvnreplace = ConfigurationManager.AppSettings["ipvnreplace"];
                 _isSslLogin = (ConfigurationManager.AppSettings["ssl_login"] == "1");
 
-                _disabledHR = (ConfigurationManager.AppSettings["disabledHR"] == "1");
                 _disabledFI = (ConfigurationManager.AppSettings["disabledFI"] == "1");
                 _disableAutoM = (ConfigurationManager.AppSettings["disableAutoMaster"] == "1");
                 _disableAutoMasterFI = (ConfigurationManager.AppSettings["disableAutoMasterFI"] == "1");
-                _disableAutoMasterHR = (ConfigurationManager.AppSettings["disableAutoMasterHR"] == "1");
                 _disableCS = (ConfigurationManager.AppSettings["disabledCS"] == "1");
                 _disableOR = (ConfigurationManager.AppSettings["disabledOR"] == "1");
                 _Disable1x2Comm = (ConfigurationManager.AppSettings["disable1x2Comm"] == "1");
                 _Group1x2Max = CastAide.AsDouble(ConfigurationManager.AppSettings["group1x2max"]);
-                _DisableHRPT_OpenTote = (ConfigurationManager.AppSettings["disableHRPT_OpenTote"] == "1");
-                _DisableHRPT_Tote = (ConfigurationManager.AppSettings["disableHRPT_Tote"] == "1");
                 _disableInternal = (ConfigurationManager.AppSettings["disableInternal"] == "1");
                 _IncludeAccuBalInStatement = (ConfigurationManager.AppSettings["IncludeAccuBalInStatement"] == "1");
                 _CacheExpire = CastAide.AsInt32(ConfigurationManager.AppSettings["CacheExpire"]);
@@ -213,17 +201,6 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return (ConfigurationManager.AppSettings["LocalTest"] == "1"); }
         }
 
-        //public static string baseCurrency
-        //{
-        //    get { return _baseCurr; }
-        //}
-        //Phuong.Nguyen
-        //Create horseracing visibility property
-        public static bool disabledHR
-        {
-            get { return _disabledHR; }
-        }
-
         public static bool disabledFI
         {
             get { return _disabledFI; }
@@ -239,11 +216,6 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return _disableAutoMasterFI; }
         }
 
-        public static bool disableAutoMasterHR
-        {
-            get { return _disableAutoMasterHR; }
-        }
-
         public static bool disableCS
         {
             get { return _disableCS; }
@@ -252,26 +224,6 @@ namespace Sunplus.Accounting.Core.Configurations
         public static bool disableOR
         {
             get { return _disableOR; }
-        }
-
-        public static double UkMeetingMax
-        {
-            get { return _UkMeetingMax; }
-        }
-
-        public static double OtherMeetingMax
-        {
-            get { return _OtherMeetingMax; }
-        }
-
-        public static double UkMeeting
-        {
-            get { return _UkMeeting; }
-        }
-
-        public static double OtherMeeting
-        {
-            get { return _OtherMeeting; }
         }
 
         public static bool Disable1x2Comm
@@ -284,16 +236,6 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return _Group1x2Max; }
         }
 
-        public static bool DisableHRPT_Tote
-        {
-            get { return _DisableHRPT_Tote; }
-        }
-
-        public static bool DisableHRPT_OpenTote
-        {
-            get { return _DisableHRPT_OpenTote; }
-        }
-
         public static bool DisableInternal
         {
             get { return _disableInternal; }
@@ -304,16 +246,10 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return _calendarTheme; }
         }
 
-        //public static bool UseNewSpecialDelete
-        //{
-        //    get { return _useNewSpecialDelete; }
-        //}
-
         /// <summary>
         /// Get time from DB server for timeout of internal url
         /// </summary>
         /// <returns></returns>
-
         public static int CacheExpire
         {
             get { return _CacheExpire; }
@@ -425,14 +361,6 @@ namespace Sunplus.Accounting.Core.Configurations
             get
             {
                 return ConfigurationManager.AppSettings["AdminUsersEditSuperStatus"].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-            }
-        }
-
-        public static bool OfferHorseRacingFixedOdds
-        {
-            get
-            {
-                return (ConfigurationManager.AppSettings["OfferHorseRacingFixedOdds"] == "1");
             }
         }
 

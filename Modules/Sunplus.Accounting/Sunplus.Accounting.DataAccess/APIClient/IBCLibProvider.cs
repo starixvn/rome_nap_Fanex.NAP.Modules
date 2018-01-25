@@ -411,11 +411,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
 
                 _cust.IsDisableEsports = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableEsports"], false);
                 _cust.IsEnableDoubleCommLosing = WebSettings.OfferDoubleComm ? (CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DoubleCommLosing"], false)) : false;
-
-                _cust.IsEnableHorseRacingFixedOdds = WebSettings.OfferHorseRacingFixedOdds ?
-                    !CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableHRFixedOdds"], false) :
-                    false;
-
                 _cust.IsDisableGoldDeluxe = WebSettings.EnableGoldDeluxe ?
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableGoldDeluxe"], false) :
                     true;

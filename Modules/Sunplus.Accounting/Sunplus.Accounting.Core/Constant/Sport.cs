@@ -39,7 +39,6 @@ namespace Sunplus.Accounting.Core.Constant
         public static readonly int WinterSports = 29;
         public static readonly int Squash = 30;
         public static readonly int OtherSports = 99;
-        public static readonly int HorseRacing = 151;
         public static readonly int Financials = 201;
         public static readonly int Casino = 251;
         public static readonly int Games = 252;

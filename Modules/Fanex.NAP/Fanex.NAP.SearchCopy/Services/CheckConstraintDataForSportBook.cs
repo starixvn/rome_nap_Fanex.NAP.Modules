@@ -84,7 +84,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             htbParameters.Add("playerdiscountcs", dr["playerdiscountcs"]);
             htbParameters.Add("playerdiscount1x2", dr["playerdiscount1x2"]);
             htbParameters.Add("playerdiscountnumber", dr["playerdiscountnumber"]);
-            htbParameters.Add("playerdiscounthrfixedodds", dr["playerdiscounthrfixedodds"]);
             htbParameters.Add("playerdiscountmyanmarodds", dr["playerdiscountmyanmarodds"]);
             htbParameters.Add("suspended", dr["suspended"]);
             htbParameters.Add("recommend", uplineId);
@@ -92,7 +91,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             htbParameters.Add("closed", dr["closed"]);
             htbParameters.Add("issearchandcopy", 1);
             htbParameters.Add("disablenumber", dr["disablenumber"]);
-            htbParameters.Add("disablehrfixedodds", dr["DisableHRFixedOdds"]);
             htbParameters.Add("language", Thread.CurrentThread.CurrentCulture.Name);
             htbParameters.Add("ip", CurrentContext.Instance.Ip4Address);
             htbParameters.Add("userid", userId);

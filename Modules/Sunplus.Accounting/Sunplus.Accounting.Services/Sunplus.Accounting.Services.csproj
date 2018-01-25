@@ -231,9 +231,6 @@
     <Compile Include="CustomerUtils.cs" />
     <Compile Include="IpManagement.cs" />
     <Compile Include="IUserService.cs" />
-    <Compile Include="PositionTaking\HRParamHandle.cs" />
-    <Compile Include="PositionTaking\HRPositionTakingManager.cs" />
-    <Compile Include="PositionTaking\HRUtilities.cs" />
     <Compile Include="PositionTaking\SportBook\AgentPT.cs" />
     <Compile Include="PositionTaking\SportBook\BasePT.cs" />
     <Compile Include="PositionTaking\SportBook\BettypeDetail.cs" />

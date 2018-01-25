@@ -94,8 +94,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Repositories
                 {
                     statusSports.HideSportsbook = false; ////alway show
                     statusSports.HideSportsbookMinPT = false; ////alway show
-                    statusSports.HideRacing = false; // Convert.ToBoolean(dataReader["disablehorseracing"]);
-                    statusSports.HideRacingMinPT = false; // Convert.ToBoolean(dataReader["disablehorseracing"]);
                     statusSports.HideCasino = false; // Convert.ToBoolean(dataReader["disablecasino"]);
                     statusSports.HideVirtualSports = false; // Convert.ToBoolean(dataReader["disablevirtualsports"]);
                     statusSports.HideBingo = false; // Convert.ToBoolean(dataReader["disablebingo"]);
