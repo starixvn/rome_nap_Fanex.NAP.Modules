@@ -378,7 +378,6 @@
     <Compile Include="Criteria\CheckSpecialSitePermissionCriteria.cs" />
     <Compile Include="Repositories\Interface\IDCSSettingCopyInsertMemberRepository.cs" />
     <Compile Include="Criteria\UpdateSyncBaseForIBCCriteria.cs" />
-    <Compile Include="Criteria\UpdateSyncBingoForIBCCriteria.cs" />
     <Compile Include="Criteria\UpdateSyncCasinoForIBCCriteria.cs" />
     <Compile Include="Criteria\CustomerInsMemberCriteria.cs" />
     <Compile Include="Criteria\GetCustomerInfoByUserIdCriteria.cs" />

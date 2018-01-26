@@ -36,7 +36,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Common
         public static class FailedSyncMessage
         {
             public const string Casino = "RNG Casino failed to synchronize !";
-            public const string Bingo = "Bingo failed to synchronize !";
         }
     }
 }

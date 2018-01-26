@@ -369,49 +369,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         }
 
         /// <summary>
-        /// Update DisabledBingoGame status for customer
-        /// sp: Acc_CustomerUpdDisableOpenTote
-        /// @huynguyen
-        /// Create date: <2010-04-16>
-        /// </summary>
-        ///<param name="accid"></param>
-        public static void CustomerUpdateDisabledBingoGame(int accid, int custid, bool disabledBingo, string Ip, bool isEnabledDownline, bool isSync)
-        {
-            try
-            {
-                using (ObjectDb objDb = new ObjectDb("Acc_UpdBingoStatus", 600))
-                {
-                    Hashtable param = new Hashtable();
-                    param.Add("userid", accid);
-                    param.Add("custid", custid);
-                    param.Add("disabledbingo", disabledBingo);
-                    param.Add("syncbg", isSync);
-                    param.Add("language", "E");
-                    param.Add("errcode", 0);
-                    param.Add("errmsg", string.Empty);
-                    param.Add("loginip", Ip);
-                    param.Add("enabledownline", isEnabledDownline);
-
-                    objDb.AssignParamValues(param);
-
-                    objDb.ExecuteNonQuery();
-
-                    if (CastAide.AsInt32(objDb.GetParameterValue("errcode")) > 0)
-                        throw new AccException(CastAide.AsString(objDb.GetParameterValue("errmsg")));
-                }
-            }
-            catch (AccException accException)
-            {
-                throw accException;
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                throw ex;
-            }
-        }
-
-        /// <summary>
         /// Update DisabledNumberGame status for customer
         /// sp: Acc_CustomerUpdDisableOpenTote
         /// @huynguyen

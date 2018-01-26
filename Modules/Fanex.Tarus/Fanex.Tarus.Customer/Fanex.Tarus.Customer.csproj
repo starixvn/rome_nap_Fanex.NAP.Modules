@@ -228,14 +228,6 @@
       <HintPath>..\..\..\packages\Sunplus.Accounting.Services.1.0.0.5\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Bingo.Core">
-      <HintPath>..\..\..\packages\Sunplus.Bingo.Core.1.0.0.2\lib\net40\Sunplus.Bingo.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Sunplus.Bingo.Services">
-      <HintPath>..\..\..\packages\Sunplus.Bingo.Services.1.0.0.1\lib\net40\Sunplus.Bingo.Services.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Libraries.AOP.1.0.4218.28561\lib\net40\Sunplus.Libraries.AOP.dll</HintPath>
       <Private>True</Private>
@@ -439,7 +431,6 @@
     <Compile Include="Criteria\SMATurnover\CheckSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\GetMatchInfo_AddSMAListCriteria.cs" />
     <Compile Include="Criteria\ViewPT\IsDepositCustomerCriteria.cs" />
-    <Compile Include="Criteria\ViewPT\GetPTSettingCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\GetSportBetTypeReferencesCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UpdateSettingsCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UploadRate\CheckImportCriteria.cs" />

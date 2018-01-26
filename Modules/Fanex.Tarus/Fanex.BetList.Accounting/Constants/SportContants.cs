@@ -17,8 +17,6 @@ namespace Fanex.BetList.Accounting.Constants
         public const int MixParlay = 100;
         public const int Soccer = 1;
         public const int Casino = 71;
-        public const int P2P = 72;
-        public const int Bingo = 252;
         public const int CombinationMixParlay = 98;
 
         public const int Motorsports = 99;

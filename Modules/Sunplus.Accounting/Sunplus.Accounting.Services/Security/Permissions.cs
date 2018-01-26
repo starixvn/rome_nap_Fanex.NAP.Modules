@@ -14,7 +14,6 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.Entities.Casino;
-using Sunplus.Bingo.Core;
 using Fanex.CustomerSetting.Module.Core.Models;
 using Fanex.Tarus.Security.Criteria;
 using Fanex.Tarus.Security.Services;
@@ -326,15 +325,6 @@ namespace Sunplus.Accounting.Business.Security
             if (parentId == 0)
                 return true;
             if (WebSettings.disableCS || !syncCasino)
-                return false;
-            return true;
-        }
-
-        public static bool IsAllowEditBingo(int parentId, bool syncBingo)
-        {
-            if (parentId == 0)
-                return true;
-            if (!BingoSettings.BingoGame.Enabled || !syncBingo)
                 return false;
             return true;
         }

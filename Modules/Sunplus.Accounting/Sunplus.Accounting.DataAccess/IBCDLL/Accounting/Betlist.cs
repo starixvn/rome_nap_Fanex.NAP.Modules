@@ -658,37 +658,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 
         #endregion Fun88
 
-        /// <summary>
-        /// Get Bingo Game Result
-        /// </summary>
-        /// <returns></returns>
-        public static DataTable GetNumberGameResult(int matchID)
-        {
-            var result = new DataTable();
-            try
-            {
-                var p = new Hashtable { { "matchid", matchID } };
-
-                DbResult dbResult = null;
-                using (ObjectDb db = new ObjectDb("SelMatchResultNumberGame", 600))
-                {
-                    db.AssignParamValues(p);
-                    var ds = db.ExecuteDataSet();
-                    var output = db.GetOuputParams();
-
-                    dbResult = new DbResult(output, ds);
-                }
-
-                if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
-                    result = dbResult.ResultSet.Tables[0];
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-            return result;
-        }
-
         public static DataTable GetSportingSolutionsResult(int matchID, string resourceId)
         {
             var result = new DataTable();

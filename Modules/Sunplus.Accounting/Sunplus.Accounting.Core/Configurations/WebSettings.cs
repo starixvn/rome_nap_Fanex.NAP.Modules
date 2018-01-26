@@ -40,8 +40,6 @@ namespace Sunplus.Accounting.Core.Configurations
         private static readonly string _ipvnreplace;
 
         private static string _iplocation;
-        private static readonly bool _isAllowMoveToBingo;
-
         private static readonly string _version;
 
         private static readonly bool _disableM88BetList;
@@ -99,7 +97,6 @@ namespace Sunplus.Accounting.Core.Configurations
                 _iplocation = ConfigurationManager.AppSettings["iplocation"];
                 _IgnoreGroups = ConfigurationManager.AppSettings["IgnoreGroups"];
                 _externalSite = CastAide.AsString(ConfigurationManager.AppSettings["ExternalSite"]);
-                _isAllowMoveToBingo = ConfigurationManager.AppSettings["isMoveBingo"] == "1";
                 _maxTransLength = CastAide.AsInt32(ConfigurationManager.AppSettings["MaxTransLength"]);
                 IsUMTime = ConfigurationManager.AppSettings["UM"] == "1";
                 LbServiceUrl = ConfigurationManager.AppSettings["LBUrl"];
@@ -297,11 +294,6 @@ namespace Sunplus.Accounting.Core.Configurations
                 var exDomain = _externalSite.Split(';');
                 return exDomain.ToDictionary(domain => domain);
             }
-        }
-
-        public static bool IsAllowMoveToBingo
-        {
-            get { return _isAllowMoveToBingo; }
         }
 
         public static int MaxTransLength

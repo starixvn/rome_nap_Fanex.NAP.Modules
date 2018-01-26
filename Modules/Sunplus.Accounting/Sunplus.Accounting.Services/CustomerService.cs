@@ -378,7 +378,6 @@ namespace Sunplus.Accounting.Business.Customer
                 customer.Suspend = uplineDetail.Suspend;
                 customer.IsUplineSyncCasino = uplineDetail.CasinoSync;
                 customer.IsUplineDisableCasino = uplineDetail.CasinoDisabled;
-                customer.IsUplineSyncBingo = uplineDetail.SyncBingo;
             }
 
             customer.FirstName = data["txtFirstname"] ?? data["txtFName"];

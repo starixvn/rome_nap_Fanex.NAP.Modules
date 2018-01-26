@@ -158,7 +158,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
                     criteria.IP = CurrentContext.Instance.Ip4Address;
 
                     Thread.Sleep(3000);
-                    // Sync casino, bingo, live casino, ng2
+                    // Sync casino, live casino, ng2
                     SyncNG2(criteria);
                     UpdateSyncData(criteria);
                 }

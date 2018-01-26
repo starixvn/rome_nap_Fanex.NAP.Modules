@@ -326,15 +326,11 @@ namespace Sunplus.Accounting.Entities.Casino
 
         public string CasinoNo { get; set; }
 
-        public bool SyncBingo { get; set; }
-
         public bool IsHideVirtualSports { get; set; }
 
         public bool IsDisableVirtualSports { get; set; }
 
         public string SiteName { get; set; }
-
-        public bool DisableBingo { get; set; }
 
         public bool IsDisableNG2Upline { get; set; }
 

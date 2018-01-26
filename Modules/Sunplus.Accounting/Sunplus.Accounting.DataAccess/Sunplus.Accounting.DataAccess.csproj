@@ -57,7 +57,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AdoNet\BetListDAO.cs" />
     <Compile Include="AdoNet\CreditTermDAO\CreditTermGroupDAO.cs" />
     <Compile Include="AdoNet\ExchangeRateDAO.cs" />
     <Compile Include="AdoNet\HelperDAO.cs" />
@@ -89,7 +88,6 @@
     <Compile Include="IAdmin\IExternalSiteDAO.cs" />
     <Compile Include="AdoNet\ReportDAO\ReportRacingDAO.cs" />
     <Compile Include="DataAccessReport.cs" />
-    <Compile Include="IBetListDAO.cs" />
     <Compile Include="ICreditTermDAO\ICreditTermGroupDAO.cs" />
     <Compile Include="IHelperDAO.cs" />
     <Compile Include="AdoNet\SqlServer\BetList\BetlistProviderClient.cs" />
@@ -148,7 +146,6 @@
     <Compile Include="IBCDLL\Accounting\CustomerTurnOver.cs" />
     <Compile Include="IBCDLL\Accounting\CustomerUpdateStatus.cs" />
     <Compile Include="IBCDLL\Accounting\LeagueWLReport.cs" />
-    <Compile Include="IBCDLL\Accounting\MatchWinLostReport.cs" />
     <Compile Include="IBCDLL\Accounting\ReportHR.cs" />
     <Compile Include="IBCDLL\Accounting\Settle.cs" />
     <Compile Include="IBCDLL\Accounting\Transactions.cs" />
@@ -342,10 +339,6 @@
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.11\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Sunplus.Data.DataAbstract, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Data.DataAbstract.2.0.0.8\lib\net40\Sunplus.Data.DataAbstract.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">

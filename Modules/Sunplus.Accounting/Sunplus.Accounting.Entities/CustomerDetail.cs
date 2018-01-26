@@ -14,13 +14,6 @@ namespace Sunplus.Accounting.Entities
         private bool _IsDisabledFIUL = false;
         private bool _IsDisabledFIDL = false;
         private bool _IsDisabledHRUL = false;
-        private bool _IsDisabledHR = false;
-        private bool _IsDisabledHRDL = false;
-        private bool _IsDisabledOpenToteUL = false;
-        private bool _IsDisabledOpenTote = false;
-        private bool _IsDisabledOpenToteDL = false;
-        private bool _IsDisabledBingoGame = false;
-        private bool _IsDisabledBingoGameDL = false;
         private bool _IsDisabledNumberGame = false;
         private bool _IsDisabledNumberGameDL = false;
         private bool _IsInternalUser = false;
@@ -33,7 +26,6 @@ namespace Sunplus.Accounting.Entities
         private bool _IsAutoSuspend = false;
         private bool _IsDisableCasino = false;
         private bool _IsCasinoSync = false;
-        private bool _IsBingoSync = false;
         private bool _IsSpecial = false;
         private bool _IsAllowMasterAutoPT = false;
         private bool _IsDisableOutright = false;
@@ -262,101 +254,6 @@ namespace Sunplus.Accounting.Entities
             }
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        public bool IsDisabledHR
-        {
-            get
-            {
-                return _IsDisabledHR;
-            }
-            set
-            {
-                _IsDisabledHR = value;
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public bool IsDisabledHRDL
-        {
-            get
-            {
-                return _IsDisabledHRDL;
-            }
-            set
-            {
-                _IsDisabledHRDL = value;
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        ///
-
-        /// <summary>
-        ///
-        /// </summary>
-        public bool IsDisabledOpenTote
-        {
-            get
-            {
-                return _IsDisabledOpenTote;
-            }
-            set
-            {
-                _IsDisabledOpenTote = value;
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public bool IsDisabledOpenToteDL
-        {
-            get
-            {
-                return _IsDisabledOpenToteDL;
-            }
-            set
-            {
-                _IsDisabledOpenToteDL = value;
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public bool IsDisabledHRUL
-        {
-            get
-            {
-                return _IsDisabledHRUL;
-            }
-            set
-            {
-                _IsDisabledHRUL = value;
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public bool IsDisabledOpenToteUL
-        {
-            get
-            {
-                return _IsDisabledOpenToteUL;
-            }
-            set
-            {
-                _IsDisabledOpenToteUL = value;
-            }
-        }
-
         public bool IsClosed
         {
             get
@@ -417,18 +314,6 @@ namespace Sunplus.Accounting.Entities
             }
         }
 
-        public bool IsBingoSync
-        {
-            get
-            {
-                return _IsBingoSync;
-            }
-            set
-            {
-                _IsBingoSync = value;
-            }
-        }
-
         public bool IsSpecial
         {
             get
@@ -469,30 +354,6 @@ namespace Sunplus.Accounting.Entities
         {
             get { return _IsEnableDoubleCommLosing; }
             set { _IsEnableDoubleCommLosing = value; }
-        }
-
-        public bool IsDisabledBingoGame
-        {
-            get
-            {
-                return _IsDisabledBingoGame;
-            }
-            set
-            {
-                _IsDisabledBingoGame = value;
-            }
-        }
-
-        public bool IsDisabledBingoGameDL
-        {
-            get
-            {
-                return _IsDisabledBingoGameDL;
-            }
-            set
-            {
-                _IsDisabledBingoGameDL = value;
-            }
         }
 
         public bool IsDisabledNumberGame

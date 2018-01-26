@@ -139,7 +139,6 @@ namespace Sunplus.Accounting.Core.Common
             public const int Harness = 153;
             public const int Financials = 201;
             public const int Casino = 251;
-            public const int BingoGame = 252;
             public const int NumberGame = 161;
             public const int Keno = 202;
             public const int GoldDeluxe = 255;

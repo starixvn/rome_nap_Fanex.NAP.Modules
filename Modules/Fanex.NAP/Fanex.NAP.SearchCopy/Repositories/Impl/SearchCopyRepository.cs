@@ -65,9 +65,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Repositories
                     custInfo.IsSyncCasino = Converter.To<byte>(dataReader["synccasino"]);
                     custInfo.IsSyncNG2 = (byte)(productInfo.IsSynced || (bool) Fanex.Module.NG2.Repository.BaseRepository.CheckAllowedCurrencyAll(criteria.Custid).Outputs["allowedng2"] ? 1 : 0);
                     custInfo.DisableNG2 = (byte)(productInfo.IsDisabled ? 1 : 0);
-                    custInfo.IsSyncBingo = Converter.To<byte>(dataReader["syncbingo"]);
                     custInfo.RoleId = Converter.ToInt(dataReader["roleid"]);
-                    custInfo.DisableBingo = Utils.ToBoolean(dataReader["disableBingo"]);
                     custInfo.DisableCasino = Utils.ToBoolean(dataReader["disableCasino"]);
                     custInfo.IsDirectCustomer = Utils.ToBoolean(dataReader["IsDirectCustomer"]);
                     break;
@@ -96,7 +94,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Repositories
                     statusSports.HideSportsbookMinPT = false; ////alway show
                     statusSports.HideCasino = false; // Convert.ToBoolean(dataReader["disablecasino"]);
                     statusSports.HideVirtualSports = false; // Convert.ToBoolean(dataReader["disablevirtualsports"]);
-                    statusSports.HideBingo = false; // Convert.ToBoolean(dataReader["disablebingo"]);
                 } 
             }
 

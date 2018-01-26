@@ -69,7 +69,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     _custSetting.IBCCustID = CastAide.AsInt32(row["custid"]);
                     _custSetting.UserPwd = CastAide.AsString(row["userpwd"]);
                     _custSetting.CurrencyName = CastAide.AsString(row["currencyname"]);
-                    _custSetting.SyncBingo = CastAide.AsBoolean(row["syncbingo"]);
                     _custSetting.IsSyncNG2 = WebSettings.IsShowNG2 ? CastAide.AsBoolean(row["syncedng2"]) : false;
 
                     _custSetting.NoIBCData = false;
@@ -390,12 +389,10 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 _cust.IsSuspended = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["Suspend"], true);
                 _cust.IsDisableCasino = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableCasino"], true);
                 _cust.IsCasinoSync = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["SyncCasino"], false);
-                _cust.IsBingoSync = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["SyncBingo"], false);
                 _cust.IsAllowAutoMasterPT =
                     !CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableAutoMPT"], true);
                 _cust.IsDisableOutright = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableOutright"],
                                                              true);
-                _cust.IsDisabledBingoGame = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableBingo"], true);
                 _cust.IsDisabledNumberGame = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableNumber"], true);
                 //if(DataUtils.IsExistKey(drCustomer.ResultSet.Tables[0].Rows[0], "IsInternal"))
                 _cust.IsInternalUser = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["IsInternal"], false);

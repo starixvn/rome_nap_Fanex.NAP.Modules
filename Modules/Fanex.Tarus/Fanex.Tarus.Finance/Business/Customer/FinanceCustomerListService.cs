@@ -10,7 +10,6 @@ using Fanex.Tarus.Finance.Model.Customer;
 using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Bingo.Core;
 
 namespace Fanex.Tarus.Finance.Business.Customer
 {
@@ -76,8 +75,6 @@ namespace Fanex.Tarus.Finance.Business.Customer
                 DisabledHR = WebSettings.disabledHR,
                 DisableCS = WebSettings.disableCS,
                 DisabledFI = WebSettings.disabledFI,
-                BingoGameEnabled = BingoSettings.BingoGame.Enabled,
-                VisibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value)
             };
             if (custInfo.RoleId == 2)
             {

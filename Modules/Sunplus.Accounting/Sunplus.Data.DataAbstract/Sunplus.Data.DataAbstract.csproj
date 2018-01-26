@@ -101,10 +101,6 @@
     <Reference Include="SPSRemoting">
       <HintPath>..\..\..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Bingo.Core, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Bingo.Core.1.0.0.2\lib\net40\Sunplus.Bingo.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -114,13 +110,8 @@
     <Compile Include="BootStrappers\BootStrapperManager.cs" />
     <Compile Include="BootStrappers\CommonBootStrapper.cs" />
     <Compile Include="BootStrappers\UnityBootStrapper.cs" />
-    <Compile Include="Business\BetListManager.cs" />
     <Compile Include="Business\ExchangeManager.cs" />
     <Compile Include="Business\MatchManager.cs" />
-    <Compile Include="Entity\BetlistBase.cs" />
-    <Compile Include="Entity\BetMonitor.cs" />
-    <Compile Include="Entity\BASportEvent.cs" />
-    <Compile Include="Entity\SportEvent.cs" />
     <Compile Include="Business\TableManager.cs" />
     <Compile Include="DAO\BetListDAO.cs" />
     <Compile Include="DAO\DataAccess.cs" />
@@ -130,7 +121,6 @@
     <Compile Include="DAO\LogDAO.cs" />
     <Compile Include="Data\AbstractModel.cs" />
     <Compile Include="Data\IDataModel.cs" />
-    <Compile Include="Entity\BetListDetail.cs" />
     <Compile Include="Entity\BetType.cs" />
     <Compile Include="Entity\Exchange.cs" />
     <Compile Include="Entity\IpVn.cs" />
