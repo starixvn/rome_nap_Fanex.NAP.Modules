@@ -260,7 +260,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
                 {
                     CustId = custId,
                     Disable = custInfoIBC.GeneralInfo.GoldDeluxeDisabled,
-                    EnableDownlines = false,
                     ActorId = actorId,
                     SubAccId = 0,
                     Ip = ipAddress
