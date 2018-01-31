@@ -5,13 +5,9 @@ using Fanex.Tarus.Security.Services;
 
 namespace Fanex.Tarus.Web.Controllers.Filters
 {
+    using Sunplus.Accounting.Core.Common;
     using System.Web.Mvc;
     using System.Web.Routing;
-
-    using Fanex.Tarus.Business.Implement;
-    using Fanex.Tarus.Business.Interface;
-
-    using Sunplus.Accounting.Core.Common;
 
     public class AuthenticateRead: FilterAttribute, IActionFilter
     {

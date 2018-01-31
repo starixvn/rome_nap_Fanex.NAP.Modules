@@ -10,11 +10,9 @@
 
 namespace Sunplus.Accounting.DataAccess.IBCClient
 {
-    using System;
-    using System.Collections;
-    using System.Web;
     using DNAide.Core;
     using DNAide.Data;
+    using Entities;
     using Fanex.Data;
     using Fanex.Tarus.Infrastructure.Extensions;
     using IBCUtils;
@@ -22,7 +20,9 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
     using Sunplus.Accounting.Core.Helper;
-    using Sunplus.Accounting.Entities;
+    using System;
+    using System.Collections;
+    using System.Web;
 
     /// <summary>
     /// Position Taking Provider Client.

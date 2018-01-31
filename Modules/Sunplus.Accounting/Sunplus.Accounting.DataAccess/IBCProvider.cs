@@ -2,7 +2,6 @@
 using Sunplus.Accounting.DataAccess.Provider.ExchangeRate;
 using Sunplus.Accounting.DataAccess.Provider.ExportStatement;
 using Sunplus.Accounting.DataAccess.Provider.Report;
-using Sunplus.Accounting.DataAccess.Provider.Settle;
 
 namespace Sunplus.Accounting.DataAccess
 {
@@ -33,16 +32,6 @@ namespace Sunplus.Accounting.DataAccess
             get { return UtilsProvider.Instance; }
         }
 
-        public static SettleProvider Settle
-        {
-            get { return SettleProvider.Instance(); }
-        }
-
-        public static FIWLProvider FIWLDetails
-        {
-            get { return FIWLProvider.Instance(); }
-        }
-
         public static ExChangeRateProvider ExChangeRate
         {
             get { return ExChangeRateProvider.Instance(); }
@@ -57,5 +46,6 @@ namespace Sunplus.Accounting.DataAccess
         {
             get { return ReportProvider.Instance; }
         }
+
     }
 }

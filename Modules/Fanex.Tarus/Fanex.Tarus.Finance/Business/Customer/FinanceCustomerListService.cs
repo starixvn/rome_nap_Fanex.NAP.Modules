@@ -57,8 +57,6 @@ namespace Fanex.Tarus.Finance.Business.Customer
                 status = "Suspended";
             else status = "Open";
 
-            var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
-
             var custInfo = new CustomerInfo
             {
                 Id = CastAide.AsInt64(row["custid"]),
@@ -71,10 +69,8 @@ namespace Fanex.Tarus.Finance.Business.Customer
                 Type = "Super",
                 RoleId = CastAide.AsInt32(row["roleid"]),
                 ParentId = 0,
-                IsAgent = 0,
-                DisabledHR = WebSettings.disabledHR,
+                IsAgent = 0,          
                 DisableCS = WebSettings.disableCS,
-                DisabledFI = WebSettings.disabledFI,
             };
             if (custInfo.RoleId == 2)
             {

@@ -11,7 +11,7 @@ namespace Sunplus.Accounting.Core.Configurations
         }
 
         [ConfigurationProperty("Transaction", IsDefaultCollection = false)]
-        [ConfigurationCollection(typeof(BACollection),
+        [ConfigurationCollection(typeof(TransactionCollection),
             AddItemName = "add",
             ClearItemsName = "clear",
             RemoveItemName = "remove")]

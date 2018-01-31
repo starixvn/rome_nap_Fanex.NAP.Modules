@@ -2,7 +2,6 @@
 using Fanex.Tarus.Entities.Customer.DepositCustomer;
 using Sunplus.Accounting.Entities;
 using System.Collections.Generic;
-using Sunplus.Accounting.Entities.BetAggregator;
 
 namespace Fanex.Tarus.Business.Interface.Customer
 {

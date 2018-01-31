@@ -227,12 +227,7 @@ namespace Sunplus.Accounting.Core.Web
             return (returnValue == null) ? defaultValue : returnValue;
         }
 
-        #endregion Load template
-
-        public static bool visibleP2P()
-        {
-            return CastAide.AsBoolean(PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"].Value);
-        }
+        #endregion Load template      
 
         public static bool enableVirtualSport()
         {
