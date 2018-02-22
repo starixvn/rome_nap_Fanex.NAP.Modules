@@ -98,6 +98,10 @@
       <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.0.11\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.8\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -141,6 +145,7 @@
     <Compile Include="DataAccess\IExchangeRateAccess.cs" />
     <Compile Include="Entities\CurrencyDetail.cs" />
     <Compile Include="Entities\ExchangeDaily.cs" />
+    <Compile Include="Entities\PJUnitPrice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
