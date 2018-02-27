@@ -7,6 +7,7 @@
     using Models;
     using Resources;
     using Services;
+    using ViewModels;
 
     public class RNGCasinoBetListController : BaseController
     {
@@ -54,6 +55,13 @@
             ViewBag.ProductName = BetListResources.FishingWorld;
             var result = _rngCasinoService.GetResultCriteria(criteria, Session[Session.SessionID + "_LANGUAGE"].ToString());
             return View("~/Areas/RNGCasino/Views/HandHistory_API/Index.cshtml", result);
+        }
+
+        public ActionResult JackpotDetails(GetJackpotDetailsCriteria criteria)
+        {
+            var result = _rngCasinoService.JackpotDetails(criteria);
+
+            return View("~/Areas/RNGCasino/Views/BetDetails/Jackpot.cshtml", new JackpotDetailsViewModel { TicketDetails = result });
         }
 
         [NonAction]

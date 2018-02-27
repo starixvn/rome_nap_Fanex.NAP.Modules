@@ -87,6 +87,20 @@
             return Enumerable.Empty<TicketDetail>();
         }
 
+        public IEnumerable<TicketDetail> GetJackpotDetails(long transId, int custId, int betType)
+        {
+            var criteria = new GetJackpotDetailsCriteria
+            {
+                TransId = transId,
+                CustId = custId,
+                BetType = betType
+            };
+
+            var repository = new RNGCasinoRepository();
+
+            return repository.JackpotDetails(criteria).Select(t => new TicketDetail { Ticket = t });
+        }
+
         public void Export(IEnumerable<TicketDetail> ticketDetails, Stream stream, int sportType)
         {
             short excelColumns = 10;
@@ -259,6 +273,6 @@
             return repository.BetDetails(criteria);
         }
 
-        #endregion
+        #endregion Get Data functions
     }
 }

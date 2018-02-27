@@ -68,6 +68,11 @@
             Justification = "Reviewed. Suppression is OK here.")]
         public string StatusRefNo(TicketDetail ticketDetail)
         {
+            if (IsJackpotContribution(ticketDetail.Ticket.BetTypeId))
+            {
+                return "<div class=\"bl_status c\"> - </div>";
+            }
+
             if (IsFishingWorld(ticketDetail.Ticket.SportTypeId))
             {
                 return GetFishingWorldStatus(ticketDetail);
@@ -90,7 +95,7 @@
                     ticketDetail.Ticket.SportTypeId + "," +
                     "'" + (ticketDetail.Ticket.BetCheck ?? string.Empty) + "'," +
                     "'" + ticketDetail.Ticket.WinlostDate.ToShortFormatedDate() + "')";
-                statusLabel = "<div id=\"rngcasino_brokengame_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + viewBrokenGame 
+                statusLabel = "<div id=\"rngcasino_brokengame_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + viewBrokenGame
                     + "\" class=\"viewbrokengame-link\">" + status.ToUpper() + "</div>";
             }
             else
@@ -156,5 +161,8 @@
                  "<br />";
             return statusLabel + resultLink1;
         }
+
+        public bool IsJackpotContribution(int betType)
+            => betType == 2198 || betType == 2398 || betType == 2998;
     }
 }

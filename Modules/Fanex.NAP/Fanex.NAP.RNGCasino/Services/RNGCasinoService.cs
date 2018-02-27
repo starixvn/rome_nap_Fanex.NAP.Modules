@@ -22,6 +22,7 @@
     using Models;
     using Models.HandHistory;
     using Newtonsoft.Json;
+    using NPOI.SS.UserModel;
     using Repositories;
     using Resources;
     using Result.Core.Voidbridge;
@@ -115,9 +116,11 @@
                     case 3:
                         siteId = 3100;
                         break;
+
                     case 2:
                         siteId = 3000;
                         break;
+
                     default:
                         break;
                 }
@@ -149,6 +152,7 @@
                     case 3:
                         siteId = 3100;
                         break;
+
                     case 2:
                         siteId = 3000;
                         break;
@@ -240,21 +244,28 @@
             {
                 case "en-US":
                     return "en";
+
                 case "zh-TW":
                     // Traditional
                     return "ch";
+
                 case "zh-CN":
                     // Simplified
                     return "cs";
+
                 case "ja-JP":
                     return "jp";
+
                 case "ko-KR":
                     return "ko";
+
                 case "vi-VN":
                     return "vi";
+
                 case "th-TH":
                     // Thai
                     return "th";
+
                 default:
                     return "en";
             }
@@ -267,13 +278,48 @@
             {
                 case RoleIdConstants.Super:
                     return Converter.ToInt(siteIds[0]);
+
                 case RoleIdConstants.Master:
                     return Converter.ToInt(siteIds[1]);
+
                 case RoleIdConstants.Agent:
                     return Converter.ToInt(siteIds[2]);
+
                 default:
                     return Converter.ToInt(siteIds[0]);
             }
+        }
+
+        public IEnumerable<TicketDetail> JackpotDetails(GetJackpotDetailsCriteria criteria)
+        {
+            var rawData = _rngCasinoRepository.JackpotDetails(criteria);
+            var detailsTickets = new List<TicketDetail>();
+
+            if (rawData != null)
+            {
+                ITicketHelper ticketHelper = new TicketHelper();
+                BetListHTMLFactory factory = new BetListHTMLFactory();
+                BetListHTMLBuilder builder = factory.CreateBuilder();
+                BetListHelper betListHelper = new BetListHelper();
+                GetCachePropertyById funcGetOddsTypeName = CustomerSetting.Module.Core.Services.Impl.CacheRef.GetOddsTypeName;
+
+                List<ITicketData> outputLiveCasino = new List<ITicketData>();
+                foreach (var ticket in rawData)
+                {
+                    var ticketDetail = new TicketDetail();
+                    ticket.CustId = criteria.CustId;
+                    ticketDetail.Ticket = ticket;
+                    ticketHelper.IsShowOddsWithChoice = betListHelper.IsShowOddsWithChoice(ticketDetail.Ticket.BetTypeId);
+                    ticketDetail.TransDateHtml = builder.BuildTrans(ticketDetail.Ticket);
+                    ticketDetail.ChoiceHtml = builder.BuildChoice(ticketDetail.Ticket, ticketHelper, outputLiveCasino, false);
+                    ticketDetail.StakeHtml = BetListExtension.BuildStake(ticketDetail, ref builder);
+                    ticketDetail.OddHtml = builder.BuildOdds(ticketDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
+                    ticketDetail.StatusHtml = betListHelper.StatusRefNo(ticketDetail);
+                    detailsTickets.Add(ticketDetail);
+                }
+            }
+
+            return detailsTickets;
         }
     }
 }
