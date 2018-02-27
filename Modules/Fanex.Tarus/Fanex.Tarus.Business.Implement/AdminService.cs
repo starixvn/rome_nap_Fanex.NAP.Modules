@@ -90,11 +90,14 @@ namespace Fanex.Tarus.Business.Implement
                     });
                 }
             }
-            foreach (var item in menu.SubMenu)
-            {
-                ConvertMenu(item, listTemp, keyWord, menu.Name, serverPath, ancestorMenuId, isReportMenu);
-            }
 
+            if (menu != null && menu.SubMenu != null)
+            {
+                foreach (var item in menu.SubMenu)
+                {
+                    ConvertMenu(item, listTemp, keyWord, menu.Name, serverPath, ancestorMenuId, isReportMenu);
+                }
+            }
         }
         public List<QuickLink> GetSearchMenu(string keyWord, bool isSuggestion, List<MenuBO> listUserMenu, List<MenuBO> listReportMenu)
         {
@@ -114,7 +117,7 @@ namespace Fanex.Tarus.Business.Implement
                 //sort result
                 if (keyWord != "" && listTemp.Count > 1)
                 {
-                    listTemp.Sort(delegate(QuickLink menuA, QuickLink menuB)
+                    listTemp.Sort(delegate (QuickLink menuA, QuickLink menuB)
                     {
                         return menuB.NumOfAppear.CompareTo(menuA.NumOfAppear);
                     });
