@@ -12,8 +12,6 @@ namespace Fanex.BetList.Accounting.Services
     using Fanex.BetList.Accounting.Criteria;
     using Fanex.BetList.Accounting.Extensions;
     using Fanex.BetList.Accounting.Models;
-    using Fanex.BetList.Accounting.Resources;
-    using Fanex.BetList.Age.BetListExcelBuilderExt;
     using Fanex.BetList.Core.Builder;
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
@@ -230,7 +228,8 @@ namespace Fanex.BetList.Accounting.Services
 
                     if (tickets.Count > 0)
                     {
-                        builder.AddFooter(tickets, false, 8);
+                        builder.AddFooterHeader(isShowMember: false);
+                        builder.AddFooter(new Footer(tickets), false, 8);
                     }
 
                     MemoryStream ms = new MemoryStream();

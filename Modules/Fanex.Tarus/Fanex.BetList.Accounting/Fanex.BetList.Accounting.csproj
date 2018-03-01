@@ -62,10 +62,6 @@
       <HintPath>..\..\..\packages\Fanex.BetList.AGCasino.1.0.0.4\lib\net40\Fanex.BetList.AGCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Age, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.BetList.Age.1.0.0.0\lib\net40\Fanex.BetList.Age.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.BetList.Allbet, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.BetList.Allbet.1.0.0.8\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
       <Private>True</Private>
@@ -336,11 +332,19 @@
   <ItemGroup>
     <Compile Include="App_GlobalResources\BetList.Designer.cs" />
     <Compile Include="BetListAreaRegistration.cs" />
+    <Compile Include="Builders\PTComm\PTComm.cs" />
+    <Compile Include="Builders\PTComm\PTComm2198.cs" />
+    <Compile Include="Builders\PTComm\PTComm33.cs" />
+    <Compile Include="Builders\PTComm\PTComm500.cs" />
+    <Compile Include="Builders\PTComm\PTComm501.cs" />
+    <Compile Include="Builders\PTComm\PTComm71.cs" />
+    <Compile Include="Builders\PTComm\PTCommFactory.cs" />
     <Compile Include="Constants\BetListConstants.cs" />
     <Compile Include="Constants\BetTypeContants.cs" />
     <Compile Include="Constants\CommonConstants.cs" />
     <Compile Include="Constants\CurrencyContants.cs" />
     <Compile Include="Constants\DateTimeFormatConstants.cs" />
+    <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Constants\ScoreStatusConstants.cs" />
     <Compile Include="Constants\SportContants.cs" />
     <Compile Include="Controllers\ExchangeBetListController.cs" />
@@ -361,6 +365,7 @@
     <Compile Include="Criteria\BetListSystemParlayDetailsCriteria.cs" />
     <Compile Include="Criteria\GetCashOutDetailCriteria.cs" />
     <Compile Include="Criteria\GetLicenseeBonusDetailCriteria.cs" />
+    <Compile Include="Extensions\BetListExcelBuilderExtension.cs" />
     <Compile Include="Extensions\BetListExtension.cs" />
     <Compile Include="Core\BetListHelper.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
@@ -390,6 +395,7 @@
     <Compile Include="Models\Excel\ExcelCell.cs" />
     <Compile Include="Models\Excel\ExcelCellRange.cs" />
     <Compile Include="Models\Excel\MOdds4Cell.cs" />
+    <Compile Include="Models\Footer.cs" />
     <Compile Include="Models\Exchange\ExchangeDetailTicket.cs" />
     <Compile Include="Models\Exchange\ExchangeTicket.cs" />
     <Compile Include="Models\Exchange\ExchangeSummaryTicket.cs" />
@@ -408,6 +414,7 @@
     <Compile Include="Models\IPVNBean.cs" />
     <Compile Include="Models\VirtualHRPopupModel.cs" />
     <Compile Include="Models\VirtualTennisModel.cs" />
+    <Compile Include="Models\WinLossModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ExchangeBetListRepository.cs" />
     <Compile Include="Repositories\BetListDetailRepository.cs" />

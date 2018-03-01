@@ -4,8 +4,8 @@
     using System.IO;
     using System.Linq;
     using Fanex.BetList.Accounting.Constants;
+    using Fanex.BetList.Accounting.Extensions;
     using Fanex.BetList.Accounting.Models;
-    using Fanex.BetList.Age.BetListExcelBuilderExt;
     using Fanex.BetList.Core.Builder;
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
@@ -132,9 +132,9 @@
                         .AddStake(ticket)
                         .AddWinLoss(ticket)
                         .AddStatus(ticket, ticketHelper, ticketData, true)
-                        .AddSuperPT(ticket, ticketData)
-                        .AddMasterPT(ticket, ticketData)
-                        .AddAgentPT(ticket, ticketData);
+                        .AddPTComm(ticket, ticketData, RoleIdConstants.Super)
+                        .AddPTComm(ticket, ticketData, RoleIdConstants.Master)
+                        .AddPTComm(ticket, ticketData, RoleIdConstants.Agent);
                 }
             }
             else

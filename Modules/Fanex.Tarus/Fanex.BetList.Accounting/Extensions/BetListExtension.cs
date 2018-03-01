@@ -19,7 +19,6 @@ namespace Fanex.BetList.Accounting.Extensions
     using Fanex.BetList.Core.Entities;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
-    using NPOI.SS.Util;
 
     /// <summary>
     /// TODO: Update summary.
@@ -187,43 +186,6 @@ namespace Fanex.BetList.Accounting.Extensions
         }
 
         /// <summary>
-        /// Add footer for excel file.
-        /// </summary>
-        /// <param name="factory">Factory object Excel builder.</param>
-        /// <param name="betlistDetail">Object bet list details.</param>
-        /// <returns>Return object Bet list excel builder.</returns>
-        public static BetListExcelBuilder AddFooter(
-            this BetListExcelBuilder factory,
-            BetListDetail betlistDetail)
-        {
-            ICellStyle style = factory.CreateCellStyle();
-            style.CloneStyleFrom(factory.OddCellStyle);
-            style.FillForegroundColor = (short)47;
-            style.Alignment = HorizontalAlignment.Right;
-            style.VerticalAlignment = VerticalAlignment.Center;
-            style.BorderTop = BorderStyle.Thin;
-            style.BorderLeft = BorderStyle.Thin;
-            style.BorderBottom = BorderStyle.Thin;
-            style.SetFont(factory.RTFHelper.PosFont);
-
-            factory.AddCell(new HSSFRichTextString("Total"), style);
-            factory.AddCell(new HSSFRichTextString("Total"), style);
-            factory.AddCell(new HSSFRichTextString("Total"), style);
-            factory.AddCell(new HSSFRichTextString("Total"), style);
-            factory.AddCell(new HSSFRichTextString("Total"), style);
-
-            CellRangeAddress cellRange = new CellRangeAddress(factory.LastContentRow, factory.LastContentRow, 0, 4);
-
-            factory.AddCell(new HSSFRichTextString("\n" + betlistDetail.TotalWinLoss.Format(2) + "\n"), style);
-            factory.AddCell(new HSSFRichTextString("\n" + betlistDetail.TotalLicenseeWinLoss.Format(2) + "\n"), style);
-            factory.AddCell(new HSSFRichTextString(string.Empty), style);
-
-            factory.MergeCell(cellRange, style);
-
-            return factory;
-        }
-
-        /// <summary>
         /// Set value for cell in excel file.
         /// </summary>
         /// <param name="factory">Factory object Excel builder.</param>
@@ -254,64 +216,5 @@ namespace Fanex.BetList.Accounting.Extensions
 
             return factory;
         }
-
-        #region For Cash Out
-
-        private static string BuildCashOutStatus(ITicket ticket)
-        {
-            string statusLabel = string.Empty;
-            string upperStatus = ticket.Status.ToUpperInvariant();
-
-            if (ticket.BetTypeId == BetTypeContants.CashOut)
-            {
-                statusLabel = BuildCashOutStatus(ticket, BetListResources.CashOut, upperStatus);
-            }
-            else if (ticket.BetTypeId == BetTypeContants.CashOutBought)
-            {
-                statusLabel = BuildCashOutStatus(ticket, BetListResources.Bought, upperStatus);
-            }
-            else if (IsCashOutOriginalTicket(ticket))
-            {
-                if (upperStatus != "VOID" && upperStatus != "REFUND")
-                {
-                    statusLabel = BuildCashOutStatus(ticket, BetListResources.CashOut);
-                }
-            }
-
-            return statusLabel;
-        }
-
-        private static string BuildCashOutStatus(ITicket ticket, string cashOutLabel, string upperStatus = null)
-        {
-            string statusLabel = string.Empty;
-
-            if (upperStatus == null || upperStatus == "WON" || upperStatus == "LOSE" || upperStatus == "DRAW")
-            {
-                statusLabel = cashOutLabel;
-            }
-            else if (upperStatus == "VOID" || upperStatus == "REFUND")
-            {
-                statusLabel = string.Format("{0}\n({1})", upperStatus, cashOutLabel);
-            }
-
-            return statusLabel;
-        }
-
-        private static bool IsCashOutOriginalTicket(ITicket ticket)
-        {
-            return ticket.BetdaqId == 0 && ticket.Stake == 0 && HasCashOutExtraInfo(ticket.ExtraInfo);
-        }
-
-        private static bool HasCashOutExtraInfo(string extraInfo)
-        {
-            if (!string.IsNullOrEmpty(extraInfo))
-            {
-                return extraInfo.Trim().StartsWith("<p25 ");
-            }
-
-            return false;
-        }
-
-        #endregion
     }
 }
