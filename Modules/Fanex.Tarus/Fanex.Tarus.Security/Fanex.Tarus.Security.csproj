@@ -95,6 +95,10 @@
       <HintPath>..\..\..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.ProductStatus.Setting.1.0.0-beta06\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
       <Private>True</Private>
@@ -187,11 +191,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authenticate\ControllerContextExtensions.cs" />
     <Compile Include="Authenticate\AuthorizeFunctionsAttribute.cs" />
     <Compile Include="Authenticate\CustomerSettingAttribute.cs" />
     <Compile Include="Authenticate\CustomerSettingRenovation\CustomerSettingClientRegistration.cs" />
     <Compile Include="Authenticate\CustomerSettingRenovation\SettingMatrixClientRegistration.cs" />
     <Compile Include="Authenticate\GoldDeluxe\GoldDeluxeAuthorizationService.cs" />
+    <Compile Include="Authenticate\ProductStatus\ProductStatusAuthorizeService.cs" />
+    <Compile Include="Authenticate\ProductStatus\ProductStatusUser.cs" />
     <Compile Include="Authenticate\SmartPunterAttribute.cs" />
     <Compile Include="Criteria\CheckSmartPunterCriteria.cs" />
     <Compile Include="Criteria\CheckDummyAccountCriteria.cs" />
@@ -214,6 +221,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
