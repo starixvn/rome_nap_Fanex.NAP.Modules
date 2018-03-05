@@ -24,10 +24,8 @@ namespace Sunplus.Accounting.Core.Configurations
         private static readonly string _getCountry;
         private static readonly string _virtualDir;
         private static readonly bool _isSslLogin;
-        private static readonly bool _disabledFI;
         
         private static readonly bool _disableAutoM;
-        private static readonly bool _disableAutoMasterFI;
         private static readonly bool _disableCS;
         private static readonly bool _disableOR;
         private static readonly bool _disableInternal;
@@ -72,18 +70,14 @@ namespace Sunplus.Accounting.Core.Configurations
                 _theme = ConfigurationManager.AppSettings["theme"];
                 _themePath = "App_Themes/" + _theme;
                 _calendarTheme = ConfigurationManager.AppSettings["CalendarTheme"];
-
                 _virtualDir = ConfigurationManager.AppSettings["VirtualDir"];
                 _internalAgentUrl = ConfigurationManager.AppSettings["int_agent_url"];
                 _internalAgentUMToken = ConfigurationManager.AppSettings["int_agent_UMToken"];
                 _directBAUrl = ConfigurationManager.AppSettings["link_BA_url"];
                 _getCountry = ConfigurationManager.AppSettings["link_Country_url"];
                 _ipvnreplace = ConfigurationManager.AppSettings["ipvnreplace"];
-                _isSslLogin = (ConfigurationManager.AppSettings["ssl_login"] == "1");
-
-                _disabledFI = (ConfigurationManager.AppSettings["disabledFI"] == "1");
-                _disableAutoM = (ConfigurationManager.AppSettings["disableAutoMaster"] == "1");
-                _disableAutoMasterFI = (ConfigurationManager.AppSettings["disableAutoMasterFI"] == "1");
+                _isSslLogin = (ConfigurationManager.AppSettings["ssl_login"] == "1");            
+                _disableAutoM = (ConfigurationManager.AppSettings["disableAutoMaster"] == "1");               
                 _disableCS = (ConfigurationManager.AppSettings["disabledCS"] == "1");
                 _disableOR = (ConfigurationManager.AppSettings["disabledOR"] == "1");
                 _Disable1x2Comm = (ConfigurationManager.AppSettings["disable1x2Comm"] == "1");
@@ -198,20 +192,10 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return (ConfigurationManager.AppSettings["LocalTest"] == "1"); }
         }
 
-        public static bool disabledFI
-        {
-            get { return _disabledFI; }
-        }
-
         public static bool disableAutoM
         {
             get { return _disableAutoM; }
-        }
-
-        public static bool disableAutoMasterFI
-        {
-            get { return _disableAutoMasterFI; }
-        }
+        }       
 
         public static bool disableCS
         {
