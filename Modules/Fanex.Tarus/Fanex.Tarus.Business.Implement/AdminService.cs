@@ -117,7 +117,7 @@ namespace Fanex.Tarus.Business.Implement
                 //sort result
                 if (keyWord != "" && listTemp.Count > 1)
                 {
-                    listTemp.Sort(delegate (QuickLink menuA, QuickLink menuB)
+                    listTemp.Sort(delegate(QuickLink menuA, QuickLink menuB)
                     {
                         return menuB.NumOfAppear.CompareTo(menuA.NumOfAppear);
                     });
