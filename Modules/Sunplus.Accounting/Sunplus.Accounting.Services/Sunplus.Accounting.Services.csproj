@@ -88,8 +88,8 @@
       <HintPath>..\..\..\packages\Fanex.Logging.Extensions.Web.1.0.5\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Module.NG2, Version=1.0.1.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Module.NG2.NAP.1.0.1.4\lib\net40\Fanex.Module.NG2.dll</HintPath>
+    <Reference Include="Fanex.Module.NG2, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Module.NG2.NAP.1.0.1.5\lib\net40\Fanex.Module.NG2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
@@ -100,8 +100,8 @@
       <HintPath>..\..\..\packages\Fanex.Tarus.DataAccess.Implement.1.0.0.6\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.0.5\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.0.7\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
@@ -165,7 +165,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="ONEbook.NG2.API, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ONEbook.NG2.API.NAP.1.0.0.4-logging\lib\net40\ONEbook.NG2.API.dll</HintPath>
+      <HintPath>..\..\..\packages\ONEbook.NG2.API.NAP.1.0.0.4\lib\net40\ONEbook.NG2.API.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RabbitMQ.Client, Version=3.5.7.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
@@ -189,7 +189,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.11-RemoveModuleLog\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.11\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Bingo.Core, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
