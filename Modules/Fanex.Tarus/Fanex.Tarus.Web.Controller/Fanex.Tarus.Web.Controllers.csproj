@@ -112,8 +112,8 @@
       <HintPath>..\..\..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Business.Implement.1.0.0.6\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Tarus.Business.Implement.1.0.0.10\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Business.Interface, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
@@ -124,8 +124,8 @@
       <HintPath>..\..\..\packages\Fanex.Tarus.Entities.1.0.0.5\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.0.5\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.0.7\lib\net40\Fanex.Tarus.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
@@ -197,12 +197,12 @@
       <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.0.9\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.8\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.11\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Services.1.0.0.2\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Services, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Services.1.0.0.5\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
@@ -271,8 +271,8 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ThirdPartyProducts.StatusSetting.1.0.1.6\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
+    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ThirdPartyProducts.StatusSetting.1.0.1.8\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
