@@ -14,6 +14,8 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
     using Data;
     using DNAide.Core;
     using Entities;
+    using Sunplus.Accounting.Core.Common;
+    using Sunplus.Accounting.Core.Helper;
     using Sunplus.Accounting.Entities;
 
     /// <summary>
@@ -57,15 +59,18 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
             return pjUnitPrices;
         }
 
-        public Result UpdatePJUnitPrice(int userId, int currenctyId, decimal pjUnitPrice)
+        public Result UpdatePJUnitPrice(int currenctyId, decimal pjUnitPrice)
         {
-            var param = new Hashtable();
-            param.Add("UserId", userId);
-            param.Add("CurrencyId", currenctyId);
-            param.Add("PJUnitPrice", pjUnitPrice);
-
             using (var objDB = new ObjectDb("PJUnitPriceUpd"))
             {
+                var param = new Hashtable();
+                param.Add("userid", AppSession.AccId);
+                param.Add("currencyid", currenctyId);
+                param.Add("pjunitprice", pjUnitPrice);
+                param.Add("ip", Utils.GetClientIP());
+                param.Add("errcode", 0);
+                param.Add("errmsg", string.Empty);
+
                 objDB.AssignParamValues(param);
                 objDB.ExecuteNonQuery();
 

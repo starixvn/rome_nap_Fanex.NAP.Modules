@@ -8,10 +8,8 @@
 namespace Fanex.Tarus.ExchangeRate.Business
 {
     using System.Collections.Generic;
-
+    using Entities;
     using ExcelUtil.Spreadsheet;
-
-    using Fanex.Tarus.ExchangeRate.Entities;
     using Sunplus.Accounting.Entities;
 
     /// <summary>
@@ -20,9 +18,14 @@ namespace Fanex.Tarus.ExchangeRate.Business
     public interface IExchangeRateService
     {
         List<ExchangeDailyDTO> GetOandaExchangeDaily(string fromDate, string toDate);
+
         ExcelFile ExportExcelExDailyOanda(string fdate, string tdate);
+
         IEnumerable<PJUnitPrice> GetPJUnitPrices();
-        Result UpdatePJUnitPrice(int userId, int currencyId, decimal pjUnitPrice);
+
+        Result UpdatePJUnitPrice(int currencyId, decimal pjUnitPrice);
+
+        ExcelFile ExportExcelPJUnitPrice();
     }
 
 }

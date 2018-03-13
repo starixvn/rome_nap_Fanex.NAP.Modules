@@ -233,7 +233,76 @@ namespace Fanex.Tarus.ExchangeRate.Business
         public IEnumerable<PJUnitPrice> GetPJUnitPrices()
             => _exchangeRateAccess.GetPJUnitPrices();
 
-        public Result UpdatePJUnitPrice(int userId, int currencyId, decimal pjUnitPrice)
-            => _exchangeRateAccess.UpdatePJUnitPrice(userId, currencyId, pjUnitPrice);
+        public Result UpdatePJUnitPrice(int currencyId, decimal pjUnitPrice)
+            => _exchangeRateAccess.UpdatePJUnitPrice(currencyId, pjUnitPrice);
+
+        public ExcelFile ExportExcelPJUnitPrice()
+        {
+            var exelFile = new ExcelFile();
+
+            var pjUnitPrice = exelFile.Worksheets.Add("PJUnitPrice");
+            var bgFormat = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+            var startRowIndex = 0;
+            var startColumnIndex = 0;
+
+            var titleCell = pjUnitPrice.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex, 2);
+            titleCell.Merged = true;
+            titleCell.Style = bgFormat;
+            titleCell.Value = "PJUnitPrice";
+
+            startRowIndex += 1;
+            pjUnitPrice.Cells[1, 0].Value = "Currency";
+            pjUnitPrice.Cells[1, 0].Style = bgFormat;
+
+            startColumnIndex += 1;
+            pjUnitPrice.Cells[1, 1].Value = "Standard Code";
+            pjUnitPrice.Cells[1, 1].Style = bgFormat;
+
+            startColumnIndex += 1;
+            pjUnitPrice.Cells[1, 2].Value = "PJUnitPrice";
+            pjUnitPrice.Cells[1, 2].Style = bgFormat;
+
+            pjUnitPrice.Columns[0].Width = 200 * 20;
+            pjUnitPrice.Columns[1].Width = 200 * 20;
+            pjUnitPrice.Columns[2].Width = 200 * 20;
+
+            var style = new CellStyle();
+            style.VerticalAlignment = VerticalAlignmentStyle.Center;
+            style.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
+            style.Font.Name = "Tahoma";
+            style.Font.Size = 160;
+
+            var pjUnitPrices = GetPJUnitPrices();
+            if (pjUnitPrices.Any())
+            {
+
+                foreach (var unitPrice in pjUnitPrices)
+                {
+                    startRowIndex++;
+
+                    pjUnitPrice.Cells[startRowIndex, 0].Value = unitPrice.Currency;
+                    pjUnitPrice.Cells[startRowIndex, 0].Style = style;
+
+                    pjUnitPrice.Cells[startRowIndex, 1].Value = unitPrice.StandardCode;
+                    pjUnitPrice.Cells[startRowIndex, 1].Style = style;
+
+                    pjUnitPrice.Cells[startRowIndex, 2].Value = unitPrice.UnitPrice;
+                    pjUnitPrice.Cells[startRowIndex, 2].Style = style;
+                }
+            }
+            else
+            {
+                startRowIndex += 1;
+                startColumnIndex = 0;
+                var groupCell = pjUnitPrice.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex, 2);
+                bgFormat = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils().GetStyleIntNumber("", Color.FromArgb(255, 255, 255), false, true);
+                groupCell.Merged = true;
+                groupCell.Style = bgFormat;
+                groupCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                groupCell.Value = "There is no information available.";
+            }
+
+            return exelFile;
+        }
     }
 }

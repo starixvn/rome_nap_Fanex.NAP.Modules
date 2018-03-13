@@ -72,7 +72,20 @@ namespace Fanex.Tarus.ExchangeRate.Controller
         }
 
         [HttpPost, AuthenticateHost]
-        public JsonResult EditPJUnitPrice(int userId, int currencyId, decimal pjUnitPrice)
-            => Json(_exchangeRateService.UpdatePJUnitPrice(userId, currencyId, pjUnitPrice));
+        public JsonResult EditPJUnitPrice(int currencyId, decimal pjUnitPrice)
+            => Json(_exchangeRateService.UpdatePJUnitPrice(currencyId, pjUnitPrice));
+
+        [AuthenticateRead]
+        public ActionResult ExportExcelPJUnitPrice()
+        {
+            var excel = _exchangeRateService.ExportExcelPJUnitPrice();
+
+            Response.Clear();
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", "PJUnitPrice"));
+            excel.SaveXls(Response.OutputStream);
+
+            return new EmptyResult();
+        }
     }
 }

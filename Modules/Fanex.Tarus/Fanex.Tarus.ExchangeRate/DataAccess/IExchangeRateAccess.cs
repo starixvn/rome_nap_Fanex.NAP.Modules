@@ -13,6 +13,6 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
 
         IEnumerable<PJUnitPrice> GetPJUnitPrices();
 
-        Result UpdatePJUnitPrice(int userId, int currenctyId, decimal pjUnitPrice);
+        Result UpdatePJUnitPrice(int currenctyId, decimal pjUnitPrice);
     }
 }
