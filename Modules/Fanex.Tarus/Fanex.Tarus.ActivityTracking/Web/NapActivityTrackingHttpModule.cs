@@ -7,7 +7,7 @@
     public class NapActivityTrackingHttpModule : ActivityTrackingHttpModule
     {
         public NapActivityTrackingHttpModule()
-            : base(new NapUserSession(), new RequestAnalyzer())
+            : base(new NapUserSession(), new RequestAnalyzer(), new JsonConverter())
         {
         }
     }

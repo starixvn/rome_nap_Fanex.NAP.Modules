@@ -96,9 +96,9 @@ namespace Fanex.Tarus.Business.Implement
                 {
                     ConvertMenu(item, listTemp, keyWord, menu.Name, serverPath, ancestorMenuId, isReportMenu);
                 }
-                }
             }
         }
+
         public List<QuickLink> GetSearchMenu(string keyWord, bool isSuggestion, List<MenuBO> listUserMenu, List<MenuBO> listReportMenu)
         {
             List<QuickLink> listTemp = new List<QuickLink>();
