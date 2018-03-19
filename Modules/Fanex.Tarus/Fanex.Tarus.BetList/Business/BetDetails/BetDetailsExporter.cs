@@ -20,6 +20,7 @@
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using Resources;
+    using Fanex.BetList.Age.BetListExcelBuilderExt;
 
     public class BetDetailsExporter : IBetDetailsExporter
     {
@@ -132,9 +133,9 @@
                         .AddStake(ticket)
                         .AddWinLoss(ticket)
                         .AddStatus(ticket, ticketHelper, ticketData, true)
-                        .AddPTComm(ticket, ticketData, RoleIdConstants.Super)
-                        .AddPTComm(ticket, ticketData, RoleIdConstants.Master)
-                        .AddPTComm(ticket, ticketData, RoleIdConstants.Agent);
+                        .AddSuperPT(ticket, ticketData)
+                        .AddMasterPT(ticket, ticketData)
+                        .AddAgentPT(ticket, ticketData);
                 }
             }
             else

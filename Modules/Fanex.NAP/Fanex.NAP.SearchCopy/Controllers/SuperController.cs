@@ -295,6 +295,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
                         customer.MobilePhone,
                         customer.Fax,
                         customer.CurrencyId,
+                        customer.EnableJackpot,
                         DateTime.Now,
                         customer.IP,
                         customer.Creator,
@@ -364,25 +365,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
                 var winLimit = winLimitService.GetMemberWinLimit(customer.ExistingCustId);
 
                 //bool isEnableCasino = !custInfo.CasinoDisabled || !custInfo.CasinoSync;
-
-                var casinoApiCustomer = new CasinoLibrary.SBAgent.Customer();
-                if (custInfo.GeneralInfo.CasinoSync)
-                {
-                    casinoApiCustomer.UpdateMaxTransferMisc(
-                      custInfo.GeneralInfo.IBCCustID,
-                      customer.DisableCasino,
-                      true,
-                       true,
-                       (decimal)winLimit.MaximumLossLimit,
-                        custInfo.GeneralInfo.IsAutoReset,
-                        false,
-                        customer.IP,
-                        customer.Creator,
-                        customer.CreatorName,
-                        AppSession.CurrentSession.FromSystem
-                    );
-                }
-
+                
                 var settingModel = casinoManager.MemberCasinoModel(customer.ExistingCustId, custInfo.GeneralInfo.UpperCustID);
 
                 casinoManager.UpdateCSStatus(

@@ -404,14 +404,14 @@ namespace Sunplus.Accounting.DataAccess.APIClient
         /// </summary>
         /// <param name="gameKindID">ID of game kind</param>
         /// <returns>List GameTypeDetail</returns>
-        public override List<GameTypeDetail> GetGameType(int gameKindID, string siteName)
+        public override List<GameTypeDetail> GetGameType(int gameKindID, string siteName, int custId, int exchangeId)
         {
             var lsGameType = new List<GameTypeDetail>();
             try
             {
                 var _csBasicInfo = new BasicInfo();
                 _csBasicInfo.SiteName = siteName;
-                DataTable dtGameType = _csBasicInfo.GetGameType(gameKindID);
+                DataTable dtGameType = _csBasicInfo.GetGameType(gameKindID, custId, exchangeId);
                 foreach (DataRow row in dtGameType.Rows)
                 {
                     var gameType = new GameTypeDetail();
@@ -725,31 +725,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
         {
             return original;
         }
-
-        public override bool FullResetMaxTransfer(string listIBCCustID, string FromIP, int ModifyBy,
-                                                  string ModifyByUsername, int FromSystem, string siteName)
-        {
-            bool isResetSuccessfull = true;
-            try
-            {
-                var cust = new Customer();
-                cust.SiteName = siteName;
-                var custIds = listIBCCustID.Split(',');
-                foreach (var custId in custIds)
-                {
-                    isResetSuccessfull = cust.FullSettlementResetMaxTransfer(custId, FromIP, ModifyBy,
-                                                                             ModifyByUsername, FromSystem);
-                }
-            }
-            catch (Exception ex)
-            {
-                // error assigning the datareader value to a property
-                ex.WriteLog();
-            }
-
-            return isResetSuccessfull;
-        }
-
+        
         public override List<ErrorDetail> MoveMaster(string MasterUsername, string SuperUsername, string FromIP,
                                                      int ModifyByUserId, string ModifyByUser, string siteName)
         {

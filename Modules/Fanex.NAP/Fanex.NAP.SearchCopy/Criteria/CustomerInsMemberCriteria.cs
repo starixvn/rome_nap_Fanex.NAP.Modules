@@ -66,6 +66,8 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Criteria
 
         public bool IsSyncNG2 { get; set; }
 
+        public bool EnableJackpot { get; set; }
+
         public override string GetSettingKey()
         {
             return "Acc_CustomerInsMember_CloneSetting_Com";
