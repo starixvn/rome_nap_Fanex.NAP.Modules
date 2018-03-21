@@ -14,10 +14,13 @@ namespace Fanex.Tarus.ExchangeRate.Business
     using System.Drawing;
     using System.Linq;
     using System.Web;
+    using CasinoLibrary.Model.UserException;
+    using CasinoLibrary.SBAgent;
     using DNAide.Core;
     using ExcelUtil.Spreadsheet;
     using Fanex.Tarus.ExchangeRate.DataAccess;
     using Fanex.Tarus.ExchangeRate.Entities;
+    using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.Entities;
 
@@ -234,7 +237,26 @@ namespace Fanex.Tarus.ExchangeRate.Business
             => _exchangeRateAccess.GetPJUnitPrices();
 
         public Result UpdatePJUnitPrice(int currencyId, decimal pjUnitPrice)
-            => _exchangeRateAccess.UpdatePJUnitPrice(currencyId, pjUnitPrice);
+        {
+            var result = _exchangeRateAccess.UpdatePJUnitPrice(currencyId, pjUnitPrice);
+
+            if (result.ErrorCode == 0)
+            {
+                try
+                {
+                    var basicInfo = new BasicInfo();
+                    basicInfo.UpdatePJExchange(Globals.CASINO_GROUP1, currencyId, pjUnitPrice);
+                }
+                catch (ErrorException casinoEx)
+                {
+                    LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
+
+                    return new Result(1, casinoEx.Message);
+                }
+            }
+
+            return result;
+        }
 
         public ExcelFile ExportExcelPJUnitPrice()
         {
