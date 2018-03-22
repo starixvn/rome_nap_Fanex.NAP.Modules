@@ -223,12 +223,6 @@
     <Compile Include="Services\RNGCasinoService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.Toco.Module.Core\_Core.csproj">
-      <Project>{af2e11aa-2a92-47ac-86fa-4d48b0aeb5d7}</Project>
-      <Name>_Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

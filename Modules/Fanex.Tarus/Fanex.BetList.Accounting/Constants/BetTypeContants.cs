@@ -53,7 +53,6 @@ namespace Fanex.BetList.Accounting.Constants
 
         public const int CasinoGames = 71;
         public const int P2P = 72;
-        public const int Bingo = 73;
         public const int P2PGames = 1000;
         public const int Baccarat = 1101;
         public const int Roulette = 1102;

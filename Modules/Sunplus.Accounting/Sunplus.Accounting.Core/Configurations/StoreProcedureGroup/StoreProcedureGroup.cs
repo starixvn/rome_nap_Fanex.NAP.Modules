@@ -48,23 +48,14 @@ namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
             get { return (ExchangeRateSession)base.Sections["ExchangeRate"]; }
         }
 
-        [ConfigurationProperty("Racing", IsDefaultCollection = false)]
-        public RacingSession Racing
-        {
-            get { return (RacingSession)base.Sections["Racing"]; }
-        }
+       
 
         [ConfigurationProperty("Report", IsDefaultCollection = false)]
         public ReportSession Report
         {
             get { return (ReportSession)base.Sections["Report"]; }
         }
-
-        [ConfigurationProperty("Settlement", IsDefaultCollection = false)]
-        public SettlementSession Settlement
-        {
-            get { return (SettlementSession)base.Sections["Settlement"]; }
-        }
+       
 
         [ConfigurationProperty("SportbookPt", IsDefaultCollection = false)]
         public SportbookPtSession SportbookPt

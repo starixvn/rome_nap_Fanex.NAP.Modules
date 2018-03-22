@@ -4,16 +4,15 @@ using Fanex.Tarus.Security.Services;
 
 namespace Fanex.Tarus.Balance.Business
 {
-    using System;
-    using System.Threading;
     using DNAide.Utils;
     using Fanex.Tarus.Balance.Criteria;
     using Fanex.Tarus.Balance.DataAccess;
     using Fanex.Tarus.Balance.Entities;
-    using Fanex.Tarus.Business.Implement;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.Core.Helper;
+    using System;
+    using System.Threading;
 
     public class ResetWinningService : IResetWinningService
     {

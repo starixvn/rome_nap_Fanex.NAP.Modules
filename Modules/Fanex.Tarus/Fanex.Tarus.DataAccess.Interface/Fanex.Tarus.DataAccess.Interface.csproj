@@ -103,8 +103,6 @@
     <Compile Include="IAdminAccess.cs" />
     <Compile Include="IHelperAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Report\ILiveCasinoWinLossAccess.cs" />
-    <Compile Include="Report\IMatchAnalysisAccess.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

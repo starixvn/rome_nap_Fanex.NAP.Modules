@@ -281,139 +281,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         }
 
         /// <summary>
-        /// Update disableHR status for customer
-        /// sp: Acc_CustomerUpdDisableHR
-        /// @phuong.nguyen
-        /// Create date: <2008-10-22>
-        /// </summary>
-        ///<param name="accid"></param>
-        public static void CustomerUpdateDisabledHR(int accid, int custid, bool disabledHR, string Ip, bool isDisableDownline)
-        {
-            try
-            {
-                Hashtable param = new Hashtable();
-                param.Add("userid", accid);
-                param.Add("custid", custid);
-                param.Add("disablehorseracing", disabledHR);
-                param.Add("language", "E");
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
-                param.Add("ip", Ip);
-                param.Add("disabledownline", isDisableDownline);
-
-                var output = new Hashtable();
-
-                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableHR", 600))
-                {
-                    db.AssignParamValues(param);
-                    db.ExecuteNonQuery();
-                    output = db.GetOuputParams();
-                }
-
-                if ((int)output["errcode"] > 0)
-                    throw new AccException(output["errmsg"].ToString());
-            }
-            catch (AccException accException)
-            {
-                throw accException;
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-        }
-
-        /// <summary>
-        /// Update disableOpenTote status for customer
-        /// sp: Acc_CustomerUpdDisableOpenTote
-        /// @huynguyen
-        /// Create date: <2010-04-16>
-        /// </summary>
-        ///<param name="accid"></param>
-        public static void CustomerUpdateDisabledHROpenTote(int accid, int custid, bool disabledHR, string Ip, bool isDisableDownline)
-        {
-            try
-            {
-                Hashtable param = new Hashtable();
-                param.Add("userid", accid);
-                param.Add("custid", custid);
-                param.Add("disableopentote", disabledHR);
-                param.Add("language", "E");
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
-                param.Add("ip", Ip);
-                param.Add("disabledownline", isDisableDownline);
-
-                //DbResult dr = DbHelper.ExecuteCmd("Acc_CustomerUpdDisableOpenTote", param, DBType.MAIN);
-                Hashtable output = new Hashtable();
-                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableOpenTote", 600))
-                {
-                    db.AssignParamValues(param);
-
-                    var ds = db.ExecuteNonQuery();
-                    output = db.GetOuputParams();
-                }
-
-
-                if ((int)output["errcode"] > 0)
-                    throw new AccException(output["errmsg"].ToString());
-            }
-            catch (AccException accException)
-            {
-                throw accException;
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-        }
-
-        /// <summary>
-        /// Update DisabledBingoGame status for customer
-        /// sp: Acc_CustomerUpdDisableOpenTote
-        /// @huynguyen
-        /// Create date: <2010-04-16>
-        /// </summary>
-        ///<param name="accid"></param>
-        public static void CustomerUpdateDisabledBingoGame(int accid, int custid, bool disabledBingo, string Ip, bool isEnabledDownline, bool isSync)
-        {
-            try
-            {
-                using (ObjectDb objDb = new ObjectDb("Acc_UpdBingoStatus", 600))
-                {
-                    Hashtable param = new Hashtable();
-                    param.Add("userid", accid);
-                    param.Add("custid", custid);
-                    param.Add("disabledbingo", disabledBingo);
-                    param.Add("syncbg", isSync);
-                    param.Add("language", "E");
-                    param.Add("errcode", 0);
-                    param.Add("errmsg", string.Empty);
-                    param.Add("loginip", Ip);
-                    param.Add("enabledownline", isEnabledDownline);
-
-                    objDb.AssignParamValues(param);
-
-                    objDb.ExecuteNonQuery();
-
-                    if (CastAide.AsInt32(objDb.GetParameterValue("errcode")) > 0)
-                        throw new AccException(CastAide.AsString(objDb.GetParameterValue("errmsg")));
-                }
-            }
-            catch (AccException accException)
-            {
-                throw accException;
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                throw ex;
-            }
-        }
-
-        /// <summary>
         /// Update DisabledNumberGame status for customer
-        /// sp: Acc_CustomerUpdDisableOpenTote
+        /// sp: Acc_CustomerUpdDisableNumber
         /// @huynguyen
         /// Create date: <2010-04-16>
         /// </summary>
@@ -611,40 +480,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
         }
 
-        public void CustomerUpdateDisabledLiveCasino(int accid, int custid, bool disabledLiveCS, string ip, bool isEnableDownlines)
-        {
-            try
-            {
-                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableLiveCS", 300))
-                {
-                    Hashtable param = new Hashtable();
-                    param.Add("userid", accid);
-                    param.Add("custid", custid);
-                    param.Add("disabledlivecs", disabledLiveCS);
-                    param.Add("language", "E");
-                    param.Add("ip", ip);
-                    param.Add("enabledownlineslivecs", isEnableDownlines);
-                    param.Add("errcode", 0);
-                    param.Add("errmsg", string.Empty);
-
-                    db.AssignParamValues(param);
-                    db.ExecuteNonQuery();
-
-                    if (CastAide.AsInt32(db.GetParameterValue("errcode")) > 0)
-                        throw new AccException(CastAide.AsString(db.GetParameterValue("errmsg")));
-                }
-            }
-            catch (AccException accException)
-            {
-                throw accException;
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-                throw ex;
-            }
-        }
-
         public void CustomerUpdateDisabledVirtualSports(int accid, int custid, bool disabled, string ip, bool isDisableDownlines)
         {
             try
@@ -699,47 +534,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 
                     if (CastAide.AsInt32(db.GetParameterValue("errcode")) > 0)
                         throw new AccException(CastAide.AsString(db.GetParameterValue("errmsg")));
-                }
-            }
-            catch (AccException accException)
-            {
-                throw accException;
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-        }
-
-        public void CustomerUpdateDisableHorseRacingFixedOdds(
-            int userId,
-            int custId,
-            bool isDisable,
-            string ip,
-            bool isDisableDownlines)
-        {
-            try
-            {
-                Hashtable param = new Hashtable();
-                param.Add("userid", userId);
-                param.Add("custid", custId);
-                param.Add("disablehrfixedodds", isDisable);
-                param.Add("enabledownlineshrfixedodds", !isDisableDownlines);
-                param.Add("language", "E");
-                param.Add("ip", ip);
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
-
-                using (ObjectDb db = new ObjectDb("LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds", 120))
-                {
-                    db.AssignParamValues(param);
-                    db.ExecuteNonQuery();
-                    var errorCode = CastAide.AsInt32(db.GetParameterValue("errcode"));
-                    var errorMessage = CastAide.AsString(db.GetParameterValue("errmsg"));
-                    if (errorCode > 0)
-                    {
-                        throw new AccException(errorMessage);
-                    }
                 }
             }
             catch (AccException accException)

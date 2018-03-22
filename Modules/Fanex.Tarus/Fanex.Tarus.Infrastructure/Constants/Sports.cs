@@ -10,10 +10,8 @@ namespace Fanex.Tarus.Infrastructure.Constants
         public const int OtherSports = 99;
 
         public const int Soccer = 1;
-        public const int HorseRacing = 151;
         public const int Financials = 201;
         public const int Casino = 251;
-        public const int BingoGame = 252;
         public const int Games = 253;
 
         public const int Motorsports = 99;
@@ -21,7 +19,6 @@ namespace Fanex.Tarus.Infrastructure.Constants
 
         public const int OtherSports_2h = 2;
         public const int NumberGame = 161;
-        public const int LiveCasino = 162;
 
         public const int Basketball = 2;
         public const int Netball = 32;

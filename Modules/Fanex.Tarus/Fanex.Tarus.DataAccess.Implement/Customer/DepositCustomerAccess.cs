@@ -174,98 +174,8 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 }
             }
 
-            #endregion NumberGame
-            #region Racing
-
-            var racings = RacingSection.Instance.Racings;
-            foreach (RacingElement racing in racings)
-            {
-                if (!racing.Active)
-                {
-                    continue;
-                }
-
-                foreach (ToteElement tote in racing.Totes)
-                {
-                    if (!tote.Active)
-                    {
-                        continue;
-                    }
-
-                    paramName = "v" + racing.Id + "minbet_" + tote.Id;
-                    hashParams.Add(paramName, dictionaryParams[paramName]);
-                    paramName = "v" + racing.Id + "maxbet_" + tote.Id;
-                    hashParams.Add(paramName, dictionaryParams[paramName]);
-                    paramName = "v" + racing.Id + "maxpermatch_" + tote.Id;
-                    hashParams.Add(paramName, dictionaryParams[paramName]);
-                    if (string.IsNullOrWhiteSpace(tote.BetType) ||
-                        tote.BetType == "NA")
-                    {
-                        continue;
-                    }
-
-                    var betTypes = tote.BetType.Split(new char[] { ',' });
-                    foreach (var betType in betTypes)
-                    {
-                        paramName = "v" + racing.Id + "discount_" + betType;
-                        hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
-                        paramName = "v" + racing.Id + "spositiontaking_" + betType;
-                        hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
-                        paramName = "v" + racing.Id + "mpositiontaking_" + betType;
-                        hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
-                        paramName = "v" + racing.Id + "apositiontaking_" + betType;
-                        hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
-                        paramName = "v" + racing.Id + "ibcpositiontaking_" + betType;
-                        hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
-                    }
-
-                    paramName = "disable" + racing.Id + "_" + tote.Id;
-                    hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
-                }
-            }
-
-
-            #endregion Racing
-            #region VirtualSports
-
-            //var virtualSports = VirtualSportsSection.Instance.Sports;
-
-            //paramName = "disablevirtualsports";
-            //hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
-            //var virtualSportsParams = "<products>";
-            //foreach (VirtualSportsElement sport in virtualSports)
-            //{
-            //    if (!sport.Active)
-            //    {
-            //        continue;
-            //    }
-
-            //    sportId = sport.Id;
-            //    if (!dictionaryParams.ContainsKey("v" + sportId + "maxbet"))
-            //    {
-            //        continue;
-            //    }
-
-            //    virtualSportsParams += string.Format("<product SportType=\"{0}\"" +
-            //        " MaxBet=\"{1}\"" +
-            //        " MinBet=\"{2}\"" +
-            //        " MaxPerMatch=\"{3}\"" +
-            //        " sPositionTaking=\"{4}\"" +
-            //        " mPositionTaking=\"{5}\"" +
-            //        " aPositionTaking=\"{6}\"></product>",
-            //        sportId,
-            //        dictionaryParams["v" + sportId + "maxbet"],
-            //        dictionaryParams["v" + sportId + "minbet"],
-            //        dictionaryParams["v" + sportId + "maxpermatch"],
-            //        dictionaryParams["v" + sportId + "spositiontaking"],
-            //        dictionaryParams["v" + sportId + "mpositiontaking"],
-            //        dictionaryParams["v" + sportId + "apositiontaking"]);
-            //}
-
-            //virtualSportsParams += "</products>";
-            //hashParams.Add("virtualsportlist", virtualSportsParams);
-
-            #endregion VirtualSports
+            #endregion NumberGame        
+        
 
             if (Sunplus.Accounting.Core.Configurations.WebSettings.EnableKeno)
             {
@@ -399,58 +309,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 }
             }
 
-            #endregion NumberGame
-            #region Racing
-
-            var racings = RacingSection.Instance.Racings;
-            foreach (RacingElement racing in racings)
-            {
-                if (!racing.Active)
-                {
-                    continue;
-                }
-
-                foreach (ToteElement tote in racing.Totes)
-                {
-                    if (!tote.Active)
-                    {
-                        continue;
-                    }
-
-                    paramName = "v" + racing.Id + "minbet_" + tote.Id;
-                    hashParam.Add(paramName, 0);
-                    paramName = "v" + racing.Id + "maxbet_" + tote.Id;
-                    hashParam.Add(paramName, 0);
-                    paramName = "v" + racing.Id + "maxpermatch_" + tote.Id;
-                    hashParam.Add(paramName, 0);
-                    if (string.IsNullOrWhiteSpace(tote.BetType) ||
-                        tote.BetType == "NA")
-                    {
-                        continue;
-                    }
-
-                    var betTypes = tote.BetType.Split(new char[] { ',' });
-                    foreach (var betType in betTypes)
-                    {
-                        paramName = "v" + racing.Id + "discount_" + betType;
-                        hashParam.Add(paramName, 0);
-                        paramName = "v" + racing.Id + "spositiontaking_" + betType;
-                        hashParam.Add(paramName, 0);
-                        paramName = "v" + racing.Id + "mpositiontaking_" + betType;
-                        hashParam.Add(paramName, 0);
-                        paramName = "v" + racing.Id + "apositiontaking_" + betType;
-                        hashParam.Add(paramName, 0);
-                        paramName = "v" + racing.Id + "ibcpositiontaking_" + betType;
-                        hashParam.Add(paramName, 0);
-                    }
-
-                    paramName = "disable" + racing.Id + "_" + tote.Id;
-                    hashParam.Add(paramName, dictionaryParam[paramName]);
-                }
-            }
-
-
-            #endregion Racing
+            #endregion NumberGame         
             #region VirtualSports
 
             //var virtualSports = VirtualSportsSection.Instance.Sports;

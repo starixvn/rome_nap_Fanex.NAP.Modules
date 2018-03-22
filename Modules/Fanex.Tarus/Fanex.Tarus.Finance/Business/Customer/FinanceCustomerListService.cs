@@ -10,7 +10,6 @@ using Fanex.Tarus.Finance.Model.Customer;
 using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Bingo.Core;
 
 namespace Fanex.Tarus.Finance.Business.Customer
 {
@@ -58,8 +57,6 @@ namespace Fanex.Tarus.Finance.Business.Customer
                 status = "Suspended";
             else status = "Open";
 
-            var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
-
             var custInfo = new CustomerInfo
             {
                 Id = CastAide.AsInt64(row["custid"]),
@@ -72,13 +69,8 @@ namespace Fanex.Tarus.Finance.Business.Customer
                 Type = "Super",
                 RoleId = CastAide.AsInt32(row["roleid"]),
                 ParentId = 0,
-                IsAgent = 0,
-                DisabledHR = WebSettings.disabledHR,
+                IsAgent = 0,          
                 DisableCS = WebSettings.disableCS,
-                DisabledFI = WebSettings.disabledFI,
-                BingoGameEnabled = BingoSettings.BingoGame.Enabled,
-                EnableLiveCasino = WebSettings.EnableLiveCasino,
-                VisibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value)
             };
             if (custInfo.RoleId == 2)
             {

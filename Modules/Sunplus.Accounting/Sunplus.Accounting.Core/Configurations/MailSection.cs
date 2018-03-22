@@ -170,37 +170,7 @@ namespace Sunplus.Accounting.Core.Configurations
         public static string BCCMailMansion88CSD
         {
             get { return CastAide.AsString(ConfigurationManager.AppSettings["BCCMailMansion88CSD"]); }
-        }
-
-        public static string ToMailHRGroup
-        {
-            get { return CastAide.AsString(ConfigurationManager.AppSettings["ToMailHRGroup"]); }
-        }
-
-        public static string CCMailHRGroup
-        {
-            get { return CastAide.AsString(ConfigurationManager.AppSettings["CCMailHRGroup"]); }
-        }
-
-        public static string BCCMailHRGroup
-        {
-            get { return CastAide.AsString(ConfigurationManager.AppSettings["BCCMailHRGroup"]); }
-        }
-
-        public static string ToMailFIAutoDummyTransfer
-        {
-            get { return CastAide.AsString(ConfigurationManager.AppSettings["ToMailFIAutoDummyTransfer"]); }
-        }
-
-        public static string CCMailFIAutoDummyTransfer
-        {
-            get { return CastAide.AsString(ConfigurationManager.AppSettings["CCMailFIAutoDummyTransfer"]); }
-        }
-
-        public static string BCCMailFIAutoDummyTransfer
-        {
-            get { return CastAide.AsString(ConfigurationManager.AppSettings["BCCMailFIAutoDummyTransfer"]); }
-        }
+        }      
 
         public static string ToMailExchangeRate
         {

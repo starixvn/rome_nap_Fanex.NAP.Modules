@@ -29,10 +29,8 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
     using Fanex.Module.NG2.Entities;
     using Fanex.Module.NG2.Services;
     using Fanex.NAP.Framework.Data;
-    using LiveCasino.CoreSetting.Models;
     using Logging.Extensions.Web;
     using Services;
-    using ICommandResults = Fanex.LiveCasino.CoreSetting.DTO.CommandResult.ICommandResults;
 
     public class SuperController : BaseCloneController
     {
@@ -160,7 +158,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
                     criteria.IP = CurrentContext.Instance.Ip4Address;
 
                     Thread.Sleep(3000);
-                    // Sync casino, bingo, live casino, ng2
+                    // Sync casino, live casino, ng2
                     SyncNG2(criteria);
                     UpdateSyncData(criteria);
                 }
@@ -206,25 +204,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
             if (resultSyncData.IsSuccessful == false)
             {
                 resultMessage = string.Join(null, new string[] { "<div>", resultSyncData.Message, "</div>" });
-            }
-
-            //resultSyncData = UpdateSyncBingoAfterCopy(criteria);
-            //if (resultSyncData.IsSuccessful == false)
-            //{
-            //    resultMessage = string.Join(null, new string[] { resultMessage, "<div>", resultSyncData.Message, "</div>" });
-            //}
-
-            resultSyncData = UpdateSyncLiveCasinoAfterCopy(criteria);
-
-            if (resultSyncData.IsSuccessful == false)
-            {
-                resultMessage = string.Join(null, new string[] { resultMessage, "<div>", resultSyncData.Message, "</div>" });
-            }
-
-            if (resultMessage != string.Empty)
-            {
-                resultSyncData.Code = -1;
-                resultSyncData.Message = string.Join(null, new string[] { "<div class='alertboxerr'>", resultMessage, "</div>" });
             }
 
             return resultSyncData;
@@ -456,152 +435,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
         }
 
         /// <summary>
-        /// Update syncBingo Data after copy customer.
-        /// </summary>
-        /// <param name="customer">Information of Customer.</param>        
-        /// <returns>True if success else return False.</returns>        
-        private CommandResult UpdateSyncBingoAfterCopy(CustomerInsMemberCriteria customer)
-        {
-            CommandResult result = new CommandResult { Code = 0, Message = string.Empty };
-            if (customer.IsSyncBingo == false)
-            {
-                return result;
-            }
-
-            try
-            {
-                bool success = SyncBingo(customer);
-                if (success == false)
-                {
-                    result.Code = -1;
-                    result.Message = Constants.FailedSyncMessage.Bingo;
-                }
-
-                ////Sync data to IBC 
-                result = UpdateSyncDataToIBC(customer.CustId, new UpdateSyncCasinoForIBCCriteria() { CustId = customer.CustId, LoginIP = customer.IP, UserId = customer.Creator });
-                if (result.IsSuccessful == false)
-                {
-                    result.Code = -1;
-                    result.Message = Constants.FailedSyncMessage.Bingo;
-                }
-            }
-            catch (Exception ex)
-            {
-                result.Code = -1;
-                result.Message = Constants.FailedSyncMessage.Bingo;
-                ExceptionHandler.Handle(ex);
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Synchronous Bingo.
-        /// </summary>
-        /// <param name="customer">Information of Customer.</param>   
-        /// <returns>True if success else return False.</returns>
-        private bool SyncBingo(CustomerInsMemberCriteria customer)
-        {
-            ////Sync data to Bingo                                                            
-            var bingoCustomer = new LiveCasinoLibrary.SBAgent.Customer();
-            bool success = bingoCustomer.AutoInsertSuperFromExisting(
-                "01",
-                customer.CustId,
-                customer.ExistingCustId,
-                customer.UserName,
-                DateTime.Now,
-                customer.IP,
-                customer.Creator,
-                customer.CreatorName,
-                3);
-            return success;
-        }
-
-        /// <summary>
-        /// Update syncLiveCasino Data after copy customer.
-        /// </summary>
-        /// <param name="customer">Information of Customer.</param>
-        /// <returns>
-        /// True if success else return False.
-        /// </returns>
-        private CommandResult UpdateSyncLiveCasinoAfterCopy(CustomerInsMemberCriteria customer)
-        {
-            CommandResult result = new CommandResult { Code = 0, Message = string.Empty };
-            if (customer.IsSyncLiveCasino == false)
-            {
-                return result;
-            }
-
-            try
-            {
-                var commandResults = SyncLiveCasino(customer);
-
-                for (int i = 0; i < commandResults.Results.Count; i++)
-                {
-                    if (commandResults.Results[i].IsSuccessful == false)
-                    {
-                        result.Code = -1;
-                        result.Message = Constants.FailedSyncMessage.LiveCasino;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                result.Code = -1;
-                result.Message = Constants.FailedSyncMessage.LiveCasino;
-                ExceptionHandler.Handle(ex);
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Synchronous Live Casino.
-        /// </summary>
-        /// <param name="customer">Information of Customer.</param>
-        /// <returns>
-        /// True if success else return False.
-        /// </returns>
-        private ICommandResults SyncLiveCasino(CustomerInsMemberCriteria customer)
-        {
-            var commandResult = _settingService.AutoInsertAccountFromExisting(
-                customer.CustId,
-                customer.ExistingCustId,
-                customer.UserName,
-                customer.Creator,
-                customer.CreatorName,
-                0, string.Empty,
-                customer.IP,
-                "E");
-
-            if (commandResult.IsSuccessful)
-            {
-                var settingContext = new LiveCasinoSettingContext
-                {
-                    Customer = new LiveCasino.CoreSetting.Models.Customer
-                    {
-                        Id = customer.CustId
-                    },
-                    Actor = new User
-                    {
-                        Id = customer.Creator
-                    },
-                    SubAccount = new User
-                    {
-                        Id = AppSession.SubAccountId
-                    },
-                    IP = customer.IP,
-                    Language = "E"
-                };
-
-                commandResult.Results.Add(_settingService.UpdateLiveCasinoStatus(settingContext, customer.DisableLiveCasino));
-            }
-
-            return commandResult;
-        }
-
-        /// <summary>
-        /// Update syncLiveCasino Data to IBC.
+        /// Sync Data to IBC.
         /// </summary>
         /// <param name="custid">The customer id.</param>
         /// <param name="sysnIBC">The criteria.</param>

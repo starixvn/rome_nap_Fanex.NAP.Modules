@@ -164,28 +164,9 @@ namespace Sunplus.Accounting.DataAccess
             var sps = LogDisplaySection.Instance[storeCollection];
             return sps != null ? sps[aliasName] : null;
         }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(RacingSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = RacingSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(P2PSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = P2PSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
         protected virtual StoreProcedureElement GetStoreProcedure(ReportSession.StoreCollection storeCollection, string aliasName)
         {
             var sps = ReportSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(SettlementSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = SettlementSession.Instance[storeCollection];
             return sps != null ? sps[aliasName] : null;
         }
 
@@ -201,12 +182,6 @@ namespace Sunplus.Accounting.DataAccess
             return sps != null ? sps[aliasName] : null;
         }
 
-        protected virtual StoreProcedureElement GetStoreProcedure(BetAggregatorSection.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = BetAggregatorSection.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
         protected virtual StoreProcedureElement GetStoreProcedure(BetListSection.StoreCollection storeCollection, string aliasName)
         {
             var sps = BetListSection.Instance[storeCollection];
@@ -216,12 +191,6 @@ namespace Sunplus.Accounting.DataAccess
         protected virtual StoreProcedureElement GetStoreProcedure(UserControlSession.StoreCollection storeCollection, string aliasName)
         {
             var sps = UserControlSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(SpecialDeleteGroupSection.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = SpecialDeleteGroupSection.Instance[storeCollection];
             return sps != null ? sps[aliasName] : null;
         }
     }

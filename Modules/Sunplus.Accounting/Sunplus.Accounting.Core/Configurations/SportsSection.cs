@@ -7,7 +7,7 @@ namespace Sunplus.Accounting.Core.Configurations
     public class SportsSection : ConfigurationSection
     {
         [ConfigurationProperty("Sports", IsDefaultCollection = false)]
-        [ConfigurationCollection(typeof(BACollection),
+        [ConfigurationCollection(typeof(SportsSection),
             AddItemName = "add",
             ClearItemsName = "clear",
             RemoveItemName = "remove")]

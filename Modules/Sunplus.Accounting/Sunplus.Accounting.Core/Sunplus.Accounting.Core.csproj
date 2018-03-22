@@ -164,8 +164,8 @@
     <Reference Include="SPSRemoting">
       <HintPath>..\..\..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.11\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.9-HideInactiveProducts4\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Core.Common">
@@ -197,34 +197,24 @@
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\Functions.cs" />
     <Compile Include="Common\Globals.cs" />
-    <Compile Include="Configurations\BASection.cs" />
     <Compile Include="Configurations\ConfigSection.cs" />
+    <Compile Include="Configurations\ReportSection.cs" />
     <Compile Include="Configurations\SportsSection.cs" />
-    <Compile Include="Configurations\RMSection.cs" />
-    <Compile Include="Configurations\LiveCasinoSection.cs" />
     <Compile Include="Configurations\CustomerSection.cs" />
     <Compile Include="Configurations\ExternalSection.cs" />
-    <Compile Include="Configurations\PokerSection.cs" />
     <Compile Include="Configurations\NumberGameSection.cs" />
-    <Compile Include="Configurations\ReportSection.cs" />
     <Compile Include="Configurations\HelperSection.cs" />
-    <Compile Include="Configurations\MonitorSection.cs" />
-    <Compile Include="Configurations\SpecialMatchAnalysisSection.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\Admin.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\Casino.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\BetAggregator.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\BetList.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\LogDisplay.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\P2P.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\Helper.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\SpecialDelete.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\Report.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\StoreProcedureGroup.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\Transaction.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\UserControl.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\ViewPt.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\SportbookPt.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\Settlement.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\Report.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\Racing.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\ExchangeRate.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\Customer.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\CreditTerm.cs" />
@@ -232,8 +222,6 @@
     <Compile Include="Configurations\UserControlSection.cs" />
     <Compile Include="Configurations\LogSection.cs" />
     <Compile Include="Configurations\MailSection.cs" />
-    <Compile Include="Configurations\RacingSession.cs" />
-    <Compile Include="Configurations\SpecialDeleteSection.cs" />
     <Compile Include="Configurations\StoreProceduresSection.cs" />
     <Compile Include="Configurations\WebSettings.cs" />
     <Compile Include="Constant\Error.cs" />
@@ -297,43 +285,7 @@
     <Compile Include="Web\TplCore\App_Templates\Others\NewsDetail.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\Others\NewsEdit.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\Report\CommonFilter.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Report\DailyCreatedCustomerHeader.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\Report\FromToDate.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Report\MainReportList.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Report\Punter\AgencyHeaderForm.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Report\Punter\HeaderForm.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Report\Punter\PeriodAnnual.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Report\Punter\PeriodLongRange.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Report\Punter\PeriodMonthly.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Report\Punter\PunterHeaderForm.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Report\Punter\SelTopPunterByCustID.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Report\Punter\TopPunterSummaryContent.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Report\TraderPerformance.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Report\TraderPerformanceDetail.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Settle\ViewLog.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Settle\ViewLogHeaderForm.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Settle\ViewLogMatchDetails.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Settle\ViewLogMatchDetailsNoInfo.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Settle\ViewLogMatchInfo.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Settle\ViewLogMenu.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\DeleteBetReportMP.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\DeleteBetReportNullAllRow.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\DeleteBetReportSendMail.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\DeleteBetReportSendMailAllRow.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\DeleteBetReportSendMailAllRow_SpecialBet.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\DeleteBetReportSendMail_SpecialBet.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\DeleteForm.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\DeleteFormNew.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\DynamicBettype.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\FillteFormCS.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\FillterForm.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\FillterFormIndex.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\FillterFormMP.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\FillterFormOutright.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\FillterFormSepecial.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\MatchInfo.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\OutrightList.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\SpecialDelete\SpecialDeleteBets.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\SpecialDelete\TransHeader.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\SpecialDelete\TransHeader_SpecialBet.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\SpecialDelete\TransRow.htm.cs" />
@@ -344,42 +296,6 @@
     <Compile Include="Web\TplCore\App_Templates\UserControl\EditAccount.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\UserControl\EditGroup.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\UserControl\Function.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\AB88WinLossFilter.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\AB88WinLossFooter.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\AB88WinLossTotal.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\CasinoWLDetail.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\DailyWLDirectFooter.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\DailyWLFooter.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\DailyWL_Header.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\DateTimeHeader.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\DateTimeHeaderV2.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\FIWLDetail.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\FOddsHR12BETWLDetail.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\FOddsHRAB88WLDetail.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\FOddsHRMansionWLDetail.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\FOddsHRWLDetail.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\HedgeRecordHeaderTable.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\LeagueWL\LeagueWL_Bettype_Header.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\LeagueWL\LeagueWL_Details_Header.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\M88WinLossFilter.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\M88WinLossFooter.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\M88WinLossTotal.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\MatchWinLostByBetTypeAllHeader.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\MatchWinLostSingleBetAllHeader.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\Report2AMatchWL.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\ReportHeaderV2.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\TOddsHRWLDetail.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\ToteHR12BETWLDetail.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\ToteHRAB88WLDetail.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\ToteHRMansionWLDetail.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\ToteHRWLDetail.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\WinLossFilter12BET.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\WinLossFooter12BET.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\WinLossTotal12BET.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\WinLostSummaryColspan.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\WinLostSummaryTotalRow.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\WLSummaryHeader.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\WinLost\WLSummaryTotalRow.htm.cs" />
     <Compile Include="Web\WebUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\Controls\Calendar.cs" />
@@ -403,11 +319,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DomainObjects\" />
-    <Folder Include="Infrastructure\" />
-    <Folder Include="Security\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />

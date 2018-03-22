@@ -23,17 +23,4 @@ namespace Sunplus.Accounting.Entities.Customer.PT.ViewPT
         [DataMember]
         public List<Bettype> BettypeList { get; set; }
     }
-
-    public class BettypeInfo
-    {
-        public enum Bettype
-        {
-            SAToteWin = 31,
-            SATotePlace = 32,
-            UKToteWin = 41,
-            UKTotePlace = 42,
-            AUToteWin = 51,
-            AUTotePlace = 52
-        }
-    }
 }

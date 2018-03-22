@@ -2,7 +2,6 @@
 using Sunplus.Accounting.DataAccess.Provider.Betlist;
 using Sunplus.Accounting.DataAccess.Provider.Customer;
 using Sunplus.Accounting.DataAccess.Provider.Log;
-using Sunplus.Accounting.DataAccess.Provider.Report;
 
 /// <summary>
 /// Summary description for SiteProvider
@@ -11,12 +10,7 @@ using Sunplus.Accounting.DataAccess.Provider.Report;
 namespace Sunplus.Accounting.DataAccess
 {
     public class SiteProvider
-    {
-        public static ReportProvider Report
-        {
-            get { return ReportProvider.Instance; }
-        }
-
+    {       
         public static BetlistProvider Betlist
         {
             get { return BetlistProvider.Instance; }

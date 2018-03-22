@@ -16,7 +16,6 @@ namespace Fanex.BetList.Accounting.Services
 {
     public interface IBetListService
     {
-        BetListDetail GetWinLossMemberBetList(WinLossMemberBetListCriteria winLossMemberBetListCriteria);
 
         IList<TicketDetail> GetMixParlayTickets(MixParlayDetailCriteria mixParlayDetailCriteria);
 

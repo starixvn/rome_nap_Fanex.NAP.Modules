@@ -337,26 +337,6 @@ namespace Fanex.BetList.Accounting.Controllers
             return new EmptyResult();
         }
 
-        /// <summary>
-        /// Exports the bet list.
-        /// </summary>
-        /// <param name="criteria">The criteria parameter.</param>
-        /// <returns>The bet list excel file.</returns>
-        [HttpGet]
-        public ActionResult ExportBetlist(WinLossMemberBetListCriteria criteria)
-        {
-            string filename = string.Empty;
-            ExportExcelBetlist export = new ExportExcelBetlist();
-            var workbook = export.ExportExcelBetList(criteria, ref filename);
-
-            if (workbook != null)
-            {
-                NpoiExcelExtensions.ResponseStreamExcel(workbook, filename);
-            }
-
-            return new EmptyResult();
-        }
-        
         [AuthorizeFunctions("ViewInfo")]
         public ActionResult GetCashOutDetails(GetCashOutDetailCriteria criteria)
         {

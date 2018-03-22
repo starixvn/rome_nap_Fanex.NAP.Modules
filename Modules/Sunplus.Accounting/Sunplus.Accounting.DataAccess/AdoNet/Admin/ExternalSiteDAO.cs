@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using DNAide.Core;
 using Fanex.Data;
 using Sunplus.Accounting.DataAccess.IAdmin;
-using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Admin;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
 {

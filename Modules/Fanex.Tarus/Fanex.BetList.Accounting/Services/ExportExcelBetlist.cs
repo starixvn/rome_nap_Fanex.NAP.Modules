@@ -8,13 +8,6 @@ using Sunplus.Accounting.DataAccess.Report;
 
 namespace Fanex.BetList.Accounting.Services
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.Text;
     using Fanex.BetList.Accounting.Constants;
     using Fanex.BetList.Accounting.Criteria;
     using Fanex.BetList.Accounting.Extensions;
@@ -28,6 +21,12 @@ namespace Fanex.BetList.Accounting.Services
     using Fanex.Common;
     using Fanex.Data;
     using NPOI.SS.UserModel;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.IO;
+    using System.Text;
     using AccBetListCore = Fanex.BetList.Accounting.Core;
 
     /// <summary>
@@ -246,92 +245,6 @@ namespace Fanex.BetList.Accounting.Services
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// Exports the excel bet list statement.
-        /// </summary>
-        /// <param name="criteria">The criteria parameter.</param>
-        /// <param name="fileName">File name.</param>
-        /// <returns>The excel bet list statement.</returns>
-        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
-            "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
-        public IWorkbook ExportExcelBetList(
-            WinLossMemberBetListCriteria criteria,
-            ref string fileName)
-        {
-            try
-            {
-                List<ITicketData> outputLiveCasino = new List<ITicketData>();
-                IList<TicketDetail> betDetails = new List<TicketDetail>();
-                ITicketHelper ticketHelper = new TicketHelper();
-
-                criteria.MoveBetsDay = ReportService.BalanceUp.MoveBetsDay;
-                criteria.BalanceUpDay = ReportService.BalanceUp.BalanceUpDay;
-
-                GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
-                BetListExcelFactory factory = new BetListExcelFactory();
-                BetListExcelBuilder builder = factory.CreateBuilder();
-
-                IBetListService _betListService = new BetListService();
-                var betListDetail = Core.SessionManager.Get<BetListDetail>(BetListService.BetListSessionKey) ?? _betListService.GetWinLossMemberBetList(criteria);
-
-                betDetails = betListDetail.BetDetails;
-
-                if (betDetails != null && betDetails.Count > 0)
-                {
-                    string reportTitle = string.Format(
-                    BetListResources.BetList_MemberReport,
-                    criteria.FromDate.ToShortFormatedDate(),
-                    criteria.ToDate.ToShortFormatedDate(),
-                    criteria.CustName,
-                    string.Empty);
-
-                    fileName = "BetList-" + criteria.FromDate.ToShortDateString() + "-" + criteria.CustName;
-                    int index = 0;
-
-                    builder.BuildWorksheet("BetList", 8);
-                    builder.AddCaption(reportTitle, 8);
-                    builder.AddHeaderStatement(true, false, false, false, true);
-                    foreach (var betdetail in betDetails)
-                    {
-                        index++;
-                        ticketHelper.Index = index;
-
-                        ////Add No
-                        builder.AddValue("\n" + index.Format(0) + "\n", HorizontalAlignment.Center, builder.RTFHelper.NormalFont, ticketHelper);
-
-                        builder.AddTrans(betdetail.Ticket, ticketHelper);
-
-                        builder.AddChoice(betdetail.Ticket, ticketHelper, outputLiveCasino)
-                               .AddOdds(betdetail.Ticket, outputLiveCasino, funcGetOddsTypeName)
-                               .AddStake(betdetail.Ticket);
-
-                        ////Add Win Loss/Comm
-                        string winloss_comm = "\n" + betdetail.Ticket.Winlost.Format(2) + "\n" + betdetail.Ticket.Comm.Format(2) + "\n";
-                        builder.AddValue(winloss_comm, HorizontalAlignment.Center, builder.RTFHelper.NormalFont, ticketHelper);
-
-                        ////Add Licensee WL/Comm
-                        builder.AddValue(betdetail.Ticket.AgentWinlost, HorizontalAlignment.Right, builder.RTFHelper.PosFont, ticketHelper);
-
-                        ////Add Status
-                        string status = "\n" + betdetail.Ticket.Status + "\n\n" + betdetail.Ticket.IP;
-                        builder.AddValue(status, HorizontalAlignment.Center, builder.RTFHelper.NormalFont, ticketHelper);
-                    }
-
-                    builder.AddFooter(betListDetail);
-
-                    IWorkbook resultWorkbook = builder.GetBetList();
-                    return resultWorkbook;
-                }
-            }
-            catch (Exception ex)
-            {
-                AccBetListCore.LoggingHandler.Log(ex);
-            }
-
-            return null;
-        }
+        }     
     }
 }

@@ -125,10 +125,6 @@
       <HintPath>..\..\..\packages\Fanex.GoldDeluxe.CoreSetting.NAP.1.0.0.9\lib\net40\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.2.2.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.LiveCasino.CoreSetting.NAP.1.2.2.6\lib\net40\Fanex.LiveCasino.CoreSetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.Logging, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Logging.1.0.4\lib\net40\Fanex.Logging.dll</HintPath>
       <Private>True</Private>
@@ -187,10 +183,6 @@
     </Reference>
     <Reference Include="ILogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ILogger.1.0.0.0\lib\net40\ILogger.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LiveCasinoLibrary, Version=1.0.0.18, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\LiveCasinoLibrary.1.0.0.18\lib\net40\LiveCasinoLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.9.0, Culture=neutral, PublicKeyToken=b32731d11ce58905">
@@ -386,10 +378,7 @@
     <Compile Include="Criteria\CheckSpecialSitePermissionCriteria.cs" />
     <Compile Include="Repositories\Interface\IDCSSettingCopyInsertMemberRepository.cs" />
     <Compile Include="Criteria\UpdateSyncBaseForIBCCriteria.cs" />
-    <Compile Include="Criteria\UpdateSyncLiveCasinoForIBCCriteria.cs" />
-    <Compile Include="Criteria\UpdateSyncBingoForIBCCriteria.cs" />
     <Compile Include="Criteria\UpdateSyncCasinoForIBCCriteria.cs" />
-    <Compile Include="Criteria\UpdateSyncLiveCasinoCriteria.cs" />
     <Compile Include="Criteria\CustomerInsMemberCriteria.cs" />
     <Compile Include="Criteria\GetCustomerInfoByUserIdCriteria.cs" />
     <Compile Include="Criteria\GetSitesCriteria.cs" />

@@ -14,7 +14,6 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.Entities.Casino;
-using Sunplus.Bingo.Core;
 using Fanex.CustomerSetting.Module.Core.Models;
 using Fanex.Tarus.Security.Criteria;
 using Fanex.Tarus.Security.Services;
@@ -210,11 +209,6 @@ namespace Sunplus.Accounting.Business.Security
             return IsTransfer;
         }
 
-        public static bool AllowSaTote(string currencyName)
-        {
-            return HRPositionTakingManager.AllowSaTote(currencyName);
-        }
-
         public static int CheckPermission<T>(int custId, T function, ref string errmsg)
         {
             int errcode = 0;
@@ -335,15 +329,6 @@ namespace Sunplus.Accounting.Business.Security
             return true;
         }
 
-        public static bool IsAllowEditBingo(int parentId, bool syncBingo)
-        {
-            if (parentId == 0)
-                return true;
-            if (!BingoSettings.BingoGame.Enabled || !syncBingo)
-                return false;
-            return true;
-        }
-
         public static bool IsAllowEditFI()
         {
             return (!WebSettings.disabledFI);
@@ -384,15 +369,6 @@ namespace Sunplus.Accounting.Business.Security
             }
         }
 
-        public static bool IsAllowEditLiveCasino(int parentId, bool syncLiveCasino)
-        {
-            if (parentId == 0)
-                return true;
-            if (!WebSettings.EnableLiveCasino || !syncLiveCasino)
-                return false;
-            return true;
-        }
-
         public static bool IsAllowEditVirtualSports(int parentId, bool hideVirtualSports)
         {
             if (parentId == 0)
@@ -404,7 +380,7 @@ namespace Sunplus.Accounting.Business.Security
 
         public static bool IsAllowEditGoldDeluxe(int parentId)
         {
-            return parentId == 0 || WebSettings.EnableLiveCasino;
+            return parentId == 0 || WebSettings.EnableGoldDeluxe;
         }
 
         #region Settlement
