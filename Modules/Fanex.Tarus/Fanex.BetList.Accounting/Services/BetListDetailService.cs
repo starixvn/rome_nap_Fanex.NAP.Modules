@@ -15,7 +15,7 @@ namespace Fanex.BetList.Accounting.Services
     public class BetListDetailService : IBetListDetailService
     {
         private readonly IBetListDetailRepository _betListDetailRepository;
-
+        
         public BetListDetailService(IBetListDetailRepository betListDetailRepository = null)
         {
             _betListDetailRepository = betListDetailRepository ?? new BetListDetailRepository();
