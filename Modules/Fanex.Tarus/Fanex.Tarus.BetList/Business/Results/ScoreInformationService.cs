@@ -46,10 +46,10 @@ namespace Fanex.Tarus.BetList.Business.Results
         /// <returns>
         /// The result for SPORTSBOOK.
         /// </returns>
-        public string GetResult(int matchId, int betType, long betId, out bool isSupport)
+        public string GetResult(int matchId, int betType, long betId, out bool isSupport, int handicap2)
         {
             var criteria = GetCriteria(matchId, betType, betId);
-            List<Sportsbook> sportsbooks = this._scoreInformationDataAccess.GetScoreInformation(ref criteria);
+            List<Sportsbook> sportsbooks = this._scoreInformationDataAccess.GetScoreInformation(ref criteria, handicap2);
 
             if (IsSupport(criteria.SportType))
             {
@@ -109,6 +109,7 @@ namespace Fanex.Tarus.BetList.Business.Results
                 MatchId = matchId,
                 BetType = betType,
                 BetId = betId
+
             };
         }
 

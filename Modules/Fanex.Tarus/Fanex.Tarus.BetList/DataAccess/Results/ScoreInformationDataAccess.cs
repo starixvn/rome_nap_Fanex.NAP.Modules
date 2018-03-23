@@ -26,7 +26,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>The list of SPORTSBOOKS.</returns>
-        public List<Sportsbook> GetScoreInformation(ref GetScoreInformationCriteria criteria)
+        public List<Sportsbook> GetScoreInformation(ref GetScoreInformationCriteria criteria, int handicap2)
         {
             var result = new List<Sportsbook>();
 
@@ -43,6 +43,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                             while (reader.Read())
                             {
                                 result[0].GameDetails.Add(BindGameDetail(reader));
+                                result[0].Handicap2 = handicap2;
                             }
                         }
 
@@ -73,6 +74,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 ResultStatusID = reader["ResultStatusID"] != DBNull.Value ? int.Parse(reader["ResultStatusID"].ToString()) : 0,
                 SettlementStatusID = reader["SettlementStatusID"] != DBNull.Value ? int.Parse(reader["SettlementStatusID"].ToString()) : 0,
                 OtherInfo = reader["OtherInfo"] != DBNull.Value ? reader["OtherInfo"].ToString() : string.Empty,
+               
             };
         }
 
