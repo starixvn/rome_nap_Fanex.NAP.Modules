@@ -7,16 +7,16 @@
 
 namespace Fanex.Tarus.ExchangeRate.DataAccess
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
     using Data;
     using DNAide.Core;
     using Entities;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Helper;
     using Sunplus.Accounting.Entities;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
 
     /// <summary>
     /// TODO: Update summary.
@@ -65,7 +65,7 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
             {
                 var param = new Hashtable();
                 param.Add("userid", AppSession.AccId);
-                param.Add("currencyid", currenctyId);
+                param.Add("exchangeid", currenctyId);
                 param.Add("pjunitprice", pjUnitPrice);
                 param.Add("ip", Utils.GetClientIP());
                 param.Add("errcode", 0);
