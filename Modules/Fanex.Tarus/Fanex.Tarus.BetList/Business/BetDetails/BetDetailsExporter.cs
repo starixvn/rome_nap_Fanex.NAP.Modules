@@ -1,8 +1,5 @@
 ﻿namespace Fanex.Tarus.BetList.Business.BetDetails
 {
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
     using Fanex.BetList.Accounting.Constants;
     using Fanex.BetList.Accounting.Extensions;
     using Fanex.BetList.Accounting.Models;
@@ -20,7 +17,9 @@
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using Resources;
-    using Fanex.BetList.Age.BetListExcelBuilderExt;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
 
     public class BetDetailsExporter : IBetDetailsExporter
     {
@@ -133,9 +132,9 @@
                         .AddStake(ticket)
                         .AddWinLoss(ticket)
                         .AddStatus(ticket, ticketHelper, ticketData, true)
-                        .AddSuperPT(ticket, ticketData)
-                        .AddMasterPT(ticket, ticketData)
-                        .AddAgentPT(ticket, ticketData);
+                        .AddPTComm(ticket, ticketData, RoleIdConstants.Super)
+                        .AddPTComm(ticket, ticketData, RoleIdConstants.Master)
+                        .AddPTComm(ticket, ticketData, RoleIdConstants.Agent);
                 }
             }
             else
