@@ -33,46 +33,6 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
-        /// <summary>
-        /// LiveCasinoFinancialReport_MinDate
-        ///     - FDL start operate live casino date: 12/17/2012
-        /// </summary>
-        public static DateTime _liveCasinoFinancialReport_MinDate;
-        public static DateTime LiveCasinoFinancialReport_MinDate
-        {
-            get
-            {
-                return _liveCasinoFinancialReport_MinDate;
-            }
-        }
-
-        public static List<int> _liveCasinoFinancialReport_Licensee;
-        public static List<int> LiveCasinoFinancialReport_Licensee
-        {
-            get
-            {
-                return _liveCasinoFinancialReport_Licensee;
-            }
-        }
-
-        public static List<int> _liveCasinoFinancialReport_Currency;
-        public static List<int> LiveCasinoFinancialReport_Currency
-        {
-            get
-            {
-                return _liveCasinoFinancialReport_Currency;
-            }
-        }
-
-        public static List<int> _liveCasinoFinancialReport_GameType;
-        public static List<int> LiveCasinoFinancialReport_GameType
-        {
-            get
-            {
-                return _liveCasinoFinancialReport_GameType;
-            }
-        }
-
         private static int _admin_SMATurnover_FunctionId;
         public static int Admin_SMATurnover_FunctionId
         {
@@ -153,58 +113,11 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             {
                 _noteViewCountToCollapse = Convert.ToInt32(ConfigurationManager.AppSettings["NoteViewCountToCollapse"]);
                 _isLegendEnable = Convert.ToBoolean(ConfigurationManager.AppSettings["IsLegendEnable"]);
-                _liveCasinoFinancialReport_MinDate = Convert.ToDateTime(ConfigurationManager.AppSettings["LiveCasinoFinancialReport_MinDate"]);
                 _admin_SMATurnover_FunctionId = Convert.ToInt32(ConfigurationManager.AppSettings["Admin_SMATurnover_FunctionId"]);
-
-                GetLiveCasinoFinancialReport_Licensee();
-                GetLiveCasinoFinancialReport_Currency();
-                GetLiveCasinoFinancialReport_GameType();
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
-            }
-        }
-
-        private static void GetLiveCasinoFinancialReport_Licensee()
-        {
-            _liveCasinoFinancialReport_Licensee = new List<int>();
-            string[] licensees = ConfigurationManager
-                .AppSettings["LiveCasinoFinancialReport_Licensee"]
-                .ToString()
-                .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string licensee in licensees)
-            {
-                _liveCasinoFinancialReport_Licensee.Add(Convert.ToInt32(licensee));
-            }
-        }
-
-        private static void GetLiveCasinoFinancialReport_Currency()
-        {
-            _liveCasinoFinancialReport_Currency = new List<int>();
-            string[] currencies = ConfigurationManager
-                .AppSettings["LiveCasinoFinancialReport_Currency"]
-                .ToString()
-                .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string currency in currencies)
-            {
-                _liveCasinoFinancialReport_Currency.Add(Convert.ToInt32(currency));
-            }
-        }
-
-        private static void GetLiveCasinoFinancialReport_GameType()
-        {
-            _liveCasinoFinancialReport_GameType = new List<int>();
-            string[] gameTypes = ConfigurationManager
-                .AppSettings["LiveCasinoFinancialReport_GameType"]
-                .ToString()
-                .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string gameType in gameTypes)
-            {
-                _liveCasinoFinancialReport_GameType.Add(Convert.ToInt32(gameType));
             }
         }
     }

@@ -31,8 +31,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
     using Keno.KenoSetting.ViewModels;
     using Logging.Extensions.Web;
     using PTEngine.BusinessObjects;
-    using PTVirtualSports.BusinessObjects;
-    using PTVirtualSports.Services;
 
     /// <summary>
     /// Class SearchCopyService.
@@ -115,14 +113,8 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
                 // copy gold deluxe
                 CopyGoldDeluxe(criteria, existingCustId, ipAddress);
 
-                // copy virtual sports
-                CopyVirtualSports(criteria, existingCustId, ipAddress);
-
                 // copy dcs
                 CopyDCS(criteria, existingCustId, ipAddress);
-
-                // copy horse racing
-                CopyRacing(criteria, existingCustId, ipAddress);
             }
 
             return result;
@@ -274,91 +266,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
                     Ip = ipAddress
                 }));
             }
-
-            return result;
-        }
-
-        private VSResult CopyVirtualSports(Hashtable criteria, int existingCustId, string ipAddress)
-        {
-            VSResult result = null;
-            try
-            {
-                
-                var oldCustomerContext = new RequestContext
-                {
-                    CustId = (int)criteria["userid"],
-                    TargetCustId = existingCustId,
-                    TargetRoleId = 1,
-                    FormId = FormType.EditPT,
-                    SubAccId = 0,
-                    AdminId = (int)criteria["userid"],
-                    Language = CultureInfo.CurrentCulture.Name,
-                    LangKey = CultureInfo.CurrentCulture.Name,
-                    IP = ipAddress,
-                    RoleId = 2
-                };
-
-                var currentContext = new RequestContext
-                {
-                    CustId = (int)criteria["userid"],
-                    TargetCustId = (int)criteria["custid"],
-                    TargetRoleId = 1,
-                    FormId = FormType.EditPT,
-                    SubAccId = 0,
-                    AdminId = (int)criteria["userid"],
-                    Language = CultureInfo.CurrentCulture.Name,
-                    LangKey = CultureInfo.CurrentCulture.Name,
-                    IP = ipAddress,
-                    RoleId = 2
-                };
-
-                var customerService = new CustomerService();
-                var oldCustomer = customerService.GetCustomer(oldCustomerContext);
-                CheckConstraintData(ref oldCustomer);
-                result = customerService.SaveCustomer(null, oldCustomer, currentContext, null);
-            }
-            catch (AggregateException ae)
-            {
-                foreach (var ex in ae.InnerExceptions)
-                {
-                    ExceptionHandler.Handle(ex);
-                }
-            }
-
-            return result;
-        }
-
-        private PTRacing.BusinessObjects.Result CopyRacing(Hashtable criteria, int existingCustId, string ipAddress)
-        {
-            PTRacing.BusinessObjects.Result result = null;
-            PTRacing.Services.ICustomerService racingService = new PTRacing.Services.CustomerService();
-
-            var oldSetting = racingService.GetCustomer(new PTRacing.BusinessObjects.RequestContext
-            {
-                TargetCustId = (int)criteria["custid"],
-                AdminId = (int)criteria["userid"],
-                CustId = (int)criteria["userid"],
-                RoleId = 2,
-                TargetRoleId = 1,
-                FormId = PTRacing.BusinessObjects.FormType.EditPT,
-                IP = ipAddress
-            });
-
-            var newContext = new PTRacing.BusinessObjects.RequestContext
-            {
-                TargetCustId = existingCustId,
-                AdminId = (int)criteria["userid"],
-                CustId = (int)criteria["userid"],
-                RoleId = 2,
-                TargetRoleId = 1,
-                FormId = PTRacing.BusinessObjects.FormType.EditPT,
-                IP = ipAddress
-            };
-
-            PTRacing.BusinessObjects.ICustomer newSetting = racingService.GetCustomer(newContext);
-            newContext.TargetCustId = newSetting.CustId = (int)criteria["custid"];
-
-            result = racingService.SaveCustomer(oldSetting, newSetting, newContext, null);
 
             return result;
         }
