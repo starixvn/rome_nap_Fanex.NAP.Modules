@@ -30,8 +30,8 @@
     <Reference Include="Accessibility">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="CasinoLibrary, Version=2.0.1.16464, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CasinoLibrary.1.0.2.19-Jackpot-05\lib\net40\CasinoLibrary.dll</HintPath>
+    <Reference Include="CasinoLibrary, Version=2.0.1.16974, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CasinoLibrary.1.0.2.19-Jackpot-06\lib\net40\CasinoLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Couchbase">
@@ -284,6 +284,10 @@
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.0.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.0.12-HideInactiveProducts3\lib\net40\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Libraries.AOP.1.0.4218.28561\lib\net40\Sunplus.Libraries.AOP.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

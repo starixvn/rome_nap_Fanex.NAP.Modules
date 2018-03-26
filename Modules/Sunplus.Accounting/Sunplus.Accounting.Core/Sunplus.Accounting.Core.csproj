@@ -59,8 +59,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CasinoLibrary, Version=2.0.1.16464, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CasinoLibrary.1.0.2.19-Jackpot-05\lib\net40\CasinoLibrary.dll</HintPath>
+    <Reference Include="CasinoLibrary, Version=2.0.1.16974, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CasinoLibrary.1.0.2.19-Jackpot-06\lib\net40\CasinoLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Couchbase, Version=1.2.6.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
@@ -170,6 +170,10 @@
     </Reference>
     <Reference Include="Sunplus.Core.Common">
       <HintPath>..\..\..\packages\Sunplus.Core.Common.1.1.4505.19054\lib\net40\Sunplus.Core.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Libraries.AOP.1.0.4218.28561\lib\net40\Sunplus.Libraries.AOP.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

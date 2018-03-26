@@ -60,8 +60,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CasinoLibrary, Version=2.0.1.16464, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CasinoLibrary.1.0.2.19-Jackpot-05\lib\net40\CasinoLibrary.dll</HintPath>
+    <Reference Include="CasinoLibrary, Version=2.0.1.16974, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CasinoLibrary.1.0.2.19-Jackpot-06\lib\net40\CasinoLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Couchbase, Version=1.2.6.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
