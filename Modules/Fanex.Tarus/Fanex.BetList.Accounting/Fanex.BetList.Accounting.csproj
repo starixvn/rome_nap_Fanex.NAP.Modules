@@ -343,8 +343,11 @@
     <Compile Include="Constants\DateTimeFormatConstants.cs" />
     <Compile Include="Constants\ScoreStatusConstants.cs" />
     <Compile Include="Constants\SportContants.cs" />
+    <Compile Include="Controllers\ExchangeBetListController.cs" />
     <Compile Include="Controllers\BetListController.cs" />
     <Compile Include="Criteria\BetListByCustInfoByRefnoCriteria.cs" />
+    <Compile Include="Criteria\Exchange\ExchangeBetDetailCriteria.cs" />
+    <Compile Include="Criteria\Exchange\ExchangeBetListCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoCriteria_Old.cs" />
     <Compile Include="Criteria\BetListByIP_OthersCriteria.cs" />
     <Compile Include="Criteria\BetListByIP_SoccerCriteria.cs" />
@@ -387,6 +390,9 @@
     <Compile Include="Models\Excel\ExcelCell.cs" />
     <Compile Include="Models\Excel\ExcelCellRange.cs" />
     <Compile Include="Models\Excel\MOdds4Cell.cs" />
+    <Compile Include="Models\Exchange\ExchangeDetailTicket.cs" />
+    <Compile Include="Models\Exchange\ExchangeTicket.cs" />
+    <Compile Include="Models\Exchange\ExchangeSummaryTicket.cs" />
     <Compile Include="Models\GroupParlayEvent.cs" />
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\ParlayEvent.cs" />
@@ -403,6 +409,7 @@
     <Compile Include="Models\VirtualHRPopupModel.cs" />
     <Compile Include="Models\VirtualTennisModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ExchangeBetListRepository.cs" />
     <Compile Include="Repositories\BetListDetailRepository.cs" />
     <Compile Include="Repositories\BetListRepository.cs" />
     <Compile Include="Repositories\IBetListDetailRepository.cs" />
@@ -421,6 +428,7 @@
     </Compile>
     <Compile Include="Services\BetListDetailService.cs" />
     <Compile Include="Services\BetListService.cs" />
+    <Compile Include="Services\ExchangeBetListService.cs" />
     <Compile Include="Services\ExportExcelBetlist.cs" />
     <Compile Include="Services\IBetListDetailService.cs" />
     <Compile Include="Services\IBetListService.cs" />
@@ -431,6 +439,7 @@
     <Compile Include="Services\ISystemParlayExcel.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\ResultService.cs" />
+    <Compile Include="ViewModels\Exchange\ExchangeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
