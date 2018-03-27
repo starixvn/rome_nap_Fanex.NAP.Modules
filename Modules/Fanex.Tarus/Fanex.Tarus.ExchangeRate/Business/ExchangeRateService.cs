@@ -288,19 +288,16 @@ namespace Fanex.Tarus.ExchangeRate.Business
             pjUnitPrice.Columns[1].Width = 200 * 20;
             pjUnitPrice.Columns[2].Width = 200 * 20;
 
-            var style = new CellStyle();
-            style.VerticalAlignment = VerticalAlignmentStyle.Center;
-            style.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
-            style.Font.Name = "Tahoma";
-            style.Font.Size = 160;
-
             var pjUnitPrices = GetPJUnitPrices();
             if (pjUnitPrices.Any())
             {
-
+                var isEven = true;
                 foreach (var unitPrice in pjUnitPrices)
                 {
                     startRowIndex++;
+
+                    var style = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils().GetStyleText(isEven);
+                    style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
 
                     pjUnitPrice.Cells[startRowIndex, 0].Value = unitPrice.Currency;
                     pjUnitPrice.Cells[startRowIndex, 0].Style = style;
@@ -308,8 +305,15 @@ namespace Fanex.Tarus.ExchangeRate.Business
                     pjUnitPrice.Cells[startRowIndex, 1].Value = unitPrice.StandardCode;
                     pjUnitPrice.Cells[startRowIndex, 1].Style = style;
 
-                    pjUnitPrice.Cells[startRowIndex, 2].Value = unitPrice.UnitPrice;
+                    pjUnitPrice.Cells[startRowIndex, 2].Value = unitPrice.UnitPrice == null ? (object)"n/a" : unitPrice.UnitPrice;
+                    style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                    if (isEven)
+                    {
+                        style.FillPattern.SetSolid(Color.FromArgb(247, 233, 248));
+                    }
                     pjUnitPrice.Cells[startRowIndex, 2].Style = style;
+
+                    isEven = !isEven;
                 }
             }
             else
