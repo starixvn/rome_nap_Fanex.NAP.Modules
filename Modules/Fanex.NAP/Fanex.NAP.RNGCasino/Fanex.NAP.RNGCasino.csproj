@@ -194,6 +194,7 @@
     <Compile Include="Configurations\OWRNGCasinoCollection.cs" />
     <Compile Include="Configurations\OWRNGCasinoElement.cs" />
     <Compile Include="Configurations\OWRNGCasinoSection.cs" />
+    <Compile Include="Constants\BetTypeConstants.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Controllers\RNGCasinoBetListController.cs" />
     <Compile Include="Criteria\GetJackpotDetailsCriteria.cs" />

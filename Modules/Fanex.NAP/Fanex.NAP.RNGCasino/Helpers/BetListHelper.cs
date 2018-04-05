@@ -68,7 +68,7 @@
             Justification = "Reviewed. Suppression is OK here.")]
         public string StatusRefNo(TicketDetail ticketDetail)
         {
-            if (IsJackpotContribution(ticketDetail.Ticket.BetTypeId))
+            if (Constants.BetTypeConstants.IsJackpotContribution(ticketDetail.Ticket.BetTypeId))
             {
                 return "<div class=\"bl_status c\"> - </div>";
             }
@@ -78,7 +78,6 @@
                 return GetFishingWorldStatus(ticketDetail);
             }
 
-            BetListHelper betlistHelper = new BetListHelper();
             string status = ticketDetail.Ticket.Status.ToLower();
             string statusLabel = string.Empty;
             bool isWonStatus = string.Equals(status, "won", StringComparison.OrdinalIgnoreCase);
@@ -86,7 +85,7 @@
             bool isDrawStatus = string.Equals(status, "draw", StringComparison.OrdinalIgnoreCase);
             var isRunningStatus = string.Equals(status, "running", StringComparison.OrdinalIgnoreCase);
 
-            if (isRunningStatus && !string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck))
+            if (isRunningStatus && !string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) && !Constants.BetTypeConstants.IsProgressiveJackpot(ticketDetail.Ticket.BetTypeId))
             {
                 var viewBrokenGame = "ViewRNGCasinoBrokenGame(" +
                     ticketDetail.Ticket.MatchId + "," +
@@ -104,7 +103,7 @@
             }
 
             string resultLink = string.Empty;
-            if (isWonStatus || isLoseStatus || isDrawStatus)
+            if (isWonStatus || isLoseStatus || isDrawStatus || Constants.BetTypeConstants.IsProgressiveJackpot(ticketDetail.Ticket.BetTypeId))
             {
                 resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) ?
                     string.Empty :
@@ -161,8 +160,5 @@
                  "<br />";
             return statusLabel + resultLink1;
         }
-
-        public bool IsJackpotContribution(int betType)
-            => betType == 2198 || betType == 2398 || betType == 2998;
     }
 }

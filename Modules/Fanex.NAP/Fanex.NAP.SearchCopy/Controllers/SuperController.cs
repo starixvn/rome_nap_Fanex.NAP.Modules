@@ -295,7 +295,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
                         customer.MobilePhone,
                         customer.Fax,
                         customer.CurrencyId,
-                        CasinoManager.Instance.IsEnabledJackpot(customer.ExistingCustId),
+                        CasinoManager.Instance.IsEnabledJackpot(customer.CustId),
                         DateTime.Now,
                         customer.IP,
                         customer.Creator,
