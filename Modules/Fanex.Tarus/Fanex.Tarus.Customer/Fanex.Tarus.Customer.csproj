@@ -78,6 +78,10 @@
       <HintPath>..\..\..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.2.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.CustomerSetting.Module.Casino.2.0.2.4\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.3.1\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
@@ -319,6 +323,8 @@
     <Compile Include="Business\AutoSuspend\IAutoSuspendService.cs" />
     <Compile Include="Business\AutoTransferAll\AutoTransferAllService.cs" />
     <Compile Include="Business\AutoTransferAll\IAutoTransferAllService.cs" />
+    <Compile Include="Business\Casino\ISyncCasinoService.cs" />
+    <Compile Include="Business\Casino\SyncCasinoService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountExcelService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\IConfigureDirectAccountService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
@@ -371,6 +377,7 @@
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
+    <Compile Include="Controller\Casino\SyncCasinoController.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerOTPController.cs" />
     <Compile Include="Controller\ExtraPtGroup\ExtraPtController.cs" />
@@ -455,6 +462,8 @@
     <Compile Include="DataAccess\AGCasino\IAGCasinoRepository.cs" />
     <Compile Include="DataAccess\AutoTransferAll\AutoTransferAllAccess.cs" />
     <Compile Include="DataAccess\AutoTransferAll\IAutoTransferAllAccess.cs" />
+    <Compile Include="DataAccess\Casino\ISyncCasinoRepository.cs" />
+    <Compile Include="DataAccess\Casino\SyncCasinoRepository.cs" />
     <Compile Include="DataAccess\ConfigureDirectAccount\ConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\ConfigureDirectAccount\IConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\CustomerLogin\CustomerOTPDataAccess.cs" />
@@ -638,10 +647,6 @@
     <ProjectReference Include="..\Fanex.Tarus.Web.Controller\Fanex.Tarus.Web.Controllers.csproj">
       <Project>{F3FE623F-A32F-4DB4-8306-64C166FC4488}</Project>
       <Name>Fanex.Tarus.Web.Controllers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sunplus.Accounting.Business\Sunplus.Accounting.Business.csproj">
-      <Project>{C7EB1617-765A-44E2-9267-96865EB5C096}</Project>
-      <Name>Sunplus.Accounting.Business</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Sunplus.Accounting\Sunplus.Accounting.Core\Sunplus.Accounting.Core.csproj">
       <Project>{09B74F02-6C21-4C5E-A52C-B6D56595A262}</Project>
