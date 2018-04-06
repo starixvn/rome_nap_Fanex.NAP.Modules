@@ -329,11 +329,6 @@ namespace Sunplus.Accounting.Business.Security
             return true;
         }
 
-        public static bool IsAllowEditFI()
-        {
-            return (!WebSettings.disabledFI);
-        }
-
         public static bool IsEnabledAutoMaster(bool isAllowedAutoMaster)
         {
             if (WebSettings.disableAutoM)
