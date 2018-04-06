@@ -368,9 +368,14 @@
       <HintPath>..\..\..\packages\Sunplus.Libraries.AOP.1.0.4218.28561\lib\net40\Sunplus.Libraries.AOP.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.0.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.0.12\lib\net40\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IO, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.IO.dll</HintPath>
       <Private>True</Private>
@@ -428,10 +433,21 @@
     <Compile Include="Business\AGCasino\IAGCasinoService.cs" />
     <Compile Include="Business\BetDetails\BetDetailsExporter.cs" />
     <Compile Include="Business\BetDetails\IBetDetailsExporter.cs" />
+    <Compile Include="Business\BetListDetailService.cs" />
+    <Compile Include="Business\BetListService.cs" />
+    <Compile Include="Business\ExchangeBetListService.cs" />
+    <Compile Include="Business\ExportExcelBetlist.cs" />
+    <Compile Include="Business\IBetListDetailService.cs" />
+    <Compile Include="Business\IBetListService.cs" />
+    <Compile Include="Business\IpService.cs" />
+    <Compile Include="Business\IResultService.cs" />
+    <Compile Include="Business\ISystemParlayExcel.cs" />
     <Compile Include="Business\MicroGaming\MicroGamingService.cs" />
     <Compile Include="Business\MicroGaming\IMicroGamingService.cs" />
     <Compile Include="Business\NumberGame\INumberWheelService.cs" />
     <Compile Include="Business\NumberGame\NumberWheelService.cs" />
+    <Compile Include="Business\ReportService.cs" />
+    <Compile Include="Business\ResultService.cs" />
     <Compile Include="Business\Results\AGCasinoResultService.cs" />
     <Compile Include="Business\Results\IAGCasinoResultService.cs" />
     <Compile Include="Business\Results\IGoldDeluxeResultService.cs" />
@@ -457,14 +473,52 @@
     <Compile Include="Business\Results\ScoreInformationService.cs" />
     <Compile Include="Business\SportingSolutions\ISportingSolutionsService.cs" />
     <Compile Include="Business\SportingSolutions\SportingSolutionsService.cs" />
-    <Compile Include="Constants\BetListContants.cs" />
+    <Compile Include="Business\SystemParlayExcel.cs" />
+    <Compile Include="Constants\BetListConstants.cs" />
+    <Compile Include="Constants\BetTypeContants.cs" />
+    <Compile Include="Constants\CommonConstants.cs" />
+    <Compile Include="Constants\CurrencyContants.cs" />
+    <Compile Include="Constants\DateTimeFormatConstants.cs" />
+    <Compile Include="Constants\ScoreStatusConstants.cs" />
+    <Compile Include="Constants\SportContants.cs" />
+    <Compile Include="Controller\BetListController.cs" />
+    <Compile Include="Controller\ExchangeBetListController.cs" />
     <Compile Include="Controller\Lucky3Controller.cs" />
     <Compile Include="Controller\AGCasinoBetListController.cs" />
     <Compile Include="Controller\MicroGamingBetListController.cs" />
     <Compile Include="Controller\TarusBetListController.cs" />
+    <Compile Include="Core\BetListHelper.cs" />
+    <Compile Include="Core\LoggingHandler.cs" />
+    <Compile Include="Core\NpoiExcelUtils.cs" />
+    <Compile Include="Core\SessionManager.cs" />
+    <Compile Include="Criteria\BetListBetTradeDetailCriteria.cs" />
+    <Compile Include="Criteria\BetListByCustInfoByRefnoCriteria.cs" />
+    <Compile Include="Criteria\BetListByCustInfoByRefnoU3Criteria.cs" />
+    <Compile Include="Criteria\BetListByCustInfoCriteria.cs" />
+    <Compile Include="Criteria\BetListByCustInfoCriteria_Old.cs" />
+    <Compile Include="Criteria\BetListByCustInfoU3Criteria.cs" />
+    <Compile Include="Criteria\BetListByCustInfoU3Criteria_Old.cs" />
+    <Compile Include="Criteria\BetListByIP_OthersCriteria.cs" />
+    <Compile Include="Criteria\BetListByIP_SoccerCriteria.cs" />
+    <Compile Include="Criteria\BetListByIP_UsernameCriteria.cs" />
+    <Compile Include="Criteria\BetListByRefNoAdvancedCriteria.cs" />
+    <Compile Include="Criteria\BetListByRefNoCriteria.cs" />
+    <Compile Include="Criteria\BetListGetSiteIdByCustIdCriteria.cs" />
+    <Compile Include="Criteria\BetListStatement.cs" />
+    <Compile Include="Criteria\BetListSystemParlayByRefnoCriteria.cs" />
+    <Compile Include="Criteria\BetListSystemParlayDetailsCriteria.cs" />
+    <Compile Include="Criteria\BetTypeByDateCriteria.cs" />
+    <Compile Include="Criteria\CustIDByUsernameCriteria.cs" />
+    <Compile Include="Criteria\Exchange\ExchangeBetDetailCriteria.cs" />
+    <Compile Include="Criteria\Exchange\ExchangeBetListCriteria.cs" />
+    <Compile Include="Criteria\GetCashOutDetailCriteria.cs" />
+    <Compile Include="Criteria\GetLicenseeBonusDetailCriteria.cs" />
     <Compile Include="Criteria\GetMicroGamingBetDetailsCriteria.cs" />
     <Compile Include="Criteria\GetAGCasinoBetDetailsCriteria.cs" />
+    <Compile Include="Criteria\GetScoreInformationCriteria.cs" />
+    <Compile Include="Criteria\GetSportingSolutionsResultCriteria.cs" />
     <Compile Include="Criteria\Lucky3\GetLucky3DetailCriteria.cs" />
+    <Compile Include="Criteria\MixParlayDetailCriteria.cs" />
     <Compile Include="Criteria\Results\GetAGCasinoResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetGoldDeluxePopUpResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetMicroGamingResultCriteria.cs" />
@@ -479,6 +533,12 @@
     <Compile Include="Criteria\SportingSolutions\GetSportingSolutionsResultCriteria.cs" />
     <Compile Include="DataAccess\AGCasino\AGCasinoRepository.cs" />
     <Compile Include="DataAccess\AGCasino\IAGCasinoRepository.cs" />
+    <Compile Include="DataAccess\BetListDetailRepository.cs" />
+    <Compile Include="DataAccess\BetListRepository.cs" />
+    <Compile Include="DataAccess\ExchangeBetListRepository.cs" />
+    <Compile Include="DataAccess\IBetListDetailRepository.cs" />
+    <Compile Include="DataAccess\IBetListRepository.cs" />
+    <Compile Include="DataAccess\ISystemParlayRepository.cs" />
     <Compile Include="DataAccess\Lucky3\Lucky3Repository.cs" />
     <Compile Include="DataAccess\MicroGaming\MicroGamingRepository.cs" />
     <Compile Include="DataAccess\MicroGaming\IMicroGamingRepository.cs" />
@@ -506,12 +566,49 @@
     <Compile Include="DataAccess\Results\ScoreInformationDataAccess.cs" />
     <Compile Include="DataAccess\SportingSolutions\ISportingSolutionsDataAccess.cs" />
     <Compile Include="DataAccess\SportingSolutions\SportingSolutionsDataAccess.cs" />
+    <Compile Include="DataAccess\SystemParlayRepository.cs" />
     <Compile Include="Entities\BetList\BetDetail.cs" />
     <Compile Include="Entities\NumberGame\NumberWheelChoice.cs" />
     <Compile Include="Entities\SportingSolutions\SetX_Info.cs" />
+    <Compile Include="Extensions\BetListExtension.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\NpoiExcelExtensions.cs" />
+    <Compile Include="Extensions\NumberExtensions.cs" />
     <Compile Include="Helper\BetListRenderHelper.cs" />
     <Compile Include="Helper\ChoiceHelper.cs" />
     <Compile Include="Helper\ReportServices.cs" />
+    <Compile Include="Models\BalanceUp.cs" />
+    <Compile Include="Models\BetListByIP_Username.cs" />
+    <Compile Include="Models\BetListDetail.cs" />
+    <Compile Include="Models\BetListRacingToteWinLoss.cs" />
+    <Compile Include="Models\BetType.cs" />
+    <Compile Include="Models\CashOutDetails.cs" />
+    <Compile Include="Models\CashOutTicket.cs" />
+    <Compile Include="Models\CombinationParlay.cs" />
+    <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\EventExcel.cs" />
+    <Compile Include="Models\Excel\ExcelCell.cs" />
+    <Compile Include="Models\Excel\ExcelCellRange.cs" />
+    <Compile Include="Models\Excel\MOdds4Cell.cs" />
+    <Compile Include="Models\Exchange\ExchangeDetailTicket.cs" />
+    <Compile Include="Models\Exchange\ExchangeSummaryTicket.cs" />
+    <Compile Include="Models\Exchange\ExchangeTicket.cs" />
+    <Compile Include="Models\Exchange\ExchangeViewModel.cs" />
+    <Compile Include="Models\GroupParlayEvent.cs" />
+    <Compile Include="Models\IPVNBean.cs" />
+    <Compile Include="Models\Match.cs" />
+    <Compile Include="Models\ParlayEvent.cs" />
+    <Compile Include="Models\SystemParlayDetail.cs" />
+    <Compile Include="Models\SystemParlayDetailExcel.cs" />
+    <Compile Include="Models\SystemParlayModel.cs" />
+    <Compile Include="Models\TennisResult\TennisGameResult.cs" />
+    <Compile Include="Models\TennisResult\TennisLeagueResult.cs" />
+    <Compile Include="Models\TennisResult\TennisMatchResult.cs" />
+    <Compile Include="Models\TennisResult\TennisResultEntity.cs" />
+    <Compile Include="Models\TennisResult\TennisSetResult.cs" />
+    <Compile Include="Models\TicketDetail.cs" />
+    <Compile Include="Models\VirtualHRPopupModel.cs" />
+    <Compile Include="Models\VirtualTennisModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\BetListResources.Designer.cs">
       <AutoGen>True</AutoGen>

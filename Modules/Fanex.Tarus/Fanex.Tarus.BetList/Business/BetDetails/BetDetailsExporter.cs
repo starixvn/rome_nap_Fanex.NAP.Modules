@@ -1,8 +1,7 @@
 ﻿namespace Fanex.Tarus.BetList.Business.BetDetails
 {
-    using Fanex.BetList.Accounting.Constants;
+    using Constants;
     using Fanex.BetList.Accounting.Extensions;
-    using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Core.Builder;
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
@@ -13,6 +12,7 @@
     using Fanex.Tarus.BetList.DataAccess;
     using Fanex.Voidbridge.BetDetail.Criteria;
     using Fanex.Voidbridge.BetDetail.Repositories;
+    using Models;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;

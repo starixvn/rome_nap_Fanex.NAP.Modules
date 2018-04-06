@@ -61,6 +61,15 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AG Casino.
+        /// </summary>
+        public static string AGCasino {
+            get {
+                return ResourceManager.GetString("AGCasino", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agent.
         /// </summary>
         public static string Agent {
@@ -75,6 +84,87 @@ namespace Fanex.Tarus.BetList.Resources {
         public static string Agent_Comm {
             get {
                 return ResourceManager.GetString("Agent_Comm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bought.
+        /// </summary>
+        public static string Bought {
+            get {
+                return ResourceManager.GetString("Bought", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bought Amount.
+        /// </summary>
+        public static string BoughtAmount {
+            get {
+                return ResourceManager.GetString("BoughtAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bought Stake.
+        /// </summary>
+        public static string BoughtStake {
+            get {
+                return ResourceManager.GetString("BoughtStake", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bought Ticket[s]:.
+        /// </summary>
+        public static string BoughtTickets {
+            get {
+                return ResourceManager.GetString("BoughtTickets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Out.
+        /// </summary>
+        public static string CashOut {
+            get {
+                return ResourceManager.GetString("CashOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Out Amount.
+        /// </summary>
+        public static string CashOutAmount {
+            get {
+                return ResourceManager.GetString("CashOutAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Out Stake.
+        /// </summary>
+        public static string CashOutStake {
+            get {
+                return ResourceManager.GetString("CashOutStake", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Out Ticket[s]:.
+        /// </summary>
+        public static string CashOutTickets {
+            get {
+                return ResourceManager.GetString("CashOutTickets", resourceCulture);
             }
         }
         
@@ -124,6 +214,51 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EUR.
+        /// </summary>
+        public static string EUR {
+            get {
+                return ResourceManager.GetString("EUR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ex.Rate 2.
+        /// </summary>
+        public static string Ex_Rate_2 {
+            get {
+                return ResourceManager.GetString("Ex_Rate_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gold Deluxe.
+        /// </summary>
+        public static string Gold_Deluxe {
+            get {
+                return ResourceManager.GetString("Gold_Deluxe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lose.
+        /// </summary>
+        public static string Lose {
+            get {
+                return ResourceManager.GetString("Lose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Master.
         /// </summary>
         public static string Master {
@@ -142,11 +277,29 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Microgaming.
+        /// </summary>
+        public static string Microgaming {
+            get {
+                return ResourceManager.GetString("Microgaming", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No information is available.
+        /// </summary>
+        public static string noInfo {
+            get {
+                return ResourceManager.GetString("noInfo", resourceCulture);
             }
         }
         
@@ -160,11 +313,38 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number Game.
+        /// </summary>
+        public static string Number_Game {
+            get {
+                return ResourceManager.GetString("Number_Game", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Odds.
         /// </summary>
         public static string Odds {
             get {
                 return ResourceManager.GetString("Odds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operator.
+        /// </summary>
+        public static string Operator {
+            get {
+                return ResourceManager.GetString("Operator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Bet Ticket:.
+        /// </summary>
+        public static string OriginalBetTicket {
+            get {
+                return ResourceManager.GetString("OriginalBetTicket", resourceCulture);
             }
         }
         
@@ -192,6 +372,42 @@ namespace Fanex.Tarus.BetList.Resources {
         public static string PT {
             get {
                 return ResourceManager.GetString("PT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ref No.
+        /// </summary>
+        public static string refno {
+            get {
+                return ResourceManager.GetString("refno", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refund.
+        /// </summary>
+        public static string Refund {
+            get {
+                return ResourceManager.GetString("Refund", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Results.
+        /// </summary>
+        public static string results {
+            get {
+                return ResourceManager.GetString("results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RM.
+        /// </summary>
+        public static string RM {
+            get {
+                return ResourceManager.GetString("RM", resourceCulture);
             }
         }
         
@@ -241,6 +457,15 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to %.
+        /// </summary>
+        public static string Symbol_Percent {
+            get {
+                return ResourceManager.GetString("Symbol_Percent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is no data.
         /// </summary>
         public static string ThereIsNoData {
@@ -255,6 +480,24 @@ namespace Fanex.Tarus.BetList.Resources {
         public static string ThereIsNoTicketDetailAvailable {
             get {
                 return ResourceManager.GetString("ThereIsNoTicketDetailAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string Total {
+            get {
+                return ResourceManager.GetString("Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total of losing tickets.
+        /// </summary>
+        public static string Total_of_losing_tickets {
+            get {
+                return ResourceManager.GetString("Total_of_losing_tickets", resourceCulture);
             }
         }
         
@@ -295,11 +538,56 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to USD.
+        /// </summary>
+        public static string USD {
+            get {
+                return ResourceManager.GetString("USD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Virtual Sports.
+        /// </summary>
+        public static string Virtual_Sports {
+            get {
+                return ResourceManager.GetString("Virtual_Sports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Win Loss.
         /// </summary>
         public static string Win_Loss {
             get {
                 return ResourceManager.GetString("Win_Loss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WinLoss.
+        /// </summary>
+        public static string WinLoss {
+            get {
+                return ResourceManager.GetString("WinLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Win/Loss.
+        /// </summary>
+        public static string WinSlashLoss {
+            get {
+                return ResourceManager.GetString("WinSlashLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Won.
+        /// </summary>
+        public static string Won {
+            get {
+                return ResourceManager.GetString("Won", resourceCulture);
             }
         }
         

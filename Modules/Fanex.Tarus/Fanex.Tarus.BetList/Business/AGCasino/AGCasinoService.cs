@@ -1,16 +1,16 @@
 ﻿namespace Fanex.Tarus.BetList.Business
 {
-    using System.Collections.Generic;
-    using Fanex.BetList.Accounting.Constants;
-    using Fanex.BetList.Accounting.Core;
-    using Fanex.BetList.Accounting.Extensions;
-    using Fanex.BetList.Accounting.Models;
+    using Constants;
+    using Core;
+    using Extensions;
     using Fanex.BetList.Core.Builder;
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
     using Fanex.BetList.Core.TicketHelper;
     using Fanex.Tarus.BetList.Criteria;
     using Fanex.Tarus.BetList.DataAccess;
+    using Models;
+    using System.Collections.Generic;
 
     public class AGCasinoService : IAGCasinoService
     {

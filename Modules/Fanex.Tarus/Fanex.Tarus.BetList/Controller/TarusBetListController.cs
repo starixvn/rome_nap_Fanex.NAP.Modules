@@ -7,21 +7,21 @@
 
 namespace Fanex.Tarus.BetList.Controller
 {
-    using System;
-    using System.Collections;
-    using System.Web.Mvc;
+    using Business;
     using Business.BetDetails;
     using CustomerSetting.Module.Core.Attributes;
     using DNAide.Core;
     using Fanex.BetList.Accounting.Constants;
-    using Fanex.BetList.Accounting.Models;
-    using Fanex.BetList.Accounting.Services;
     using Fanex.Tarus.Security.Authenticate;
     using Fanex.Tarus.Security.Criteria;
     using Fanex.Tarus.Security.Domain;
     using Fanex.Tarus.Security.Services;
+    using Models;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Helper;
+    using System;
+    using System.Collections;
+    using System.Web.Mvc;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
 
     [SpecialSiteFilter]

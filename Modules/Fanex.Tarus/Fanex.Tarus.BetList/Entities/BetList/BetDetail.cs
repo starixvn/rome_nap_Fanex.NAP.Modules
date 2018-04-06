@@ -1,7 +1,7 @@
 ﻿namespace Fanex.Tarus.BetList.Entities.BetList
 {
+    using Models;
     using System.Collections.Generic;
-    using Fanex.BetList.Accounting.Models;
 
     public class BetDetail
     {

@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Tarus.BetList.Business.BetDetails
 {
+    using Models;
     using System.Collections.Generic;
     using System.IO;
-    using Fanex.BetList.Accounting.Models;
 
     public interface IBetDetailsExporter
     {

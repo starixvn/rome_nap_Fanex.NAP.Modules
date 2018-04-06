@@ -1,11 +1,11 @@
 ﻿namespace Fanex.Tarus.BetList.DataAccess
 {
-    using System.Collections.Generic;
-    using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Core.Entities;
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.Tarus.BetList.Criteria;
+    using Models;
+    using System.Collections.Generic;
 
     public class AGCasinoRepository : IAGCasinoRepository
     {
