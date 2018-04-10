@@ -59,7 +59,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.BetList.Core.2.57.0-beta\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+      <HintPath>..\..\..\packages\Fanex.BetList.Core.2.57.0-beta1\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.CashOut, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
@@ -71,7 +71,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.Core, Version=2.57.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.BetList.Core.2.57.0-beta\lib\net40\Fanex.BetList.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\Fanex.BetList.Core.2.57.0-beta1\lib\net40\Fanex.BetList.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.GlobalGaming, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
@@ -283,7 +283,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.1-Jackpot\lib\net40\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.1-Jackpot-01\lib\net40\Sunplus.Accounting.DataAccess.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
