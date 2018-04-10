@@ -18,6 +18,6 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
     /// </summary>
     public interface IScoreInformationDataAccess
     {
-        List<Sportsbook> GetScoreInformation(ref GetScoreInformationCriteria criteria);
+        List<Sportsbook> GetScoreInformation(ref GetScoreInformationCriteria criteria, int handicap2);
     }
 }
