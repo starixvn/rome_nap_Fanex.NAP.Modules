@@ -14,6 +14,8 @@ namespace Fanex.Tarus.ExchangeRate.Controller
     using Fanex.Tarus.ExchangeRate.Entities;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
+    using Security.Services;
+    using ViewModels;
 
     /// <summary>
     /// TODO: Update summary.
@@ -22,12 +24,13 @@ namespace Fanex.Tarus.ExchangeRate.Controller
     {
         //
         // GET: /OANDAExRate/
-        public readonly IExchangeRateService _exchangeRateService;
+        private readonly IExchangeRateService _exchangeRateService;
 
         public ExchangeRateController()
             : this(null)
         {
         }
+
         public ExchangeRateController(IExchangeRateService exRateService)
         {
             _exchangeRateService = exRateService ?? new ExchangeRateService();
@@ -68,7 +71,10 @@ namespace Fanex.Tarus.ExchangeRate.Controller
         {
             var pjUnitPrices = _exchangeRateService.GetPJUnitPrices();
 
-            return View("~/Views/ExchangeRate/PJUnitPrice.cshtml", pjUnitPrices);
+            return View("~/Views/ExchangeRate/PJUnitPrice.cshtml",
+                new PJUnitPriceViewModel(
+                    pjUnitPrices,
+                    PermissionService.CheckHostPermission("ExchangeRate/EditPJUnitPrice", Sunplus.Accounting.Core.Common.AppSession.AccId)));
         }
 
         [HttpPost, AuthenticateHost]

@@ -167,12 +167,19 @@
     <Compile Include="Entities\ExchangeDaily.cs" />
     <Compile Include="Entities\PJUnitPrice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\PJUnitPriceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.Tarus.Security\Fanex.Tarus.Security.csproj">
+      <Project>{06EBADAA-AC59-41B0-B7DB-AFD65C89D790}</Project>
+      <Name>Fanex.Tarus.Security</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
