@@ -214,7 +214,6 @@
     <Compile Include="Criteria\GetRNGCasinoBetDetailsCriteria.cs" />
     <Compile Include="Criteria\GetRNGCasinoResultCriteria.cs" />
     <Compile Include="Criteria\GetVoidbridgeResultCriteria.cs" />
-    <Compile Include="Extensions\BetListExtension.cs" />
     <Compile Include="Helpers\BetListHelper.cs" />
     <Compile Include="Models\BetDetail.cs" />
     <Compile Include="Models\HandHistory\HandHistoryModel.cs" />
