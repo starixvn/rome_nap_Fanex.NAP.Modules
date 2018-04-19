@@ -68,12 +68,16 @@
             Justification = "Reviewed. Suppression is OK here.")]
         public string StatusRefNo(TicketDetail ticketDetail)
         {
+            if (Constants.BetTypeConstants.IsJackpotContribution(ticketDetail.Ticket.BetTypeId))
+            {
+                return "<div class=\"bl_status c\"> - </div>";
+            }
+
             if (IsFishingWorld(ticketDetail.Ticket.SportTypeId))
             {
                 return GetFishingWorldStatus(ticketDetail);
             }
 
-            BetListHelper betlistHelper = new BetListHelper();
             string status = ticketDetail.Ticket.Status.ToLower();
             string statusLabel = string.Empty;
             bool isWonStatus = string.Equals(status, "won", StringComparison.OrdinalIgnoreCase);
@@ -81,7 +85,7 @@
             bool isDrawStatus = string.Equals(status, "draw", StringComparison.OrdinalIgnoreCase);
             var isRunningStatus = string.Equals(status, "running", StringComparison.OrdinalIgnoreCase);
 
-            if (isRunningStatus && !string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck))
+            if (isRunningStatus && !string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) && !Constants.BetTypeConstants.IsProgressiveJackpot(ticketDetail.Ticket.BetTypeId))
             {
                 var viewBrokenGame = "ViewRNGCasinoBrokenGame(" +
                     ticketDetail.Ticket.MatchId + "," +
@@ -90,7 +94,7 @@
                     ticketDetail.Ticket.SportTypeId + "," +
                     "'" + (ticketDetail.Ticket.BetCheck ?? string.Empty) + "'," +
                     "'" + ticketDetail.Ticket.WinlostDate.ToShortFormatedDate() + "')";
-                statusLabel = "<div id=\"rngcasino_brokengame_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + viewBrokenGame 
+                statusLabel = "<div id=\"rngcasino_brokengame_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + viewBrokenGame
                     + "\" class=\"viewbrokengame-link\">" + status.ToUpper() + "</div>";
             }
             else
@@ -99,7 +103,7 @@
             }
 
             string resultLink = string.Empty;
-            if (isWonStatus || isLoseStatus || isDrawStatus)
+            if (isWonStatus || isLoseStatus || isDrawStatus || Constants.BetTypeConstants.IsProgressiveJackpot(ticketDetail.Ticket.BetTypeId))
             {
                 resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) ?
                     string.Empty :

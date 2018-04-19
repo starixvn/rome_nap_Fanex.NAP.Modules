@@ -11,7 +11,6 @@ namespace Fanex.BetList.Accounting.Controllers
     using CustomerSetting.Module.Core.Attributes;
     using Fanex.BetList.Accounting.Core;
     using Fanex.BetList.Accounting.Criteria;
-    using Fanex.BetList.Accounting.Extensions;
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Services;
     using Fanex.Common;
@@ -288,7 +287,6 @@ namespace Fanex.BetList.Accounting.Controllers
 
             return PartialView("~/Views/BetList/BetListStatement/_BetListStatement.cshtml", result);
         }
-
 
         /// <summary>
         /// Gets the bet list by reference no.

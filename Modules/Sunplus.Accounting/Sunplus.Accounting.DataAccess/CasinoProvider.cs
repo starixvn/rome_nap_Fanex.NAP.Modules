@@ -57,7 +57,7 @@ namespace Sunplus.Accounting.DataAccess
         /// </summary>
         /// <param name="gameKindID">ID of game kind</param>
         /// <returns>List GameTypeDetail</returns>
-        public abstract List<GameTypeDetail> GetGameType(int gameKindID, string siteName);
+        public abstract List<GameTypeDetail> GetGameType(int gameKindID, string siteName, int custId, int exchangeId);
 
         public abstract List<GameTypeDetail> GetGameType(int custId, int gameKindID, string siteName);
 

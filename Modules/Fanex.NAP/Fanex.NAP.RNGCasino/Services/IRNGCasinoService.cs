@@ -1,10 +1,11 @@
 ﻿namespace Fanex.Module.RNGCasino.Services
 {
+    using System;
+    using System.Collections.Generic;
     using Criteria;
     using Models;
     using Models.HandHistory;
-    using System;
-    using System.Collections.Generic;
+    using NPOI.SS.UserModel;
 
     public interface IRNGCasinoService
     {
@@ -16,5 +17,7 @@
         HandHistoryModel GetVoidbridgeResult(GetVoidbridgeResultCriteria criteria, string language);
 
         HandHistoryModel GetResultCriteria(GetResultCriteria criteria, string language);
+
+        IEnumerable<TicketDetail> JackpotDetails(GetJackpotDetailsCriteria criteria);
     }
 }

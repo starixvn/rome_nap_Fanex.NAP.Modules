@@ -147,25 +147,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     var _cust = new Customer();
                     _cust.SiteName = _custSetting.SiteName;
                     #endregion
-
-                    if (_custSetting.RoleId != 4)
-                    {
-                        dt = _cust.GetDefaultMaxTransfer(_custSetting.UpperCustID, 0, false);
-                        _custSetting.MaxTransferCreditLimit = CastAide.AsDouble((dt.Rows[0]["MaxLimit"]));
-                        _custSetting.MinTransferCreditLimit = CastAide.AsDouble((dt.Rows[0]["MinLimit"]));
-                        _custSetting.DefaultTransferCredit = CastAide.AsDouble((dt.Rows[0]["DefMaxTransferCredit"]));
-                    }
-                    else //Super
-                    {
-                        dt = _cust.GetDefaultMaxTransfer(0, _custSetting.Currency, true);
-                        if (dt != null)
-                        {
-                            _custSetting.MaxTransferCreditLimit = CastAide.AsDouble((dt.Rows[0]["MaxTransferCredit"]));
-                            _custSetting.MinTransferCreditLimit = _custSetting.MaxTransferCreditLimit;
-                            _custSetting.DefaultTransferCredit = CastAide.AsDouble((dt.Rows[0]["SuperMaxTransfer"]));
-                        }
-                    }
-
+                                        
                     if (_custSetting.CasinoSync)
                     {
                         var dataTableCustomerSettings = _cust.GetCustSetting(_custSetting.IBCCustID);
