@@ -47,12 +47,12 @@ namespace Sunplus.Accounting.Core.Helper
             Type type = value.GetType();
 
             var json = new JsonSerializer
-                           {
-                               NullValueHandling = NullValueHandling.Ignore,
-                               ObjectCreationHandling = ObjectCreationHandling.Replace,
-                               MissingMemberHandling = MissingMemberHandling.Ignore,
-                               ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                           };
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                ObjectCreationHandling = ObjectCreationHandling.Replace,
+                MissingMemberHandling = MissingMemberHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
 
             if (type == typeof(DataRow))
                 json.Converters.Add(new DataRowConverter());
@@ -79,12 +79,12 @@ namespace Sunplus.Accounting.Core.Helper
         private object Deserialize(string jsonText, Type valueType)
         {
             var json = new JsonSerializer
-                           {
-                               NullValueHandling = NullValueHandling.Ignore,
-                               ObjectCreationHandling = ObjectCreationHandling.Replace,
-                               MissingMemberHandling = MissingMemberHandling.Ignore,
-                               ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                           };
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                ObjectCreationHandling = ObjectCreationHandling.Replace,
+                MissingMemberHandling = MissingMemberHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
 
             var sr = new StringReader(jsonText);
             var reader = new JsonTextReader(sr);
@@ -100,7 +100,7 @@ namespace Sunplus.Accounting.Core.Helper
     /// </summary>
     public class DataRowConverter : JsonConverter
     {
-         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }
@@ -123,11 +123,6 @@ namespace Sunplus.Accounting.Core.Helper
         public override bool CanConvert(Type objectType)
         {
             return typeof(DataRow).IsAssignableFrom(objectType);
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
         }
     }
 
