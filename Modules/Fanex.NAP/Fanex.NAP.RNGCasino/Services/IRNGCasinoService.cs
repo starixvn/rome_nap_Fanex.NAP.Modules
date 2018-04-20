@@ -5,7 +5,6 @@
     using Criteria;
     using Models;
     using Models.HandHistory;
-    using NPOI.SS.UserModel;
 
     public interface IRNGCasinoService
     {
