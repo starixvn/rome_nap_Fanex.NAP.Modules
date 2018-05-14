@@ -17,19 +17,20 @@ namespace Fanex.Tarus.Admin.Business.MailingList
     using DNAide.Core;
     using Sunplus.Accounting.Core.Extensions;
     using Fanex.Tarus.Admin.Entities.MailingList;
-using Fanex.Tarus.Web.Controllers.Filters;
+    using Fanex.Tarus.Web.Controllers.Filters;
+
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class SpecialDeleteService : ISpecialDeleteService
     {
         private readonly ISpecialDeleteAccess _specialDeleteAccess;
-         public SpecialDeleteService():this(null)
+        public SpecialDeleteService() : this(null)
         {
-            
+
         }
 
-         public SpecialDeleteService(ISpecialDeleteAccess specialDeleteAccess)
+        public SpecialDeleteService(ISpecialDeleteAccess specialDeleteAccess)
         {
             _specialDeleteAccess = specialDeleteAccess ?? new SpecialDeleteAccess();
         }
@@ -44,9 +45,9 @@ using Fanex.Tarus.Web.Controllers.Filters;
                 int index = 0;
                 foreach (DataRow row in datatable.Rows)
                 {
-                    var mailLicensee =  new MailLicensee();
+                    var mailLicensee = new MailLicensee();
 
-                    mailLicensee.SiteID  = CastAide.AsInt32(row["siteid"]);
+                    mailLicensee.SiteID = CastAide.AsInt32(row["siteid"]);
                     mailLicensee.SiteName = CastAide.AsString(row["site"]);
                     mailLicensee.ToList = CastAide.AsString(row["tolist"]);
                     mailLicensee.CCList = CastAide.AsString(row["cclist"]);
@@ -54,10 +55,10 @@ using Fanex.Tarus.Web.Controllers.Filters;
                     mailLicensee.IsMailExist = CastAide.AsBoolean(row["isavailabe"]);
 
                     model.LicenseeList.Add(mailLicensee);
-                    
+
                     if (!mailLicensee.IsMailExist)
                     {
-                        model.NonMailingList += index == 0 ? mailLicensee.SiteName : ", " + mailLicensee.SiteName ;
+                        model.NonMailingList += index == 0 ? mailLicensee.SiteName : ", " + mailLicensee.SiteName;
                         index++;
                     }
                 }
@@ -80,6 +81,10 @@ using Fanex.Tarus.Web.Controllers.Filters;
         {
             try
             {
+                mailLicensee.ToList = RemoveWhiteSpaceInEmailList(mailLicensee.ToList);
+                mailLicensee.CCList = RemoveWhiteSpaceInEmailList(mailLicensee.CCList);
+                mailLicensee.BCCList = RemoveWhiteSpaceInEmailList(mailLicensee.BCCList);
+
                 var result = _specialDeleteAccess.UpdateInsertMailing(mailLicensee, update);
                 return result;
             }
@@ -87,6 +92,16 @@ using Fanex.Tarus.Web.Controllers.Filters;
             {
                 return new Result { ErrorCode = 1, ErrorMessage = e.Message };
             }
+        }
+
+        private string RemoveWhiteSpaceInEmailList(string emailList)
+        {
+            if (emailList == null)
+            {
+                return emailList;
+            }
+
+            return emailList.Trim().Replace(new[] { " ", "\t" }, string.Empty);
         }
     }
 }
