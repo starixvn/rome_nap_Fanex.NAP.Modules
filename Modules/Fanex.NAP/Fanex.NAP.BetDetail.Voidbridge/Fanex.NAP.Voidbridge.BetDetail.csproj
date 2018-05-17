@@ -145,7 +145,6 @@
     <Compile Include="Controllers\VoidbridgeBetListController.cs" />
     <Compile Include="Criteria\GetVoidbridgeBetDetailsCriteria.cs" />
     <Compile Include="Criteria\GetVoidbridgeResultCriteria.cs" />
-    <Compile Include="Extensions\BetListExtension.cs" />
     <Compile Include="Helpers\BetListHelper.cs" />
     <Compile Include="Models\BetDetailReport.cs" />
     <Compile Include="Models\HandHistory\AuthInfo.cs" />

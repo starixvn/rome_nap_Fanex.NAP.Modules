@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Criteria;
-    using Extensions;
     using Fanex.BetList.Core.Builder;
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
@@ -47,9 +46,9 @@
                     ticketHelper.IsShowOddsWithChoice = betListHelper.IsShowOddsWithChoice(ticketDetail.Ticket.BetTypeId);
                     ticketDetail.TransDateHtml = builder.BuildTrans(ticketDetail.Ticket);
                     ticketDetail.ChoiceHtml = builder.BuildChoice(ticketDetail.Ticket, ticketHelper, outputLiveCasino, false);
-                    ticketDetail.StakeHtml = BetListExtension.BuildStake(ticketDetail, ref builder);
+                    ticketDetail.StakeHtml = builder.BuildStake(ticketDetail.Ticket);
                     ticketDetail.OddHtml = builder.BuildOdds(ticketDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
-                    ticketDetail.StatusHtml = betListHelper.StatusRefNo(ticketDetail);
+                    ticketDetail.StatusHtml = betListHelper.BuildStatus(builder, ticketHelper, ticketDetail.Ticket, new List<ITicketData>());
 
                     detailsTickets.Add(ticketDetail);
                 }

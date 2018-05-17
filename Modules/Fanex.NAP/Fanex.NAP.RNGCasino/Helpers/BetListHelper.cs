@@ -1,13 +1,13 @@
 ﻿namespace Fanex.Module.RNGCasino.Helpers
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Text;
     using System.Text.RegularExpressions;
+    using BetList.Core.Builder;
     using CustomerSetting.Module.Core.Constants;
     using Fanex.BetList.Core.Entities;
-    using Fanex.CustomerSetting.Module.Core.Extensions;
-    using Models;
     using Resources;
 
     public class BetListHelper
@@ -63,102 +63,18 @@
                 Math.Round(input * 100, 2).ToString() + BetListResources.Symbol_Percent;
         }
 
-        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
-            "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
-        public string StatusRefNo(TicketDetail ticketDetail)
+        public string BuildStatus(BetListHTMLBuilder builder, ITicketHelper ticketHelper, ITicket ticket, List<ITicketData> ticketData)
         {
-            if (Constants.BetTypeConstants.IsJackpotContribution(ticketDetail.Ticket.BetTypeId))
-            {
-                return "<div class=\"bl_status c\"> - </div>";
-            }
+            var statusBuilder = builder.CreateStatusBuilder(ticket.BetTypeId);
+            var statusBlock = statusBuilder.Render(ticket, ticketHelper, ticketData, true);
+            statusBlock.ShowIP = null;
 
-            if (IsFishingWorld(ticketDetail.Ticket.SportTypeId))
-            {
-                return GetFishingWorldStatus(ticketDetail);
-            }
-
-            string status = ticketDetail.Ticket.Status.ToLower();
-            string statusLabel = string.Empty;
-            bool isWonStatus = string.Equals(status, "won", StringComparison.OrdinalIgnoreCase);
-            bool isLoseStatus = string.Equals(status, "lose", StringComparison.OrdinalIgnoreCase);
-            bool isDrawStatus = string.Equals(status, "draw", StringComparison.OrdinalIgnoreCase);
-            var isRunningStatus = string.Equals(status, "running", StringComparison.OrdinalIgnoreCase);
-
-            if (isRunningStatus && !string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) && !Constants.BetTypeConstants.IsProgressiveJackpot(ticketDetail.Ticket.BetTypeId))
-            {
-                var viewBrokenGame = "ViewRNGCasinoBrokenGame(" +
-                    ticketDetail.Ticket.MatchId + "," +
-                    (string.IsNullOrEmpty(ticketDetail.Ticket.Race) ? "0" : ticketDetail.Ticket.Race) + "," +
-                    ticketDetail.Ticket.BetTypeId + "," +
-                    ticketDetail.Ticket.SportTypeId + "," +
-                    "'" + (ticketDetail.Ticket.BetCheck ?? string.Empty) + "'," +
-                    "'" + ticketDetail.Ticket.WinlostDate.ToShortFormatedDate() + "')";
-                statusLabel = "<div id=\"rngcasino_brokengame_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + viewBrokenGame
-                    + "\" class=\"viewbrokengame-link\">" + status.ToUpper() + "</div>";
-            }
-            else
-            {
-                statusLabel = "<div class=\"bl_status c\">" + status.ToUpper() + "</div>";
-            }
-
-            string resultLink = string.Empty;
-            if (isWonStatus || isLoseStatus || isDrawStatus || Constants.BetTypeConstants.IsProgressiveJackpot(ticketDetail.Ticket.BetTypeId))
-            {
-                resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) ?
-                    string.Empty :
-                    "ViewRNGCasinoResult(" +
-                        ticketDetail.Ticket.MatchId + "," +
-                        (string.IsNullOrEmpty(ticketDetail.Ticket.Race) ? "0" : ticketDetail.Ticket.Race) + "," +
-                        ticketDetail.Ticket.BetTypeId + "," +
-                        ticketDetail.Ticket.SportTypeId + "," +
-                        "'" + (ticketDetail.Ticket.BetCheck ?? string.Empty) + "'," +
-                        "\'" + ticketDetail.Ticket.WinlostDate.ToShortFormatedDate() + "\'" + "," +
-                        ticketDetail.Ticket.CustId + ")";
-            }
-
-            var resultLink1 = string.IsNullOrEmpty(resultLink) ?
-                string.Empty :
-                "<br />" +
-                "<a id=\"result_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + resultLink + "\" class=\"betlist-result\">" + BetListResources.Result + "</a>" +
-                "<br />";
-            return statusLabel + resultLink1;
+            return statusBlock.ToString();
         }
 
         public bool IsShowOddsWithChoice(int betTypeId)
         {
             return betTypeId == BetTypeContants.MixParlay || betTypeId == BetTypeContants.SystemParlay;
-        }
-
-        public bool IsFishingWorld(int sportType)
-        {
-            return sportType == SportContants.FishingWorld;
-        }
-
-        public string GetFishingWorldStatus(TicketDetail ticketDetail)
-        {
-            var statusLabel = string.Empty;
-            var status = ticketDetail.Ticket.Status.ToLower();
-            bool isWonStatus = string.Equals(status, "won", StringComparison.OrdinalIgnoreCase);
-            bool isLoseStatus = string.Equals(status, "lose", StringComparison.OrdinalIgnoreCase);
-            bool isDrawStatus = string.Equals(status, "draw", StringComparison.OrdinalIgnoreCase);
-
-            statusLabel = "<div class=\"bl_status c\">" + status.ToUpper() + "</div>";
-
-            var resultLink = string.Empty;
-            if (isWonStatus || isLoseStatus || isDrawStatus)
-            {
-                resultLink = string.IsNullOrEmpty(ticketDetail.Ticket.BetCheck) ?
-                     string.Empty :
-                     "ViewFishingWorldResult(" + ticketDetail.Ticket.CustId + ", '" + ticketDetail.Ticket.BetCheck + "')";
-            }
-
-            var resultLink1 = string.IsNullOrEmpty(resultLink) ?
-                 string.Empty :
-                 "<br />" +
-                 "<a id=\"result_" + ticketDetail.Ticket.TransId + "\" onclick=\"" + resultLink + "\">" + BetListResources.Result + "</a>" +
-                 "<br />";
-            return statusLabel + resultLink1;
         }
     }
 }
