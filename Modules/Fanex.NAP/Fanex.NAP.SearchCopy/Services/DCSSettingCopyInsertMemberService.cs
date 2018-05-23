@@ -1,11 +1,13 @@
 ﻿namespace Fanex.CustomerSetting.Module.SearchCopy.Services
 {
+    using System;
     using Core.Models;
-    using Fanex.NAP.Framework.Data;
-    using Repository.Impl;
-    using Repository.Interface;
+    using Criteria;
+    using Logging.Extensions.Web;
+    using NAP.Framework.Data;
+    using Repositories;
 
-    public class DCSSettingCopyInsertMemberService : IDCSSettingCopyInsertMemberService
+    internal class DCSSettingCopyInsertMemberService : IDCSSettingCopyInsertMemberService
     {
         private readonly IDCSSettingCopyInsertMemberRepository _repository;
 
@@ -14,14 +16,24 @@
             _repository = repository ?? new DCSSettingCopyInsertMemberRepository();
         }
 
-       public Result CorrectMemberPositionTaking(ICriteria criteria)
+        public Result CorrectMemberPositionTaking(int custId, int sourceCustId, int actorId, string ip)
         {
-            return _repository.CorrectMemberPositionTaking(criteria);
-        }
+            ICriteria criteria = new DCSSettingCopyInsertMemberCriteria(
+                custId,
+                sourceCustId,
+                actorId,
+                ip);
 
-       public bool CheckMemberPositionTakingConstrain(ICriteria criteria)
-       {
-           return _repository.CheckMemberPositionTakingConstrain(criteria);
-       }
+            try
+            {
+                return _repository.CorrectMemberPositionTaking(criteria);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
+
+            return null;
+        }
     }
 }
