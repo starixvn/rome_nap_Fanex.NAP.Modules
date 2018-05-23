@@ -23,7 +23,7 @@ namespace Sunplus.Accounting.Entities.LogDisplay
 
     public interface IRecordLog
     {
-        int ID { get; set; } // log code
+        long ID { get; set; } // log code
 
         string Date { get; set; } // log date
 
@@ -93,7 +93,7 @@ namespace Sunplus.Accounting.Entities.LogDisplay
     public class RecordLog : IRecordLog
     {
         [DataMember]
-        public int ID { get; set; } // log code
+        public long ID { get; set; } // log code
 
         [DataMember]
         public string Date { get; set; } // log date
