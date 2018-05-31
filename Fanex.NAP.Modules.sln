@@ -61,6 +61,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.Finance", "Modu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.SSO", "Modules\Fanex.Tarus\Fanex.Nap.SSO\Fanex.Nap.SSO.csproj", "{0DD8B22B-0A04-41BA-A5EC-E60FE682DB57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.API", "Modules\Fanex.Tarus\Fanex.Tarus.API\Fanex.Tarus.API.csproj", "{870E4221-2EDC-4397-87B2-85EE2792879F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -171,6 +173,10 @@ Global
 		{0DD8B22B-0A04-41BA-A5EC-E60FE682DB57}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{0DD8B22B-0A04-41BA-A5EC-E60FE682DB57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DD8B22B-0A04-41BA-A5EC-E60FE682DB57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{870E4221-2EDC-4397-87B2-85EE2792879F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{870E4221-2EDC-4397-87B2-85EE2792879F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{870E4221-2EDC-4397-87B2-85EE2792879F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{870E4221-2EDC-4397-87B2-85EE2792879F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -202,5 +208,6 @@ Global
 		{ACDAC061-9C62-4C4B-A08C-2C810669E290} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 		{2DA5F7C3-BB8B-45F2-9E38-DD8E23655DA6} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 		{0DD8B22B-0A04-41BA-A5EC-E60FE682DB57} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
+		{870E4221-2EDC-4397-87B2-85EE2792879F} = {E1811F45-F687-4BEB-A0E5-4EF1C0E04196}
 	EndGlobalSection
 EndGlobal
