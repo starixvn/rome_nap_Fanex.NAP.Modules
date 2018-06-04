@@ -18,22 +18,44 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
     using Casino.Services.Impl;
     using Casino.Services.Interface;
     using CasinoLibrary.Model.UserException;
+    using Common;
     using Core.Attributes;
-    using Fanex.CustomerSetting.Module.Core.Web;
-    using Fanex.CustomerSetting.Module.SearchCopy.Common;
-    using Fanex.CustomerSetting.Module.SearchCopy.Criteria;
-    using Fanex.CustomerSetting.Module.SearchCopy.Entities;
-    using Fanex.CustomerSetting.Module.SearchCopy.ViewModels;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.Logging;
+    using Core.Web;
+    using Criteria;
+    using Entities;
     using Fanex.Module.NG2.Entities;
     using Fanex.Module.NG2.Services;
-    using Fanex.NAP.Framework.Data;
+    using Logging;
     using Logging.Extensions.Web;
+    using NAP.Framework.Data;
+    using Security.Authenticate;
     using Services;
+    using ViewModels;
 
     public class SuperController : BaseCloneController
     {
+        private readonly MemberWinLimitService memberWinLimitService;
+        private readonly CasinoServiceBase casinoServiceBase;
+        private readonly SuperServices superServices;
+        private readonly MemberServices memberServices;
+
+        public SuperController() : this(null, null, null, null)
+        {
+        }
+
+        public SuperController(
+            MemberWinLimitService memberWinLimitService,
+            CasinoServiceBase casinoServiceBase,
+            SuperServices superServices,
+            MemberServices memberServices)
+        {
+            this.memberWinLimitService = memberWinLimitService ?? new MemberWinLimitServiceImpl();
+            this.casinoServiceBase = casinoServiceBase ?? new CasinoServiceBaseImpl();
+            this.superServices = superServices ?? new SuperServicesImpl();
+            this.memberServices = memberServices ?? new MemberServicesImpl();
+        }
+
+
         /// <summary>
         /// Render search existing super form.
         /// </summary>        
@@ -295,16 +317,15 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
                         customer.MobilePhone,
                         customer.Fax,
                         customer.CurrencyId,
-                        CasinoManager.Instance.IsEnabledJackpot(customer.CustId),
+                        superServices.IsEnabledJackpot(customer.CustId),
                         DateTime.Now,
                         customer.IP,
                         customer.Creator,
                         customer.CreatorName,
                         3);
 
-                var casinoMemberWinLimitService = new CasinoMemberWinLimitService();
-                var memberLimit = casinoMemberWinLimitService.GetMemberWinLimit(customer.ExistingCustId);
-                casinoMemberWinLimitService.UpdateMemberWinLimit(customer.CustId, customer.Creator, 0, memberLimit);
+                var memberLimit = memberWinLimitService.GetMemberWinLimit(customer.ExistingCustId);
+                memberWinLimitService.UpdateMemberWinLimit(customer.CustId, customer.Creator, 0, memberLimit);
             }
 
             return success;
@@ -315,8 +336,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
             var success = false;
             string errMsg = string.Empty;
             var casinoCustomer = new CasinoLibrary.SBAgent.Customer();
-            CasinoManager casinoManager = new CasinoManager();
-            var custInfo = casinoManager.GetCustInfoIBC(customer.CustId, customer.UplineId);
+            var custInfo = casinoServiceBase.GetCustInfoIBC(customer.CustId, customer.UplineId);
 
             try
             {
@@ -361,18 +381,16 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
 
             if (success)
             {
-                ICasinoMemberWinLimitService winLimitService = new CasinoMemberWinLimitService();
-                var winLimit = winLimitService.GetMemberWinLimit(customer.ExistingCustId);
+                var winLimit = memberWinLimitService.GetMemberWinLimit(customer.ExistingCustId);
 
                 //bool isEnableCasino = !custInfo.CasinoDisabled || !custInfo.CasinoSync;
 
-                var settingModel = casinoManager.MemberCasinoModel(customer.ExistingCustId, custInfo.GeneralInfo.UpperCustID);
+                var settingModel = memberServices.MemberCasinoModel(customer.ExistingCustId, custInfo.GeneralInfo.UpperCustID);
 
-                casinoManager.UpdateCSStatus(
+                casinoServiceBase.UpdateCSStatus(
                     custInfo.GeneralInfo.IBCCustID,
                     true,
                     custInfo.GeneralInfo.UplineDisabledCasino ? true : custInfo.GeneralInfo.CasinoDisabled,
-                    !custInfo.GeneralInfo.CasinoDisabledDownline,
                     custInfo.GeneralInfo.UpperCustID,
                     string.Empty,
                     0,
@@ -382,26 +400,23 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
                     string.Empty,
                     out errMsg);
 
-                casinoManager.UpdateMemberSettings(
+                memberServices.UpdateMemberSettings(
                     custInfo.GeneralInfo.IBCCustID,
                     custInfo.GeneralInfo.RoleId,
-                    custInfo.GeneralInfo.UpperCustID,
-                    custInfo.GeneralInfo.UplineRoleId,
                     customer.IP,
                     customer.Creator,
                     customer.CreatorName,
                     AppSession.CurrentSession.FromSystem,
                     settingModel);
 
-                winLimitService.UpdateMemberWinLimit(customer.CustId, customer.Creator, 0, winLimit);
+                memberWinLimitService.UpdateMemberWinLimit(customer.CustId, customer.Creator, 0, winLimit);
             }
             else
             {
-                casinoManager.UpdateCSStatus(
+                casinoServiceBase.UpdateCSStatus(
                     custInfo.GeneralInfo.IBCCustID,
                     false,
                     custInfo.GeneralInfo.UplineDisabledCasino ? true : customer.DisableCasino,
-                    false,
                     custInfo.GeneralInfo.UpperCustID,
                     string.Empty,
                     0,
