@@ -96,7 +96,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.ProductStatus.Setting.1.0.0-beta22\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
+      <HintPath>..\..\..\packages\Fanex.ProductStatus.Setting.1.0.0-beta24\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -198,7 +198,7 @@
     <Compile Include="Authenticate\CustomerSettingRenovation\SettingMatrixClientRegistration.cs" />
     <Compile Include="Authenticate\GoldDeluxe\GoldDeluxeAuthorizationService.cs" />
     <Compile Include="Authenticate\ProductStatus\ProductStatusAuthorizeService.cs" />
-    <Compile Include="Authenticate\ProductStatus\ProductStatusUser.cs" />
+    <Compile Include="Authenticate\ProductStatus\ProductStatusActor.cs" />
     <Compile Include="Authenticate\SmartPunterAttribute.cs" />
     <Compile Include="Criteria\CheckSmartPunterCriteria.cs" />
     <Compile Include="Criteria\CheckDummyAccountCriteria.cs" />

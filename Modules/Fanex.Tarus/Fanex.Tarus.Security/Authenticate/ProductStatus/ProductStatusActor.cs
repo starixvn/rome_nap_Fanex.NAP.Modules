@@ -4,7 +4,7 @@ using Sunplus.Accounting.Core.Helper;
 
 namespace Fanex.Tarus.Security.Authenticate.ProductStatus
 {
-    public class ProductStatusUser : IProductStatusActor
+    public class ProductStatusActor : IProductStatusActor
     {
         public int Id => AppSession.AccId;
 
