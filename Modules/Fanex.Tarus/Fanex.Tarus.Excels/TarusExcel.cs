@@ -18,6 +18,11 @@
             Initialize(filePath, sheetName);
         }
 
+        public TarusExcel(Stream stream, string sheetName)
+        {
+            Initialize(stream, sheetName);
+        }
+
         public int FirstRow { get; private set; }
 
         public IWorkbook Workbook { get; private set; }
@@ -85,8 +90,11 @@
                 return;
             }
 
-            Stream fileStream = File.OpenRead(filePath);
+            Initialize(File.OpenRead(filePath), sheetName);
+        }
 
+        private void Initialize(Stream fileStream, string sheetName)
+        {
             Workbook = new HSSFWorkbook(fileStream);
             fileStream.Close();
 
