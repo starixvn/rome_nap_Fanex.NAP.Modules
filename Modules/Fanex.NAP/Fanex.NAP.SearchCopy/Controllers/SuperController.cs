@@ -397,8 +397,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
                     SystemId,
                     "en",
                     custInfo.GeneralInfo.UserName,
-                    string.Empty,
-                    out errMsg);
+                    string.Empty);
 
                 memberServices.UpdateMemberSettings(
                     custInfo.GeneralInfo.IBCCustID,
@@ -423,8 +422,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
                     SystemId,
                     "en",
                     custInfo.GeneralInfo.UserName,
-                    string.Empty,
-                    out errMsg);
+                    string.Empty);
 
                 casinoCustomer.RemoveAccount(custInfo.GeneralInfo.UserName, customer.IP, custInfo.GeneralInfo.IBCCustID, custInfo.GeneralInfo.UserName, AppSession.CurrentSession.FromSystem);
             }
