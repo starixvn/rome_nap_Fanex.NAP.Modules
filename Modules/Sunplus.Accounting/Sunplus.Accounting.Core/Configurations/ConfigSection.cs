@@ -71,12 +71,6 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return (ExChangeRateElements)base["ExChangeRate"]; }
         }
 
-        [ConfigurationProperty("News", IsRequired = true)]
-        public NewsElements News
-        {
-            get { return (NewsElements)base["News"]; }
-        }
-
         [ConfigurationProperty("ExportStatement", IsRequired = true)]
         public ExportStatementElements ExportStatement
         {
@@ -381,22 +375,6 @@ namespace Sunplus.Accounting.Core.Configurations
             set
             {
                 base["ExChangeRateProviderType"] = value;
-            }
-        }
-    }
-
-    public class NewsElements : ConfigurationElement
-    {
-        [ConfigurationProperty("NewsProviderType", DefaultValue = "Sunplus.Accounting.DataAccess.{0}.{1}.Others.NewsProviderClient")]
-        public string NewsProviderType
-        {
-            get
-            {
-                return (string)base["NewsProviderType"];
-            }
-            set
-            {
-                base["NewsProviderType"] = value;
             }
         }
     }

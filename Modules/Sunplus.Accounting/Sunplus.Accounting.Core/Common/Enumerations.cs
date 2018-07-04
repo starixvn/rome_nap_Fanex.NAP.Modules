@@ -199,7 +199,6 @@ namespace Sunplus.Accounting.Core.Common
             public enum Others
             {
                 Other,
-                WhatNew,
                 ExportStatement,
                 BetListByIp,
                 MeetingComm,

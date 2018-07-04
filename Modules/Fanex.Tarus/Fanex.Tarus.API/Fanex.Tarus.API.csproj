@@ -85,8 +85,8 @@
       <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.13\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.14, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.14-RemoveUnusedCode01\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

@@ -167,8 +167,8 @@
       <HintPath>..\..\..\packages\SharedCache.WinServiceCommon.3.0.5.1\lib\net40\SharedCache.WinServiceCommon.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.13\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.14, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.14-RemoveUnusedCode01\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Core.Common, Version=1.1.4505.19054, Culture=neutral, processorArchitecture=MSIL">
@@ -312,11 +312,7 @@
     <Compile Include="Web\TplCore\App_Templates\ExRate\SendEmail.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\MenuSub.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\NoInformation.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Others\LastNews.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\Others\Menu.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Others\News.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Others\NewsDetail.htm.cs" />
-    <Compile Include="Web\TplCore\App_Templates\Others\NewsEdit.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\Report\CommonFilter.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\Report\FromToDate.htm.cs" />
     <Compile Include="Web\TplCore\App_Templates\SpecialDelete\TransHeader.htm.cs" />

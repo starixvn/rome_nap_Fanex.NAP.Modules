@@ -102,8 +102,8 @@
       <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.1.8\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.13\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.14, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.14-RemoveUnusedCode01\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
