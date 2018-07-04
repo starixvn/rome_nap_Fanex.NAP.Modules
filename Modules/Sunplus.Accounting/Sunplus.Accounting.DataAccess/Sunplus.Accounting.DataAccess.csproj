@@ -106,7 +106,6 @@
     <Compile Include="IBCDLL\Accounting\AgentTurnOver.cs" />
     <Compile Include="IBCDLL\Accounting\Balance.cs" />
     <Compile Include="IBCDLL\Accounting\Betlist.cs" />
-    <Compile Include="IBCDLL\Accounting\CasinoSynchronise.cs" />
     <Compile Include="IBCDLL\Accounting\CompanyReport.cs" />
     <Compile Include="IBCDLL\Accounting\Credit.cs" />
     <Compile Include="IBCDLL\Accounting\CustomerBalance.cs" />
