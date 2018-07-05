@@ -3,28 +3,31 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Fanex.CustomerSetting.MatrixClient;
-    using Fanex.CustomerSetting.Module.Core.Criteria;
-    using Fanex.CustomerSetting.Module.Core.Services.Impl;
-    using Fanex.Tarus.Security.Services;
+    using CustomerSetting.MatrixClient;
+    using CustomerSetting.Module.Core.Criteria;
+    using CustomerSetting.Module.Core.Services.Impl;
+    using HttpModules.Services;
+    using Services;
     using Sunplus.Accounting.Core.Common;
 
     public class SettingMatrixClientRegistration : SettingMatrixRegistration
     {
-        private CustomerSettingAttribute _customerSettingAttribute = new CustomerSettingAttribute();
-
-        private ServiceBase _serviceBase = new ServiceBase();
+        private readonly CustomerSettingAttribute _customerSettingAttribute = new CustomerSettingAttribute();
+        private readonly ServiceBase _serviceBase = new ServiceBase();
+        private readonly ICreditOrDepositCustomerAuthorization _customerAuthorization = new CreditOrDepositCustomerAuthorization();
 
         public override bool VerifyPermission()
         {
             var hasReadPermission = _customerSettingAttribute.AllowRead(GetActionName());
+
             if (!hasReadPermission)
             {
                 return false;
             }
 
-            var hasSpecialSitePermission = PermissionService.HasPermission(Enumerations.Functions.AccessSpecialSites.ToString());
+            var hasSpecialSitePermission = PermissionService.HasPermission(Enumerations.Functions.AccessSpecialSites);
             var customerName = HttpContext.Current.Request.QueryString["customerName"];
+
             if (!string.IsNullOrWhiteSpace(customerName))
             {
                 var specialSiteCriteria = new CheckCustomerIsSpecialSiteCriteria()
@@ -36,6 +39,8 @@
                 {
                     return false;
                 }
+
+                return _customerAuthorization.CanRead(customerName, AppSession.AccId);
             }
 
             return true;

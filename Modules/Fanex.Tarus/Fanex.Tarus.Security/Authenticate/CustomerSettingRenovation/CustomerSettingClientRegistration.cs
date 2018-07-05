@@ -5,42 +5,52 @@
     using System.Net;
     using System.Text.RegularExpressions;
     using System.Web;
+    using CustomerSetting.Client40;
+    using CustomerSetting.Client40.Models;
     using CustomerSetting.Module.Core;
     using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Services.Impl;
-    using Fanex.CustomerSetting.Client40;
-    using Fanex.CustomerSetting.Client40.Models;
+    using HttpModules.Services;
     using Sunplus.Accounting.Core.Common;
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
-        private CustomerSettingAttribute _customerSettingAttribute = new CustomerSettingAttribute();
-        private ServiceBase _service = new ServiceBase();
+        private readonly CustomerSettingAttribute _customerSettingAttribute = new CustomerSettingAttribute();
+        private readonly ServiceBase _service = new ServiceBase();
+        private readonly ICreditOrDepositCustomerAuthorization _customerAuthorization = new CreditOrDepositCustomerAuthorization();
 
         public override bool VerifyQueryPermission(PermissionContext permissionContext)
         {
-            var hasSpecialPermission = _service.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria
-            {
-                CustID = GetPropertyValue(permissionContext, "customerId"),
-                UserID = permissionContext.ActorId
-            });
+            var custId = GetPropertyValue(permissionContext, "customerId");
+            var userId = permissionContext.ActorId;
 
-            var allowed = hasSpecialPermission.IsSuccess && _customerSettingAttribute.AllowRead(GetActionName());
+            var hasSpecialPermission = _service.CheckSpecialSitePermission(
+                new CheckSpecialSitePermissionCriteria
+                {
+                    CustID = custId,
+                    UserID = userId
+                });
 
-            return allowed;
+            return hasSpecialPermission.IsSuccess
+                && _customerSettingAttribute.AllowRead(GetActionName())
+                && _customerAuthorization.CanRead(custId.ToString(), userId);
         }
 
         public override bool VerifyUpdatePermission(PermissionContext permissionContext)
         {
-            var hasSpecialPermission = _service.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria
-            {
-                CustID = GetPropertyValue(permissionContext, "customerId"),
-                UserID = permissionContext.ActorId
-            });
+            var custId = GetPropertyValue(permissionContext, "customerId");
+            var userId = permissionContext.ActorId;
 
-            var allowed = hasSpecialPermission.IsSuccess && _customerSettingAttribute.AllowUpdate(GetActionName());
+            var hasSpecialPermission = _service.CheckSpecialSitePermission(
+                new CheckSpecialSitePermissionCriteria
+                {
+                    CustID = custId,
+                    UserID = userId
+                });
 
-            return allowed;
+            return hasSpecialPermission.IsSuccess
+                && _customerSettingAttribute.AllowUpdate(GetActionName())
+                && _customerAuthorization.CanHost(custId.ToString(), userId);
         }
 
         public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
