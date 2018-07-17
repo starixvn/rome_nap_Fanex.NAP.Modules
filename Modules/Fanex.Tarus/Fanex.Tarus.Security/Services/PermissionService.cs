@@ -1,14 +1,14 @@
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using DNAide.Core;
 using DNAide.Data;
 using Fanex.Data;
 using Fanex.Tarus.Security.Criteria;
+using Fanex.Tarus.Security.Repositories;
 using Fanex.Tarus.Security.Web;
+using static Sunplus.Accounting.Core.Common.Enumerations;
 
 namespace Fanex.Tarus.Security.Services
 {
@@ -59,6 +59,12 @@ namespace Fanex.Tarus.Security.Services
 
             return roleAccess.ContainsKey(actionName.ToLower()) && roleAccess[actionName.ToLower()] == 3;
         }
+
+        public static IDictionary<string, byte> GetCreditAndDepositPolicy(int userId)
+            => PermissionDataAccess.GetUserPermissions(new GetUserPermissionCriteria(userId))
+                .Where(f => f.FuncName.Equals(Functions.CreditSiteFuncName, StringComparison.OrdinalIgnoreCase)
+                    || f.FuncName.Equals(Functions.DepositSiteFuncName, StringComparison.OrdinalIgnoreCase))
+                .ToDictionary(f => f.FuncName.ToLowerInvariant(), f => f.ActualPolicy);
 
         /// <summary>
         /// Determines whether the specified action path has permission.
@@ -256,5 +262,8 @@ namespace Fanex.Tarus.Security.Services
                 return Convert.ToBoolean(outputs["isdummyaccount"]);
             }
         }
+
+        private static IUserPermissionDataAccess PermissionDataAccess
+            => new UserPermissionDataAccess();
     }
 }

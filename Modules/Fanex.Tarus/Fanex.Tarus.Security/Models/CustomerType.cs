@@ -1,7 +1,18 @@
 ﻿namespace Fanex.Tarus.Security.Models
 {
-    internal class CustomerType
+    internal sealed class CustomerType
     {
-        internal string UserName { get; }
+        public CustomerType(string custInfo, bool isDeposit, bool isValid)
+        {
+            CustInfo = custInfo;
+            IsDeposit = isDeposit;
+            IsValid = isValid;
+        }
+
+        public string CustInfo { get; }
+
+        public bool IsDeposit { get; }
+
+        public bool IsValid { get; }
     }
 }

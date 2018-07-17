@@ -230,6 +230,10 @@
       <HintPath>..\..\..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.1.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.1.9-RemoveUnusedCode01\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Agent.Utilities.3.0.0.7\lib\net40\Sunplus.Agent.Utilities.dll</HintPath>
       <Private>True</Private>
@@ -332,7 +336,6 @@
     <Compile Include="Services\ISearchCopyService.cs" />
     <Compile Include="Services\KenoService.cs" />
     <Compile Include="Services\NG2Service.cs" />
-    <Compile Include="Services\PermissionService.cs" />
     <Compile Include="Services\SearchCopyService.cs" />
     <Compile Include="ViewModels\CustomerSettingView.cs" />
     <Compile Include="ViewModels\MultipleAccountsViewModel.cs" />

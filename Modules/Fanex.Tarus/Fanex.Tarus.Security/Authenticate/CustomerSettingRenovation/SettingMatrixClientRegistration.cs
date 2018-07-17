@@ -4,17 +4,14 @@
     using System.Web.Mvc;
     using System.Web.Routing;
     using CustomerSetting.MatrixClient;
-    using CustomerSetting.Module.Core.Criteria;
-    using CustomerSetting.Module.Core.Services.Impl;
     using HttpModules.Services;
-    using Services;
     using Sunplus.Accounting.Core.Common;
 
     public class SettingMatrixClientRegistration : SettingMatrixRegistration
     {
         private readonly CustomerSettingAttribute _customerSettingAttribute = new CustomerSettingAttribute();
-        private readonly ServiceBase _serviceBase = new ServiceBase();
-        private readonly ICreditOrDepositCustomerAuthorization _customerAuthorization = new CreditOrDepositCustomerAuthorization();
+        private readonly ICustomerAuthorization _specialSiteAuthorization = new SpecialSiteCustomerAuthorization();
+        private readonly ICustomerAuthorization _creditOrDepositAuthorization = new CreditOrDepositCustomerAuthorization();
 
         public override bool VerifyPermission()
         {
@@ -25,22 +22,14 @@
                 return false;
             }
 
-            var hasSpecialSitePermission = PermissionService.HasPermission(Enumerations.Functions.AccessSpecialSites);
             var customerName = HttpContext.Current.Request.QueryString["customerName"];
 
             if (!string.IsNullOrWhiteSpace(customerName))
             {
-                var specialSiteCriteria = new CheckCustomerIsSpecialSiteCriteria()
-                {
-                    UserName = customerName
-                };
+                var userId = AppSession.AccId;
 
-                if (!hasSpecialSitePermission && _serviceBase.CheckCustomerBelongToSpecialSite(specialSiteCriteria).IsSpecialSite)
-                {
-                    return false;
-                }
-
-                return _customerAuthorization.CanRead(customerName, AppSession.AccId);
+                return _specialSiteAuthorization.CanRead(customerName, userId).IsOk
+                    && _creditOrDepositAuthorization.CanRead(customerName, userId).IsOk;
             }
 
             return true;

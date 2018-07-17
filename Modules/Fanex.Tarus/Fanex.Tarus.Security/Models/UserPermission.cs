@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Tarus.Security.Models
 {
-    internal sealed class UserPermission
+    public sealed class UserPermission
     {
-        internal UserPermission(int groupId, string fileNames, string funcName, byte policy)
+        public UserPermission(int groupId, string fileNames, string funcName, byte policy)
         {
             GroupId = groupId;
             FileNames = fileNames;
@@ -10,12 +10,12 @@
             ActualPolicy = policy;
         }
 
-        internal int GroupId { get; }
+        public int GroupId { get; }
 
-        internal string FileNames { get; }
+        public string FileNames { get; }
 
-        internal string FuncName { get; }
+        public string FuncName { get; }
 
-        internal byte ActualPolicy { get; }
+        public byte ActualPolicy { get; }
     }
 }

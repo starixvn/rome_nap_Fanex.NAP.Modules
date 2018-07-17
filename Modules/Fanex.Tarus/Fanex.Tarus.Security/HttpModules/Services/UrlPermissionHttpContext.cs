@@ -4,6 +4,7 @@
     using System.IO;
     using System.Net;
     using System.Web;
+    using Models;
     using Newtonsoft.Json.Linq;
     using Sunplus.Accounting.Core.Common;
 
@@ -37,7 +38,7 @@
                 : paramValue;
         }
 
-        public void RedirectToAccessDenyPage()
+        public void RedirectToAccessDenyPage(AuthorizationResult result)
         {
             var httpResponse = Response;
 
@@ -46,7 +47,8 @@
                 httpResponse.Clear();
                 httpResponse.StatusCode = (int)HttpStatusCode.Forbidden;
                 httpResponse.ContentType = "application/json; charset=utf-8";
-                httpResponse.Write("{ \"ErrorCode\": 99999, \"ErrorMessage\": \"You don't have permission to access.\" }");
+                httpResponse.Write(result.ToJson());
+                httpResponse.TrySkipIisCustomErrors = true;
                 httpResponse.End();
             }
             else

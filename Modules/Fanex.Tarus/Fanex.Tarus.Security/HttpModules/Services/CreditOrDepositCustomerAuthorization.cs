@@ -3,14 +3,17 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Constant;
     using Constants;
+    using Criteria;
+    using Models;
+    using Repositories;
     using Security.Services;
+    using static Sunplus.Accounting.Core.Common.Enumerations;
 
-    public sealed class CreditOrDepositCustomerAuthorization : ICreditOrDepositCustomerAuthorization
+    internal sealed class CreditOrDepositCustomerAuthorization : ICustomerAuthorization
     {
         private readonly ICustomerTypeService customerTypeService;
-        private readonly IUserPermissionService userPermissionService;
+        private readonly IUserPermissionDataAccess permissionDataAccess;
 
         public CreditOrDepositCustomerAuthorization()
             : this(null, null)
@@ -19,30 +22,111 @@
 
         internal CreditOrDepositCustomerAuthorization(
             ICustomerTypeService customerTypeService,
-            IUserPermissionService userPermissionService)
+            IUserPermissionDataAccess permissionDataAccess)
         {
             this.customerTypeService = customerTypeService ?? new CustomerTypeService();
-            this.userPermissionService = userPermissionService ?? new UserPermissionService();
+            this.permissionDataAccess = permissionDataAccess ?? new UserPermissionDataAccess();
         }
 
-        public bool CanRead(string custIdOrUserName, int userId)
-            => GetPolicy(custIdOrUserName, userId).HasValue;
+        public AuthorizationResult CanRead(string parameterValue, int userId)
+            => CanAccess(parameterValue, userId, PolicyConst.Read);
 
-        public bool CanHost(string custIdOrUserName, int userId)
-            => GetPolicy(custIdOrUserName, userId) == PolicyConst.Host;
+        public AuthorizationResult CanHost(string parameterValue, int userId)
+            => CanAccess(parameterValue, userId, PolicyConst.Host);
 
-        public byte? GetPolicy(string custIdOrUserName, int userId)
+        public AuthorizationResult CanAccess(string parameterValue, int userId, byte urlPolicy)
         {
-            var isDepositCustomer = customerTypeService.IsDepositByParam(custIdOrUserName);
-            var functionName = isDepositCustomer ? FunctionNameConst.DepositSite : FunctionNameConst.CreditSite;
+            if (parameterValue.IndexOf(',') != -1)
+            {
+                return CanAccessByUserNameList(parameterValue, userId, urlPolicy);
+            }
 
-            return userPermissionService.GetActualPolicy(userId, functionName);
+            return CanAccessByCustIdOrUserName(parameterValue, userId, urlPolicy);
         }
 
-        public IDictionary<string, byte> GetCreditAndDepositPolicy(int userId)
-            => userPermissionService.GetUserPermissions(userId).Where(p =>
-                    p.FuncName.Equals(FunctionNameConst.CreditSite, StringComparison.OrdinalIgnoreCase) ||
-                    p.FuncName.Equals(FunctionNameConst.DepositSite, StringComparison.OrdinalIgnoreCase))
-                .ToDictionary(kvp => kvp.FuncName.ToLowerInvariant(), kvp => kvp.ActualPolicy);
+        private AuthorizationResult CanAccessByCustIdOrUserName(string custIdOrUserName, int userId, byte urlPolicy)
+        {
+            int custId;
+
+            var customerType = int.TryParse(custIdOrUserName, out custId)
+                ? customerTypeService.GetCustomerType(custId)
+                : customerTypeService.GetCustomerType(custIdOrUserName);
+
+            if (customerType == null || !customerType.IsValid)
+            {
+                return AuthorizationResult.Ok();
+            }
+
+            var functionName = customerType.IsDeposit
+                ? Functions.DepositSiteFuncName
+                : Functions.CreditSiteFuncName;
+            var userPolicy = GetActualPolicy(userId, functionName);
+
+            return !userPolicy.HasValue || userPolicy.Value < urlPolicy
+                ? AuthorizationResult.Forbidden()
+                : AuthorizationResult.Ok();
+        }
+
+        private AuthorizationResult CanAccessByUserNameList(string userNameList, int userId, byte urlPolicy)
+        {
+            ICollection<string> creditCustomers = new List<string>();
+            ICollection<string> depositCustomers = new List<string>();
+            GetCreditAndDepositCustomers(userNameList, ref creditCustomers, ref depositCustomers);
+
+            var authorizationResult = GetActualPolicy(creditCustomers, userId, Functions.CreditSiteFuncName, urlPolicy);
+
+            if (authorizationResult.IsOk)
+            {
+                authorizationResult = GetActualPolicy(depositCustomers, userId, Functions.DepositSiteFuncName, urlPolicy);
+            }
+
+            return authorizationResult;
+        }
+
+        private void GetCreditAndDepositCustomers(
+            string userNameList,
+            ref ICollection<string> creditCustomers,
+            ref ICollection<string> depositCustomers)
+        {
+            var customers = customerTypeService
+                   .GetCustomerTypes(userNameList)
+                   .Where(c => c.IsValid);
+
+            foreach (var customer in customers)
+            {
+                if (customer.IsDeposit)
+                {
+                    depositCustomers.Add(customer.CustInfo);
+                }
+                else
+                {
+                    creditCustomers.Add(customer.CustInfo);
+                }
+            }
+        }
+
+        private AuthorizationResult GetActualPolicy(ICollection<string> customers, int userId, string functionName, byte urlPolicy)
+        {
+            if (customers.Count > 0)
+            {
+                var userPolicy = GetActualPolicy(userId, functionName);
+
+                if (!userPolicy.HasValue || userPolicy.Value < urlPolicy)
+                {
+                    return AuthorizationResult.Forbidden($"Invalid usernames: {string.Join(", ", customers)}");
+                }
+            }
+
+            return AuthorizationResult.Ok();
+        }
+
+        private byte? GetActualPolicy(int userId, string functionName)
+        {
+            var userPermission = permissionDataAccess
+                .GetUserPermissions(new GetUserPermissionCriteria(userId))
+                .FirstOrDefault(f => f.FuncName.Equals(functionName, StringComparison.OrdinalIgnoreCase));
+
+            return userPermission?.ActualPolicy;
+        }
     }
 }

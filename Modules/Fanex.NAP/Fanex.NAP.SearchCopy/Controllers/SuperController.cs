@@ -14,7 +14,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
     using Criteria;
     using Logging.Extensions.Web;
     using NAP.Framework.Data;
-    using Security.Authenticate;
     using Services;
     using ViewModels;
 
@@ -33,20 +32,11 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
             _searchCopyService = searchCopyService ?? new SearchCopyService();
         }
 
-        [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "SearchAndCopy")]
         public ActionResult Index()
             => View("~/Areas/CustomerSetting/Views/SearchCopy/Super/Index.cshtml");
 
         public ActionResult SearchExistingSuper(string username, string level = "member")
         {
-            var permissionService = new PermissionService();
-            var permissionResult = permissionService.CheckSpecialSitePermission(AppSession.AccId, username: username);
-
-            if (permissionResult.ErrorCode != 0)
-            {
-                return Json(permissionResult, JsonRequestBehavior.AllowGet);
-            }
-
             var result = _searchCopyService.SearchExistingCustomer(username, IsMember(level));
 
             return Json(
@@ -68,18 +58,9 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
             return Json(sites, JsonRequestBehavior.AllowGet);
         }
 
-        [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "SearchAndCopy")]
         public ActionResult CopyExistingSuper(CopyExistingCustomerCriteria criteria, string code)
         {
             int creatorId = AppSession.AccId;
-            var permissionService = new PermissionService();
-            var permissionResult = permissionService.CheckSpecialSitePermission(creatorId, custId: criteria.ExistingCustId);
-
-            if (permissionResult.ErrorCode != 0)
-            {
-                return Json(permissionResult, JsonRequestBehavior.AllowGet);
-            }
-
             criteria.Creator = creatorId;
             criteria.CreatorName = AppSession.AccUserName;
             criteria.IP = CurrentContext.Instance.Ip4Address;
@@ -121,7 +102,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
             }
         }
 
-        [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "SearchAndCopy")]
         public ActionResult MultipleAccounts(MultipleAccountsViewModel viewModel)
         {
             var isMember = viewModel.ParentId > 0;
@@ -143,7 +123,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
         }
 
         [HttpPost]
-        [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "SearchAndCopy")]
         public ActionResult CheckAvailableUsernames(int custId, int parentId, string usernames)
             => Json(_searchCopyService.CheckAvailableUsernames(usernames), JsonRequestBehavior.DenyGet);
 

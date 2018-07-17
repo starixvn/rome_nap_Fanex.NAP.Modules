@@ -4,12 +4,12 @@
 
     internal sealed class GetUserPermissionCriteria : CriteriaBase
     {
-        internal GetUserPermissionCriteria(int userId)
+        public GetUserPermissionCriteria(int userId)
         {
             CustId = userId;
         }
 
-        internal int CustId { get; }
+        public int CustId { get; }
 
         public override string GetSettingKey()
             => "Acc_Con_FileNameSelByCustID";

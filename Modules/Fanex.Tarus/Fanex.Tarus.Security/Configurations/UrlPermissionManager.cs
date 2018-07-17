@@ -15,7 +15,7 @@
             urlPermissions = GetUrlPermissions();
         }
 
-        internal static UrlPermission GetUrlPermission(string url)
+        public static UrlPermission GetUrlPermission(string url)
         {
             UrlPermission urlPermission;
             urlPermissions.TryGetValue(url, out urlPermission);

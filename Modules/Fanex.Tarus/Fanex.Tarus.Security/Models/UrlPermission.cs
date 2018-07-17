@@ -4,17 +4,17 @@
 
     internal sealed class UrlPermission
     {
-        internal UrlPermission(IEnumerable<string> paramNames, byte policy, IEnumerable<string> filters)
+        public UrlPermission(IEnumerable<string> paramNames, byte policy, IEnumerable<string> filters)
         {
             ParamNames = paramNames;
             Policy = policy;
             Filters = filters;
         }
 
-        internal IEnumerable<string> ParamNames { get; }
+        public IEnumerable<string> ParamNames { get; }
 
-        internal byte Policy { get; }
+        public byte Policy { get; }
 
-        internal IEnumerable<string> Filters { get; }
+        public IEnumerable<string> Filters { get; }
     }
 }

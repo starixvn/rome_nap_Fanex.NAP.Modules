@@ -6,6 +6,8 @@
 
     internal interface IUserPermissionDataAccess
     {
+        AuthorizationResult CheckSpecialSitePermission(ICriteria criteria);
+
         IEnumerable<UserPermission> GetUserPermissions(ICriteria criteria);
     }
 }

@@ -7,33 +7,23 @@
     using System.Web;
     using CustomerSetting.Client40;
     using CustomerSetting.Client40.Models;
-    using CustomerSetting.Module.Core;
-    using CustomerSetting.Module.Core.Criteria;
-    using CustomerSetting.Module.Core.Services.Impl;
     using HttpModules.Services;
     using Sunplus.Accounting.Core.Common;
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
         private readonly CustomerSettingAttribute _customerSettingAttribute = new CustomerSettingAttribute();
-        private readonly ServiceBase _service = new ServiceBase();
-        private readonly ICreditOrDepositCustomerAuthorization _customerAuthorization = new CreditOrDepositCustomerAuthorization();
+        private readonly ICustomerAuthorization _specialSiteAuthorization = new SpecialSiteCustomerAuthorization();
+        private readonly ICustomerAuthorization _creditOrDepositAuthorization = new CreditOrDepositCustomerAuthorization();
 
         public override bool VerifyQueryPermission(PermissionContext permissionContext)
         {
             var custId = GetPropertyValue(permissionContext, "customerId");
             var userId = permissionContext.ActorId;
 
-            var hasSpecialPermission = _service.CheckSpecialSitePermission(
-                new CheckSpecialSitePermissionCriteria
-                {
-                    CustID = custId,
-                    UserID = userId
-                });
-
-            return hasSpecialPermission.IsSuccess
+            return _specialSiteAuthorization.CanRead(custId, userId).IsOk
                 && _customerSettingAttribute.AllowRead(GetActionName())
-                && _customerAuthorization.CanRead(custId.ToString(), userId);
+                && _creditOrDepositAuthorization.CanRead(custId.ToString(), userId).IsOk;
         }
 
         public override bool VerifyUpdatePermission(PermissionContext permissionContext)
@@ -41,16 +31,9 @@
             var custId = GetPropertyValue(permissionContext, "customerId");
             var userId = permissionContext.ActorId;
 
-            var hasSpecialPermission = _service.CheckSpecialSitePermission(
-                new CheckSpecialSitePermissionCriteria
-                {
-                    CustID = custId,
-                    UserID = userId
-                });
-
-            return hasSpecialPermission.IsSuccess
+            return _specialSiteAuthorization.CanHost(custId, userId).IsOk
                 && _customerSettingAttribute.AllowUpdate(GetActionName())
-                && _customerAuthorization.CanHost(custId.ToString(), userId);
+                && _creditOrDepositAuthorization.CanHost(custId, userId).IsOk;
         }
 
         public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
@@ -62,8 +45,8 @@
         {
             var settingContext = new SettingContext();
 
-            settingContext.ActorId = (int)AppSession.AccId;
-            settingContext.ActorName = (string)AppSession.AccUserName;
+            settingContext.ActorId = AppSession.AccId;
+            settingContext.ActorName = AppSession.AccUserName;
             settingContext.ActorLevel = 5;
             settingContext.SubAccountId = 0;
             settingContext.Language = "en-US";
@@ -98,7 +81,7 @@
             return string.Empty;
         }
 
-        private int? GetPropertyValue(PermissionContext permissionContext, string property)
+        private string GetPropertyValue(PermissionContext permissionContext, string property)
         {
             var queryString = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue(property);
             var val = queryString != null ? queryString.AttemptedValue : null;
@@ -116,8 +99,7 @@
                 }
             }
 
-            var result = Utils.ToInt32(val);
-            return result;
+            return val;
         }
 
         private string GetInternalAddress()

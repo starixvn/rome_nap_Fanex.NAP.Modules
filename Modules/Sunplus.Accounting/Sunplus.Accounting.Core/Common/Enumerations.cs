@@ -231,8 +231,8 @@ namespace Sunplus.Accounting.Core.Common
             public const string ViewIPVN = "ViewIPVN";
             public const string UploadVR = "UploadVR";
             public const string AccessSpecialSites = "AccessSpecialSites";
-            public const string CreditSiteFuncName = "CreditSite";
-            public const string DepositSiteFuncName = "DepositSite";
+            public const string CreditSiteFuncName = "[creditsite]";
+            public const string DepositSiteFuncName = "[depositsite]";
 
             //public const string SpecialDelete = "SpecialDelete";
             public const string UserControl = "UserControl";
