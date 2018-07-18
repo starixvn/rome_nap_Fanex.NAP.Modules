@@ -4,6 +4,8 @@
 
     public interface IVirtualRateExcel
     {
+        ExcelResult ValidateTemplateFile();
+
         DataTable ExcelToDataTable();
     }
 }
