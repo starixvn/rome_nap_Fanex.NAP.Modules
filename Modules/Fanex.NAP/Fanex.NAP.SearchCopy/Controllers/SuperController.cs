@@ -3,9 +3,7 @@
 namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
 {
     using System;
-    using System.Configuration;
     using System.Linq;
-    using System.Threading;
     using System.Web.Mvc;
     using System.Web.SessionState;
     using App_Start;
@@ -37,12 +35,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "SearchAndCopy")]
         public ActionResult Index()
-        {
-            ViewBag.CurrentUserId = AppSession.AccId;
-            ViewBag.CurrentURL = GetCurrentUrl();
-
-            return View("~/Areas/CustomerSetting/Views/SearchCopy/Super/Index.cshtml");
-        }
+            => View("~/Areas/CustomerSetting/Views/SearchCopy/Super/Index.cshtml");
 
         public ActionResult SearchExistingSuper(string username, string level = "member")
         {
@@ -54,7 +47,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
                 return Json(permissionResult, JsonRequestBehavior.AllowGet);
             }
 
-            var result = _searchCopyService.SearchExistingUser(username, IsMember(level));
+            var result = _searchCopyService.SearchExistingCustomer(username, IsMember(level));
 
             return Json(
                 new CustomerSettingView(result.CustId, username, result.ParentId, result.BreadCrumbs),
@@ -76,7 +69,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
         }
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "SearchAndCopy")]
-        public ActionResult CopyExistingSuper(CustomerInsMemberCriteria criteria, string code)
+        public ActionResult CopyExistingSuper(CopyExistingCustomerCriteria criteria, string code)
         {
             int creatorId = AppSession.AccId;
             var permissionService = new PermissionService();
@@ -162,17 +155,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
         }
 
         private static bool IsMember(string level)
-            => level.Equals("member", StringComparison.OrdinalIgnoreCase);  
-
-        private string GetCurrentUrl()
-        {
-            var uri = System.Web.HttpContext.Current.Request.Url;
-            var host = $"{uri.Scheme}{Uri.SchemeDelimiter}{uri.Host}{(uri.Port == 80 ? string.Empty : ":")}{uri.Port}";
-
-            var currentURL = ConfigurationManager.AppSettings["CurrentURL"];
-            currentURL = string.Format(currentURL, host);
-
-            return currentURL.StartsWith("http") ? currentURL : "http://" + currentURL;
-        }
+            => level.Equals("member", StringComparison.OrdinalIgnoreCase);
     }
 }

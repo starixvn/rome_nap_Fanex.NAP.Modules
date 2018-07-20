@@ -117,7 +117,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Repositories
             }
         }
 
-        public Result CopyExistingSuper(CustomerInsMemberCriteria criteria)
+        public Result CopyExistingSuper(CopyExistingCustomerCriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {

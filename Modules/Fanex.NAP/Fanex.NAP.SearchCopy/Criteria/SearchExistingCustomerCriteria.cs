@@ -4,9 +4,9 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Criteria
 {
     using Fanex.NAP.Framework.Data;
 
-    internal class SearchExistingUserCriteria : CriteriaBase
+    internal class SearchExistingCustomerCriteria : CriteriaBase
     {
-        public SearchExistingUserCriteria(string username)
+        public SearchExistingCustomerCriteria(string username)
         {
             Username = username;
         }

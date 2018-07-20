@@ -345,10 +345,10 @@
     <Compile Include="Entities\SMACustomerInfo.cs" />
     <Compile Include="Criteria\UpdateSyncBaseForIBCCriteria.cs" />
     <Compile Include="Criteria\UpdateSyncCasinoForIBCCriteria.cs" />
-    <Compile Include="Criteria\CustomerInsMemberCriteria.cs" />
+    <Compile Include="Criteria\CopyExistingCustomerCriteria.cs" />
     <Compile Include="Criteria\GetCustomerInfoByUserIdCriteria.cs" />
     <Compile Include="Criteria\GetSitesCriteria.cs" />
-    <Compile Include="Criteria\SearchExistingUserCriteria.cs" />
+    <Compile Include="Criteria\SearchExistingCustomerCriteria.cs" />
     <Compile Include="Entities\CustomerInfo.cs" />
     <Compile Include="Entities\SearchResult.cs" />
     <Compile Include="Entities\Site.cs" />

@@ -7,7 +7,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
-    using Core.Criteria;
     using Core.Models;
     using Criteria;
     using Entities;
@@ -23,10 +22,10 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             _searchCopyRepository = searchCopyRepository ?? new SearchCopyRepository();
         }
 
-        public SearchResult SearchExistingUser(string username, bool isMember)
+        public SearchResult SearchExistingCustomer(string username, bool isMember)
         {
             var smaCustomers = _searchCopyRepository
-                .GetSMACustomerInfo(new SearchExistingUserCriteria(username))
+                .GetSMACustomerInfo(new SearchExistingCustomerCriteria(username))
                 .Where(smap => smap.CustId != 0);
 
             var searchResult = isMember
@@ -132,7 +131,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
                 : $"Unavailable username(s): {string.Join(", ", existingUsernames)}";
         }
 
-        public Result CopyMember(CustomerInsMemberCriteria criteria, byte systemId, int fromSystem)
+        public Result CopyMember(CopyExistingCustomerCriteria criteria, byte systemId, int fromSystem)
         {
             var sourceCustId = criteria.ExistingCustId;
             var uplineId = criteria.UplineId;
@@ -193,7 +192,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             return result;
         }
 
-        public Result CopySuper(CustomerInsMemberCriteria criteria, byte systemId, int fromSystem)
+        public Result CopySuper(CopyExistingCustomerCriteria criteria, byte systemId, int fromSystem)
         {
             var result = _searchCopyRepository.CopyExistingSuper(criteria);
 

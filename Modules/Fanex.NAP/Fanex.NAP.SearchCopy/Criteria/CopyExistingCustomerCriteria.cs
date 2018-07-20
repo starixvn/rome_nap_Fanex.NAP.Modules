@@ -4,7 +4,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Criteria
 {
     using NAP.Framework.Data;
 
-    public class CustomerInsMemberCriteria : CriteriaBase
+    public class CopyExistingCustomerCriteria : CriteriaBase
     {
         public int UplineId { get; set; }
 

@@ -31,7 +31,7 @@
             _casinoRepository = casinoRepository ?? new CasinoRepository();
         }
 
-        public bool UpdateSuperData(CustomerInsMemberCriteria customer, int casinoFromSystem)
+        public bool UpdateSuperData(CopyExistingCustomerCriteria customer, int casinoFromSystem)
         {
             try
             {
@@ -80,7 +80,7 @@
             return false;
         }
 
-        public bool UpdateMemberData(CustomerInsMemberCriteria customer, byte systemId, int casinoFromSystem)
+        public bool UpdateMemberData(CopyExistingCustomerCriteria customer, byte systemId, int casinoFromSystem)
         {
             var isSuccessful = false;
             var errorMessage = string.Empty;

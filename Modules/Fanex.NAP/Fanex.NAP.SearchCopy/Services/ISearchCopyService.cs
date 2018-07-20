@@ -10,7 +10,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
 
     internal interface ISearchCopyService
     {
-        SearchResult SearchExistingUser(string username, bool isMember);
+        SearchResult SearchExistingCustomer(string username, bool isMember);
 
         Hashtable GetSportBookSettingMember(int custId, int uplineId, int userId);
 
@@ -20,8 +20,8 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
 
         string CheckAvailableUsernames(string usernames);
 
-        Result CopyMember(CustomerInsMemberCriteria criteria, byte systemId, int fromSystem);
+        Result CopyMember(CopyExistingCustomerCriteria criteria, byte systemId, int fromSystem);
 
-        Result CopySuper(CustomerInsMemberCriteria criteria, byte systemId, int fromSystem);
+        Result CopySuper(CopyExistingCustomerCriteria criteria, byte systemId, int fromSystem);
     }
 }

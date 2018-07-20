@@ -24,7 +24,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Repositories
 
         Result InsertMember(Hashtable inputParams);
 
-        Result CopyExistingSuper(CustomerInsMemberCriteria criteria);
+        Result CopyExistingSuper(CopyExistingCustomerCriteria criteria);
 
         Result ExecuteNonQuery(ICriteria criteria);
     }

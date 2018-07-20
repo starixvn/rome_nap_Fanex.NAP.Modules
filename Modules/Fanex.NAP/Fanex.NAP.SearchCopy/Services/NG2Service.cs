@@ -19,7 +19,7 @@
             _ng2Repository = ng2Repository ?? new NG2Repository();
         }
 
-        public void SyncCustomer(CustomerInsMemberCriteria criteria, byte systemId)
+        public void SyncCustomer(CopyExistingCustomerCriteria criteria, byte systemId)
         {
             var disabled = GetStatus(criteria.ExistingCustId).IsDisabled;
 
