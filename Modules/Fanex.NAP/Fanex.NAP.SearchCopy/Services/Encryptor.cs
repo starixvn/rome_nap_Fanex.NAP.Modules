@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Fanex.CustomerSetting.Module.SearchCopy.Services
+﻿namespace Fanex.CustomerSetting.Module.SearchCopy.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
     public class Encryptor
     {
         private const string HexDigit = "0123456789abcdef";
 
-        protected Encryptor() { }
-        
-        public static string Code
+        protected Encryptor()
         {
-            get
-            {
-                var code = GetCaptchaString(4);
-
-                return code;
-            }
         }
+        
+        public static string Code { get; } = GetCaptchaString(4);
 
         public static string GetCaptchaString(int length)
         {
@@ -108,8 +102,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
         }
 
         public static string Decrypt(string encrypted, string code)
-        {
-            return RC4(code, HexDecode(encrypted));
-        }
+            => RC4(code, HexDecode(encrypted));
     }
 }

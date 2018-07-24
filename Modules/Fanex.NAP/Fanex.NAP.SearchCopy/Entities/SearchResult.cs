@@ -1,13 +1,23 @@
-﻿using System.Collections;
-
-namespace Fanex.CustomerSetting.Module.SearchCopy.Entities
+﻿namespace Fanex.CustomerSetting.Module.SearchCopy.Entities
 {
-    public class SearchResult
+    internal class SearchResult
     {
-        public int CustId { get; set; }
+        public SearchResult()
+            : this(-1, -1, null)
+        {
+        }
 
-        public int ParentId { get; set; }
+        public SearchResult(int custId, int parentId, string breadCrumbs)
+        {
+            CustId = custId;
+            ParentId = parentId;
+            BreadCrumbs = breadCrumbs;
+        }
 
-        public string BreadCrumbs { get; set; }
+        public int CustId { get; }
+
+        public int ParentId { get; }
+
+        public string BreadCrumbs { get; }
     }
 }

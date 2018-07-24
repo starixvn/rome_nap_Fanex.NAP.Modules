@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Data;
-using System.Threading;
-using Fanex.CustomerSetting.Module.Core.Web;
-
-namespace Fanex.CustomerSetting.Module.SearchCopy.Services
+﻿namespace Fanex.CustomerSetting.Module.SearchCopy.Services
 {
+    using System;
+    using System.Collections;
+    using System.Data;
+    using System.Threading;
+    using Fanex.CustomerSetting.Module.Core.Web;
+
     public class CheckConstraintDataForSportBook
     {
         private Hashtable _htbSporttypeBettype = new Hashtable();
