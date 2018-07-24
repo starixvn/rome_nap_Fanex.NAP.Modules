@@ -1,46 +1,35 @@
 ﻿namespace Fanex.CustomerSetting.Module.SearchCopy.Criteria
 {
-    using System.Collections;
-    using Core.Web;
     using Fanex.NAP.Framework.Data;
 
-    public class DCSSettingCopyInsertMemberCriteria : CriteriaBase
+    internal class DCSSettingCopyInsertMemberCriteria : CriteriaBase
     {
-        public string IpAddress { get; set; }
+        public DCSSettingCopyInsertMemberCriteria(int custId, int existingCustId, int userId, string ip)
+        {
+            CustId = custId;
+            ExistingCustId = existingCustId;
+            UserId = userId;
+            IP = ip;
+        }
 
-        public int CustID { get; set; }
+        public int CustId { get; }
 
-        public int ExistingCustID { get; set; }
+        public int ExistingCustId { get; }
 
-        public int UserID { get; set; }
+        public int UserId { get; }
 
-        public int SubAccID { get; set; }
+        public string IP { get; }
 
-        public string ErrMsg { get; set; }
+        public int SubAccId { get; } = 0;
 
-        public int ErrCode { get; set; }
+        public int ErrCode { get; } = 0;
+
+        public string ErrMsg { get; } = string.Empty;
 
         public override string GetSettingKey()
-        {
-            return "Acc_CustSetting_DCSSettingCopyInsertMember";
-        }
-
-        public override Hashtable GetSpParams()
-        {
-            Hashtable param = new Hashtable();
-            param.Add("custid", CustID);
-            param.Add("existingcustid", ExistingCustID);
-            param.Add("userid", UserID);
-            param.Add("subaccid", SubAccID);
-            param.Add("ip", IpAddress);
-            param.Add("errcode", 0);
-            param.Add("errmsg", string.Empty);
-            return param;
-        }
+            => "Acc_CustSetting_DCSSettingCopyInsertMember";
 
         public override bool IsValid()
-        {
-            return this.CustID > 0 && this.ExistingCustID > 0;
-        }
+            => CustId > 0 && ExistingCustId > 0;
     }
 }
