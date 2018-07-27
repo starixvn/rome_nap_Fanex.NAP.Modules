@@ -11,6 +11,8 @@ namespace Fanex.Tarus.Finance.Model.Transfer
 
         public string ForexAccount { get; set; }
 
+        public string FromAmount { get; set; }
+
         public Result SpecialSitePermission { get; set; }
     }
 }
