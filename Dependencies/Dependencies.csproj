@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F70EF9CA-C9B2-4C4E-B764-D5072B580147}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Dependencies</RootNamespace>
+    <AssemblyName>Dependencies</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Modules\Fanex.NAP\Fanex.NAP.BetDetail.Voidbridge\Fanex.NAP.Voidbridge.BetDetail.csproj">
+      <Project>{daa5a14e-2db9-42d0-8115-d6c84e323e6c}</Project>
+      <Name>Fanex.NAP.Voidbridge.BetDetail</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.NAP\Fanex.NAP.CloneSetting\Fanex.NAP.CloneSetting.csproj">
+      <Project>{37a65793-85e8-4ac4-9254-f5f35bbc2e35}</Project>
+      <Name>Fanex.NAP.CloneSetting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.NAP\Fanex.NAP.RNGCasino\Fanex.NAP.RNGCasino.csproj">
+      <Project>{cc2cccc5-2eb5-4200-be30-14d8ee8c1dee}</Project>
+      <Name>Fanex.NAP.RNGCasino</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.NAP\Fanex.NAP.SearchCopy\Fanex.NAP.SearchCopy.csproj">
+      <Project>{f3b4da37-69b0-44e6-b011-7844a0fe77f1}</Project>
+      <Name>Fanex.NAP.SearchCopy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.AuthenticationFilter\Fanex.AuthenticationFilter.csproj">
+      <Project>{9e60faef-0c05-4506-be45-8a1c8fdd0ad3}</Project>
+      <Name>Fanex.AuthenticationFilter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Nap.SSO\Fanex.Nap.SSO.csproj">
+      <Project>{0dd8b22b-0a04-41ba-a5ec-e60fe682db57}</Project>
+      <Name>Fanex.Nap.SSO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.ActivityTracking\Fanex.Tarus.ActivityTracking.csproj">
+      <Project>{97df67f5-124c-448b-973c-05379e0a6404}</Project>
+      <Name>Fanex.Tarus.ActivityTracking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.Admin\Fanex.Tarus.Admin.csproj">
+      <Project>{b7fd958b-43db-45ee-895e-2105971893e3}</Project>
+      <Name>Fanex.Tarus.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.API\Fanex.Tarus.API.csproj">
+      <Project>{870e4221-2edc-4397-87b2-85ee2792879f}</Project>
+      <Name>Fanex.Tarus.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.Balance\Fanex.Tarus.Balance.csproj">
+      <Project>{2dae27b1-6a14-41e6-8c36-7cc5621bf36b}</Project>
+      <Name>Fanex.Tarus.Balance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj">
+      <Project>{be4a5642-a3b6-4329-bb8f-4973446e7fa9}</Project>
+      <Name>Fanex.Tarus.Business.Implement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.DataAccess.Implement\Fanex.Tarus.DataAccess.Implement.csproj">
+      <Project>{9780010a-7eec-4726-959b-d2cffb1875ee}</Project>
+      <Name>Fanex.Tarus.DataAccess.Implement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.Entities\Fanex.Tarus.Entities.csproj">
+      <Project>{0d0f3c0d-f85c-4b0d-b033-16424e1ae5e0}</Project>
+      <Name>Fanex.Tarus.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.Excels\Fanex.Tarus.Excels.csproj">
+      <Project>{4d443bd2-6287-4427-8afd-cabff55e2d6f}</Project>
+      <Name>Fanex.Tarus.Excels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.ExchangeRate\Fanex.Tarus.ExchangeRate.csproj">
+      <Project>{acdac061-9c62-4c4b-a08c-2c810669e290}</Project>
+      <Name>Fanex.Tarus.ExchangeRate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.Finance\Fanex.Tarus.Finance.csproj">
+      <Project>{2da5f7c3-bb8b-45f2-9e38-dd8e23655da6}</Project>
+      <Name>Fanex.Tarus.Finance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
+      <Project>{ccc0446a-42e7-4850-b09c-4dac278f23b3}</Project>
+      <Name>Fanex.Tarus.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.Security\Fanex.Tarus.Security.csproj">
+      <Project>{06ebadaa-ac59-41b0-b7db-afd65c89d790}</Project>
+      <Name>Fanex.Tarus.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.Statements\Fanex.Tarus.Statements.csproj">
+      <Project>{5d529c91-cacf-4ecd-87fd-41bbec2d85bf}</Project>
+      <Name>Fanex.Tarus.Statements</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.User\Fanex.Tarus.User.csproj">
+      <Project>{fa489626-9250-447a-b555-e621b43d3aff}</Project>
+      <Name>Fanex.Tarus.User</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.Web.Controller\Fanex.Tarus.Web.Controllers.csproj">
+      <Project>{f3fe623f-a32f-4db4-8306-64c166fc4488}</Project>
+      <Name>Fanex.Tarus.Web.Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Tarus\Fanex.Tarus.Web.Models\Fanex.Tarus.Web.Models.csproj">
+      <Project>{3ada1c70-fd55-4c89-bfef-1b695b1042cd}</Project>
+      <Name>Fanex.Tarus.Web.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Sunplus.Accounting\Sunplus.Accounting.Core\Sunplus.Accounting.Core.csproj">
+      <Project>{09b74f02-6c21-4c5e-a52c-b6d56595a262}</Project>
+      <Name>Sunplus.Accounting.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Sunplus.Accounting\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj">
+      <Project>{27984fee-40dc-40dc-b3b9-3a8776c5511d}</Project>
+      <Name>Sunplus.Accounting.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Sunplus.Accounting\Sunplus.Accounting.Entities\Sunplus.Accounting.Entities.csproj">
+      <Project>{c2043b3c-af85-4334-8542-f9ac2b031d79}</Project>
+      <Name>Sunplus.Accounting.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Sunplus.Accounting\Sunplus.Accounting.Services\Sunplus.Accounting.Services.csproj">
+      <Project>{a09d69e5-924e-4ee6-b3cc-1b51762837f6}</Project>
+      <Name>Sunplus.Accounting.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

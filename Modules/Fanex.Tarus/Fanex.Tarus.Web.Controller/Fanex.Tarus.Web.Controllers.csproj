@@ -72,16 +72,8 @@
       <HintPath>..\..\..\packages\CasinoLibrary.2.0.2.28015\lib\net40\CasinoUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Couchbase, Version=1.2.6.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Couchbase.1.0.0.0\lib\net40\Couchbase.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="DNAide, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.DNAide.2.1.0.0\lib\net40\DNAide.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Couchbase.1.0.0.0\lib\net40\Enyim.Caching.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ExcelUtil, Version=29.3.0.1000, Culture=neutral, processorArchitecture=MSIL">
@@ -197,16 +189,8 @@
       <HintPath>..\..\..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RemotingRef, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\RemotingRef.2.0.0.17\lib\net40\RemotingRef.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SPSRemoting">
-      <HintPath>..\..\..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.0.12\lib\net40\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.1.6\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.12, Culture=neutral, processorArchitecture=MSIL">
@@ -284,7 +268,7 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ThirdPartyProducts.StatusSetting.1.0.1.9\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
+      <HintPath>..\..\..\packages\ThirdPartyProducts.StatusSetting.1.0.2.1-RR2\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

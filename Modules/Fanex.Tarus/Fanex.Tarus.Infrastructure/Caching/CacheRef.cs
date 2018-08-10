@@ -9,58 +9,43 @@ namespace Fanex.Tarus.Infrastructure.Caching
 {
     using DNAide.Core;
     using RemotingRef;
+    using System.Threading;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class CacheRef
+    public static class CacheRef
     {
-        private static string TWLang(string lang)
-        {
-            switch (lang)
-            {
-                case "en-US": return "en";
-                case "zh-TW": return "ch"; // Traditional
-                case "zh-CN": return "cs"; // Simplified
-                case "ja-JP": return "jp";
-                case "th-TH": return "th"; // Thai
-                default: return "en";
-            }
-        }
+        private static readonly IRemotingRefService remotingRefService = new RemotingRefService();
 
         public static string GetBettype(object bettypeID)
         {
-            return RefData.GetBetTypeName(bettypeID.ToString(), TWLang("en-US"), string.Empty);
+            return remotingRefService.GetBetTypeName(bettypeID.ToString(), Thread.CurrentThread.CurrentCulture.Name);
         }
 
         public static string GetSportName(object sportID)
         {
-            return RefData.GetSportName(sportID.ToString(), TWLang("en-US"), string.Empty);
+            return remotingRefService.GetSportName(sportID.ToString(), Thread.CurrentThread.CurrentCulture.Name, string.Empty);
         }
 
         public static string GetTeamName(object teamID)
         {
-            return RefData.GetTeamName(teamID.ToString(), TWLang("en-US"), string.Empty);
+            return remotingRefService.GetTeamName(teamID.ToString(), Thread.CurrentThread.CurrentCulture.Name, string.Empty);
         }
 
         public static string GetLeagueName(object leagueID)
         {
-            return RefData.GetLeagueName(leagueID.ToString(), TWLang("en-US"), string.Empty);
-        }
-
-        public static string GetFncIndexName(object IndexId)
-        {
-            return RefData.GetFncIndexName(CastAide.AsString(IndexId), TWLang("en-US"));
+            return remotingRefService.GetLeagueName(leagueID.ToString(), Thread.CurrentThread.CurrentCulture.Name, string.Empty);
         }
 
         public static string GetHorseTeamName(object CodeID)
         {
-            return RefData.GetHorseTeamName(CastAide.AsString(CodeID), TWLang("en-US"));
+            return remotingRefService.GetHorseTeamName(CastAide.AsString(CodeID), Thread.CurrentThread.CurrentCulture.Name);
         }
 
         public static string GetOddsTypeName(object OddsType)
         {
-            return RefData.GetOddsTypeName(CastAide.AsString(OddsType), TWLang("en-US"));
+            return remotingRefService.GetOddsTypeName(CastAide.AsString(OddsType), Thread.CurrentThread.CurrentCulture.Name);
         }
 
         public static string GetCombinationName(string betteam)
@@ -94,23 +79,23 @@ namespace Fanex.Tarus.Infrastructure.Caching
         {
             string result = string.Empty;
             
-            return RemotingRef.RefData.GetCasinoBetItem(resultId.ToString(), TWLang("en-US"));
+            return remotingRefService.GetCasinoBetItem(resultId.ToString(), Thread.CurrentThread.CurrentCulture.Name);
         }
 
         public static string GetRouletteBetResult(int resultId)
         {
 
-            return RemotingRef.RefData.GetRouletteBetItem(resultId.ToString(), TWLang("en-US"));
+            return remotingRefService.GetRouletteBetItem(resultId.ToString(), Thread.CurrentThread.CurrentCulture.Name);
         }
 
         public static string[] GetCombinationTypeCombo(string betTeam, string betCheck, decimal hdp1, decimal hdp2)
         {
-            return RefData.GetCombinationTypeCombo(betTeam, betCheck, (int)hdp1, (int)hdp2, TWLang("en-US"));
+            return remotingRefService.GetCombinationTypeCombo(betTeam, betCheck, (int)hdp1, (int)hdp2, Thread.CurrentThread.CurrentCulture.Name);
         }
 
         public static string GetProductName(int productId)
         {
-            return RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), ("en-US"), string.Empty);
+            return remotingRefService.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), Thread.CurrentThread.CurrentCulture.Name, string.Empty);
         }
     }
 }
