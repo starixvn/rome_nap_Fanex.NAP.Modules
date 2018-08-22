@@ -21,7 +21,8 @@ namespace Sunplus.Accounting.Core.Helper
             {
                 if (HttpContext.Current.Request.IsLocal)
                     return "127.0.0.1";
-                return CastAide.AsString(HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"], "");
+                var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                return ip.Split(',')[0];
             }
             catch (Exception ex)
             {
