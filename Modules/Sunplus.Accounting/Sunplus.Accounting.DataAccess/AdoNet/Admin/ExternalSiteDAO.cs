@@ -11,6 +11,18 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
 {
     public class ExternalSiteDAO : DataAccess, IExternalSiteDAO
     {
+        public Result InitSuperInfo(string superName)
+        {
+            using (ObjectDb db = new ObjectDb("Acc_CustomerInsSuperInfo"))
+            {
+                var inputParams = new Hashtable { { "custname", superName } };
+                db.AssignParamValues(inputParams);
+                db.ExecuteNonQuery();
+
+                return GetResultFromOutputHash(db.GetOuputParams());
+            }
+        }
+
         public IEnumerable<string> GetGroupNames()
         {
             IList<string> groups = new List<string>(16);
