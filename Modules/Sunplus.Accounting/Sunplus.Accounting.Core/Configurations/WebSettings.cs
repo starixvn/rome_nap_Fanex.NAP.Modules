@@ -24,7 +24,7 @@ namespace Sunplus.Accounting.Core.Configurations
         private static readonly string _getCountry;
         private static readonly string _virtualDir;
         private static readonly bool _isSslLogin;
-        
+
         private static readonly bool _disableAutoM;
         private static readonly bool _disableCS;
         private static readonly bool _disableOR;
@@ -76,8 +76,8 @@ namespace Sunplus.Accounting.Core.Configurations
                 _directBAUrl = ConfigurationManager.AppSettings["link_BA_url"];
                 _getCountry = ConfigurationManager.AppSettings["link_Country_url"];
                 _ipvnreplace = ConfigurationManager.AppSettings["ipvnreplace"];
-                _isSslLogin = (ConfigurationManager.AppSettings["ssl_login"] == "1");            
-                _disableAutoM = (ConfigurationManager.AppSettings["disableAutoMaster"] == "1");               
+                _isSslLogin = (ConfigurationManager.AppSettings["ssl_login"] == "1");
+                _disableAutoM = (ConfigurationManager.AppSettings["disableAutoMaster"] == "1");
                 _disableCS = (ConfigurationManager.AppSettings["disabledCS"] == "1");
                 _disableOR = (ConfigurationManager.AppSettings["disabledOR"] == "1");
                 _Disable1x2Comm = (ConfigurationManager.AppSettings["disable1x2Comm"] == "1");
@@ -195,7 +195,7 @@ namespace Sunplus.Accounting.Core.Configurations
         public static bool disableAutoM
         {
             get { return _disableAutoM; }
-        }       
+        }
 
         public static bool disableCS
         {
@@ -473,6 +473,14 @@ namespace Sunplus.Accounting.Core.Configurations
             get
             {
                 return (ConfigurationManager.AppSettings["IsShowAllBet"] == "1");
+            }
+        }
+
+        public static bool IsShowPokerGames
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["ProductIdPokerGames"]);
             }
         }
 
