@@ -34,7 +34,7 @@
                 BetListHTMLFactory factory = new BetListHTMLFactory();
                 BetListHTMLBuilder builder = factory.CreateBuilder();
                 BetListHelper betListHelper = new BetListHelper();
-                GetCachePropertyById funcGetOddsTypeName = CustomerSetting.Module.Core.Services.Impl.CacheRef.GetOddsTypeName;
+                GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
 
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
 
