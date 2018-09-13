@@ -453,33 +453,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
 
             return dataTable;
-        }
-
-        /// <summary>
-        /// Check a username exists in a list of groupname
-        /// </summary>
-        /// <param name="param"></param>
-        /// <returns></returns>
-        public static DataTable CheckUserNameExistInListGroupName(Hashtable param)
-        {
-            DataTable dt = new DataTable();
-            try
-            {                
-                using (ObjectDb db = new ObjectDb("AdminSelByListGroupNameUserName", 600))
-                {
-                    db.AssignParamValues(param);
-                    var ds = db.ExecuteDataSet();
-                    if (ds != null && ds.Tables.Count > 0)
-                        dt = ds.Tables[0];
-                }                
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                throw ex;
-            }
-            return dt;
-        }
+        }       
 
         //Phuong.Nguyen modified
         public static IDataReader FunctionParent(string system)
@@ -611,41 +585,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 
             return error;
         }
-
-        /// <summary>
-        /// Select info for Update Multiple Policy Admin
-        /// sp: Acc_Con_Batch_AdminPolicySel         
-        /// </summary>        
-        /// <param name="custId"></param>
-        /// <returns>IDataReader</returns>
-        /// Phuong.Nguyen modified
-        //public static DataResult SelectMultUpdPolicy(string custId)
-        public static DbResult SelectMultUpdPolicy(string custId)
-        {
-            DbResult result = null;
-            try
-            {                
-                using (ObjectDb db = new ObjectDb("AdminPolicySel"))
-                {
-                    var param = new Hashtable();
-                    param.Add("custids", custId);
-                    param.Add("groupid", 0);
-
-                    db.AssignParamValues(param);
-                    var ds = db.ExecuteDataSet();
-                    var output = db.GetOuputParams();
-
-                    result = new DbResult(output, ds);
-                }                
-            }
-            catch (Exception ex)
-            {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                throw ex;
-            }
-            return result;
-        }
+       
 
         /// <summary>
         /// Add new Group
@@ -1207,35 +1147,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return error;
-        }
-
-        /// <summary>
-        /// Select Admin info by cust id
-        /// sp: Acc_Con_AdminSelByCustID        
-        /// </summary>
-        /// <param name="custId"></param>
-        /// <returns></returns>
-        public static IDataReader SelectAdminInfo(string custId)
-        {
-            IDataReader reader = null;
-            try
-            {
-                using(ObjectDb db = new ObjectDb("Con_AdminSelByCustID"))
-                {
-                    var param = new Hashtable();
-                    param.Add("custid", custId);
-
-                    db.AssignParamValues(param);
-                    reader = db.ExecuteReader();
-                }                
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                throw ex;
-            }
-            return reader;
-        }
+        }       
 
         /// <summary>
         /// Check host permission 
