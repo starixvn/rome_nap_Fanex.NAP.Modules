@@ -18,5 +18,7 @@ namespace Sunplus.Accounting.DataAccess.IAdmin
         IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId);
 
         Result ChangePrimaryGroup(int custId, string groupName, DateTime effectiveDate, int userId, string ip);
+
+        Result InitSuperInfo(string superName);
     }
 }
