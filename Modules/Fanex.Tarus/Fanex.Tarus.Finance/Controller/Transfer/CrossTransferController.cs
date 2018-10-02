@@ -44,11 +44,17 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
             return View("~/Views/Finance/Transfer/Index.cshtml", crossTransferModel);
         }
 
-        public JsonResult TransferYesterdayTransactionHandler(string fromCustName, string toCustName, double exRate, double amount, string remark)
+        public JsonResult TransferYesterdayTransactionHandler(
+            string fromCustName,
+            string toCustName,
+            double exRate,
+            double amount,
+            string remark,
+            bool isCollection)
         {
             fromCustName = WebUtility.HtmlDecode(fromCustName);
             toCustName = WebUtility.HtmlDecode(toCustName);
-            return Json(_crossTransferService.TransferYesterdayTransaction(AppSession.AccId, fromCustName, toCustName, exRate, amount, remark), JsonRequestBehavior.AllowGet);
+            return Json(_crossTransferService.TransferYesterdayTransaction(AppSession.AccId, fromCustName, toCustName, exRate, amount, remark, isCollection), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult SelectCustomerExRate(string username)

@@ -9,7 +9,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
     public class CrossTransferAccess : ICrossTransferAccess
     {
         public Result CustomerCrossTransferInsert(int fromCustID, int toCustID, double fromAmount, double toAmount, double fromExRate,
-            double toExRate, string forexUsername, string remark, int custid)
+            double toExRate, string forexUsername, string remark, int custid, bool isCollection)
         {
             try
             {
@@ -25,6 +25,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
                     objDB.AddInParameter("remark", DbType.String, remark);
                     objDB.AddInParameter("userid", DbType.Int32, custid);
                     objDB.AddInParameter("ip", DbType.String, Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+                    objDB.AddInParameter("iscollection", DbType.Boolean, isCollection);
 
                     objDB.AddOutParameter("errmsg", DbType.String, 500);
                     objDB.AddOutParameter("errcode", DbType.Int32, sizeof(int));
@@ -41,7 +42,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
         }
 
         public Result BettransInsertTransfer(int _accId, int _fromCustId, string _toUser, double _exRate,
-                                                      double _amount, string _remark, string _ip)
+                                                      double _amount, string _remark, string _ip, bool _isCollection)
         {
             try
             {
@@ -55,6 +56,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
                     objDB.AddInParameter("remark", DbType.String, _remark);
                     objDB.AddInParameter("language", DbType.String, "E");
                     objDB.AddInParameter("ip", DbType.String, Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+                    objDB.AddInParameter("iscollection", DbType.Boolean, _isCollection);
 
                     objDB.AddOutParameter("errmsg", DbType.String, 500);
                     objDB.AddOutParameter("errcode", DbType.Int32, sizeof(int));

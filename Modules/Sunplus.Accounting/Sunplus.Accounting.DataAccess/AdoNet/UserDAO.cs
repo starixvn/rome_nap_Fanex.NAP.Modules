@@ -191,7 +191,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         }
 
         public Result InsDataTmpExcelFinanceCrossTransfer(int userId, string arrFromCust, string arrToCust, string arrFromAmount,
-                                        string arrToAmount, string arrDescription)
+            string arrToAmount, string arrDescription, string arrCollection)
         {
             using (ObjectDb objDb = new ObjectDb("Acc_FinanceCrossTransferMulInsTmpExcel"))
             {
@@ -202,6 +202,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 hsParam.Add("arramount", arrFromAmount);
                 hsParam.Add("arrtoamount", arrToAmount);
                 hsParam.Add("arrdescription", arrDescription);
+                hsParam.Add("arriscollection", arrCollection);
 
                 objDb.AssignParamValues(hsParam);
                 objDb.ExecuteNonQuery();

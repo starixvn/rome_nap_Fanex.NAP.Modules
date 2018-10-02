@@ -18,5 +18,7 @@ namespace Fanex.Tarus.Finance.Model.Transfer
         public string ForexUsername { get; set; }
 
         public string Remark { get; set; }
+
+        public bool IsCollection { get; set; }
     }
 }

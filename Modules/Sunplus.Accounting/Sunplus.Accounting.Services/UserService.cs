@@ -105,13 +105,16 @@ namespace Sunplus.Accounting.Business
         }
 
         public Result InsDataTmpExcelFinanceCrossTransfer(int userId, string arrFromCust, string arrToCust, string arrFromAmount,
-                                        string arrToAmount, string arrDescription)
+            string arrToAmount, string arrDescription, string arrCollection)
         {
             try
             {
                 int maxLength = 4000;
                 if (userId <= 0 || arrFromCust.Length > maxLength || arrToCust.Length > maxLength ||
-                    arrFromAmount.Length > maxLength || arrToAmount.Length > maxLength || arrDescription.Length > maxLength)
+                    arrFromAmount.Length > maxLength ||
+                    arrToAmount.Length > maxLength ||
+                    arrDescription.Length > maxLength ||
+                    arrCollection.Length > maxLength)
                 {
                     return new Result()
                     {
@@ -120,7 +123,7 @@ namespace Sunplus.Accounting.Business
                     };
                 }
 
-                return _userDAO.InsDataTmpExcelFinanceCrossTransfer(userId, arrFromCust, arrToCust, arrFromAmount, arrToAmount, arrDescription);
+                return _userDAO.InsDataTmpExcelFinanceCrossTransfer(userId, arrFromCust, arrToCust, arrFromAmount, arrToAmount, arrDescription, arrCollection);
             }
             catch (Exception ex)
             {
@@ -222,10 +225,10 @@ namespace Sunplus.Accounting.Business
             Dictionary<string, int> items = transList.AsQueryable()
                 .GroupBy(entity => entity.RefNo)
                 .Select(entityGroup => new
-                                           {
-                                               RefNo = entityGroup.Key,
-                                               Total = entityGroup.Count()
-                                           }
+                {
+                    RefNo = entityGroup.Key,
+                    Total = entityGroup.Count()
+                }
                 )
                 .ToDictionary(entity => entity.RefNo, entity => entity.Total);
             return items[RefNo];
@@ -236,10 +239,10 @@ namespace Sunplus.Accounting.Business
             Check.Argument.IsNotNull(transList, "transList");
             var items = new Dictionary<string, int>();
             items = transList.AsQueryable().GroupBy(entity => entity.RefNo).Select(entityGroup => new
-                                                                                                      {
-                                                                                                          RefNo = entityGroup.Key,
-                                                                                                          Total = entityGroup.Count()
-                                                                                                      }).ToDictionary(entity => entity.RefNo, entity => entity.Total);
+            {
+                RefNo = entityGroup.Key,
+                Total = entityGroup.Count()
+            }).ToDictionary(entity => entity.RefNo, entity => entity.Total);
             return items;
         }
 

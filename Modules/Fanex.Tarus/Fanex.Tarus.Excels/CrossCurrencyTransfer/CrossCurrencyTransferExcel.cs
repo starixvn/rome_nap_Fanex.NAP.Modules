@@ -41,7 +41,7 @@
 
         private ExcelResult ValidateColumnNames(IRow headerRow)
         {
-            if (headerRow == null || headerRow.LastCellNum < 5)
+            if (headerRow == null || headerRow.LastCellNum < 6)
             {
                 return CreateErrorResult(Labels.InvalidExcelTemplate);
             }
@@ -85,6 +85,14 @@
                 !remark.Equals("Remark", StringComparison.Ordinal))
             {
                 invalidColumnNames.Add(remark);
+            }
+
+            string collection = headerRow.Cells[5].ToString();
+
+            if (string.IsNullOrEmpty(collection) ||
+                !collection.Equals("Collection", StringComparison.Ordinal))
+            {
+                invalidColumnNames.Add(collection);
             }
 
             if (invalidColumnNames.Count > 0)

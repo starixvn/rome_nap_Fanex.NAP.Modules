@@ -6,9 +6,9 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
 
     public interface ICrossTransferAccess
     {
-        Result CustomerCrossTransferInsert(int fromCustID, int toCustID, double fromAmount, double toAmount, double fromExRate, double toExRate, string forexUsername, string remark, int custid);
+        Result CustomerCrossTransferInsert(int fromCustID, int toCustID, double fromAmount, double toAmount, double fromExRate, double toExRate, string forexUsername, string remark, int custid, bool isCollection);
 
-        Result BettransInsertTransfer(int _accId, int _fromCustId, string _toUser, double _exRate, double _amount, string _remark, string _ip);
+        Result BettransInsertTransfer(int _accId, int _fromCustId, string _toUser, double _exRate, double _amount, string _remark, string _ip, bool _isCollection);
 
         CustomerExRate SelectCustomerExRate(string username);
 

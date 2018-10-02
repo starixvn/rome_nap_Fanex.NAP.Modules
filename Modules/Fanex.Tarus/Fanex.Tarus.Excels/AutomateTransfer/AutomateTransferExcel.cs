@@ -39,6 +39,7 @@
             IRow excelRow;
             DataRow drow;
             ICell cell;
+            int row = 0;
 
             while (excelRows.MoveNext())
             {
@@ -46,6 +47,7 @@
                 drow = dt.NewRow();
                 //// Current Row Index
                 var count = 0;
+                var collectionColumn = 5;
 
                 for (int i = 0, max = excelRow.LastCellNum; i < max; i++)
                 {
@@ -61,6 +63,14 @@
                             default:
                                 try
                                 {
+                                    if ((row > 0 && i == collectionColumn) &&
+                                        !string.IsNullOrEmpty(cell.StringCellValue)
+                                        && !string.Equals(cell.StringCellValue, "Yes", StringComparison.OrdinalIgnoreCase)
+                                        && !string.Equals(cell.StringCellValue, "No", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        throw new Exception();
+                                    }
+
                                     if (string.IsNullOrEmpty(cell.StringCellValue))
                                     {
                                         count++;
@@ -87,6 +97,8 @@
                     drow[0] = excelRow.RowNum + 1;
                     dt.Rows.Add(drow);
                 }
+
+                row++;
             }
 
             return dt;
@@ -103,7 +115,8 @@
                 new DataColumn("To Cust", typeof(string)),
                 new DataColumn("Amount"),
                 new DataColumn("ActualRate"),
-                new DataColumn("Description", typeof(string))
+                new DataColumn("Description", typeof(string)),
+                new DataColumn("Collection", typeof(string))
             });
 
             return dataTable;
@@ -111,7 +124,7 @@
 
         private ExcelResult ValidateColumnNames(IRow headerRow)
         {
-            if (headerRow == null || headerRow.LastCellNum < 5)
+            if (headerRow == null || headerRow.LastCellNum < 6)
             {
                 return CreateErrorResult(Labels.InvalidExcelTemplate);
             }
@@ -155,6 +168,14 @@
                 !description.Equals("Description", StringComparison.Ordinal))
             {
                 invalidColumnNames.Add(description);
+            }
+
+            string collection = headerRow.Cells[5].ToString();
+
+            if (string.IsNullOrEmpty(collection) ||
+                !collection.Equals("Collection", StringComparison.Ordinal))
+            {
+                invalidColumnNames.Add(collection);
             }
 
             if (invalidColumnNames.Count > 0)
