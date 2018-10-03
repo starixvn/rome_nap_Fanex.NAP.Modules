@@ -140,6 +140,7 @@
     <Compile Include="Business\AutoFollowBet\SourceTypeConstants.cs" />
     <Compile Include="Business\BACustomer\BACustomerService.cs" />
     <Compile Include="Business\BACustomer\IBACustomerService.cs" />
+    <Compile Include="Business\CustomerDateLimit\CustomerDateLimitService.cs" />
     <Compile Include="Business\IMBCRestriction\IMBCAdminService.cs" />
     <Compile Include="Business\LimitNewMember\ILimitNewMemberService.cs" />
     <Compile Include="Business\LimitNewMember\LimitNewMemberService.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Business\SMAManagement\SMAManagementService.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Controller\CustomerDateLimitController.cs" />
     <Compile Include="Controller\BACustomerController.cs" />
     <Compile Include="Controller\IMBCAdminController.cs" />
     <Compile Include="Controller\LimitNewMemberController.cs" />
@@ -163,6 +165,9 @@
     <Compile Include="Controller\SecurityCode\AdminSecurityCodeController.cs" />
     <Compile Include="Controller\SiteManagementController.cs" />
     <Compile Include="Controller\SMAManagement\SMAManagementController.cs" />
+    <Compile Include="Criteria\CustomerDateLimit\GetCustomerDateLimitByIdCriteria.cs" />
+    <Compile Include="Criteria\CustomerDateLimit\UpdateCustomerDateLimitCriteria.cs" />
+    <Compile Include="Criteria\CustomerDateLimit\GetAllCustomerDateLimitCriteria.cs" />
     <Compile Include="Criteria\LimitNewMember\LimitNewMemberCriteria.cs" />
     <Compile Include="Criteria\MailingList\SMATurnover\GetMailingListCriteria.cs" />
     <Compile Include="Criteria\MailingList\SMATurnover\UpdateMailingListCriteria.cs" />
@@ -176,6 +181,7 @@
     <Compile Include="Criteria\SMAManagement\UpdateOwnerCriteria.cs" />
     <Compile Include="DataAccess\BACustomer\BACustomerAccess.cs" />
     <Compile Include="DataAccess\BACustomer\IBACustomerAccess.cs" />
+    <Compile Include="DataAccess\CustomerDateLimit\CustomerDateLimitDataAccess.cs" />
     <Compile Include="DataAccess\IMBCRestriction\IMBCDAO.cs" />
     <Compile Include="DataAccess\LimitNewMember\ILimitNewMemberAccess.cs" />
     <Compile Include="DataAccess\LimitNewMember\LimitNewMemberAccess.cs" />
@@ -191,6 +197,8 @@
     <Compile Include="DataAccess\SMAManagement\SMAManagementAccess.cs" />
     <Compile Include="Entities\AutoFollowBet\AutoFollowBet.cs" />
     <Compile Include="Entities\AutoFollowBet\AutoFollowBetDetail.cs" />
+    <Compile Include="Entities\CustomerDateLimit\CustomerDateLimitViewModel.cs" />
+    <Compile Include="Entities\CustomerDateLimit\CustomerDateLimitModel.cs" />
     <Compile Include="Entities\CustomerSecurityCode.cs" />
     <Compile Include="Entities\FollowedCustomer.cs" />
     <Compile Include="Entities\FollowedCustomerDTO.cs" />
@@ -205,6 +213,7 @@
     <Compile Include="Entities\SMAManagement\SMAEntity.cs" />
     <Compile Include="Entities\SMAManagement\SMAGroupHeadline.cs" />
     <Compile Include="Entities\SMAManagement\SMAManagerModel.cs" />
+    <Compile Include="Enums\CustomerDataRangeType.cs" />
     <Compile Include="Enums\HeadlineType.cs" />
     <Compile Include="Enums\SiteType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
