@@ -129,26 +129,17 @@
   <data name="Configuration" xml:space="preserve">
     <value>Configuration</value>
   </data>
-  <data name="ConfigureMaxNewMembers" xml:space="preserve">
-    <value>Configure Max New Members</value>
-  </data>
   <data name="Disabled" xml:space="preserve">
     <value>Disabled</value>
+  </data>
+  <data name="EditMaxMembersLimitbySuper" xml:space="preserve">
+    <value>Edit Max Members Limit by Super</value>
   </data>
   <data name="Master" xml:space="preserve">
     <value>Master</value>
   </data>
-  <data name="MaxPerDay" xml:space="preserve">
-    <value>Max per day</value>
-  </data>
-  <data name="MaxPerDayEmpty" xml:space="preserve">
-    <value>Please input Max per day!</value>
-  </data>
-  <data name="MaxPerDayHint" xml:space="preserve">
-    <value>Max per day: number of member accounts that agents could create on specific super per day.</value>
-  </data>
-  <data name="MaxPerDayInvalid" xml:space="preserve">
-    <value>Invalid Max per day!</value>
+  <data name="MaxMembersLimitbySuper" xml:space="preserve">
+    <value>Max Members Limit by Super</value>
   </data>
   <data name="Member" xml:space="preserve">
     <value>Member</value>
@@ -167,12 +158,6 @@
   </data>
   <data name="Super" xml:space="preserve">
     <value>Super</value>
-  </data>
-  <data name="SuperEmpty" xml:space="preserve">
-    <value>Please input Super!</value>
-  </data>
-  <data name="SuperNotFound" xml:space="preserve">
-    <value>Invalid Super!</value>
   </data>
   <data name="Suspended" xml:space="preserve">
     <value>Suspended</value>

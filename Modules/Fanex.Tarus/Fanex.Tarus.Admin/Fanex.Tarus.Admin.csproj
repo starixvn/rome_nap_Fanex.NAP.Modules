@@ -60,6 +60,10 @@
       <HintPath>..\..\..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Business.Implement.1.0.0.12\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
       <Private>True</Private>
@@ -142,12 +146,12 @@
     <Compile Include="Business\BACustomer\IBACustomerService.cs" />
     <Compile Include="Business\CustomerDateLimit\CustomerDateLimitService.cs" />
     <Compile Include="Business\IMBCRestriction\IMBCAdminService.cs" />
-    <Compile Include="Business\LimitNewMember\ILimitNewMemberService.cs" />
-    <Compile Include="Business\LimitNewMember\LimitNewMemberService.cs" />
     <Compile Include="Business\MailingList\ISpecialDeleteService.cs" />
     <Compile Include="Business\MailingList\SMATurnover\Admin_SMATurnoverMailingListService.cs" />
     <Compile Include="Business\MailingList\SMATurnover\IAdmin_SMATurnoverMailingListService.cs" />
     <Compile Include="Business\MailingList\SpecialDeleteService.cs" />
+    <Compile Include="Business\MaxMemberLimitBySuper\IMaxMemberLimitBySuperService.cs" />
+    <Compile Include="Business\MaxMemberLimitBySuper\MaxMemberLimitBySuperService.cs" />
     <Compile Include="Business\SecurityCode\AdminSecurityCodeService.cs" />
     <Compile Include="Business\SecurityCode\IAdminSecurityCodeService.cs" />
     <Compile Include="Business\SiteManagement\ISiteManagementService.cs" />
@@ -159,7 +163,7 @@
     <Compile Include="Controller\CustomerDateLimitController.cs" />
     <Compile Include="Controller\BACustomerController.cs" />
     <Compile Include="Controller\IMBCAdminController.cs" />
-    <Compile Include="Controller\LimitNewMemberController.cs" />
+    <Compile Include="Controller\MaxNewMemberBySuperController.cs" />
     <Compile Include="Controller\MailingList\Admin_SMATurnoverMailingListController.cs" />
     <Compile Include="Controller\MailingList\SpecialDeleteController.cs" />
     <Compile Include="Controller\SecurityCode\AdminSecurityCodeController.cs" />
@@ -168,9 +172,11 @@
     <Compile Include="Criteria\CustomerDateLimit\GetCustomerDateLimitByIdCriteria.cs" />
     <Compile Include="Criteria\CustomerDateLimit\UpdateCustomerDateLimitCriteria.cs" />
     <Compile Include="Criteria\CustomerDateLimit\GetAllCustomerDateLimitCriteria.cs" />
-    <Compile Include="Criteria\LimitNewMember\LimitNewMemberCriteria.cs" />
     <Compile Include="Criteria\MailingList\SMATurnover\GetMailingListCriteria.cs" />
     <Compile Include="Criteria\MailingList\SMATurnover\UpdateMailingListCriteria.cs" />
+    <Compile Include="Criteria\MaxMemberLimitBySuper\UpdateSuperCriteria.cs" />
+    <Compile Include="Criteria\MaxMemberLimitBySuper\SearchSuperCriteria.cs" />
+    <Compile Include="Criteria\MaxMemberLimitBySuper\GetSitesCriteria.cs" />
     <Compile Include="Criteria\SecurityCode\GetUserListCriteria.cs" />
     <Compile Include="Criteria\SecurityCode\ResetSecurityCodeCriteria.cs" />
     <Compile Include="Criteria\SiteManagement\AddSiteCriteria.cs" />
@@ -183,12 +189,12 @@
     <Compile Include="DataAccess\BACustomer\IBACustomerAccess.cs" />
     <Compile Include="DataAccess\CustomerDateLimit\CustomerDateLimitDataAccess.cs" />
     <Compile Include="DataAccess\IMBCRestriction\IMBCDAO.cs" />
-    <Compile Include="DataAccess\LimitNewMember\ILimitNewMemberAccess.cs" />
-    <Compile Include="DataAccess\LimitNewMember\LimitNewMemberAccess.cs" />
     <Compile Include="DataAccess\MailingList\ISpecialDeleteAccess.cs" />
     <Compile Include="DataAccess\MailingList\SMATurnover\Admin_SMATurnoverMailingListDataAccess.cs" />
     <Compile Include="DataAccess\MailingList\SMATurnover\IAdmin_SMATurnoverMailingListDataAccess.cs" />
     <Compile Include="DataAccess\MailingList\SpecialDeleteAccess.cs" />
+    <Compile Include="DataAccess\MaxMemberLimitBySuper\IMaxMemberLimitBySuperDataAccess.cs" />
+    <Compile Include="DataAccess\MaxMemberLimitBySuper\MaxMemberLimitBySuperDataAccess.cs" />
     <Compile Include="DataAccess\SecurityCode\AdminSecurityCodeDataAccess.cs" />
     <Compile Include="DataAccess\SecurityCode\IAdminSecurityCodeDataAccess.cs" />
     <Compile Include="DataAccess\SiteManagement\ISiteManagementDataAccess.cs" />
@@ -202,12 +208,16 @@
     <Compile Include="Entities\CustomerSecurityCode.cs" />
     <Compile Include="Entities\FollowedCustomer.cs" />
     <Compile Include="Entities\FollowedCustomerDTO.cs" />
+    <Compile Include="Entities\MaxMemberLimitBySuper\MaxMemberLimitBySuperUpdateResultEntity.cs" />
+    <Compile Include="Entities\MaxMemberLimitBySuper\MaxMemberLimitBySuperSearchResult.cs" />
+    <Compile Include="Entities\MaxMemberLimitBySuper\MaxMemberLimitBySuperEntity.cs" />
+    <Compile Include="Entities\MaxMemberLimitBySuper\MaxMemberLimitViewModel.cs" />
     <Compile Include="Entities\Licensee.cs" />
-    <Compile Include="Entities\LimitMember.cs" />
     <Compile Include="Entities\MailingList\SpecialDeleteMailing.cs" />
     <Compile Include="Entities\RacingDefaultSetting.cs" />
     <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\SecurityCode\CustomerInfo.cs" />
+    <Compile Include="Entities\Site.cs" />
     <Compile Include="Entities\SMAManagement\FilterGroup.cs" />
     <Compile Include="Entities\SMAManagement\IdNameEntity.cs" />
     <Compile Include="Entities\SMAManagement\SMAEntity.cs" />
