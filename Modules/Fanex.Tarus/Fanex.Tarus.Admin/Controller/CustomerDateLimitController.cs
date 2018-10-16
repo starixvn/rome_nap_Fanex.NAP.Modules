@@ -4,6 +4,7 @@ namespace Fanex.Tarus.Admin.Controller
     using Business.CustomerDateLimit;
     using Criteria.CustomerDateLimit;
     using Entities.CustomerDateLimit;
+    using Enums;
     using Infrastructure.Common;
     using Web.Controllers;
     using Web.Controllers.Filters;
@@ -47,6 +48,27 @@ namespace Fanex.Tarus.Admin.Controller
             var customer = new CustomerDateLimitModel();
 
             return View("~/Views/Admin/CustomerDateLimit/Add.cshtml", customer);
+        }
+
+        [HttpGet]
+        [AuthenticateHost]
+        public ActionResult Remove()
+        {
+            var customer = new CustomerDateLimitModel();
+
+            return View("~/Views/Admin/CustomerDateLimit/Remove.cshtml", customer);
+        }
+
+        [HttpPost]
+        [AuthenticateHost]
+        public ActionResult Remove(UpdateCustomerDateLimitCriteria criteria)
+        {
+            if (criteria != null)
+            {                
+                criteria.Choice = CustomerDataRangeType.None;
+            }
+
+            return Update(criteria);
         }
 
         [AuthenticateHost]

@@ -14,7 +14,7 @@
 
         CustomerDateLimitModel GetById(int custId);
 
-        Result Update(UpdateCustomerDateLimitCriteria criteria);
+        CustomerDataRangeResult Update(UpdateCustomerDateLimitCriteria criteria);
     }
 
     public class CustomerDateLimitDataAccess : ICustomerDateLimitDataAccess
@@ -74,9 +74,9 @@
             return null;
         }
 
-        public Result Update(UpdateCustomerDateLimitCriteria criteria)
+        public CustomerDataRangeResult Update(UpdateCustomerDateLimitCriteria criteria)
         {
-            var result = new Result();
+            var result = new CustomerDataRangeResult();
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -85,7 +85,13 @@
 
                 if (outputParams != null)
                 {
-                    result = new Result((int)outputParams["errcode"], outputParams["errmsg"].ToString());
+                    result = new CustomerDataRangeResult
+                    {
+                        ErrorCode = (int)outputParams["errcode"],
+                        ErrorMessage = outputParams["errmsg"].ToString(),
+                        EffectedRow = (int)outputParams["effectedrow"],
+                        NoChangeUsers = outputParams["nochangeuser"].ToString()
+                    };
                 }
             }
 
