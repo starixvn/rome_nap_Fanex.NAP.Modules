@@ -250,6 +250,7 @@
     <Compile Include="HttpModules\CustomerAuthorizationHttpModule.cs" />
     <Compile Include="Models\UserPermission.cs" />
     <Compile Include="HttpModules\Services\CreditOrDepositCustomerAuthorization.cs" />
+    <Compile Include="Services\CreditOrDepositCustomerUtils.cs" />
     <Compile Include="Services\CustomerTypeService.cs" />
     <Compile Include="Services\ICustomerTypeService.cs" />
     <Compile Include="HttpModules\Services\UrlPermissionHttpContext.cs" />
