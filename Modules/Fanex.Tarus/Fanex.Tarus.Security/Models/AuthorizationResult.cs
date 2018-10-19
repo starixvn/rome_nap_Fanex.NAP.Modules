@@ -1,7 +1,7 @@
 ﻿namespace Fanex.Tarus.Security.Models
 {
     using System.Net;
-    using System.Text;
+    using System.Web.Script.Serialization;
 
     internal sealed class AuthorizationResult
     {
@@ -15,21 +15,12 @@
 
         public string ErrorMessage { get; }
 
+        [ScriptIgnore]
         public bool IsOk
             => ErrorCode == 0;
 
         public string ToJson()
-            => new StringBuilder()
-                .Append("{\"")
-                .Append(nameof(ErrorCode))
-                .Append("\":")
-                .Append(ErrorCode)
-                .Append(",\"")
-                .Append(nameof(ErrorMessage))
-                .Append("\":\"")
-                .Append(ErrorMessage)
-                .Append("\"}")
-                .ToString();
+            => new JavaScriptSerializer().Serialize(this);
 
         public static AuthorizationResult Ok()
             => new AuthorizationResult(0, string.Empty);
