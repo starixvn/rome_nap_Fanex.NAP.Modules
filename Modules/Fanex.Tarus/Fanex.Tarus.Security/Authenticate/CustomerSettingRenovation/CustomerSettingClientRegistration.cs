@@ -5,42 +5,35 @@
     using System.Net;
     using System.Text.RegularExpressions;
     using System.Web;
-    using CustomerSetting.Module.Core;
-    using CustomerSetting.Module.Core.Criteria;
-    using CustomerSetting.Module.Core.Services.Impl;
-    using Fanex.CustomerSetting.Client40;
-    using Fanex.CustomerSetting.Client40.Models;
+    using CustomerSetting.Client40;
+    using CustomerSetting.Client40.Models;
+    using HttpModules.Services;
     using Sunplus.Accounting.Core.Common;
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
-        private CustomerSettingAttribute _customerSettingAttribute = new CustomerSettingAttribute();
-        private ServiceBase _service = new ServiceBase();
+        private readonly CustomerSettingAttribute _customerSettingAttribute = new CustomerSettingAttribute();
+        private readonly ICustomerAuthorization _specialSiteAuthorization = new SpecialSiteCustomerAuthorization();
+        private readonly ICustomerAuthorization _creditOrDepositAuthorization = new CreditOrDepositCustomerAuthorization();
 
         public override bool VerifyQueryPermission(PermissionContext permissionContext)
         {
-            var hasSpecialPermission = _service.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria
-            {
-                CustID = GetPropertyValue(permissionContext, "customerId"),
-                UserID = permissionContext.ActorId
-            });
+            var custId = GetPropertyValue(permissionContext, "customerId");
+            var userId = permissionContext.ActorId;
 
-            var allowed = hasSpecialPermission.IsSuccess && _customerSettingAttribute.AllowRead(GetActionName());
-
-            return allowed;
+            return _specialSiteAuthorization.CanRead(custId, userId).IsOk
+                && _customerSettingAttribute.AllowRead(GetActionName())
+                && _creditOrDepositAuthorization.CanRead(custId.ToString(), userId).IsOk;
         }
 
         public override bool VerifyUpdatePermission(PermissionContext permissionContext)
         {
-            var hasSpecialPermission = _service.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria
-            {
-                CustID = GetPropertyValue(permissionContext, "customerId"),
-                UserID = permissionContext.ActorId
-            });
+            var custId = GetPropertyValue(permissionContext, "customerId");
+            var userId = permissionContext.ActorId;
 
-            var allowed = hasSpecialPermission.IsSuccess && _customerSettingAttribute.AllowUpdate(GetActionName());
-
-            return allowed;
+            return _specialSiteAuthorization.CanHost(custId, userId).IsOk
+                && _customerSettingAttribute.AllowUpdate(GetActionName())
+                && _creditOrDepositAuthorization.CanHost(custId, userId).IsOk;
         }
 
         public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
@@ -52,8 +45,8 @@
         {
             var settingContext = new SettingContext();
 
-            settingContext.ActorId = (int)AppSession.AccId;
-            settingContext.ActorName = (string)AppSession.AccUserName;
+            settingContext.ActorId = AppSession.AccId;
+            settingContext.ActorName = AppSession.AccUserName;
             settingContext.ActorLevel = 5;
             settingContext.SubAccountId = 0;
             settingContext.Language = "en-US";
@@ -88,7 +81,7 @@
             return string.Empty;
         }
 
-        private int? GetPropertyValue(PermissionContext permissionContext, string property)
+        private string GetPropertyValue(PermissionContext permissionContext, string property)
         {
             var queryString = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue(property);
             var val = queryString != null ? queryString.AttemptedValue : null;
@@ -106,8 +99,7 @@
                 }
             }
 
-            var result = Utils.ToInt32(val);
-            return result;
+            return val;
         }
 
         private string GetInternalAddress()

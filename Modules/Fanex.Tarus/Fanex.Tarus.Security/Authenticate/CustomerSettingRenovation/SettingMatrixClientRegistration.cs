@@ -3,39 +3,33 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Fanex.CustomerSetting.MatrixClient;
-    using Fanex.CustomerSetting.Module.Core.Criteria;
-    using Fanex.CustomerSetting.Module.Core.Services.Impl;
-    using Fanex.Tarus.Security.Services;
+    using CustomerSetting.MatrixClient;
+    using HttpModules.Services;
     using Sunplus.Accounting.Core.Common;
 
     public class SettingMatrixClientRegistration : SettingMatrixRegistration
     {
-        private CustomerSettingAttribute _customerSettingAttribute = new CustomerSettingAttribute();
-
-        private ServiceBase _serviceBase = new ServiceBase();
+        private readonly CustomerSettingAttribute _customerSettingAttribute = new CustomerSettingAttribute();
+        private readonly ICustomerAuthorization _specialSiteAuthorization = new SpecialSiteCustomerAuthorization();
+        private readonly ICustomerAuthorization _creditOrDepositAuthorization = new CreditOrDepositCustomerAuthorization();
 
         public override bool VerifyPermission()
         {
             var hasReadPermission = _customerSettingAttribute.AllowRead(GetActionName());
+
             if (!hasReadPermission)
             {
                 return false;
             }
 
-            var hasSpecialSitePermission = PermissionService.HasPermission(Enumerations.Functions.AccessSpecialSites.ToString());
             var customerName = HttpContext.Current.Request.QueryString["customerName"];
+
             if (!string.IsNullOrWhiteSpace(customerName))
             {
-                var specialSiteCriteria = new CheckCustomerIsSpecialSiteCriteria()
-                {
-                    UserName = customerName
-                };
+                var userId = AppSession.AccId;
 
-                if (!hasSpecialSitePermission && _serviceBase.CheckCustomerBelongToSpecialSite(specialSiteCriteria).IsSpecialSite)
-                {
-                    return false;
-                }
+                return _specialSiteAuthorization.CanRead(customerName, userId).IsOk
+                    && _creditOrDepositAuthorization.CanRead(customerName, userId).IsOk;
             }
 
             return true;

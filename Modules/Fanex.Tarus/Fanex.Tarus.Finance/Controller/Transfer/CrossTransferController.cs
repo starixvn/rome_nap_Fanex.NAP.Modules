@@ -41,14 +41,6 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
                 return View("~/Views/Common/AccessDenied.cshtml");
             }
 
-            var custName = Request.QueryString["fromCustName"];
-            var serviceBase = new ServiceBase();
-            crossTransferModel.SpecialSitePermission = serviceBase.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria()
-            {
-                UserID = AppSession.AccId,
-                CustName = custName
-            });
-
             return View("~/Views/Finance/Transfer/Index.cshtml", crossTransferModel);
         }
 

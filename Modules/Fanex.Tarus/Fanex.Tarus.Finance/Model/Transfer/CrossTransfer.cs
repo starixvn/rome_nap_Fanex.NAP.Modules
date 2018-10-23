@@ -13,6 +13,5 @@ namespace Fanex.Tarus.Finance.Model.Transfer
 
         public string FromAmount { get; set; }
 
-        public Result SpecialSitePermission { get; set; }
     }
 }
