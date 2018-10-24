@@ -11,7 +11,6 @@
     {
         private readonly CustomerSettingAttribute _customerSettingAttribute = new CustomerSettingAttribute();
         private readonly ICustomerAuthorization _specialSiteAuthorization = new SpecialSiteCustomerAuthorization();
-        private readonly ICustomerAuthorization _creditOrDepositAuthorization = new CreditOrDepositCustomerAuthorization();
 
         public override bool VerifyPermission()
         {
@@ -28,8 +27,7 @@
             {
                 var userId = AppSession.AccId;
 
-                return _specialSiteAuthorization.CanRead(customerName, userId).IsOk
-                    && _creditOrDepositAuthorization.CanRead(customerName, userId).IsOk;
+                return _specialSiteAuthorization.CanRead(customerName, userId).IsOk;
             }
 
             return true;
