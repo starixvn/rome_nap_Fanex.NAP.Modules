@@ -14,7 +14,6 @@
     {
         private readonly CustomerSettingAttribute _customerSettingAttribute = new CustomerSettingAttribute();
         private readonly ICustomerAuthorization _specialSiteAuthorization = new SpecialSiteCustomerAuthorization();
-        private readonly ICustomerAuthorization _creditOrDepositAuthorization = new CreditOrDepositCustomerAuthorization();
 
         public override bool VerifyQueryPermission(PermissionContext permissionContext)
         {
@@ -22,8 +21,7 @@
             var userId = permissionContext.ActorId;
 
             return _specialSiteAuthorization.CanRead(custId, userId).IsOk
-                && _customerSettingAttribute.AllowRead(GetActionName())
-                && _creditOrDepositAuthorization.CanRead(custId.ToString(), userId).IsOk;
+                && _customerSettingAttribute.AllowRead(GetActionName());
         }
 
         public override bool VerifyUpdatePermission(PermissionContext permissionContext)
@@ -32,8 +30,7 @@
             var userId = permissionContext.ActorId;
 
             return _specialSiteAuthorization.CanHost(custId, userId).IsOk
-                && _customerSettingAttribute.AllowUpdate(GetActionName())
-                && _creditOrDepositAuthorization.CanHost(custId, userId).IsOk;
+                && _customerSettingAttribute.AllowUpdate(GetActionName());
         }
 
         public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
