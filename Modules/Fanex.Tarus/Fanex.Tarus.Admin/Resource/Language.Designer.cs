@@ -97,20 +97,20 @@ namespace Fanex.Tarus.Admin.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configure Max New Members.
-        /// </summary>
-        public static string ConfigureMaxNewMembers {
-            get {
-                return ResourceManager.GetString("ConfigureMaxNewMembers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Disabled.
         /// </summary>
         public static string Disabled {
             get {
                 return ResourceManager.GetString("Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Max Members Limit by Super.
+        /// </summary>
+        public static string EditMaxMembersLimitbySuper {
+            get {
+                return ResourceManager.GetString("EditMaxMembersLimitbySuper", resourceCulture);
             }
         }
         
@@ -124,38 +124,11 @@ namespace Fanex.Tarus.Admin.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max per day.
+        ///   Looks up a localized string similar to Max Members Limit by Super.
         /// </summary>
-        public static string MaxPerDay {
+        public static string MaxMembersLimitbySuper {
             get {
-                return ResourceManager.GetString("MaxPerDay", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please input Max per day!.
-        /// </summary>
-        public static string MaxPerDayEmpty {
-            get {
-                return ResourceManager.GetString("MaxPerDayEmpty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Max per day: number of member accounts that agents could create on specific super per day..
-        /// </summary>
-        public static string MaxPerDayHint {
-            get {
-                return ResourceManager.GetString("MaxPerDayHint", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid Max per day!.
-        /// </summary>
-        public static string MaxPerDayInvalid {
-            get {
-                return ResourceManager.GetString("MaxPerDayInvalid", resourceCulture);
+                return ResourceManager.GetString("MaxMembersLimitbySuper", resourceCulture);
             }
         }
         
@@ -210,24 +183,6 @@ namespace Fanex.Tarus.Admin.Resource {
         public static string Super {
             get {
                 return ResourceManager.GetString("Super", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please input Super!.
-        /// </summary>
-        public static string SuperEmpty {
-            get {
-                return ResourceManager.GetString("SuperEmpty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid Super!.
-        /// </summary>
-        public static string SuperNotFound {
-            get {
-                return ResourceManager.GetString("SuperNotFound", resourceCulture);
             }
         }
         

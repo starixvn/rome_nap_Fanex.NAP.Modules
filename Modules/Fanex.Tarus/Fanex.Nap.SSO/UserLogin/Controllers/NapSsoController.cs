@@ -78,8 +78,17 @@ namespace Fanex.NAP.SSO
                 Domain = _currentContext.DomainName,
                 Platform = _currentContext.Platform
             };
-
-            this._userService.UserCheckIn(ref criteria);
+            try
+            {
+                this._userService.UserCheckIn(ref criteria);
+            }
+            catch (Exception ex)
+            {                
+                if (criteria.OnUserId == 0)
+                {
+                    throw ex;
+                }                
+            }
             return criteria;
         }
     }
