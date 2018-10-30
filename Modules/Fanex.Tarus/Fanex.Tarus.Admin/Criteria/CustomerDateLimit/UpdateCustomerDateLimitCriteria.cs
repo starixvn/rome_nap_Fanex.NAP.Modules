@@ -22,6 +22,10 @@
 
         public string ErrMsg { get; set; }
 
+        public int EffectedRow { get; set; }
+
+        public string NoChangeUser { get; set; }
+
         public string GetSettingKey() => "EAS_CustomerDateLimitMultipleUpd";
 
         public Hashtable GetSPParams()
@@ -35,6 +39,8 @@
                 ["userid"] = UserId,
                 ["errcode"] = ErrCode,
                 ["errmsg"] = ErrMsg,
+                ["effectedrow"] = EffectedRow,
+                ["nochangeuser"] = NoChangeUser
             };
     }
 }

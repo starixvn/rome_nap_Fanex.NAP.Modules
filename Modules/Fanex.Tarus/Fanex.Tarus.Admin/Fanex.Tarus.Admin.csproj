@@ -215,6 +215,7 @@
     <Compile Include="Entities\Licensee.cs" />
     <Compile Include="Entities\MailingList\SpecialDeleteMailing.cs" />
     <Compile Include="Entities\RacingDefaultSetting.cs" />
+    <Compile Include="Entities\CustomerDataRangeResult.cs" />
     <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\SecurityCode\CustomerInfo.cs" />
     <Compile Include="Entities\Site.cs" />

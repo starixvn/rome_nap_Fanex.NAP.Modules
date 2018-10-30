@@ -12,7 +12,7 @@
 
         CustomerDateLimitModel GetById(int custId);
 
-        Result Update(UpdateCustomerDateLimitCriteria criteria);
+        CustomerDataRangeResult Update(UpdateCustomerDateLimitCriteria criteria);
     }
 
     public class CustomerDateLimitService : ICustomerDateLimitService
@@ -35,7 +35,7 @@
         public CustomerDateLimitModel GetById(int custId)
            => dataAccess.GetById(custId);
 
-        public Result Update(UpdateCustomerDateLimitCriteria criteria)
+        public CustomerDataRangeResult Update(UpdateCustomerDateLimitCriteria criteria)
             => dataAccess.Update(criteria);
     }
 }
