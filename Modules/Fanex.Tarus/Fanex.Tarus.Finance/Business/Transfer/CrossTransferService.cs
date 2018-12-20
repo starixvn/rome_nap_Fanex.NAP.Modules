@@ -29,7 +29,14 @@ namespace Fanex.Tarus.Finance.Business.Transfer
             _crossTransferAccess = crossTransferAccess ?? new CrossTransferAccess();
         }
 
-        public Result TransferYesterdayTransaction(int accId, string fromCustName, string toCustName, double exRate, double amount, string remark)
+        public Result TransferYesterdayTransaction(
+            int accId,
+            string fromCustName,
+            string toCustName,
+            double exRate,
+            double amount,
+            string remark,
+            bool isCollection)
         {
             try
             {
@@ -44,7 +51,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                 bool IsTransfer = Permissions.IsFiTransfer(fromCustId, toCustName, ref msg);
                 if (IsTransfer)
                 {
-                    return _crossTransferAccess.BettransInsertTransfer(accId, fromCustId, toCustName, exRate, amount, remark, Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+                    return _crossTransferAccess.BettransInsertTransfer(accId, fromCustId, toCustName, exRate, amount, remark, Sunplus.Accounting.Core.Helper.Utils.GetClientIP(), isCollection);
                 }
                 else
                 {
@@ -71,7 +78,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                     return new Result { ErrorCode = 1, ErrorMessage = Fanex.Tarus.Infrastructure.Resource.ErrorLanguage.NotAutherizedFunction };
                 }
                 Fanex.Tarus.Infrastructure.Caching.CacheHelper.Set<string>("Transfer_ForexAccount_" + AppSession.AccUserName, param.ForexUsername);
-                return _crossTransferAccess.CustomerCrossTransferInsert(param.FromCustID, param.ToCustID, param.FromAmount, param.ToAmount, param.FromExRate, param.ToExRate, param.ForexUsername, param.Remark, AppSession.AccId);
+                return _crossTransferAccess.CustomerCrossTransferInsert(param.FromCustID, param.ToCustID, param.FromAmount, param.ToAmount, param.FromExRate, param.ToExRate, param.ForexUsername, param.Remark, AppSession.AccId, param.IsCollection);
             }
             catch (Exception exception)
             {
