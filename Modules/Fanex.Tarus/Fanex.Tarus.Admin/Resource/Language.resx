@@ -126,6 +126,9 @@
   <data name="Closed" xml:space="preserve">
     <value>Closed</value>
   </data>
+  <data name="CompareBalance" xml:space="preserve">
+    <value>Compare Balance</value>
+  </data>
   <data name="Configuration" xml:space="preserve">
     <value>Configuration</value>
   </data>

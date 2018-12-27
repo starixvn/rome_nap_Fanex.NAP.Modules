@@ -88,6 +88,15 @@ namespace Fanex.Tarus.Admin.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compare Balance.
+        /// </summary>
+        public static string CompareBalance {
+            get {
+                return ResourceManager.GetString("CompareBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration.
         /// </summary>
         public static string Configuration {

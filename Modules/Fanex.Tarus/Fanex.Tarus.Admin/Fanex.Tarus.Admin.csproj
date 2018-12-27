@@ -144,6 +144,7 @@
     <Compile Include="Business\AutoFollowBet\SourceTypeConstants.cs" />
     <Compile Include="Business\BACustomer\BACustomerService.cs" />
     <Compile Include="Business\BACustomer\IBACustomerService.cs" />
+    <Compile Include="Business\CompareBalance\CompareBalanceService.cs" />
     <Compile Include="Business\CustomerDateLimit\CustomerDateLimitService.cs" />
     <Compile Include="Business\IMBCRestriction\IMBCAdminService.cs" />
     <Compile Include="Business\MailingList\ISpecialDeleteService.cs" />
@@ -163,12 +164,14 @@
     <Compile Include="Controller\CustomerDateLimitController.cs" />
     <Compile Include="Controller\BACustomerController.cs" />
     <Compile Include="Controller\IMBCAdminController.cs" />
+    <Compile Include="Controller\CompareBalanceController.cs" />
     <Compile Include="Controller\MaxNewMemberBySuperController.cs" />
     <Compile Include="Controller\MailingList\Admin_SMATurnoverMailingListController.cs" />
     <Compile Include="Controller\MailingList\SpecialDeleteController.cs" />
     <Compile Include="Controller\SecurityCode\AdminSecurityCodeController.cs" />
     <Compile Include="Controller\SiteManagementController.cs" />
     <Compile Include="Controller\SMAManagement\SMAManagementController.cs" />
+    <Compile Include="Criteria\CompareBalance\GetCompareBalanceCriteria.cs" />
     <Compile Include="Criteria\CustomerDateLimit\GetCustomerDateLimitByIdCriteria.cs" />
     <Compile Include="Criteria\CustomerDateLimit\UpdateCustomerDateLimitCriteria.cs" />
     <Compile Include="Criteria\CustomerDateLimit\GetAllCustomerDateLimitCriteria.cs" />
@@ -187,6 +190,7 @@
     <Compile Include="Criteria\SMAManagement\UpdateOwnerCriteria.cs" />
     <Compile Include="DataAccess\BACustomer\BACustomerAccess.cs" />
     <Compile Include="DataAccess\BACustomer\IBACustomerAccess.cs" />
+    <Compile Include="DataAccess\CompareBalance\CompareBalanceDataAccess.cs" />
     <Compile Include="DataAccess\CustomerDateLimit\CustomerDateLimitDataAccess.cs" />
     <Compile Include="DataAccess\IMBCRestriction\IMBCDAO.cs" />
     <Compile Include="DataAccess\MailingList\ISpecialDeleteAccess.cs" />
@@ -203,6 +207,7 @@
     <Compile Include="DataAccess\SMAManagement\SMAManagementAccess.cs" />
     <Compile Include="Entities\AutoFollowBet\AutoFollowBet.cs" />
     <Compile Include="Entities\AutoFollowBet\AutoFollowBetDetail.cs" />
+    <Compile Include="Entities\CompareBalance\CompareBalanceModel.cs" />
     <Compile Include="Entities\CustomerDateLimit\CustomerDateLimitViewModel.cs" />
     <Compile Include="Entities\CustomerDateLimit\CustomerDateLimitModel.cs" />
     <Compile Include="Entities\CustomerSecurityCode.cs" />
