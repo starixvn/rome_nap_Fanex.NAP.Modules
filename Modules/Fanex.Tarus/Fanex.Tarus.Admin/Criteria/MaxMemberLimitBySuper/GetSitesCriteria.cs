@@ -10,6 +10,8 @@
 
         public string System { get; set; }
 
+        public bool IncludeCN88 => true;
+
         public override string GetSettingKey()
         {
             return "CustomerSetting_SiteSel";
