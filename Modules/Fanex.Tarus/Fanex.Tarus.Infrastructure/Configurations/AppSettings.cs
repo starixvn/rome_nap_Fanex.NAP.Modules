@@ -3,10 +3,11 @@
 
 namespace Fanex.Tarus.Infrastructure.Configurations
 {
-    using System;
-    using System.Configuration;
     using Fanex.Common;
     using Sunplus.Accounting.Core.Extensions;
+    using System;
+    using System.Configuration;
+    using System.Linq;
 
     /// <summary>
     /// Summary description for Settings
@@ -124,6 +125,17 @@ namespace Fanex.Tarus.Infrastructure.Configurations
 
                 return string.IsNullOrWhiteSpace(productId) ? 0 : Converter.ToInt(productId);
             }
+        }
+
+        public static bool IsCN88SiteName(string site)
+        {
+            if (ConfigurationManager.AppSettings["CN88SiteName"] == null)
+            {
+                return false;
+            }
+
+            var cn88SiteName = ConfigurationManager.AppSettings["CN88SiteName"].Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
+            return cn88SiteName.Contains(site, StringComparer.OrdinalIgnoreCase);
         }
 
         static AppSettings()

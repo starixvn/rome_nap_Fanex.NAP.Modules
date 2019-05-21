@@ -6,7 +6,9 @@ using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
+using Fanex.Common;
 using Fanex.Data;
+using Fanex.Tarus.Infrastructure.Configurations;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Entities;
@@ -139,8 +141,35 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
                     var ds = db.ExecuteDataSet();
                     var output = db.GetOuputParams();
-
+                    
                     result = new DbResult(output, ds);
+                }
+
+                if(result.ResultSet.Tables.Count > 0 && result.ResultSet.Tables[0].Rows.Count >0)
+                {
+                    string siteName = result.ResultSet.Tables[0].Rows[0]["membersite"].ToString();
+                    if(AppSettings.IsCN88SiteName(siteName))
+                    {
+                        int custId = Converter.ToInt(result.ResultSet.Tables[0].Rows[0]["custid"]);
+                        int roleId = Converter.ToInt(result.ResultSet.Tables[0].Rows[0]["roleid"]);
+                        using (var db = new ObjectDb("CS_Customer_Credit_Sel"))
+                        {
+                            db.AssignParamValues(new Hashtable { { "custid", custId } });
+                            var ds = db.ExecuteDataSet();
+                            var dt = ds.Tables[0].Copy();
+                            dt.TableName = "Table5";
+                            result.ResultSet.Tables.Add(dt);
+                        }
+
+                        using (var db = new ObjectDb("CS_Member_TotalBetStake_Sel"))
+                        {
+                            db.AssignParamValues(new Hashtable { { "custid", custId } });
+                            var ds = db.ExecuteDataSet();
+                            var dt = ds.Tables[0].Copy();
+                            dt.TableName = "Table6";
+                            result.ResultSet.Tables.Add(dt);
+                        }
+                    }
                 }
             }
             catch (Exception ex)

@@ -23,6 +23,8 @@ namespace Fanex.Tarus.Infrastructure.Common
         #region Roles
         public enum Role
         {
+            Null = -9999,
+            Headline = 0,
             Super = 4,
             Master = 3,
             Agent = 2,
