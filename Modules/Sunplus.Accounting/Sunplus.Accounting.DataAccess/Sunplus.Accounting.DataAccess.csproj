@@ -250,7 +250,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.1.9\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.0-CN88\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.14, Culture=neutral, processorArchitecture=MSIL">
@@ -299,7 +299,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UseGlobalSettings="True" BuildVersion_ReplaceNonNumerics="False" />
+      <UserProperties BuildVersion_ReplaceNonNumerics="False" BuildVersion_UseGlobalSettings="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

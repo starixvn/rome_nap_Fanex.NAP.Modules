@@ -11,28 +11,21 @@ using Sunplus.Accounting.Core.Common;
 namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
 {
     public class SMAManagementAccess : ISMAManagementAccess
-    {
-        int CN88Id = 329;
-        public IEnumerable<IdNameEntity> GetSites(bool isCN88)
+    {       
+        public IEnumerable<IdNameEntity> GetSites()
         {
-            IList<IdNameEntity> sites = new List<IdNameEntity>(32);
-            if (isCN88) {
-                return null;
-            }
+            IList<IdNameEntity> sites = new List<IdNameEntity>(32);           
             using (var db = new ObjectDb("Acc_SiteSel_Credit"))
             {
                 using (var reader = db.ExecuteReader())
                 {
-                    int Id = Convert.ToInt32(reader["siteid"]);
                     while (reader.Read())
-                    {
-                        if (Id!= CN88Id) {
-                            sites.Add(new IdNameEntity
-                            {
-                                Id = Id,
-                                Name = reader["site"].ToString()
-                            });
-                        }
+                    {                     
+                        sites.Add(new IdNameEntity
+                        {
+                            Id = Convert.ToInt32(reader["siteid"]),
+                            Name = reader["site"].ToString()
+                        });                      
                     }
                 }
             }

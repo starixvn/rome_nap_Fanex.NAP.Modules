@@ -31,16 +31,16 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
         [AuthenticateRead]
         public ActionResult Index()
         {
-            ViewData["HasHostPermission"] = HasHostPermission();
+            ViewData["HasHostPermission"] = HasHostPermission(Sunplus.Accounting.Core.Common.Enumerations.Admin.SMAManagement);
 
-            return View("~/Views/Admin/SMAManagement/SMAManagement.cshtml", GetFilterInfo(false));
+            return View("~/Views/Admin/SMAManagement/SMAManagement.cshtml", GetFilterInfo());
         }
 
         public ActionResult CN88()
         {
-            ViewData["HasHostPermission"] = HasHostPermission();
+            ViewData["HasHostPermission"] = HasHostPermission(Sunplus.Accounting.Core.Common.Enumerations.Admin.CN88SMAManagement);
 
-            return View("~/Views/Admin/SMAManagement/CN88SMAManagement.cshtml", GetFilterInfo(true));
+            return View("~/Views/Admin/SMAManagement/CN88SMAManagement.cshtml", GetCN88FilterInfo());
         }
 
         [HttpGet]
@@ -83,12 +83,46 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
             return new EmptyResult();
         }
 
+        public ActionResult ExportCN88SMAGroupHeadlinesToExcel(GetCN88SMAGroupHeadlineCriteria criteria)
+        {
+            string reportName = "CN88SMAListByGroupHeadline";
+            var excelFile = _smaManagementService.ExportCN88SMAGroupHeadlinesToExcel(reportName, criteria);
+
+            Response.Clear();
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", reportName));
+
+            excelFile.SaveXls(Response.OutputStream);
+
+            return new EmptyResult();
+        }
+
         [HttpPost]
         public ActionResult UpdateHeadlineType(UpdateHeadlineTypeCriteria criteria)
         {
             Result result;
 
-            if (!HasHostPermission())
+            if (!HasHostPermission(Sunplus.Accounting.Core.Common.Enumerations.Admin.SMAManagement))
+            {
+                result = new Result(403, "You are not authorized on this function!");
+            }
+            else
+            {
+                criteria.UserId = AppSession.AccId;
+                criteria.IP = Utils.GetClientIP();
+
+                result = _smaManagementService.UpdateHeadlineType(criteria);
+            }
+
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateCN88HeadlineType(UpdateHeadlineTypeCriteria criteria)
+        {
+            Result result;
+
+            if (!HasHostPermission(Sunplus.Accounting.Core.Common.Enumerations.Admin.CN88SMAManagement))
             {
                 result = new Result(403, "You are not authorized on this function!");
             }
@@ -108,7 +142,27 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
         {
             Result result;
 
-            if (!HasHostPermission())
+            if (!HasHostPermission(Sunplus.Accounting.Core.Common.Enumerations.Admin.SMAManagement))
+            {
+                result = new Result(403, "You are not authorized on this function!");
+            }
+            else
+            {
+                criteria.UserId = AppSession.AccId;
+                criteria.IP = Utils.GetClientIP();
+
+                result = _smaManagementService.UpdateOwner(criteria);
+            }
+
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateCN88Owner(UpdateOwnerCriteria criteria)
+        {
+            Result result;
+
+            if (!HasHostPermission(Sunplus.Accounting.Core.Common.Enumerations.Admin.CN88SMAManagement))
             {
                 result = new Result(403, "You are not authorized on this function!");
             }
@@ -124,9 +178,9 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
         }
 
         [NonAction]
-        FilterGroup GetFilterInfo(bool isCN88)
+        FilterGroup GetFilterInfo()
         {
-            var sites = _smaManagementService.GetSites(isCN88).Select(s => new SelectListItem
+            var sites = _smaManagementService.GetSites().Select(s => new SelectListItem
             {
                 Text = s.Name,
                 Value = s.Id.ToString()
@@ -150,6 +204,26 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
             };
         }
 
+        [NonAction]
+        FilterGroup GetCN88FilterInfo()
+        {
+            var currencies = _smaManagementService.GetCurrencies(false).Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString()
+            }).ToList();
+
+            currencies.Insert(0, new SelectListItem { Text = Language.All, Value = "0", Selected = true });
+
+            return new FilterGroup
+            {
+                Sites = null,
+                Currencies = currencies,
+                Statuses = GetCN88Statuses(),
+                HeadlineTypes = GetHeadlineTypes(),
+                Positions = GetPositions()
+            };
+        }
 
 
         [NonAction]
@@ -173,7 +247,7 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
             {
                 new SelectListItem { Text = "Active", Value = "isActive" },
                 new SelectListItem { Text = "View Only", Value = "isViewOnly" },
-                new SelectListItem { Text = "Suspended" , Value = "IsSuspended" },
+                new SelectListItem { Text = "Suspended" , Value = "isSuspended" },
                 new SelectListItem { Text = "Inactive", Value = "isInactive" },
                 new SelectListItem { Text = Language.Disabled, Value = "isDisabled" }
             };
@@ -204,12 +278,12 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
         }
 
         [NonAction]
-        bool HasHostPermission()
+        bool HasHostPermission(Sunplus.Accounting.Core.Common.Enumerations.Admin permission)
         {
             var permissionService = new PermissionService();
             var roleAccess = permissionService.GetRoleAccess(AppSession.AccId);
 
-            return permissionService.GetHostPermission(Sunplus.Accounting.Core.Common.Enumerations.Admin.SMAManagement, roleAccess);
+            return permissionService.GetHostPermission(permission, roleAccess);
         }
     }
 }

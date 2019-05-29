@@ -8,7 +8,7 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
 {
     public interface ISMAManagementService
     {
-        IEnumerable<IdNameEntity> GetSites(bool isCN88);
+        IEnumerable<IdNameEntity> GetSites();
 
         IEnumerable<IdNameEntity> GetCurrencies(bool excludeTestCurrencies);
 
@@ -17,6 +17,8 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
         CN88SMAManagerModel GetCN88SMAGroupHeadlines(GetCN88SMAGroupHeadlineCriteria criteria);
 
         ExcelFile ExportSMAGroupHeadlinesToExcel(string sheetName, GetSMAGroupHeadlineCriteria criteria);
+
+        ExcelFile ExportCN88SMAGroupHeadlinesToExcel(string sheetName, GetCN88SMAGroupHeadlineCriteria criteria);
 
         Result UpdateHeadlineType(UpdateHeadlineTypeCriteria criteria);
 

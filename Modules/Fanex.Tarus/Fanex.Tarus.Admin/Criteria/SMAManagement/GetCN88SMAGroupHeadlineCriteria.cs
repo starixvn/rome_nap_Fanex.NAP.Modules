@@ -11,7 +11,7 @@ namespace Fanex.Tarus.Admin.Criteria.SMAManagement
 
         public bool IsActive { get; set; }
 
-        public bool IsSusupended { get; set; }
+        public bool IsSuspended { get; set; }
 
         public bool IsViewOnly { get; set; }
 
@@ -51,8 +51,8 @@ namespace Fanex.Tarus.Admin.Criteria.SMAManagement
             {              
                 { "currency", Currency },
                 { "active", IsActive },
-                { "viewonly ", IsViewOnly  },
-                { "suspended", IsSusupended },
+                { "viewonly", IsViewOnly },
+                { "suspended", IsSuspended },
                 { "inactive", IsInactive },
                 { "disabled", IsDisabled },
                 { "roleid", RoleId },

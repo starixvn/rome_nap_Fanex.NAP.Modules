@@ -276,7 +276,8 @@ namespace Sunplus.Accounting.Core.Common
             Admin_ManageExAcc = 1,
             Admin_ManageGlobalRes = 2,
             P2PDefaultSetting = 3,
-            SMAManagement = 4
+            SMAManagement = 4,
+            CN88SMAManagement = 5
         }
     }
 }
