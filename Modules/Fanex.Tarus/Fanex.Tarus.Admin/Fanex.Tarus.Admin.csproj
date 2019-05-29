@@ -179,6 +179,7 @@
     <Compile Include="Criteria\SiteManagement\AddSiteCriteria.cs" />
     <Compile Include="Criteria\SiteManagement\CriteriaBase.cs" />
     <Compile Include="Criteria\SiteManagement\ValidateSiteCriteria.cs" />
+    <Compile Include="Criteria\SMAManagement\GetCN88SMAGroupHeadlineCriteria.cs" />
     <Compile Include="Criteria\SMAManagement\GetSMAGroupHeadlineCriteria.cs" />
     <Compile Include="Criteria\SMAManagement\UpdateHeadlineTypeCriteria.cs" />
     <Compile Include="Criteria\SMAManagement\UpdateOwnerCriteria.cs" />
@@ -217,8 +218,11 @@
     <Compile Include="Entities\Site.cs" />
     <Compile Include="Entities\SMAManagement\FilterGroup.cs" />
     <Compile Include="Entities\SMAManagement\IdNameEntity.cs" />
+    <Compile Include="Entities\SMAManagement\CN88SMAEntity.cs" />
     <Compile Include="Entities\SMAManagement\SMAEntity.cs" />
+    <Compile Include="Entities\SMAManagement\CN88SMAGroupHeadline.cs" />
     <Compile Include="Entities\SMAManagement\SMAGroupHeadline.cs" />
+    <Compile Include="Entities\SMAManagement\CN88SMAManagerModel.cs" />
     <Compile Include="Entities\SMAManagement\SMAManagerModel.cs" />
     <Compile Include="Enums\CustomerDataRangeType.cs" />
     <Compile Include="Enums\HeadlineType.cs" />

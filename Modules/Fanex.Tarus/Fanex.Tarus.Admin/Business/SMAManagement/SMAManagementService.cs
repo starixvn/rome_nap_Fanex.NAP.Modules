@@ -20,6 +20,7 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
     public class SMAManagementService : ISMAManagementService
     {
         private const string SMAGroupHeadlinesSessionKey = "Fanex.Tarus.Admin.Business.SMAManagement.SMAListByGroupHeadline";
+        private const string CN88SMAGroupHeadlinesSessionKey = "Fanex.Tarus.Admin.Business.SMAManagement.CN88SMAListByGroupHeadline";
 
         private readonly ISMAManagementAccess _smaManagementAccess;
 
@@ -28,9 +29,9 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
             _smaManagementAccess = smaManagementAccess ?? new SMAManagementAccess();
         }
 
-        public IEnumerable<IdNameEntity> GetSites()
+        public IEnumerable<IdNameEntity> GetSites(bool isCN88)
         {
-            return _smaManagementAccess.GetSites();
+            return _smaManagementAccess.GetSites(isCN88);
         }
 
         public IEnumerable<IdNameEntity> GetCurrencies(bool excludeTestCurrencies)
@@ -72,6 +73,50 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
 
                     pagingResult.TotalMemberNotAssignedToGroup = pagingResult.SMAGroupHeadlines.Count(q => q.GroupId == 0);
 
+                    return pagingResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
+        }
+
+        public CN88SMAManagerModel GetCN88SMAGroupHeadlines(GetCN88SMAGroupHeadlineCriteria criteria)
+        {
+            CN88SMAManagerModel result = null;
+            bool fromSession = criteria.PageIndex != 1;
+
+            try
+            {
+                if (fromSession)
+                {
+                    result = (CN88SMAManagerModel)SessionExtension.GetSession(HttpContext.Current.Session, CN88SMAGroupHeadlinesSessionKey);
+                }
+
+                if (result == null)
+                {
+                    HttpContext.Current.Session.Remove(CN88SMAGroupHeadlinesSessionKey);
+
+                    result = GetCN88SMAGroupHeadlinesFromDatabase(criteria);
+
+                    SessionExtension.AddSession(HttpContext.Current.Session, SMAGroupHeadlinesSessionKey, result);
+                }
+
+                if (result != null && result.TotalGroups > 0)
+                {
+                    var pagingResult = new CN88SMAManagerModel
+                    {
+                        TotalGroups = result.TotalGroups,
+                        CN88SMAGroupHeadlines = result.CN88SMAGroupHeadlines
+                            .Skip(criteria.PageSize * (criteria.PageIndex - 1))
+                            .Take(criteria.PageSize)
+                            .ToList()
+                    };
+
+                    pagingResult.TotalMemberNotAssignedToGroup = pagingResult.CN88SMAGroupHeadlines.Count(q => q.GroupId == 0);
                     return pagingResult;
                 }
             }
@@ -188,6 +233,51 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
                 TotalGroups = totalGroups + totalMemberNotAssignedToGroup,
                 TotalMemberNotAssignedToGroup = totalMemberNotAssignedToGroup,
                 SMAGroupHeadlines = smaGroupHeadlines
+            };
+        }
+
+        private CN88SMAManagerModel GetCN88SMAGroupHeadlinesFromDatabase(GetCN88SMAGroupHeadlineCriteria criteria)
+        {
+            int totalGroups = 0,
+                totalMemberNotAssignedToGroup = 0;
+
+            IList<CN88SMAGroupHeadline> smaGroupHeadlines = new List<CN88SMAGroupHeadline>(512);
+
+            var groupHeadlines = _smaManagementAccess.GetCN88SMAGroupHeadlines(criteria);
+
+            foreach (var group in groupHeadlines)
+            {
+                if (group.GroupId != 0)
+                {
+                    totalGroups++;
+                    smaGroupHeadlines.Add(group);
+                }
+
+                foreach (var entity in group.CN88SMAEntities)
+                {
+                    entity.HeadlineType = MapHeadlineType(entity.HeadlineTypeId);                  
+                    entity.Position = MapRole(entity.RoleId);
+
+                    if (group.GroupId == 0)
+                    {
+                        totalMemberNotAssignedToGroup++;
+
+                        smaGroupHeadlines.Add(new CN88SMAGroupHeadline
+                        {
+                            GroupId = group.GroupId,
+                            GroupName = group.GroupName,
+                            Owner = entity.Owner,
+                            CN88SMAEntities = new List<CN88SMAEntity> { entity }
+                        });
+                    }
+                }
+            }
+
+            return new CN88SMAManagerModel
+            {
+                TotalGroups = totalGroups + totalMemberNotAssignedToGroup,
+                TotalMemberNotAssignedToGroup = totalMemberNotAssignedToGroup,
+                CN88SMAGroupHeadlines = smaGroupHeadlines
             };
         }
 

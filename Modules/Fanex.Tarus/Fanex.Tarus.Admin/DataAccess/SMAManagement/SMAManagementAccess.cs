@@ -12,21 +12,27 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
 {
     public class SMAManagementAccess : ISMAManagementAccess
     {
-        public IEnumerable<IdNameEntity> GetSites()
+        int CN88Id = 329;
+        public IEnumerable<IdNameEntity> GetSites(bool isCN88)
         {
             IList<IdNameEntity> sites = new List<IdNameEntity>(32);
-
+            if (isCN88) {
+                return null;
+            }
             using (var db = new ObjectDb("Acc_SiteSel_Credit"))
             {
                 using (var reader = db.ExecuteReader())
                 {
+                    int Id = Convert.ToInt32(reader["siteid"]);
                     while (reader.Read())
                     {
-                        sites.Add(new IdNameEntity
-                        {
-                            Id = Convert.ToInt32(reader["siteid"]),
-                            Name = reader["site"].ToString()
-                        });
+                        if (Id!= CN88Id) {
+                            sites.Add(new IdNameEntity
+                            {
+                                Id = Id,
+                                Name = reader["site"].ToString()
+                            });
+                        }
                     }
                 }
             }
@@ -97,6 +103,42 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
             return groupHeadlinesHash.Values;
         }
 
+        public IEnumerable<CN88SMAGroupHeadline> GetCN88SMAGroupHeadlines(GetCN88SMAGroupHeadlineCriteria criteria)
+        {
+            IDictionary<int, CN88SMAGroupHeadline> groupHeadlinesHash = new Dictionary<int, CN88SMAGroupHeadline>(128);
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSPParams()))
+                {
+                    CN88SMAEntity entity;
+                    CN88SMAGroupHeadline groupHeadline;
+
+                    while (reader.Read())
+                    {
+                        entity = ParseCN88SMAEntity(reader);
+
+                        if (!groupHeadlinesHash.TryGetValue(entity.GroupId, out groupHeadline))
+                        {
+                            groupHeadline = new CN88SMAGroupHeadline
+                            {
+                                GroupId = entity.GroupId,
+                                GroupName = entity.GroupName,
+                                Owner = entity.Owner,
+                                CN88SMAEntities = new List<CN88SMAEntity>(64)
+                            };
+
+                            groupHeadlinesHash.Add(entity.GroupId, groupHeadline);
+                        }
+
+                        groupHeadline.CN88SMAEntities.Add(entity);
+                    }
+                }
+            }
+
+            return groupHeadlinesHash.Values;
+        }
+
         public Result UpdateHeadlineType(UpdateHeadlineTypeCriteria criteria)
         {
             return ExecuteNonQuery(criteria.GetSettingKey(), criteria.GetSPParams());
@@ -157,6 +199,53 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
             }
 
             return entity;
+        }
+
+        private CN88SMAEntity ParseCN88SMAEntity(IDataReader reader)
+        {
+            var entity = new CN88SMAEntity
+            {
+                GroupId = Convert.ToInt32(reader["custheadlineid"]),
+                GroupName = reader["groupname"].ToString(),
+                CustId = Convert.ToInt32(reader["custid"]),
+                Username = reader["username"].ToString(),             
+                Status = getStatusName(Convert.ToInt32(reader["status"])),
+                Site = reader["site"].ToString(),
+                Currency = reader["currencyname"].ToString(),
+                RoleId = Convert.ToInt32(reader["roleid"]),
+                Owner = reader["ownername"].ToString()
+            };
+
+            object headlineType = reader["headlinetype"];
+
+            if (headlineType == null || headlineType is DBNull)
+            {
+                entity.HeadlineTypeId = null;
+            }
+            else
+            {
+                entity.HeadlineTypeId = Convert.ToInt32(headlineType);
+            }          
+
+            return entity;
+        }
+
+        string getStatusName(int statusId)
+        {
+            switch (statusId)
+            {
+                case 1:
+                    return "Inactive";
+                case 2:
+                    return "Suspended";
+                case 3:
+                    return "ViewOnly";
+                case 4:
+                    return "Active";
+                default:
+                    return "";
+            }
+             
         }
     }
 }

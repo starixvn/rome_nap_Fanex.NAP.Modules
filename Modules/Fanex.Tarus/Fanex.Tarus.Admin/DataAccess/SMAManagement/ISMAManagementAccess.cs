@@ -7,11 +7,13 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
 {
     public interface ISMAManagementAccess
     {
-        IEnumerable<IdNameEntity> GetSites();
+        IEnumerable<IdNameEntity> GetSites(bool isCN88);
 
         IEnumerable<IdNameEntity> GetCurrencies(bool excludeTestCurrencies);
 
         IEnumerable<SMAGroupHeadline> GetSMAGroupHeadlines(GetSMAGroupHeadlineCriteria criteria);
+
+        IEnumerable<CN88SMAGroupHeadline> GetCN88SMAGroupHeadlines(GetCN88SMAGroupHeadlineCriteria criteria);
 
         Result UpdateHeadlineType(UpdateHeadlineTypeCriteria criteria);
 

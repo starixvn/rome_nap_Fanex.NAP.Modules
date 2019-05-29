@@ -16,7 +16,7 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
 {
     public class SMAManagementController : BaseController
     {
-        private readonly ISMAManagementService _smaManagementService;
+        readonly ISMAManagementService _smaManagementService;      
 
         public SMAManagementController()
             : this(null)
@@ -33,7 +33,14 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
         {
             ViewData["HasHostPermission"] = HasHostPermission();
 
-            return View("~/Views/Admin/SMAManagement/SMAManagement.cshtml", GetFilterInfo());
+            return View("~/Views/Admin/SMAManagement/SMAManagement.cshtml", GetFilterInfo(false));
+        }
+
+        public ActionResult CN88()
+        {
+            ViewData["HasHostPermission"] = HasHostPermission();
+
+            return View("~/Views/Admin/SMAManagement/CN88SMAManagement.cshtml", GetFilterInfo(true));
         }
 
         [HttpGet]
@@ -49,6 +56,14 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
         public JsonResult GetSMAGroupHeadlines(GetSMAGroupHeadlineCriteria criteria)
         {
             var result = _smaManagementService.GetSMAGroupHeadlines(criteria);
+
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost] 
+        public JsonResult GetCN88SMAGroupHeadlines(GetCN88SMAGroupHeadlineCriteria criteria)
+        {
+            var result = _smaManagementService.GetCN88SMAGroupHeadlines(criteria);
 
             return Json(result, JsonRequestBehavior.DenyGet);
         }
@@ -109,9 +124,9 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
         }
 
         [NonAction]
-        private FilterGroup GetFilterInfo()
+        FilterGroup GetFilterInfo(bool isCN88)
         {
-            var sites = _smaManagementService.GetSites().Select(s => new SelectListItem
+            var sites = _smaManagementService.GetSites(isCN88).Select(s => new SelectListItem
             {
                 Text = s.Name,
                 Value = s.Id.ToString()
@@ -135,9 +150,12 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
             };
         }
 
+
+
         [NonAction]
-        private IEnumerable<SelectListItem> GetStatuses()
+        IEnumerable<SelectListItem> GetStatuses()
         {
+
             return new List<SelectListItem>
             {
                 new SelectListItem { Text = Language.Open, Value = "isOpen" },
@@ -148,7 +166,21 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
         }
 
         [NonAction]
-        private IEnumerable<SelectListItem> GetHeadlineTypes()
+        IEnumerable<SelectListItem> GetCN88Statuses()
+        {
+
+            return new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Active", Value = "isActive" },
+                new SelectListItem { Text = "View Only", Value = "isViewOnly" },
+                new SelectListItem { Text = "Suspended" , Value = "IsSuspended" },
+                new SelectListItem { Text = "Inactive", Value = "isInactive" },
+                new SelectListItem { Text = Language.Disabled, Value = "isDisabled" }
+            };
+        }
+
+        [NonAction]
+        IEnumerable<SelectListItem> GetHeadlineTypes()
         {
             return new List<SelectListItem>
             {
@@ -159,7 +191,7 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
         }
 
         [NonAction]
-        private IEnumerable<SelectListItem> GetPositions()
+        IEnumerable<SelectListItem> GetPositions()
         {
             return new List<SelectListItem>
             {
@@ -172,7 +204,7 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
         }
 
         [NonAction]
-        private bool HasHostPermission()
+        bool HasHostPermission()
         {
             var permissionService = new PermissionService();
             var roleAccess = permissionService.GetRoleAccess(AppSession.AccId);
