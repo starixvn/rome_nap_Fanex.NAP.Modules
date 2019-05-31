@@ -3,7 +3,7 @@
     using System.Net;
     using System.Web.Script.Serialization;
 
-    internal sealed class AuthorizationResult
+    public sealed class AuthorizationResult
     {
         private AuthorizationResult(int code, string message)
         {

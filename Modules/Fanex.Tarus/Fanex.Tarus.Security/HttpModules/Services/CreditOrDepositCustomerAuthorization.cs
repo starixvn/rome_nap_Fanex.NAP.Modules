@@ -8,7 +8,6 @@
     using Models;
     using Repositories;
     using Security.Services;
-    using static Sunplus.Accounting.Core.Common.Enumerations;
 
     internal sealed class CreditOrDepositCustomerAuthorization : ICustomerAuthorization
     {
@@ -58,8 +57,8 @@
             }
 
             var functionName = customerType.IsDeposit
-                ? Functions.DepositSiteFuncName
-                : Functions.CreditSiteFuncName;
+                ? ManageAccountInfoConst.DepositSiteFunctionName
+                : ManageAccountInfoConst.CreditSiteFunctionName;
             var userPolicy = GetActualPolicy(userId, functionName);
 
             return !userPolicy.HasValue || userPolicy.Value < urlPolicy
@@ -73,11 +72,11 @@
             ICollection<string> depositCustomers = new List<string>();
             GetCreditAndDepositCustomers(userNameList, ref creditCustomers, ref depositCustomers);
 
-            var authorizationResult = GetActualPolicy(creditCustomers, userId, Functions.CreditSiteFuncName, urlPolicy);
+            var authorizationResult = GetActualPolicy(creditCustomers, userId, ManageAccountInfoConst.CreditSiteFunctionName, urlPolicy);
 
             if (authorizationResult.IsOk)
             {
-                authorizationResult = GetActualPolicy(depositCustomers, userId, Functions.DepositSiteFuncName, urlPolicy);
+                authorizationResult = GetActualPolicy(depositCustomers, userId, ManageAccountInfoConst.DepositSiteFunctionName, urlPolicy);
             }
 
             return authorizationResult;

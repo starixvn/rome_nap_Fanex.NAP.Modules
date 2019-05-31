@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Tarus.Security.Constants
 {
-    internal static class PolicyConst
+    public static class PolicyConst
     {
         public const byte Read = 1;
 

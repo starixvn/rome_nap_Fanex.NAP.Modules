@@ -12,6 +12,9 @@
                 case "[B]":
                     return new CreditOrDepositCustomerAuthorization();
 
+                case "[C]":
+                    return new CN88CustomerAuthorization();
+
                 default:
                     return null;
             }
