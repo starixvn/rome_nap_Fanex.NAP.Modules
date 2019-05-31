@@ -18,6 +18,9 @@ namespace Sunplus.Accounting.Entities.CreditTerm
         public string Currency { get; set; }
 
         [DataMember]
+        public string YesterdayBalance { get; set; }
+
+        [DataMember]
         public string TotalBalance { get; set; }
 
         [DataMember]
