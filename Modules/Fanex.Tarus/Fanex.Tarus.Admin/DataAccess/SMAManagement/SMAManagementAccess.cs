@@ -227,6 +227,8 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
         {
             switch (statusId)
             {
+                case 0:
+                    return "Disabled";
                 case 1:
                     return "Inactive";
                 case 2:
