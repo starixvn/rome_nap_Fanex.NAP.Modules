@@ -3,10 +3,11 @@
     using System.Configuration;
     using System.Globalization;
     using System.Linq;
+    using static Common.Enumerations;
 
     public static class InternalLoginManager
     {
-        public static string GetInternalLoginUrl(string site)
+        public static string GetInternalLoginUrl(string site, Role role = Role.Null)
         {
             var internalUrlSection = ConfigurationManager.GetSection("InternalUrlSection") as InternalUrlSection;
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture;
@@ -14,7 +15,7 @@
             {
                 if (culture.CompareInfo.IndexOf(element.Sites, site, CompareOptions.IgnoreCase) >= 0)
                 {
-                    return element.Url;
+                    return role == Role.Headline ? element.UrlHeadline : element.Url;
                 }
             }
 

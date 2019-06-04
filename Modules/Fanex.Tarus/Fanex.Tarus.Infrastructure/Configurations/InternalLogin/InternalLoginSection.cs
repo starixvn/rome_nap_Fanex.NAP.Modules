@@ -80,5 +80,18 @@
                 this["url"] = value;
             }
         }
+
+        [ConfigurationProperty("urlheadline", IsRequired = false)]
+        public string UrlHeadline
+        {
+            get
+            {
+                return this["urlheadline"].ToString();
+            }
+            set
+            {
+                this["urlheadline"] = value;
+            }
+        }
     }
 }

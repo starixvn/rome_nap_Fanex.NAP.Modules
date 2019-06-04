@@ -70,9 +70,8 @@
       <HintPath>..\..\..\packages\Fanex.Tarus.Business.Implement.1.0.0.12\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.1.4\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.1.6\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Security.1.0.0.6\lib\net461\Fanex.Tarus.Security.dll</HintPath>
@@ -122,9 +121,8 @@
       <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.1.9\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.2-CN02\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.2.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.2.2\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Accounting.Services.1.0.1\lib\net40\Sunplus.Accounting.Services.dll</HintPath>

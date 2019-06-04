@@ -68,9 +68,8 @@
       <HintPath>..\..\..\packages\Fanex.Tarus.Business.Implement.1.0.0.12\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.1.4\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.1.6\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Security.1.0.0.6\lib\net461\Fanex.Tarus.Security.dll</HintPath>
@@ -153,8 +152,6 @@
     <Compile Include="Business\MailingList\SpecialDeleteService.cs" />
     <Compile Include="Business\MaxMemberLimitBySuper\IMaxMemberLimitBySuperService.cs" />
     <Compile Include="Business\MaxMemberLimitBySuper\MaxMemberLimitBySuperService.cs" />
-    <Compile Include="Business\SecurityCode\AdminSecurityCodeService.cs" />
-    <Compile Include="Business\SecurityCode\IAdminSecurityCodeService.cs" />
     <Compile Include="Business\SiteManagement\ISiteManagementService.cs" />
     <Compile Include="Business\SiteManagement\SiteManagementService.cs" />
     <Compile Include="Business\SMAManagement\ISMAManagementService.cs" />
@@ -168,7 +165,6 @@
     <Compile Include="Controller\MaxNewMemberBySuperController.cs" />
     <Compile Include="Controller\MailingList\Admin_SMATurnoverMailingListController.cs" />
     <Compile Include="Controller\MailingList\SpecialDeleteController.cs" />
-    <Compile Include="Controller\SecurityCode\AdminSecurityCodeController.cs" />
     <Compile Include="Controller\SiteManagementController.cs" />
     <Compile Include="Controller\SMAManagement\SMAManagementController.cs" />
     <Compile Include="Criteria\CompareBalance\GetCompareBalanceCriteria.cs" />
@@ -180,8 +176,6 @@
     <Compile Include="Criteria\MaxMemberLimitBySuper\UpdateSuperCriteria.cs" />
     <Compile Include="Criteria\MaxMemberLimitBySuper\SearchSuperCriteria.cs" />
     <Compile Include="Criteria\MaxMemberLimitBySuper\GetSitesCriteria.cs" />
-    <Compile Include="Criteria\SecurityCode\GetUserListCriteria.cs" />
-    <Compile Include="Criteria\SecurityCode\ResetSecurityCodeCriteria.cs" />
     <Compile Include="Criteria\SiteManagement\AddSiteCriteria.cs" />
     <Compile Include="Criteria\SiteManagement\CriteriaBase.cs" />
     <Compile Include="Criteria\SiteManagement\ValidateSiteCriteria.cs" />
@@ -199,8 +193,6 @@
     <Compile Include="DataAccess\MailingList\SpecialDeleteAccess.cs" />
     <Compile Include="DataAccess\MaxMemberLimitBySuper\IMaxMemberLimitBySuperDataAccess.cs" />
     <Compile Include="DataAccess\MaxMemberLimitBySuper\MaxMemberLimitBySuperDataAccess.cs" />
-    <Compile Include="DataAccess\SecurityCode\AdminSecurityCodeDataAccess.cs" />
-    <Compile Include="DataAccess\SecurityCode\IAdminSecurityCodeDataAccess.cs" />
     <Compile Include="DataAccess\SiteManagement\ISiteManagementDataAccess.cs" />
     <Compile Include="DataAccess\SiteManagement\SiteManagementDataAccess.cs" />
     <Compile Include="DataAccess\SMAManagement\ISMAManagementAccess.cs" />
@@ -222,7 +214,6 @@
     <Compile Include="Entities\RacingDefaultSetting.cs" />
     <Compile Include="Entities\CustomerDataRangeResult.cs" />
     <Compile Include="Entities\Result.cs" />
-    <Compile Include="Entities\SecurityCode\CustomerInfo.cs" />
     <Compile Include="Entities\Site.cs" />
     <Compile Include="Entities\SMAManagement\FilterGroup.cs" />
     <Compile Include="Entities\SMAManagement\IdNameEntity.cs" />
