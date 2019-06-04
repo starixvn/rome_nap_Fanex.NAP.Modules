@@ -141,14 +141,15 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
                     var ds = db.ExecuteDataSet();
                     var output = db.GetOuputParams();
-                    
+
                     result = new DbResult(output, ds);
                 }
 
-                if(result.ResultSet.Tables.Count > 0 && result.ResultSet.Tables[0].Rows.Count >0)
+
+                if (result.ResultSet.Tables.Count > 0 && result.ResultSet.Tables[0].Rows.Count > 0)
                 {
-                    string siteName = result.ResultSet.Tables[0].Rows[0]["membersite"].ToString();
-                    if(AppSettings.IsCN88SiteName(siteName))
+                    string siteName = result.ResultSet.Tables[0].Columns.Contains("membersite") ? result.ResultSet.Tables[0].Rows[0]["membersite"]?.ToString() : string.Empty;
+                    if (AppSettings.IsCN88SiteName(siteName))
                     {
                         int custId = Converter.ToInt(result.ResultSet.Tables[0].Rows[0]["custid"]);
                         int roleId = Converter.ToInt(result.ResultSet.Tables[0].Rows[0]["roleid"]);
