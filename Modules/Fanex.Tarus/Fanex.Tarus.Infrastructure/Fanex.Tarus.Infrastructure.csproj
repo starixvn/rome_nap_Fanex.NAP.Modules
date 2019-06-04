@@ -230,6 +230,7 @@
     <Compile Include="Configurations\WebSettings.cs" />
     <Compile Include="Constants\CustomerBalanceConstants.cs" />
     <Compile Include="Constants\BetType.cs" />
+    <Compile Include="Constants\CN88CustomerStatusConstants.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Constants\SMALevelNameConstants.cs" />
     <Compile Include="Constants\Sports.cs" />
