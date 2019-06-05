@@ -234,7 +234,7 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
                 case 2:
                     return "Suspended";
                 case 3:
-                    return "ViewOnly";
+                    return "View Only";
                 case 4:
                     return "Active";
                 default:
