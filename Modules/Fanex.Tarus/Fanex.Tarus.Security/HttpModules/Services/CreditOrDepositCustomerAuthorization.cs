@@ -1,30 +1,23 @@
 ﻿namespace Fanex.Tarus.Security.HttpModules.Services
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Constants;
-    using Criteria;
     using Models;
-    using Repositories;
     using Security.Services;
 
-    internal sealed class CreditOrDepositCustomerAuthorization : ICustomerAuthorization
+    public sealed class CreditOrDepositCustomerAuthorization : ICustomerAuthorization
     {
-        private readonly ICustomerTypeService customerTypeService;
-        private readonly IUserPermissionDataAccess permissionDataAccess;
+        private readonly ICustomerAuthorizationService customerAuthorizationService;
 
         public CreditOrDepositCustomerAuthorization()
-            : this(null, null)
+            : this(null)
         {
         }
 
-        internal CreditOrDepositCustomerAuthorization(
-            ICustomerTypeService customerTypeService,
-            IUserPermissionDataAccess permissionDataAccess)
+        internal CreditOrDepositCustomerAuthorization(ICustomerAuthorizationService customerAuthorizationService)
         {
-            this.customerTypeService = customerTypeService ?? new CustomerTypeService();
-            this.permissionDataAccess = permissionDataAccess ?? new UserPermissionDataAccess();
+            this.customerAuthorizationService = customerAuthorizationService ?? new CustomerAuthorizationService();
         }
 
         public AuthorizationResult CanRead(string parameterValue, int userId)
@@ -35,63 +28,83 @@
 
         public AuthorizationResult CanAccess(string parameterValue, int userId, byte urlPolicy)
         {
-            if (parameterValue.IndexOf(',') != -1)
+            var permissions = MangeAccountInfoPermissionBuilder.GetManageAccountInfoPermissions(userId, urlPolicy);
+            var hasCN88SitePermission = permissions.ContainsKey(ManageAccountInfoConst.CN88SiteFunctionName);
+
+            if (hasCN88SitePermission && HasCreditSiteOrDepositSitePermission(permissions))
             {
-                return CanAccessByUserNameList(parameterValue, userId, urlPolicy);
+                return CheckCreditSiteOrDepositSitePermission(permissions, parameterValue);
             }
 
-            return CanAccessByCustIdOrUserName(parameterValue, userId, urlPolicy);
+            var result = CheckCN88SitePermission(parameterValue, hasCN88SitePermission);
+
+            if (result.IsOk && !hasCN88SitePermission)
+            {
+                return CheckCreditSiteOrDepositSitePermission(permissions, parameterValue);
+            }
+
+            return result;
         }
 
-        private AuthorizationResult CanAccessByCustIdOrUserName(string custIdOrUserName, int userId, byte urlPolicy)
+        private AuthorizationResult CheckCN88SitePermission(string parameterValue, bool hasCN88SitePermission)
         {
-            int custId;
+            var customers = customerAuthorizationService.GetCustomerSites(parameterValue, !hasCN88SitePermission).ToList();
+            var customersCount = customers.Count;
 
-            var customerType = int.TryParse(custIdOrUserName, out custId)
-                ? customerTypeService.GetCustomerType(custId)
-                : customerTypeService.GetCustomerType(custIdOrUserName);
-
-            if (customerType == null || !customerType.IsValid)
+            if (customersCount > 0)
             {
-                return AuthorizationResult.Ok();
+                return customersCount == 1
+                    ? AuthorizationResult.Forbidden()
+                    : AuthorizationResult.Forbidden(BuildInvalidUsernamesError(customers.Select(c => c.CustInfo)));
             }
 
+            return AuthorizationResult.Ok();
+        }
+
+        private static bool HasCreditSiteOrDepositSitePermission(IDictionary<string, byte> permissions)
+            => permissions.ContainsKey(ManageAccountInfoConst.CreditSiteFunctionName)
+            || permissions.ContainsKey(ManageAccountInfoConst.DepositSiteFunctionName);
+
+        private AuthorizationResult CheckCreditSiteOrDepositSitePermission(
+            IDictionary<string, byte> permissions,
+            string parameterValue)
+        {
+            var customerTypes = customerAuthorizationService.GetCustomerTypes(parameterValue).ToList();
+            var customerTypesCount = customerTypes.Count;
+
+            if (customerTypesCount == 1)
+            {
+                return CanAccess(permissions, customerTypes[0]);
+            }
+            else if (customerTypesCount > 1)
+            {
+                return CanAccess(permissions, customerTypes);
+            }
+
+            return AuthorizationResult.Ok();
+        }
+
+        private static AuthorizationResult CanAccess(
+            IDictionary<string, byte> permissions,
+            CustomerType customerType)
+        {
             var functionName = customerType.IsDeposit
                 ? ManageAccountInfoConst.DepositSiteFunctionName
                 : ManageAccountInfoConst.CreditSiteFunctionName;
-            var userPolicy = GetActualPolicy(userId, functionName);
 
-            return !userPolicy.HasValue || userPolicy.Value < urlPolicy
-                ? AuthorizationResult.Forbidden()
-                : AuthorizationResult.Ok();
+            return permissions.ContainsKey(functionName)
+                ? AuthorizationResult.Ok()
+                : AuthorizationResult.Forbidden();
         }
 
-        private AuthorizationResult CanAccessByUserNameList(string userNameList, int userId, byte urlPolicy)
+        private static AuthorizationResult CanAccess(
+            IDictionary<string, byte> permissions,
+            IEnumerable<CustomerType> customerTypes)
         {
             ICollection<string> creditCustomers = new List<string>();
             ICollection<string> depositCustomers = new List<string>();
-            GetCreditAndDepositCustomers(userNameList, ref creditCustomers, ref depositCustomers);
 
-            var authorizationResult = GetActualPolicy(creditCustomers, userId, ManageAccountInfoConst.CreditSiteFunctionName, urlPolicy);
-
-            if (authorizationResult.IsOk)
-            {
-                authorizationResult = GetActualPolicy(depositCustomers, userId, ManageAccountInfoConst.DepositSiteFunctionName, urlPolicy);
-            }
-
-            return authorizationResult;
-        }
-
-        private void GetCreditAndDepositCustomers(
-            string userNameList,
-            ref ICollection<string> creditCustomers,
-            ref ICollection<string> depositCustomers)
-        {
-            var customers = customerTypeService
-                   .GetCustomerTypes(userNameList)
-                   .Where(c => c.IsValid);
-
-            foreach (var customer in customers)
+            foreach (var customer in customerTypes)
             {
                 if (customer.IsDeposit)
                 {
@@ -102,30 +115,21 @@
                     creditCustomers.Add(customer.CustInfo);
                 }
             }
-        }
 
-        private AuthorizationResult GetActualPolicy(ICollection<string> customers, int userId, string functionName, byte urlPolicy)
-        {
-            if (customers.Count > 0)
+            if (creditCustomers.Count > 0 && !permissions.ContainsKey(ManageAccountInfoConst.CreditSiteFunctionName))
             {
-                var userPolicy = GetActualPolicy(userId, functionName);
+                return AuthorizationResult.Forbidden(BuildInvalidUsernamesError(creditCustomers));
+            }
 
-                if (!userPolicy.HasValue || userPolicy.Value < urlPolicy)
-                {
-                    return AuthorizationResult.Forbidden($"Invalid usernames: {string.Join(", ", customers)}");
-                }
+            if (depositCustomers.Count > 0 && !permissions.ContainsKey(ManageAccountInfoConst.DepositSiteFunctionName))
+            {
+                return AuthorizationResult.Forbidden(BuildInvalidUsernamesError(depositCustomers));
             }
 
             return AuthorizationResult.Ok();
         }
 
-        private byte? GetActualPolicy(int userId, string functionName)
-        {
-            var userPermission = permissionDataAccess
-                .GetUserPermissions(new GetUserPermissionCriteria(userId))
-                .FirstOrDefault(f => f.FuncName.Equals(functionName, StringComparison.OrdinalIgnoreCase));
-
-            return userPermission?.ActualPolicy;
-        }
+        private static string BuildInvalidUsernamesError(IEnumerable<string> usernames)
+            => $"Invalid usernames: {string.Join(", ", usernames)}";
     }
 }

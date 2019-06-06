@@ -5,7 +5,7 @@
     using Models;
     using Repositories;
 
-    internal sealed class SpecialSiteCustomerAuthorization : ICustomerAuthorization
+    public sealed class SpecialSiteCustomerAuthorization : ICustomerAuthorization
     {
         private readonly IUserPermissionDataAccess permissionDataAccess;
 

@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Tarus.Security.HttpModules
 {
     using System;
+    using System.Collections.Generic;
     using System.Web;
     using Configurations;
     using Constants;
@@ -42,13 +43,34 @@
                 return;
             }
 
-            var paramValue = currentContext.GetParamValueFromParamList(urlPermission.ParamNames);
+            var paramValue = GetParamValue(urlPermission.ParamNames);
 
             if (paramValue == null)
             {
                 return;
             }
 
+            Authorize(urlPermission, paramValue);
+        }
+
+        private UrlPermission GetUrlPermission()
+        {
+            var relativePath = currentContext.GetLowerAbsolutePath();
+
+            return UrlPermissionManager.GetUrlPermission(relativePath);
+        }
+
+        private string GetParamValue(IEnumerable<string> paramNames)
+        {
+            var paramValue = currentContext.GetParamValueFromParamList(paramNames);
+
+            return paramValue != null
+                ? HttpUtility.UrlDecode(paramValue)
+                : paramValue;
+        }
+
+        private void Authorize(UrlPermission urlPermission, string paramValue)
+        {
             ICustomerAuthorization authorize;
             AuthorizationResult result;
 
@@ -68,13 +90,6 @@
                     }
                 }
             }
-        }
-
-        private UrlPermission GetUrlPermission()
-        {
-            var relativePath = currentContext.GetLowerAbsolutePath();
-
-            return UrlPermissionManager.GetUrlPermission(relativePath);
         }
     }
 }

@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Fanex.Tarus.Security.Criteria;
+using Fanex.Tarus.Security.Models;
+using Fanex.Tarus.Security.Repositories;
+
+namespace Fanex.Tarus.Security.Services
+{
+    internal interface ICustomerAuthorizationService
+    {
+        IEnumerable<CustomerSite> GetCustomerSites(string custIdOrUserNameList, bool isCN88Site);
+
+        IEnumerable<CustomerType> GetCustomerTypes(string custIdOrUserNameList);
+    }
+
+    internal class CustomerAuthorizationService : ICustomerAuthorizationService
+    {
+        private readonly ICustomerSiteDataAccess customerSiteDataAccess;
+        private readonly ICustomerTypeDataAccess customerTypeDataAccess;
+
+        internal CustomerAuthorizationService()
+            : this(null, null)
+        {
+        }
+
+        internal CustomerAuthorizationService(
+            ICustomerSiteDataAccess customerSiteDataAccess,
+            ICustomerTypeDataAccess customerTypeDataAccess)
+        {
+            this.customerSiteDataAccess = customerSiteDataAccess ?? new CustomerSiteDataAccess();
+            this.customerTypeDataAccess = customerTypeDataAccess ?? new CustomerTypeDataAccess();
+        }
+
+        public IEnumerable<CustomerSite> GetCustomerSites(string custIdOrUserNameList, bool isCN88Site)
+            => GetCustomerSites(custIdOrUserNameList)
+                .Where(c =>
+                    c.IsValid
+                    && !string.IsNullOrWhiteSpace(c.Site)
+                    && c.Site.Equals("cn88", StringComparison.OrdinalIgnoreCase) == isCN88Site);
+
+        private IEnumerable<CustomerSite> GetCustomerSites(string custIdOrUserNameList)
+        {
+            int custId;
+
+            return int.TryParse(custIdOrUserNameList, out custId)
+                ? customerSiteDataAccess.GetCustomerSites(new GetCustomerSiteCriteria(custId))
+                : customerSiteDataAccess.GetCustomerSites(new GetCustomerSiteCriteria(custIdOrUserNameList));
+        }
+
+        public IEnumerable<CustomerType> GetCustomerTypes(string custIdOrUserNameList)
+        {
+            int custId;
+
+            var customerTypes = int.TryParse(custIdOrUserNameList, out custId)
+                ? customerTypeDataAccess.GetCustomerTypes(new GetCustomerTypeCriteria(custId))
+                : customerTypeDataAccess.GetCustomerTypes(new GetCustomerTypeCriteria(custIdOrUserNameList));
+
+            return customerTypes.Where(c => c.IsValid);
+        }
+    }
+}

@@ -248,7 +248,6 @@
     <Compile Include="Configurations\UrlPermissionSection.cs" />
     <Compile Include="Criteria\GetUserPermissionCriteria.cs" />
     <Compile Include="Criteria\GetCustomerTypeCriteria.cs" />
-    <Compile Include="HttpModules\Services\CN88CustomerAuthorization.cs" />
     <Compile Include="HttpModules\Services\CustomerAuthorizationFactory.cs" />
     <Compile Include="HttpModules\Services\ICustomerAuthorization.cs" />
     <Compile Include="HttpModules\Services\SpecialSiteCustomerAuthorization.cs" />
@@ -266,10 +265,9 @@
     <Compile Include="Models\UserPermission.cs" />
     <Compile Include="HttpModules\Services\CreditOrDepositCustomerAuthorization.cs" />
     <Compile Include="Services\CreditOrDepositCustomerUtils.cs" />
-    <Compile Include="Services\CustomerTypeService.cs" />
-    <Compile Include="Services\ICustomerTypeService.cs" />
     <Compile Include="HttpModules\Services\UrlPermissionHttpContext.cs" />
     <Compile Include="Permission\CheckPermissionAttribute.cs" />
+    <Compile Include="Services\CustomerAuthorizationService.cs" />
     <Compile Include="Services\Encryptor.cs" />
     <Compile Include="Services\IPermissionService.cs" />
     <Compile Include="Services\ISmartPunterService.cs" />

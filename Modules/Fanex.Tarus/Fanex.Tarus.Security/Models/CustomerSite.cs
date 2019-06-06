@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Fanex.Tarus.Security.Models
+﻿namespace Fanex.Tarus.Security.Models
 {
     internal sealed class CustomerSite
     {
@@ -16,10 +14,5 @@ namespace Fanex.Tarus.Security.Models
         public string Site { get; }
 
         public bool IsValid { get; }
-
-        public bool IsCN88Site
-            => IsValid
-            && !string.IsNullOrWhiteSpace(Site)
-            && Site.Equals("cn88", StringComparison.OrdinalIgnoreCase);
     }
 }
