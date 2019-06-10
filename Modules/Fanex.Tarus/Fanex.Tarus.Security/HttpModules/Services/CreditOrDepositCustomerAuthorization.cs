@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Tarus.Security.HttpModules.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Constants;
@@ -8,6 +9,7 @@
 
     public sealed class CreditOrDepositCustomerAuthorization : ICustomerAuthorization
     {
+        private const string CN88SiteName = "cn88";
         private readonly ICustomerAuthorizationService customerAuthorizationService;
 
         public CreditOrDepositCustomerAuthorization()
@@ -28,27 +30,42 @@
 
         public AuthorizationResult CanAccess(string parameterValue, int userId, byte urlPolicy)
         {
+            var customerSites = customerAuthorizationService.GetCustomerSites(parameterValue).ToList();
+
             var permissions = MangeAccountInfoPermissionBuilder.GetManageAccountInfoPermissions(userId, urlPolicy);
             var hasCN88SitePermission = permissions.ContainsKey(ManageAccountInfoConst.CN88SiteFunctionName);
+            AuthorizationResult result = AuthorizationResult.Ok();
 
-            if (hasCN88SitePermission && HasCreditSiteOrDepositSitePermission(permissions))
+            if (hasCN88SitePermission)
             {
-                return CheckCreditSiteOrDepositSitePermission(permissions, parameterValue);
+                if (HasCreditSiteOrDepositSitePermission(permissions))
+                {
+                    if (customerSites.Any(c => !c.Site.Equals(CN88SiteName, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        return CheckCreditSiteOrDepositSitePermission(permissions, parameterValue);
+                    }
+                }
+                else
+                {
+                    result = CheckCN88SitePermission(customerSites, false);
+                }
             }
-
-            var result = CheckCN88SitePermission(parameterValue, hasCN88SitePermission);
-
-            if (result.IsOk && !hasCN88SitePermission)
+            else
             {
-                return CheckCreditSiteOrDepositSitePermission(permissions, parameterValue);
+                result = CheckCN88SitePermission(customerSites, true);
+
+                if (result.IsOk)
+                {
+                    return CheckCreditSiteOrDepositSitePermission(permissions, parameterValue);
+                }
             }
 
             return result;
         }
 
-        private AuthorizationResult CheckCN88SitePermission(string parameterValue, bool hasCN88SitePermission)
+        private AuthorizationResult CheckCN88SitePermission(IEnumerable<CustomerSite> customerSites, bool isCN88Site)
         {
-            var customers = customerAuthorizationService.GetCustomerSites(parameterValue, !hasCN88SitePermission).ToList();
+            var customers = customerSites.Where(c => c.Site.Equals(CN88SiteName, StringComparison.OrdinalIgnoreCase) == isCN88Site).ToList();
             var customersCount = customers.Count;
 
             if (customersCount > 0)
