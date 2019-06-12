@@ -20,6 +20,7 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
     public class SMAManagementService : ISMAManagementService
     {
         private const string SMAGroupHeadlinesSessionKey = "Fanex.Tarus.Admin.Business.SMAManagement.SMAListByGroupHeadline";
+        private const string CN88SMAGroupHeadlinesSessionKey = "Fanex.Tarus.Admin.Business.SMAManagement.CN88SMAListByGroupHeadline";
 
         private readonly ISMAManagementAccess _smaManagementAccess;
 
@@ -83,6 +84,50 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
             return result;
         }
 
+        public CN88SMAManagerModel GetCN88SMAGroupHeadlines(GetCN88SMAGroupHeadlineCriteria criteria)
+        {
+            CN88SMAManagerModel result = null;
+            bool fromSession = criteria.PageIndex != 1;
+
+            try
+            {
+                if (fromSession)
+                {
+                    result = (CN88SMAManagerModel)SessionExtension.GetSession(HttpContext.Current.Session, CN88SMAGroupHeadlinesSessionKey);
+                }
+
+                if (result == null)
+                {
+                    HttpContext.Current.Session.Remove(CN88SMAGroupHeadlinesSessionKey);
+
+                    result = GetCN88SMAGroupHeadlinesFromDatabase(criteria);
+
+                    SessionExtension.AddSession(HttpContext.Current.Session, SMAGroupHeadlinesSessionKey, result);
+                }
+
+                if (result != null && result.TotalGroups > 0)
+                {
+                    var pagingResult = new CN88SMAManagerModel
+                    {
+                        TotalGroups = result.TotalGroups,
+                        CN88SMAGroupHeadlines = result.CN88SMAGroupHeadlines
+                            .Skip(criteria.PageSize * (criteria.PageIndex - 1))
+                            .Take(criteria.PageSize)
+                            .ToList()
+                    };
+
+                    pagingResult.TotalMemberNotAssignedToGroup = pagingResult.CN88SMAGroupHeadlines.Count(q => q.GroupId == 0);
+                    return pagingResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
+        }
+
         public ExcelFile ExportSMAGroupHeadlinesToExcel(string sheetName, GetSMAGroupHeadlineCriteria criteria)
         {
             int startRow = 1;
@@ -124,6 +169,58 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
                     for (int i = 0; i < getSession.TotalGroups; i++)
                     {
                         ExportSMAListToExcelFileAssignBody(ref worksheet, startRow, ref nextRow, getSession.SMAGroupHeadlines[i], i + 1);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return excelFile;
+        }
+
+        public ExcelFile ExportCN88SMAGroupHeadlinesToExcel(string sheetName, GetCN88SMAGroupHeadlineCriteria criteria)
+        {
+            int startRow = 1;
+            ExcelFile excelFile = new ExcelFile();
+
+            try
+            {
+                var getSession = GetFromSession(
+                    SMAGroupHeadlinesSessionKey,
+                    () =>
+                    {
+                        return GetCN88SMAGroupHeadlinesFromDatabase(criteria);
+                    });
+
+                var worksheet = excelFile.Worksheets.Add(sheetName);
+                ExportSMAListToExcelFileAssignHeader(ref worksheet, startRow++);
+
+                if (getSession != null && getSession.TotalGroups > 0)
+                {
+                    int nextRow = 0,
+                        notAssignedToGroupCount = getSession.TotalMemberNotAssignedToGroup;
+
+                    if (notAssignedToGroupCount > 0)
+                    {
+                        var cellStyle = new ExcelGemboxUtils().GetStyleTextCenter(false);
+                        var notAssignedGroupCell = worksheet.Cells.GetSubrangeAbsolute(startRow, 1, startRow + notAssignedToGroupCount - 1, 1);
+
+                        notAssignedGroupCell.Merged = true;
+                        notAssignedGroupCell.Style = cellStyle;
+                        notAssignedGroupCell.Value = "Not assigned to group";
+
+                        notAssignedGroupCell = worksheet.Cells.GetSubrangeAbsolute(startRow + nextRow, 2, startRow + nextRow + (notAssignedToGroupCount - 1), 2);
+
+                        notAssignedGroupCell.Merged = true;
+                        notAssignedGroupCell.Style = cellStyle;
+                        notAssignedGroupCell.Value = string.Empty;
+                    }
+
+                    for (int i = 0; i < getSession.TotalGroups; i++)
+                    {
+                        ExportCN88SMAListToExcelFileAssignBody(ref worksheet, startRow, ref nextRow, getSession.CN88SMAGroupHeadlines[i], i + 1);
                     }
                 }
             }
@@ -188,6 +285,51 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
                 TotalGroups = totalGroups + totalMemberNotAssignedToGroup,
                 TotalMemberNotAssignedToGroup = totalMemberNotAssignedToGroup,
                 SMAGroupHeadlines = smaGroupHeadlines
+            };
+        }
+
+        private CN88SMAManagerModel GetCN88SMAGroupHeadlinesFromDatabase(GetCN88SMAGroupHeadlineCriteria criteria)
+        {
+            int totalGroups = 0,
+                totalMemberNotAssignedToGroup = 0;
+
+            IList<CN88SMAGroupHeadline> smaGroupHeadlines = new List<CN88SMAGroupHeadline>(512);
+
+            var groupHeadlines = _smaManagementAccess.GetCN88SMAGroupHeadlines(criteria);
+
+            foreach (var group in groupHeadlines)
+            {
+                if (group.GroupId != 0)
+                {
+                    totalGroups++;
+                    smaGroupHeadlines.Add(group);
+                }
+
+                foreach (var entity in group.CN88SMAEntities)
+                {
+                    entity.HeadlineType = MapHeadlineType(entity.HeadlineTypeId);                  
+                    entity.Position = MapRole(entity.RoleId);
+
+                    if (group.GroupId == 0)
+                    {
+                        totalMemberNotAssignedToGroup++;
+
+                        smaGroupHeadlines.Add(new CN88SMAGroupHeadline
+                        {
+                            GroupId = group.GroupId,
+                            GroupName = group.GroupName,
+                            Owner = entity.Owner,
+                            CN88SMAEntities = new List<CN88SMAEntity> { entity }
+                        });
+                    }
+                }
+            }
+
+            return new CN88SMAManagerModel
+            {
+                TotalGroups = totalGroups + totalMemberNotAssignedToGroup,
+                TotalMemberNotAssignedToGroup = totalMemberNotAssignedToGroup,
+                CN88SMAGroupHeadlines = smaGroupHeadlines
             };
         }
 
@@ -335,6 +477,94 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
                 excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
                 excelCell.Style = cellStyle;
                 excelCell.Style.FillPattern.SetSolid(backgroundColor);
+                excelCell.Value = smaEntity.Position;
+
+                nextRow++;
+            }
+        }
+
+        private void ExportCN88SMAListToExcelFileAssignBody(
+           ref ExcelWorksheet worksheet,
+           int startRow,
+           ref int nextRow,
+           CN88SMAGroupHeadline groupHeadline,
+           int groupIndex)
+        {
+            CellStyle cellStyle = new ExcelGemboxUtils().GetStyleTextCenter(false);
+            int startCol;
+            CN88SMAEntity smaEntity; 
+            CellRange cellRange;
+            ExcelCell excelCell;
+
+            int totalItems = groupHeadline != null ? groupHeadline.CN88SMAEntities.Count : 0;
+
+            for (int i = 0; i < totalItems; i++)
+            {
+                startCol = 0;
+                smaEntity = groupHeadline.CN88SMAEntities[i];                
+
+                if (i == 0)
+                {
+                    cellRange = worksheet.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow + (totalItems - 1), startCol);
+
+                    cellRange.Merged = true;
+                    cellRange.Style = cellStyle;
+                    cellRange.Value = groupIndex;
+
+                    if (groupHeadline.GroupId != 0)
+                    {
+                        cellRange = worksheet.Cells.GetSubrangeAbsolute(
+                            startRow + nextRow,
+                            startCol + 1,
+                            startRow + nextRow + (totalItems - 1),
+                            startCol + 1);
+
+                        cellRange.Merged = true;
+                        cellRange.Style = cellStyle;
+                        cellRange.Value = groupHeadline.GroupName;
+
+                        cellRange = worksheet.Cells.GetSubrangeAbsolute(
+                            startRow + nextRow,
+                            startCol + 2,
+                            startRow + nextRow + (totalItems - 1),
+                            startCol + 2);
+
+                        cellRange.Merged = true;
+                        cellRange.Style = cellStyle;
+                        cellRange.Value = smaEntity.HeadlineType;
+                    }
+
+                    cellRange = worksheet.Cells.GetSubrangeAbsolute(
+                            startRow + nextRow,
+                            startCol + 3,
+                            startRow + nextRow + (totalItems - 1),
+                            startCol + 3);
+
+                    cellRange.Merged = true;
+                    cellRange.Style = cellStyle;
+                    cellRange.Value = smaEntity.Owner;
+                }
+
+                startCol += 3;
+
+                excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
+                excelCell.Style = cellStyle;               
+                excelCell.Value = smaEntity.Username;
+
+                excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
+                excelCell.Style = cellStyle;               
+                excelCell.Value = smaEntity.Status;
+
+                excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
+                excelCell.Style = cellStyle;             
+                excelCell.Value = smaEntity.Site;
+
+                excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
+                excelCell.Style = cellStyle;             
+                excelCell.Value = smaEntity.Currency;
+
+                excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
+                excelCell.Style = cellStyle;              
                 excelCell.Value = smaEntity.Position;
 
                 nextRow++;

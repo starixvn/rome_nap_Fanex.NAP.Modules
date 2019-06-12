@@ -4,7 +4,7 @@
     using Models;
     using NAP.Framework.Data;
 
-    internal interface IUserPermissionDataAccess
+    public interface IUserPermissionDataAccess
     {
         AuthorizationResult CheckSpecialSitePermission(ICriteria criteria);
 

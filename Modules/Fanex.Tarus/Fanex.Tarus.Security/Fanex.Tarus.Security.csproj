@@ -40,8 +40,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="CN88.CustomerSetting.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CN88.CustomerSetting.Client.1.0.0-beta06\lib\net461\CN88.CustomerSetting.Client.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\packages\CN88.CustomerSetting.Client.1.0.0\lib\net461\CN88.CustomerSetting.Client.dll</HintPath>
     </Reference>
     <Reference Include="Couchbase, Version=1.2.6.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CouchbaseNetClient.1.2.6.3\lib\net40\Couchbase.dll</HintPath>
@@ -149,8 +148,8 @@
     <Reference Include="RestSharp">
       <HintPath>..\..\..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.1.9\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.0\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.2.2, Culture=neutral, processorArchitecture=MSIL">
@@ -237,10 +236,12 @@
     <Compile Include="Authenticate\ProductStatus\ProductStatusAuthorizeService.cs" />
     <Compile Include="Authenticate\ProductStatus\ProductStatusActor.cs" />
     <Compile Include="Authenticate\SmartPunterAttribute.cs" />
+    <Compile Include="Constants\ManageAccountInfoConst.cs" />
     <Compile Include="Constants\PolicyConst.cs" />
     <Compile Include="Criteria\CheckSmartPunterCriteria.cs" />
     <Compile Include="Criteria\CheckDummyAccountCriteria.cs" />
     <Compile Include="Criteria\CheckSpecialSitePermissionCriteria.cs" />
+    <Compile Include="Criteria\GetCustomerSiteCriteria.cs" />
     <Compile Include="Domain\SmartPunterActionId.cs" />
     <Compile Include="Configurations\UrlPermissionManager.cs" />
     <Compile Include="Configurations\UrlPermissionSection.cs" />
@@ -250,8 +251,11 @@
     <Compile Include="HttpModules\Services\ICustomerAuthorization.cs" />
     <Compile Include="HttpModules\Services\SpecialSiteCustomerAuthorization.cs" />
     <Compile Include="Models\AuthorizationResult.cs" />
+    <Compile Include="Models\CustomerSite.cs" />
     <Compile Include="Models\CustomerType.cs" />
+    <Compile Include="Repositories\CustomerSiteDataAccess.cs" />
     <Compile Include="Repositories\CustomerTypeDataAccess.cs" />
+    <Compile Include="Repositories\ICustomerSiteDataAccess.cs" />
     <Compile Include="Repositories\ICustomerTypeDataAccess.cs" />
     <Compile Include="Repositories\IUserPermissionDataAccess.cs" />
     <Compile Include="Repositories\UserPermissionDataAccess.cs" />
@@ -260,13 +264,13 @@
     <Compile Include="Models\UserPermission.cs" />
     <Compile Include="HttpModules\Services\CreditOrDepositCustomerAuthorization.cs" />
     <Compile Include="Services\CreditOrDepositCustomerUtils.cs" />
-    <Compile Include="Services\CustomerTypeService.cs" />
-    <Compile Include="Services\ICustomerTypeService.cs" />
     <Compile Include="HttpModules\Services\UrlPermissionHttpContext.cs" />
     <Compile Include="Permission\CheckPermissionAttribute.cs" />
+    <Compile Include="Services\CustomerAuthorizationService.cs" />
     <Compile Include="Services\Encryptor.cs" />
     <Compile Include="Services\IPermissionService.cs" />
     <Compile Include="Services\ISmartPunterService.cs" />
+    <Compile Include="Services\MangeAccountInfoPermissionBuilder.cs" />
     <Compile Include="Services\PermissionService.cs" />
     <Compile Include="Services\SmartPunterService.cs" />
     <Compile Include="Repositories\ISmartPunterRepository.cs" />

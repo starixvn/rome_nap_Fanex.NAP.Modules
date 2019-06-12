@@ -71,8 +71,8 @@
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.1.6\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Security, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Security.1.0.0.6\lib\net461\Fanex.Tarus.Security.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Security, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Tarus.Security.1.0.1.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -97,8 +97,8 @@
     <Reference Include="NPOI">
       <HintPath>..\..\..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.1.9\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.0\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -179,6 +179,7 @@
     <Compile Include="Criteria\SiteManagement\AddSiteCriteria.cs" />
     <Compile Include="Criteria\SiteManagement\CriteriaBase.cs" />
     <Compile Include="Criteria\SiteManagement\ValidateSiteCriteria.cs" />
+    <Compile Include="Criteria\SMAManagement\GetCN88SMAGroupHeadlineCriteria.cs" />
     <Compile Include="Criteria\SMAManagement\GetSMAGroupHeadlineCriteria.cs" />
     <Compile Include="Criteria\SMAManagement\UpdateHeadlineTypeCriteria.cs" />
     <Compile Include="Criteria\SMAManagement\UpdateOwnerCriteria.cs" />
@@ -217,8 +218,11 @@
     <Compile Include="Entities\Site.cs" />
     <Compile Include="Entities\SMAManagement\FilterGroup.cs" />
     <Compile Include="Entities\SMAManagement\IdNameEntity.cs" />
+    <Compile Include="Entities\SMAManagement\CN88SMAEntity.cs" />
     <Compile Include="Entities\SMAManagement\SMAEntity.cs" />
+    <Compile Include="Entities\SMAManagement\CN88SMAGroupHeadline.cs" />
     <Compile Include="Entities\SMAManagement\SMAGroupHeadline.cs" />
+    <Compile Include="Entities\SMAManagement\CN88SMAManagerModel.cs" />
     <Compile Include="Entities\SMAManagement\SMAManagerModel.cs" />
     <Compile Include="Enums\CustomerDataRangeType.cs" />
     <Compile Include="Enums\HeadlineType.cs" />
