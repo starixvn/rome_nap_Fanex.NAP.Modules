@@ -19,7 +19,7 @@ namespace Fanex.Tarus.Infrastructure.Resource {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Labels {
@@ -93,6 +93,42 @@ namespace Fanex.Tarus.Infrastructure.Resource {
         public static string Choosing_image {
             get {
                 return ResourceManager.GetString("Choosing_image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string CN88Active {
+            get {
+                return ResourceManager.GetString("CN88Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inactive.
+        /// </summary>
+        public static string CN88Inactive {
+            get {
+                return ResourceManager.GetString("CN88Inactive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suspended.
+        /// </summary>
+        public static string CN88Suspended {
+            get {
+                return ResourceManager.GetString("CN88Suspended", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Only.
+        /// </summary>
+        public static string CN88ViewOnly {
+            get {
+                return ResourceManager.GetString("CN88ViewOnly", resourceCulture);
             }
         }
         

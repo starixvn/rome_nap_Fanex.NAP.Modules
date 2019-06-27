@@ -288,4 +288,16 @@
   <data name="Tennis" xml:space="preserve">
     <value>Tennis</value>
   </data>
+  <data name="CN88Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="CN88Inactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="CN88Suspended" xml:space="preserve">
+    <value>Suspended</value>
+  </data>
+  <data name="CN88ViewOnly" xml:space="preserve">
+    <value>View Only</value>
+  </data>
 </root>
