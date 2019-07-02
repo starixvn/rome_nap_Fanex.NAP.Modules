@@ -7,6 +7,8 @@ using DNAide.Core;
 using DNAide.Data;
 using Fanex.Data;
 using IBCUtils;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Entities;
 
@@ -77,7 +79,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        public static IbcError Acc_CustomerPwdUpd(int CustId, string UserPwd, int UserId, string language, bool isCN88)
+        public static IbcError Acc_CustomerPwdUpd(int CustId, string UserPwd, int UserId, string language, bool isCN88, bool forceChangePwd)
         {
             IbcError error = IbcError.SuccessResult;
             try
@@ -91,6 +93,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                     p.Add("userid", UserId);
                     p.Add("langguage", language);
                     p.Add("loginip", HttpContext.Current.Request.UserHostAddress);
+                    p.Add("isforcedchangepwd", forceChangePwd);
 
                     objdb.AssignParamValues(p);
                     objdb.ExecuteNonQuery();
@@ -1154,7 +1157,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 param.Add("search", search);
                 param.Add("firstname", firstname);
                 param.Add("lastname", lastname);
-                
+
                 using (ObjectDb db = new ObjectDb("UpdateUserSearch", 600))
                 {
                     db.AssignParamValues(param);
@@ -1164,6 +1167,29 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+        }
+
+        public static void KickoutCustomer(int custId, byte roleId = 0, int serverId = 0, string ip = null)
+        {
+            try
+            {
+                using (var db = new ObjectDb("Age_OnUser_ForceKickedout"))
+                {
+                    db.AssignParamValues(new Hashtable
+                    {
+                        ["custid"] = custId,
+                        ["roleid"] = roleId == 0 ? AppSession.CustRoleId : roleId,
+                        ["serverid"] = serverId == 0 ? WebSettings.ServerId : serverId,
+                        ["ip"] = ip ?? Utils.GetClientIP()
+                    });
+
+                    db.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
     }
