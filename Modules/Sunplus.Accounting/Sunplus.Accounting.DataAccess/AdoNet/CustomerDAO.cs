@@ -16,6 +16,19 @@ using Sunplus.Accounting.Entities.Customer;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet
 {
+    public class MemberMBCBalanceModel
+    {
+        public MemberMBCBalanceModel(decimal balance, decimal netPosition)
+        {
+            Balance = balance;
+            NetPosition = netPosition;
+        }
+
+        public decimal Balance { get; }
+
+        public decimal NetPosition { get; }
+    }
+
     public class CustomerDAO : DataAccess, ICustomerDAO
     {
         protected Core.Configurations.StoreProcedureElement GetStoreProcedure(string aliasName)
@@ -248,6 +261,34 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 if (errorCode == 0)
                     return CastAide.AsString(objdb.GetParameterValue("siterng"));
                 return null;
+            }
+        }
+        
+        public MemberMBCBalanceModel GetMemberMBCBalanceModel(int custId)
+        {
+            using (ObjectDb objdb = new ObjectDb("Acc_BalanceMemberSel", 180))
+            {
+                var param = new Hashtable();
+                param.Add("custid", custId);
+
+                objdb.AssignParamValues(param);
+                objdb.ExecuteNonQuery();
+                return new MemberMBCBalanceModel(
+                    CastAide.AsDecimal(objdb.GetParameterValue("balance")),
+                    CastAide.AsDecimal(objdb.GetParameterValue("netposition")));
+            }
+        }
+
+        public decimal GetMemberOustandingMBC(int custId)
+        {
+            using (ObjectDb objdb = new ObjectDb("Acc_OutstandingMemberSel", 180))
+            {
+                var param = new Hashtable();
+                param.Add("custid", custId);
+
+                objdb.AssignParamValues(param);
+                objdb.ExecuteNonQuery();
+                return CastAide.AsDecimal(objdb.GetParameterValue("outstanding"));
             }
         }
     }
