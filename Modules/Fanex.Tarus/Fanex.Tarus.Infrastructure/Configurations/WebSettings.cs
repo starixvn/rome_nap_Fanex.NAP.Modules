@@ -17,31 +17,7 @@ namespace Fanex.Tarus.Infrastructure.Configurations
     /// TODO: Update summary.
     /// </summary>
     public static class WebSettings
-    {
-        private static readonly string _getDateMixparlayDailyWL;
-        private static readonly string _racing_HideIBCPT_DateRange;
-
-        static WebSettings()
-        {
-            try
-            {
-                _getDateMixparlayDailyWL = ConfigurationManager.AppSettings["date_VirtualSport"];
-                _racing_HideIBCPT_DateRange = DNAide.Core.CastAide.AsString(ConfigurationManager.AppSettings["Racing_HideIBCPT_DateRange"], string.Empty);
-            }
-            catch (Exception ex)
-            {
-
-                {
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                }
-
-            }
-        }
-        public static string getDateVirtualSport
-        {
-            get { return _getDateMixparlayDailyWL; }
-        }
-
+    { 
         public static int KenoPositionTaking_BetTypeRepresentative
         {
             get
@@ -73,26 +49,6 @@ namespace Fanex.Tarus.Infrastructure.Configurations
         /// Requirement Specification
         /// Define a key that allow a quick show/hide IBC PT column on Racing reports and also for export excel in a specific range date       
         /// </summary>
-        public static bool IsHideIBCPTRacing
-        {
-            get
-            {
-                var isHide = false;
-                string[] _dateRange = _racing_HideIBCPT_DateRange.Split('|');
-
-                if (_dateRange.Length != 2)
-                    return false;
-
-                DateTime _default = DateTime.Today.AddMonths(-1);
-
-                DateTime _fromDate = DNAide.Core.CastAide.AsDateTime(_dateRange[0], _default);
-                DateTime _todate = DNAide.Core.CastAide.AsDateTime(_dateRange[1], _default);
-
-                if (DateTime.Today >= _fromDate && DateTime.Today <= _todate)
-                    isHide = true;
-
-                return isHide;
-            }
-        }
+       
     }
 }

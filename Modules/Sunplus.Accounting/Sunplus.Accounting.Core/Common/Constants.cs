@@ -92,12 +92,7 @@ namespace Sunplus.Accounting.Core.Common
         public static class SystemCurrency
         {
             public const int Thai = 43;
-        }
-
-        public static class Domain
-        {
-            public static readonly Dictionary<string, string> External = WebSettings.ExternalSite;
-        }
+        }       
 
         #region Sport Constance
 

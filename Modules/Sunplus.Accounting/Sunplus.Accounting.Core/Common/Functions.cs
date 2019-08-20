@@ -86,23 +86,6 @@ namespace Sunplus.Accounting.Core.Common
 
         #endregion Nested type: ExchangeRate
 
-        #region Nested type: Report
-
-        public static class Report
-        {
-            public static bool IsVisibleReportList
-            {
-                get { return IsVisibleFunction(Enumerations.Functions.Reports.ReportList); }
-            }
-
-            public static bool AllowViewReport2A
-            {
-                get { return IsVisibleFunction(Enumerations.Functions.Reports.Report2a); }
-            }
-        }
-
-        #endregion Nested type: Report
-
         #region Nested type: Settings
 
         /// <summary>

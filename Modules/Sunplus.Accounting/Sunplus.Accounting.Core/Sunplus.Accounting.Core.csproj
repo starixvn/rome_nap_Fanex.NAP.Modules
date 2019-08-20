@@ -259,7 +259,6 @@
     <Compile Include="Configurations\WebSettings.cs" />
     <Compile Include="Constant\Error.cs" />
     <Compile Include="Constant\Sport.cs" />
-    <Compile Include="Email\SendMailBugSystem.cs" />
     <Compile Include="Extensions\CollectionExtension.cs" />
     <Compile Include="Extensions\DateTimeExtension.cs" />
     <Compile Include="Extensions\EnumerableExtension.cs" />

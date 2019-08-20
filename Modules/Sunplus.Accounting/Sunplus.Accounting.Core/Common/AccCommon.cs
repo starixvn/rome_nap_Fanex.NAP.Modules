@@ -19,11 +19,7 @@ namespace Sunplus.Accounting.Core.Common
         public const int pageSize = 50;
 
         private static string vers = string.Empty;
-
-        public static string FuncMgr
-        {
-            get { return CastAide.AsString(ConfigurationManager.AppSettings["funcMgr"]); }
-        }
+       
 
         public static bool IsLocalTest
         {

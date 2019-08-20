@@ -14,25 +14,6 @@ namespace Fanex.Tarus.Infrastructure.Configurations
     /// </summary>
     public static class AppSettings
     {
-
-        public static bool _isLegendEnable;
-        public static bool IsLegendEnable
-        {
-            get
-            {
-                return _isLegendEnable;
-            }
-        }
-
-        public static int _noteViewCountToCollapse;
-        public static int NoteViewCountToCollapse
-        {
-            get
-            {
-                return _noteViewCountToCollapse;
-            }
-        }
-
         private static int _admin_SMATurnover_FunctionId;
         public static int Admin_SMATurnover_FunctionId
         {
@@ -151,9 +132,8 @@ namespace Fanex.Tarus.Infrastructure.Configurations
         static AppSettings()
         {
             try
-            {
-                _noteViewCountToCollapse = Convert.ToInt32(ConfigurationManager.AppSettings["NoteViewCountToCollapse"]);
-                _isLegendEnable = Convert.ToBoolean(ConfigurationManager.AppSettings["IsLegendEnable"]);
+            {               
+           
                 _admin_SMATurnover_FunctionId = Convert.ToInt32(ConfigurationManager.AppSettings["Admin_SMATurnover_FunctionId"]);
             }
             catch (Exception ex)

@@ -32,14 +32,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         public static void CustomerUpdateClosed(int accid, int custid, bool isClosed, string Ip, int roleId = 0)
         {
             try
-            {
-                if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL)
-                    && roleId == 4 &&
-                    !WebSettings.ExternalAdminUsersEditSuperStatus.Contains(AppSession.AccId.ToString())
-                    && !isClosed)
-                {
-                    return;
-                }
+            {              
 
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdClosed", 600))
                 {

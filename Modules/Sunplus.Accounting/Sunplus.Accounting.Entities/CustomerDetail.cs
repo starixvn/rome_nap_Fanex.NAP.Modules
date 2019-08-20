@@ -13,7 +13,6 @@ namespace Sunplus.Accounting.Entities
         private int _RoleId;
         private bool _IsDisabledFIUL = false;
         private bool _IsDisabledFIDL = false;
-        private bool _IsDisabledHRUL = false;
         private bool _IsDisabledNumberGame = false;
         private bool _IsDisabledNumberGameDL = false;
         private bool _IsInternalUser = false;
