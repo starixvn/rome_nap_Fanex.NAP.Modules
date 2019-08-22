@@ -213,10 +213,6 @@
     <Compile Include="Configurations\StoreProcedureGroup\ExchangeRateSession.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\HelperSession.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\LogDisplaySection.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\P2PSession.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\ReportSession.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\SettlementSession.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\SpecialDeleteGroupSection.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\SportbookPtSession.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\TransactionGroupSection.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\UserControlSession.cs" />
