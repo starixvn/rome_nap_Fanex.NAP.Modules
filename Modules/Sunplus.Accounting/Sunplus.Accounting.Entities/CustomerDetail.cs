@@ -17,10 +17,8 @@ namespace Sunplus.Accounting.Entities
         private bool _IsDisabledNumberGameDL = false;
         private bool _IsInternalUser = false;
         private int _LimitPerIP = 0;
-
-        //@Huynguyen edited
+      
         private bool _IsClosed = false;
-
         private bool _IsSuspended = false;
         private bool _IsAutoSuspend = false;
         private bool _IsDisableCasino = false;
@@ -28,11 +26,8 @@ namespace Sunplus.Accounting.Entities
         private bool _IsSpecial = false;
         private bool _IsAllowMasterAutoPT = false;
         private bool _IsDisableOutright = false;
-        private bool _IsEnableDoubleCommLosing = false;
-
-        private bool _isEnableHorseRacingFixedOdds = false;
-        private bool _SelectedBetting;
-        //end
+        private bool _IsEnableDoubleCommLosing = false;      
+        private bool _SelectedBetting;    
 
         private string _UserName2;
         private string _UserName;
@@ -437,21 +432,7 @@ namespace Sunplus.Accounting.Entities
             {
                 _LimitPerIP = value;
             }
-        }
-
-
-        public bool IsEnableHorseRacingFixedOdds
-        {
-            get
-            {
-                return _isEnableHorseRacingFixedOdds;
-            }
-
-            set
-            {
-                _isEnableHorseRacingFixedOdds = value;
-            }
-        }
+        }       
 
         public int AccId { get; set; }
 

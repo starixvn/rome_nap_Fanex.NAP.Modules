@@ -252,7 +252,6 @@
     <Compile Include="Configurations\StoreProcedureGroup\Customer.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\CreditTerm.cs" />
     <Compile Include="Configurations\TransactionSection.cs" />
-    <Compile Include="Configurations\UserControlSection.cs" />
     <Compile Include="Configurations\LogSection.cs" />
     <Compile Include="Configurations\MailSection.cs" />
     <Compile Include="Configurations\StoreProceduresSection.cs" />

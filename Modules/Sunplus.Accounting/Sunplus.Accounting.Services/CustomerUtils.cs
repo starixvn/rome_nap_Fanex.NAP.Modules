@@ -559,43 +559,6 @@ namespace Sunplus.Accounting.Business.Customer
             return html.ToString();
         }
 
-        public static string LoadHorseRacingPTHeader_v2(bool showAutoPT, bool editMixMaxPT, string sporttype, DataRow dr, string prefix)
-        {
-            StringBuilder html = new StringBuilder();
-            try
-            {
-                string content = WebUtils.LoadTemplate("Customer/v2/HorseRacingPositionTakingHeader.htm");
-                string BetSetting = WebUtils.LoadTemplate("Customer/v2/BetSetting.htm");
-
-                TemplateHandler.Assign(ref BetSetting, "{sporttype}", sporttype);
-
-                TemplateHandler.Assign(ref content, "{overunder}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "OverUnder"));
-                TemplateHandler.Assign(ref content, "{BetSetting}", AddBetSetting(BetSetting, sporttype, dr));
-
-                if (editMixMaxPT)
-                {
-                    TemplateHandler.Assign(ref content, "{bet-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "PositionTaking"));
-                    TemplateHandler.RemoveBlock(ref content, "min-max-pt");
-                    if (prefix == "s")
-                    {
-                        TemplateHandler.RemoveBlock(ref content, "super-min");
-                        TemplateHandler.Assign(ref content, "{wPT}", "wPT70");
-                    }
-                    else TemplateHandler.Assign(ref content, "{wPT}", "wPT70");
-                }
-                else
-                {
-                    TemplateHandler.Assign(ref content, "{wPT}", "wPT70");
-                    TemplateHandler.Assign(ref content, "{bet-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblBetSetting"));
-                }
-                html.Append(content);
-            }
-            catch (Exception ex)
-            {
-            }
-            return html.ToString();
-        }
-
         public static string LoadMotosportsPTHeader_v2(bool showAutoPT, bool editMixMaxPT, string sporttype, DataRow dr, string prefix)
         {
             StringBuilder html = new StringBuilder();
@@ -847,7 +810,6 @@ namespace Sunplus.Accounting.Business.Customer
             }
 
             TemplateHandler.Assign(ref tpl, "{financial-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblFinancial"));
-            TemplateHandler.Assign(ref tpl, "{horseracing-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHorseRacing"));
         }
 
         public static void GetCredit(DataRow dr, ref string tpl, bool isEdit)
@@ -1028,10 +990,7 @@ namespace Sunplus.Accounting.Business.Customer
             }
             TemplateHandler.Assign(ref strHtml, "{status-text}", strSS + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Status"));
             TemplateHandler.Assign(ref strHtml, "{commission-text}", str + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Commission"));
-            TemplateHandler.Assign(ref strHtml, "{commissionHorseRacing-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "CommissionHR"));
-            TemplateHandler.Assign(ref strHtml, "{commissionFinancial-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "CommissionFinancial"));
-
-            TemplateHandler.Assign(ref strHtml, "{groupa-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "GroupA"));
+             TemplateHandler.Assign(ref strHtml, "{groupa-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "GroupA"));
             TemplateHandler.Assign(ref strHtml, "{groupb-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "GroupB"));
             TemplateHandler.Assign(ref strHtml, "{groupc-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "GroupC"));
             TemplateHandler.Assign(ref strHtml, "{groupd-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "GroupD"));

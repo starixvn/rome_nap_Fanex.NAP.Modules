@@ -439,42 +439,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable/Disable SA Racing status  updated successfully.
-        /// </summary>
-        internal static string _109 {
-            get {
-                return ResourceManager.GetString("-109", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable/Disable UK/Irish Racing status updated successfully.
-        /// </summary>
-        internal static string _110 {
-            get {
-                return ResourceManager.GetString("-110", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UK/Irish Racing Bet Setting updated successfully.
-        /// </summary>
-        internal static string _111 {
-            get {
-                return ResourceManager.GetString("-111", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SA Racing Bet Setting updated successfully.
-        /// </summary>
-        internal static string _112 {
-            get {
-                return ResourceManager.GetString("-112", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Enable/Disable Aust Racing status updated successfully.
         /// </summary>
         internal static string _113 {

@@ -8,8 +8,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
 {
     public class ThirdPartyProductStatusService : IThirdPartyProductStatusService
     {
-        private const int KenoProductId = 8;
-        private const int RacingProductId = 2;
+        private const int KenoProductId = 8;      
 
         public ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId, bool isDeposit = false)
         {
@@ -19,7 +18,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 CustName = custName,
                 RoleId = roleId,
                 HasCheckAll = productId == KenoProductId,
-                GroupBySport = productId == RacingProductId,
+                GroupBySport = false,
                 ProductStatusList = StatusSettingService.GetProductStatus(new GetProductStatusRequest() {
                     CustId = custId,
                     ProductId = productId,

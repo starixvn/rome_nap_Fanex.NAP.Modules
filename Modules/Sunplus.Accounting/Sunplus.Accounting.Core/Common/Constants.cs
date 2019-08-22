@@ -129,9 +129,6 @@ namespace Sunplus.Accounting.Core.Common
             public const int WinterSports = 29;
             public const int Squash = 30;
             public const int OtherSports = 99;
-            public const int HorseRacing = 151;
-            public const int Greyhound = 152;
-            public const int Harness = 153;
             public const int Financials = 201;
             public const int Casino = 251;
             public const int NumberGame = 161;

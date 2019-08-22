@@ -140,19 +140,7 @@
   </data>
   <data name="-108" xml:space="preserve">
     <value>Enable/Disable Financial status  updated successfully</value>
-  </data>
-  <data name="-109" xml:space="preserve">
-    <value>Enable/Disable SA Racing status  updated successfully</value>
-  </data>
-  <data name="-110" xml:space="preserve">
-    <value>Enable/Disable UK/Irish Racing status updated successfully</value>
-  </data>
-  <data name="-111" xml:space="preserve">
-    <value>UK/Irish Racing Bet Setting updated successfully</value>
-  </data>
-  <data name="-112" xml:space="preserve">
-    <value>SA Racing Bet Setting updated successfully</value>
-  </data>
+  </data> 
   <data name="betdaq_NoMatch" xml:space="preserve">
     <value>New match has not been created yet!</value>
   </data>
