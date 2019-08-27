@@ -13,10 +13,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
 {
     public class DownLineBalanceProviderClient : DownLineBalanceProvider
     {
-        protected Core.Configurations.StoreProcedureElement GetStoreProcedure(string aliasName)
-        {
-            return GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Balance, aliasName);
-        }
+       
         public override DbResult RptMABalance(string db, int roleid, int custid, bool isYesterday, string username,
                                               string firstletter, string currency)
         {

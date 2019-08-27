@@ -41,12 +41,6 @@ namespace Fanex.Tarus.Infrastructure.Configurations
                 return Convert.ToString(ConfigurationManager.AppSettings["AGCasinoAPILink"]);
             }
         }
-
-        /// <summary>
-        /// Description
-        /// Requirement Specification
-        /// Define a key that allow a quick show/hide IBC PT column on Racing reports and also for export excel in a specific range date       
-        /// </summary>
        
     }
 }

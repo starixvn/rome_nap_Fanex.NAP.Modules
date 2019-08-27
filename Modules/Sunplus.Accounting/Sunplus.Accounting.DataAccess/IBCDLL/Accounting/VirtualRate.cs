@@ -7,7 +7,6 @@ using DNAide.Data;
 using Fanex.Data;
 using Fanex.Tarus.Excels.VirtualRate;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -16,12 +15,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
     /// </summary>
     public sealed class VirtualRate
     {
-        private static Core.Configurations.StoreProcedureElement GetStoreProcedure(string aliasName)
-        {
-            var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
-            return sps != null ? sps[aliasName] : null;
-
-        }
         public static DataTable GetDataFromExcel(string ExcelPath)
         {
             IVirtualRateExcel virtualRateExcel = new VirtualRateExcel(ExcelPath);

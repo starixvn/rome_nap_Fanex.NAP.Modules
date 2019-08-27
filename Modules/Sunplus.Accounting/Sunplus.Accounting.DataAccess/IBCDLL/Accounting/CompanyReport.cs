@@ -7,8 +7,6 @@ using System.Globalization;
 using DNAide.Data;
 using Fanex.Data;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     /// <summary>
@@ -20,12 +18,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
         }
 
-        public static StoreProcedureElement GetReportStoreProcedure(ReportSession.StoreCollection storeCollection, string alias)
-        {
-            var sps = ReportSession.Instance[storeCollection];
-            return sps != null ? sps[alias] : null;
-        }
-
+       
         //public static StoreProcedureElement GetBetListStoreProcedure(string alias)
         //{
         //    var sps = BetListSection.Instance[BetListSection.StoreCollection.BetListStores];

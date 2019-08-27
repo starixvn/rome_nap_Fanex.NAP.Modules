@@ -17,8 +17,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
     using Fanex.Tarus.Infrastructure.Extensions;
     using IBCUtils;
     using Sunplus.Accounting.Core.Common;
-    using Sunplus.Accounting.Core.Configurations;
-    using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
     using Sunplus.Accounting.Core.Helper;
     using System;
     using System.Collections;
@@ -353,19 +351,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// SP Config.
-        /// </summary>
-        private class SpConfig : DataAccess
-        {
-            public StoreProcedureElement GetCustomerStoreProcedure(
-                SportbookPtSession.StoreCollection storeCollection,
-                string aliasName)
-            {
-                return GetStoreProcedure(storeCollection, aliasName);
-            }
-        }
+        }        
     }
 }

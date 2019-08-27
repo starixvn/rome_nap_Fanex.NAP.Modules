@@ -57,11 +57,10 @@ namespace Sunplus.Accounting.Business.Customer
         /// Get currency list by System
         /// </summary>
         /// <param name="system"></param>
-        /// <param name="checkHorseRacing"></param>
         /// <param name="isSearchFilter"></param>
         /// <param name="isAddNewSuper"></param>
         /// <returns></returns>
-        public static string GetListCurrencyBySystem(string system, bool checkHorseRacing, bool isSearchFilter, bool isAddNewSuper)
+        public static string GetListCurrencyBySystem(string system, bool isSearchFilter, bool isAddNewSuper)
         {
             var html = new StringBuilder();
             try
@@ -76,21 +75,12 @@ namespace Sunplus.Accounting.Business.Customer
                         html.Append("<option value=''>All</option>");
                     if (isAddNewSuper)
                         html.Append("<option value=''>Select</option>");
-                    if (checkHorseRacing)
+                   
+                    foreach (DataRow dr in currencies)
                     {
-                        foreach (DataRow dr in currencies)
-                        {
-                            html.Append("<option value=\"" + dr["exchangeid"] + "_" + dr["HRAllowed"] + "\">" +
-                                        dr["currency"] + "</option>");
-                        }
+                        html.Append("<option value=\"" + dr["exchangeid"] + "\">" + dr["currency"] + "</option>");
                     }
-                    else
-                    {
-                        foreach (DataRow dr in currencies)
-                        {
-                            html.Append("<option value=\"" + dr["exchangeid"] + "\">" + dr["currency"] + "</option>");
-                        }
-                    }
+                   
                 }
             }
             catch

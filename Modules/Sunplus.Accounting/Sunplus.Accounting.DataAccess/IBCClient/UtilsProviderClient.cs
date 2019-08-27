@@ -77,13 +77,5 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             return exchange;
             ;
         }
-
-        private class SpConfig: DataAccess
-        {
-            public StoreProcedureElement GetExchangeStoreProcedure(Core.Configurations.StoreProcedureGroup.ExchangeRateSession.StoreCollection storeCollection, string aliasName)
-            {
-                return GetStoreProcedure(storeCollection, aliasName);
-            }
-        }
     }
 }

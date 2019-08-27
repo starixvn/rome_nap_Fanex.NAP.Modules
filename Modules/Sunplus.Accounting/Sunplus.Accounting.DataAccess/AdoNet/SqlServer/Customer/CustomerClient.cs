@@ -54,13 +54,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Customer
             rs = DbHelper.Execute("Acc_CustomerSelOnline", param, DBType.ON_USER);
             return rs.ResultSet.Tables[0].Rows;
         }
-
-        public class SpConfig : DataAccess
-        {
-            public Core.Configurations.StoreProcedureElement GetStoreProcedure(string aliasName)
-            {
-                return GetStoreProcedure(Core.Configurations.StoreProcedureGroup.CustomerSession.StoreCollection.CustomerControl, aliasName);
-            }
-        }
+      
     }
 }

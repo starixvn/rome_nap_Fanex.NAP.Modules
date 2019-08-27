@@ -12,18 +12,13 @@ namespace Sunplus.Accounting.DataAccess.Report.ResetWinning
     using DNAide.Core;
     using DNAide.Utils;
     using Fanex.Data;
-    using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Entities.Report.ResetWinning;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class ResetWinningDAO : DataAccessReport, IResetWinningDAO
-    {
-        private StoreProcedureElement getSPMapping(string key)
-        {
-            return GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.ResetWinning, key);
-        }
+    {      
 
         public ResetWinningDTO GetDataResetWinning(string date, int data)
         {

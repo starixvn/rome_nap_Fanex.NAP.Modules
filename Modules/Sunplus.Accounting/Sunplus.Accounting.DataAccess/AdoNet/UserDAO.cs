@@ -21,13 +21,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
     public class UserDAO : DataAccess, IUserDAO
     {
         #region IUserDAO Members
-
-        protected StoreProcedureElement GetTransactionStoreProcedure(string storeAlias)
-        {
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.TransactionGroupSection.StoreCollection.DailyTxn, storeAlias);
-            return spElement;
-        }
-
+               
         public DbResult InsResetWinning(DateTime dateTime, int userId, string[] arrDesc, string IP)
         {
             DbResult result = null;

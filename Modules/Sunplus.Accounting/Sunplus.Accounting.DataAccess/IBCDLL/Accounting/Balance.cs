@@ -5,19 +5,11 @@ using System.Data;
 using DNAide.Core;
 using DNAide.Data;
 using Fanex.Data;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     public sealed class Balance
     {
-        private static Core.Configurations.StoreProcedureElement GetExchangeStoreProcedure(string aliasName)
-        {
-            var sps = ExchangeRateSession.Instance[ExchangeRateSession.StoreCollection.ExchangeRateControl];
-
-            return sps != null ? sps[aliasName] : null;
-
-        }
         /// <summary>
         /// private constructor
         /// </summary>
@@ -495,13 +487,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 
     public sealed class CustomerBalance
     {
-        private static Core.Configurations.StoreProcedureElement GetCustomerStoreProcedure(string aliasName)
-        {
-            var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
-
-            return sps != null ? sps[aliasName] : null;
-
-        }
+       
         /// <summary>
         /// Select Customer Balance for agent
         /// SP: Update Given Credit Successfully

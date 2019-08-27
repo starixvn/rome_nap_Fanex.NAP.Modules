@@ -431,14 +431,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-        public static bool IsShowPokerGames
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["ProductIdPokerGames"]);
-            }
-        }
-
         public static bool EnableRNGCasino
         {
             get

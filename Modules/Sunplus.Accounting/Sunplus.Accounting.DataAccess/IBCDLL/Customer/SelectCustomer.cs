@@ -7,7 +7,6 @@ using Fanex.Data;
 using JSoft.Utility;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using Sunplus.Accounting.Core.Extensions;
 using System;
 using System.Collections;
@@ -19,45 +18,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
 {
     public class SelectCustomer : DataAccess
     {
-        private static Core.Configurations.StoreProcedureElement GetStoreProcedure(string aliasName)
-        {
-            var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
-            return sps != null ? sps[aliasName] : null;
-
-        }
-
-        private static Core.Configurations.StoreProcedureElement GetHelperStoreProcedure(string aliasName)
-        {
-            var sps = HelperSession.Instance[HelperSession.StoreCollection.HelperControl];
-            return sps != null ? sps[aliasName] : null;
-
-        }
-
-        private static Core.Configurations.StoreProcedureElement GetExchangeStoreProcedure(string aliasName)
-        {
-            var sps = ExchangeRateSession.Instance[ExchangeRateSession.StoreCollection.ExchangeRateControl];
-
-            return sps != null ? sps[aliasName] : null;
-
-        }
-
-        private static StoreProcedureElement GetUserControlStoreProcedure(string aliasName)
-        {
-            var sps = UserControlSession.Instance[UserControlSession.StoreCollection.AccountInfo];
-
-            return sps != null ? sps[aliasName] : null;
-
-        }
-
-        private static StoreProcedureElement GetSportBookStoreProcedure(string aliasName)
-        {
-            var sps = SportbookPtSession.Instance[SportbookPtSession.StoreCollection.SportBooksPtControl];
-
-            return sps != null ? sps[aliasName] : null;
-
-        }
-
-
+       
 
         /// <summary>
         /// call Store SiteSel to get all SiteName
@@ -477,93 +438,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
-        }
-
-        /// <summary>
-        /// call SP CustomerSelBySAg to get data for Master list
-        /// writer: Vu Hanh
-        /// Using DNAide's Library
-        /// Tho.Nguyen updated: 11/29/2008
-        /// </summary>
-        /// <returns>DataResult</returns>
-        public static DbResult GetMasterList(Hashtable hash)
-        {
-            DbResult rs = null;
-            try
-            {
-                var spElement = GetStoreProcedure("MasterList");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName);
-            }
-            catch (Exception ex)
-            {
-
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-            return rs;
-        }
-
-        /// <summary>
-        /// call SP CustomerSelByMAg to get data for Agent list
-        /// writer: Vu Hanh
-        /// Using DNAide's library
-        /// Tho.Nguyen updated: 12/1/2008
-        /// </summary>
-        /// <returns>DataResult</returns>
-        public static DbResult GetAgentList(Hashtable hash)
-        {
-            DbResult rs = null;
-            try
-            {
-                var spElement = GetStoreProcedure("AgentList");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 600);
-            }
-            catch (Exception ex)
-            {
-
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-            return rs;
-        }
-
-        /// <summary>
-        /// call SP CustomerSelByAg to get data for Member list
-        /// writer: Vu Hanh
-        /// Using DNAide's library
-        /// Tho.Nguyen updated: 12/1/2008
-        /// </summary>
-        /// <returns>DataResult</returns>
-        public static DbResult GetMemberList(Hashtable hash)
-        {
-            DbResult rs = null;
-            try
-            {
-
-                var spElement = GetStoreProcedure("MemberList");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 600);
-            }
-            catch (Exception ex)
-            {
-
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-            return rs;
-        }
-
-        public static DbResult GetMasterByComList_1(Hashtable hash)
-        {
-            DbResult rs = null;
-            try
-            {
-                var spElement = GetStoreProcedure("DirectMasterList");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName);
-            }
-            catch (Exception ex)
-            {
-
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-            return rs;
-        }
+        }            
 
         /// <summary>
         /// Nguyen Thi Minh Thu
@@ -624,100 +499,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return ds;
-        }
-
-        /// <summary>
-        /// Execute SP CustomerSelComEditOverride_Ag, CustomerSelComEditOverride_MAg, or CustomerSelComEditOverride_SAg
-        /// to get Min Max position taking
-        /// @PhuongDN
-        /// Using DNAide's Library
-        /// Tho.Nguyen updated: 12/3/2008
-        /// </summary>
-        /// <param name="agentType">s: Super;m: Master; a: Agent</param>
-        /// <param name="custId"></param>
-        /// <returns>DataResult containing Max, Min, Mid position taking of Dead ball soccer, Live soccer, Basket ball.
-        /// 0.9>=Max>=Mid;Mid>=Min>=0</returns>
-        public static DbResult GetMaxMinPositionTaking(string agentType, string custId)
-        {
-            DbResult ds = null;
-            try
-            {
-                var p = new Hashtable();
-                p.Add("custid", custId);
-                switch (agentType.ToLower())
-                {
-                    case "super":
-                        var spElementS = GetSportBookStoreProcedure("CustomerSelComEditOverride_SAg");
-                        ds = DbHelper.Execute(spElementS.Name, p, spElementS.DbName);
-                        break;
-                    case "master":
-                        var spElementM = GetSportBookStoreProcedure("CustomerSelComEditOverride_MAg");
-                        ds = DbHelper.Execute(spElementM.Name, p, spElementM.DbName);
-                        break;
-                    case "agent":
-                        var spElementA = GetSportBookStoreProcedure("CustomerSelComEditOverride_Ag");
-                        ds = DbHelper.Execute(spElementA.Name, p, spElementA.DbName);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-            return ds;
-        }
-
-        /// <summary>
-        /// Execute SP CustomerSelComEditOverride_Ag, CustomerSelComEditOverride_MAg, or CustomerSelComEditOverride_SAg
-        /// to get Min Max position taking
-        /// @PhuongDN
-        /// Using DNAide's Library
-        /// Tho.Nguyen updated: 12/3/2008
-        /// </summary>
-        /// <param name="agentType">s: Super;m: Master; a: Agent</param>
-        /// <param name="custId"></param>
-        /// <returns>DataResult containing Max, Min, Mid position taking of Dead ball soccer, Live soccer, Basket ball.
-        /// 0.9>=Max>=Mid;Mid>=Min>=0</returns>
-        public static DbResult GetMaxMinPositionTaking_acc(string agentType, string custId)
-        {
-            DbResult ds = null;
-            try
-            {
-                var p = new Hashtable();
-                p.Add("custid", custId);
-
-                var spElement = new SelectCustomer().GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "CustomerSelComEditOverride_Ag");
-
-                switch (agentType.ToLower())
-                {
-                    case "super":
-
-                        spElement = new SelectCustomer().GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "CustomerSelComEditOverride_SAg");
-                        ds = DbHelper.Execute(spElement.Name, p, spElement.DbName);
-                        break;
-                    case "master":
-
-                        spElement = new SelectCustomer().GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "CustomerSelComEditOverride_MAg");
-                        ds = DbHelper.Execute(spElement.Name, p, spElement.DbName);
-                        break;
-                    case "agent":
-                        spElement = new SelectCustomer().GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "CustomerSelComEditOverride_Ag");
-                        ds = DbHelper.Execute(spElement.Name, p, spElement.DbName);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-            return ds;
-        }
+        }       
 
         /// <summary>
         /// Using DNAide's Library
@@ -970,13 +752,5 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             return result;
         }
-    }
-
-    public class SelectCustomerAdapter : DataAccess
-    {
-        public StoreProcedureElement GetStoreProcedureInfo(ViewPtSession.StoreCollection storeCollection, string aliasName)
-        {
-            return GetStoreProcedure(storeCollection, aliasName);
-        }
-    }
+    }   
 }

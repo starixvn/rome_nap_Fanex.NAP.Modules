@@ -5,19 +5,12 @@ using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using Fanex.Data;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     public sealed class AccountCredit
     {
-        private static Core.Configurations.StoreProcedureElement GetStoreProcedure(string aliasName)
-        {
-            var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
-            return sps != null ? sps[aliasName] : null;
-        }
-
         /// <summary>
         /// call store CustomerSelCredit
         /// @author: Vu Thi Hong Hanh

@@ -31,11 +31,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
     public class CustomerDAO : DataAccess, ICustomerDAO
     {
-        protected Core.Configurations.StoreProcedureElement GetStoreProcedure(string aliasName)
-        {
-            return GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.CustomerSession.StoreCollection.CustomerControl, aliasName);
-        }
-
+      
         public DataTable GetCustomerInfo(string username)
         {
             DataTable dt = new DataTable();

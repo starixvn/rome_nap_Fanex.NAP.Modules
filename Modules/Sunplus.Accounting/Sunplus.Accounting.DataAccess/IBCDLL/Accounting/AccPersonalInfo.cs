@@ -3,27 +3,14 @@ using System;
 using System.Collections;
 using System.Data;
 using DNAide.Core;
-using DNAide.Data;
 using Fanex.Data;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     public sealed class AccPersonalInfo
     {
-        private static StoreProcedureElement GetStoreProcedure(SportbookPtSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = SportbookPtSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
-        private static StoreProcedureElement GetUserStoreProcedure(UserControlSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = UserControlSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
+        
 
         public static Result AccPasswordVerify(string accName, int accId, string pass)
         {

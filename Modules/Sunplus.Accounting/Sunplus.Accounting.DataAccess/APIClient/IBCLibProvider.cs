@@ -462,22 +462,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 throw ex;
             }
             return _cust;
-        }
-
-        private class StoreProcedureConfiguration : DataAccess
-        {
-            public StoreProcedureElement GetStoreProcedureInfo(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.CasinoSession.StoreCollection storeCollection, string aliasName)
-            {
-                return GetStoreProcedure(storeCollection, aliasName);
-            }
-        }
-
-        private class StoreCustomerProcedureConfiguration : DataAccess
-        {
-            public StoreProcedureElement GetStoreProcedureInfo(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.CustomerSession.StoreCollection storeCollection, string aliasName)
-            {
-                return GetStoreProcedure(storeCollection, aliasName);
-            }
-        }
+        }       
     }
 }

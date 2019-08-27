@@ -78,14 +78,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.CustSetting
                 LogExtensions.ExceptionHandler(ex);
             }
             return result;
-        }
-
-        private class SpConfig : DataAccess
-        {
-            public Core.Configurations.StoreProcedureElement GetStoreProcedure(string aliasName)
-            {
-                return GetStoreProcedure(Core.Configurations.StoreProcedureGroup.CustomerSession.StoreCollection.CustomerControl, aliasName);
-            }
-        }
+        }       
     }
 }

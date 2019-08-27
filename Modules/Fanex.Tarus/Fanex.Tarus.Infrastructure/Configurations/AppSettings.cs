@@ -98,16 +98,6 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
-        public static int ProductIdPokerGames
-        {
-            get
-            {
-                string productId = ConfigurationManager.AppSettings["ProductIdPokerGames"];
-
-                return string.IsNullOrWhiteSpace(productId) ? 0 : Converter.ToInt(productId);
-            }
-        }
-
         public static int ProductIdCardClub
         {
             get

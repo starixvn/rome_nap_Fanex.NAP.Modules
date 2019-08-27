@@ -5,19 +5,13 @@ using DNAide.Core;
 using DNAide.Data;
 using Fanex.Data;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     public sealed class Transfer : DataAccess
     {
-        private static StoreProcedureElement GetCustomerStoreProcedure(string aliasName)
-        {
-            var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
-            return sps != null ? sps[aliasName] : null;
-        }
-
+       
         /// <summary>
         /// call SP BettransInsTransferAdmin
         /// @author:Vu Hanh
