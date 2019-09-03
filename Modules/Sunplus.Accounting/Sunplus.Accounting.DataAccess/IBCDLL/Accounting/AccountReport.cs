@@ -188,6 +188,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("ip", ip);
                 p.Add("UserId", AppSession.AccId);
                 p.Add("movebetsday", ReportUtils.BalanceUp.MoveBetsDay);
+                p.Add("balanceupday", ReportUtils.BalanceUp.BalanceUpDay);
 
                 using (ObjectDb db = new ObjectDb("BetList_IP_Username", 600))
                 {
@@ -222,6 +223,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("fromdate", FormatHandler.ResetStartDate(fromdate));
                 p.Add("custid", custid);
                 p.Add("ip", ip);
+                p.Add("movebetsday", ReportUtils.BalanceUp.MoveBetsDay);
+                p.Add("balanceupday", ReportUtils.BalanceUp.BalanceUpDay);
 
                 using (var db = new ObjectDb("BetList_IP_OtherSports", 180))
                 {
@@ -252,6 +255,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("fromdate", FormatHandler.ResetStartDate(fromdate));
                 p.Add("custid", custid);
                 p.Add("ip", ip);
+                p.Add("movebetsday", ReportUtils.BalanceUp.MoveBetsDay);
+                p.Add("balanceupday", ReportUtils.BalanceUp.BalanceUpDay);
 
                 using (var db = new ObjectDb("BetList_IP_Soccer", 180))
                 {
