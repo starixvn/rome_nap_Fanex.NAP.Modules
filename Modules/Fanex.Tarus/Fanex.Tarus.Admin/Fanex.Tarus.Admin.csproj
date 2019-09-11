@@ -146,7 +146,6 @@
     <Compile Include="Business\BACustomer\IBACustomerService.cs" />
     <Compile Include="Business\CompareBalance\CompareBalanceService.cs" />
     <Compile Include="Business\CustomerDateLimit\CustomerDateLimitService.cs" />
-    <Compile Include="Business\IMBCRestriction\IMBCAdminService.cs" />
     <Compile Include="Business\MailingList\ISpecialDeleteService.cs" />
     <Compile Include="Business\MailingList\SMATurnover\Admin_SMATurnoverMailingListService.cs" />
     <Compile Include="Business\MailingList\SMATurnover\IAdmin_SMATurnoverMailingListService.cs" />
@@ -161,7 +160,6 @@
     </Compile>
     <Compile Include="Controller\CustomerDateLimitController.cs" />
     <Compile Include="Controller\BACustomerController.cs" />
-    <Compile Include="Controller\IMBCAdminController.cs" />
     <Compile Include="Controller\CompareBalanceController.cs" />
     <Compile Include="Controller\MaxNewMemberBySuperController.cs" />
     <Compile Include="Controller\MailingList\Admin_SMATurnoverMailingListController.cs" />
@@ -188,7 +186,6 @@
     <Compile Include="DataAccess\BACustomer\IBACustomerAccess.cs" />
     <Compile Include="DataAccess\CompareBalance\CompareBalanceDataAccess.cs" />
     <Compile Include="DataAccess\CustomerDateLimit\CustomerDateLimitDataAccess.cs" />
-    <Compile Include="DataAccess\IMBCRestriction\IMBCDAO.cs" />
     <Compile Include="DataAccess\MailingList\ISpecialDeleteAccess.cs" />
     <Compile Include="DataAccess\MailingList\SMATurnover\Admin_SMATurnoverMailingListDataAccess.cs" />
     <Compile Include="DataAccess\MailingList\SMATurnover\IAdmin_SMATurnoverMailingListDataAccess.cs" />
