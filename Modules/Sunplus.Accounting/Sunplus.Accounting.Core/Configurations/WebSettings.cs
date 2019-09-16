@@ -405,15 +405,7 @@ namespace Sunplus.Accounting.Core.Configurations
             {
                 return (ConfigurationManager.AppSettings["IsShowSportsbook2"] == "1");
             }
-        }
-
-        public static bool IsShowCockFighting
-        {
-            get
-            {
-                return (ConfigurationManager.AppSettings["IsShowCockFighting"] == "1");
-            }
-        }       
+        }        
 
         public static bool IsShowAllBet
         {
