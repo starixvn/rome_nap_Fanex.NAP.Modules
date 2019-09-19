@@ -39,14 +39,6 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
-        public static int ProductIdMicrogaming
-        {
-            get
-            {
-                return Converter.ToInt(ConfigurationManager.AppSettings["ProductIdMicrogaming"]);
-            }
-        }
-
         public static int ProductIdMacau
         {
             get

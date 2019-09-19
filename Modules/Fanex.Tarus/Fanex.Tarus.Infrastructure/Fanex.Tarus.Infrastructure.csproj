@@ -200,10 +200,6 @@
     <Compile Include="Configurations\KenoBetTypes\KenoBetTypesCollection.cs" />
     <Compile Include="Configurations\KenoBetTypes\KenoBetTypesElement.cs" />
     <Compile Include="Configurations\KenoBetTypes\KenoBetTypesSection.cs" />
-    <Compile Include="Configurations\MicroGamingBetTypes\MicroGamingBetTypesCollection.cs" />
-    <Compile Include="Configurations\MicroGamingBetTypes\MicroGamingBetTypesElement.cs" />
-    <Compile Include="Configurations\MicroGamingBetTypes\MicroGamingBetTypesSection.cs" />
-    <Compile Include="Configurations\MicroGamingBetTypes\MicroGamingBetTypesSectionServices.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\AdminSession.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\BetAggregatorSection.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\BetListSection.cs" />

@@ -343,14 +343,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-        public static bool EnableMicrogaming
-        {
-            get
-            {
-                return (ConfigurationManager.AppSettings["EnableMicrogaming"] == "1");
-            }
-        }
-
         public static bool EnableMetricGaming
         {
             get
