@@ -62,10 +62,7 @@
     <Compile Include="AdoNet\HelperDAO.cs" />
     <Compile Include="AdoNet\LogDisplayDAO\LogDisplayDAO.cs" />
     <Compile Include="AdoNet\Admin\ExternalSiteDAO.cs" />
-    <Compile Include="AdoNet\SqlServer\Report\DirectBalanceProviderClient.cs" />
-    <Compile Include="AdoNet\SqlServer\Report\DownLineBalanceProviderClient.cs" />
     <Compile Include="CustomerAdapter\ConsolidatedGroup\ConsolidatedGroupAdapter.cs" />
-    <Compile Include="IBCClient\PositionTakingProviderClient.cs" />
     <Compile Include="IBCClient\UtilsProviderClient.cs" />
     <Compile Include="IBCDLL\Customer\ViewCommDCS\IViewCommDCSRepository.cs" />
     <Compile Include="IBCDLL\Customer\ViewCommDCS\ViewCommDCSRepository.cs" />
@@ -124,7 +121,6 @@
     <Compile Include="IExchangeRateDAO.cs" />
     <Compile Include="ILogDisplay\ILogDisplayDAO.cs" />
     <Compile Include="IUserDAO.cs" />
-    <Compile Include="PositionTakingProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider\Betlist\BetlistProvider.cs" />
     <Compile Include="Provider\Customer\CustomerProvider.cs" />
@@ -133,9 +129,6 @@
     <Compile Include="Provider\ExportStatement\ExportStatementProvider.cs" />
     <Compile Include="Provider\Log\LogProvider.cs" />
     <Compile Include="IReportDAO\ILicenseDAO.cs" />
-    <Compile Include="Provider\Report\DirectBalanceProvider.cs" />
-    <Compile Include="Provider\Report\DownLineBalanceProvider.cs" />
-    <Compile Include="Provider\Report\ReportProvider.cs" />
     <Compile Include="Report\ReportUtils.cs" />
     <Compile Include="ResetWinning\IResetWinningDAO.cs" />
     <Compile Include="ResetWinning\ResetWinningDAO.cs" />
@@ -294,7 +287,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ReplaceNonNumerics="False" BuildVersion_UseGlobalSettings="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UseGlobalSettings="True" BuildVersion_ReplaceNonNumerics="False" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
