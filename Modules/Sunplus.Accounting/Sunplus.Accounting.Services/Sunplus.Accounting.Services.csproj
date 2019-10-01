@@ -172,11 +172,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts2\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts8\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.2.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.2.6-RemoveInactiveProducts2\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.2.8-RemoveInactiveProducts4\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.14, Culture=neutral, processorArchitecture=MSIL">
