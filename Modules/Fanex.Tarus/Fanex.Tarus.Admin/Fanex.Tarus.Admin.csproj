@@ -147,8 +147,6 @@
     <Compile Include="Business\CompareBalance\CompareBalanceService.cs" />
     <Compile Include="Business\CustomerDateLimit\CustomerDateLimitService.cs" />
     <Compile Include="Business\MailingList\ISpecialDeleteService.cs" />
-    <Compile Include="Business\MailingList\SMATurnover\Admin_SMATurnoverMailingListService.cs" />
-    <Compile Include="Business\MailingList\SMATurnover\IAdmin_SMATurnoverMailingListService.cs" />
     <Compile Include="Business\MailingList\SpecialDeleteService.cs" />
     <Compile Include="Business\MaxMemberLimitBySuper\IMaxMemberLimitBySuperService.cs" />
     <Compile Include="Business\MaxMemberLimitBySuper\MaxMemberLimitBySuperService.cs" />
@@ -162,7 +160,6 @@
     <Compile Include="Controller\BACustomerController.cs" />
     <Compile Include="Controller\CompareBalanceController.cs" />
     <Compile Include="Controller\MaxNewMemberBySuperController.cs" />
-    <Compile Include="Controller\MailingList\Admin_SMATurnoverMailingListController.cs" />
     <Compile Include="Controller\MailingList\SpecialDeleteController.cs" />
     <Compile Include="Controller\SiteManagementController.cs" />
     <Compile Include="Controller\SMAManagement\SMAManagementController.cs" />
@@ -170,8 +167,6 @@
     <Compile Include="Criteria\CustomerDateLimit\GetCustomerDateLimitByIdCriteria.cs" />
     <Compile Include="Criteria\CustomerDateLimit\UpdateCustomerDateLimitCriteria.cs" />
     <Compile Include="Criteria\CustomerDateLimit\GetAllCustomerDateLimitCriteria.cs" />
-    <Compile Include="Criteria\MailingList\SMATurnover\GetMailingListCriteria.cs" />
-    <Compile Include="Criteria\MailingList\SMATurnover\UpdateMailingListCriteria.cs" />
     <Compile Include="Criteria\MaxMemberLimitBySuper\UpdateSuperCriteria.cs" />
     <Compile Include="Criteria\MaxMemberLimitBySuper\SearchSuperCriteria.cs" />
     <Compile Include="Criteria\MaxMemberLimitBySuper\GetSitesCriteria.cs" />
@@ -187,8 +182,6 @@
     <Compile Include="DataAccess\CompareBalance\CompareBalanceDataAccess.cs" />
     <Compile Include="DataAccess\CustomerDateLimit\CustomerDateLimitDataAccess.cs" />
     <Compile Include="DataAccess\MailingList\ISpecialDeleteAccess.cs" />
-    <Compile Include="DataAccess\MailingList\SMATurnover\Admin_SMATurnoverMailingListDataAccess.cs" />
-    <Compile Include="DataAccess\MailingList\SMATurnover\IAdmin_SMATurnoverMailingListDataAccess.cs" />
     <Compile Include="DataAccess\MailingList\SpecialDeleteAccess.cs" />
     <Compile Include="DataAccess\MaxMemberLimitBySuper\IMaxMemberLimitBySuperDataAccess.cs" />
     <Compile Include="DataAccess\MaxMemberLimitBySuper\MaxMemberLimitBySuperDataAccess.cs" />

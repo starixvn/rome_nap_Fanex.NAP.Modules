@@ -8,11 +8,12 @@
 namespace Fanex.Tarus.SpecialDelete.Controller.MailList
 {
     using System.Web.Mvc;
-    using Fanex.Tarus.Admin.Business.MailingList;
     using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.Entities.MailingList;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
+    using Admin.Business.MailingList;
+
     /// <summary>
     /// TODO: Update summary.
     /// </summary>

@@ -4,7 +4,6 @@
 namespace Fanex.Tarus.Infrastructure.Configurations
 {
     using Fanex.Common;
-    using Sunplus.Accounting.Core.Extensions;
     using System;
     using System.Configuration;
     using System.Linq;
@@ -14,15 +13,6 @@ namespace Fanex.Tarus.Infrastructure.Configurations
     /// </summary>
     public static class AppSettings
     {
-        private static int _admin_SMATurnover_FunctionId;
-        public static int Admin_SMATurnover_FunctionId
-        {
-            get
-            {
-                return _admin_SMATurnover_FunctionId;
-            }
-        }
-
         public static int ProductIdBetTrade
         {
             get
@@ -100,19 +90,6 @@ namespace Fanex.Tarus.Infrastructure.Configurations
 
             var cn88SiteName = ConfigurationManager.AppSettings["CN88SiteName"].Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
             return cn88SiteName.Contains(site, StringComparer.OrdinalIgnoreCase);
-        }
-
-        static AppSettings()
-        {
-            try
-            {               
-           
-                _admin_SMATurnover_FunctionId = Convert.ToInt32(ConfigurationManager.AppSettings["Admin_SMATurnover_FunctionId"]);
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
         }
     }
 }
