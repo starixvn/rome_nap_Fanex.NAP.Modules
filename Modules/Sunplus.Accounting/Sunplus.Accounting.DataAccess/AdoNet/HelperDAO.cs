@@ -13,29 +13,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 {
     public class HelperDAO : DataAccess, IHelperDAO
     {
-
-        public Result AddCountry(string countryName)
-        {
-            var result = new Result();
-
-            using (ObjectDb db = new ObjectDb("InsertCountry"))
-            {
-                Hashtable p = new Hashtable();
-                p.Add("name", countryName);
-                db.AssignParamValues(p);
-
-                db.ExecuteNonQuery();
-
-                var errcode = CastAide.AsInt32(db.GetParameterValue("errcode"));
-                var errmsg = CastAide.AsString(db.GetParameterValue("errmsg"));
-
-                result.ErrorCode = errcode;
-                result.ErrorMessage = errmsg;
-            }
-
-            return result;
-        }
-
         public DataTable GetSites(Enumerations.AccountingSystem system)
         {
             var param = new Hashtable { { "system", system.ToString().ToUpper() }, { "userid", AppSession.AccId } };

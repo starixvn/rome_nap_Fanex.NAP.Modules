@@ -368,35 +368,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             }
         }
 
-        public static string GetUsernameById(string id)
-        {
-            var param = new Hashtable();
-            param.Add("inputuser", id);
-            
-            DbResult ds = null;
-            using (ObjectDb db = new ObjectDb("DBA_GetAgent"))
-            {
-                db.AssignParamValues(param);
-                var dataset = db.ExecuteDataSet();
-                var output = db.GetOuputParams();
-
-                ds = new DbResult(output, dataset);
-            }
-
-            if (ds.ResultSet.Tables[0].Rows.Count > 0)
-            {
-                if (!Convert.IsDBNull(ds.ResultSet.Tables[0].Rows[0]["membername"]))
-                    return ds.ResultSet.Tables[0].Rows[0]["membername"].ToString();
-                if (!Convert.IsDBNull(ds.ResultSet.Tables[0].Rows[0]["agentName"]))
-                    return ds.ResultSet.Tables[0].Rows[0]["agentName"].ToString();
-                if (!Convert.IsDBNull(ds.ResultSet.Tables[0].Rows[0]["masterName"]))
-                    return ds.ResultSet.Tables[0].Rows[0]["masterName"].ToString();
-                if (!Convert.IsDBNull(ds.ResultSet.Tables[0].Rows[0]["superName"]))
-                    return ds.ResultSet.Tables[0].Rows[0]["superName"].ToString();
-            }
-            return "";
-        }
-
         /// <summary>
         /// Select list of online of a user
         /// </summary>
