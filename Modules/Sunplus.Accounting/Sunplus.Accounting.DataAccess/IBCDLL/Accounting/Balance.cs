@@ -15,42 +15,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// </summary>
         private Balance()
         {
-        }
-
-
-        /// <summary>
-        /// call store CustomerPwdUpd 
-        /// @author: Vu Thi Hong Hanh
-        /// </summary>
-        /// <param name="custId">custId</param>
-        /// <param name="userPwd">userPwd</param>
-        /// <param name="userId">userId</param>
-        /// <returns></returns>
-        public static Boolean CustomerPwdUpd(int custId, string userPwd, int userId)
-        {
-            Boolean isUpdate = false;
-            try
-            {
-                var hash = new Hashtable();
-                hash.Add("custid", custId);
-                hash.Add("userpwd", userPwd);
-                hash.Add("userid", userId);
-
-                using (ObjectDb db = new ObjectDb("Acc_CustomerPwdUpd", 600))
-                {
-                    db.AssignParamValues(hash);
-                    db.ExecuteNonQuery();
-                }
-
-                isUpdate = true;
-            }
-            catch (Exception ex)
-            {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-            return isUpdate;
-        }
+        }      
 
         /// <summary>
         /// Execute SP ExchangeSelAccount

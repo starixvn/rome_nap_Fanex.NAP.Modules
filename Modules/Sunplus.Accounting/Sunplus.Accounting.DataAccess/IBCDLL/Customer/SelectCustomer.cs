@@ -704,26 +704,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dtb;
-        }
-
-        /// <summary>
-        /// SP: Agw_SelCustomerGivenCredit
-        /// </summary>
-        /// <param name="custid"></param>
-        /// <returns></returns>
-        public static decimal GetCustomerGivenCredit(string custid /*, out string roleid*/)
-        {
-            var param = new Hashtable();
-            param.Add("custid", custid);
-
-            using (ObjectDb db = new ObjectDb("SelCustomerGivenCredit"))
-            {
-                db.AssignParamValues(param);
-
-                var ds = db.ExecuteDataSet();
-                return Math.Round(decimal.Parse(ds.Tables[0].Rows[0]["givencredit"].ToString()));
-            }
-        }
+        }  
 
         public static DbResult QueryUserName(int userid, string query, string accountingSystem, bool hasViewFinanceAccount)
         {

@@ -10,9 +10,7 @@ namespace Sunplus.Accounting.Entities
     public class CustomerDetail
     {
         private int _CustID;
-        private int _RoleId;
-        private bool _IsDisabledFIUL = false;
-        private bool _IsDisabledFIDL = false;
+        private int _RoleId;      
         private bool _IsDisabledNumberGame = false;
         private bool _IsDisabledNumberGameDL = false;
         private bool _IsInternalUser = false;
@@ -215,36 +213,6 @@ namespace Sunplus.Accounting.Entities
             set
             {
                 _Fax = value;
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public bool IsDisabledFIDL
-        {
-            get
-            {
-                return _IsDisabledFIDL;
-            }
-            set
-            {
-                _IsDisabledFIDL = value;
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public bool IsDisabledFIUL
-        {
-            get
-            {
-                return _IsDisabledFIUL;
-            }
-            set
-            {
-                _IsDisabledFIUL = value;
             }
         }
 
