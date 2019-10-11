@@ -445,15 +445,7 @@ namespace Sunplus.Accounting.Core.Configurations
             {
                 return (ConfigurationManager.AppSettings["IsShowNG2"] == "1");
             }
-        }
-
-        public static bool IsShowLucky3
-        {
-            get
-            {
-                return (ConfigurationManager.AppSettings["IsShowLucky3"] == "1");
-            }
-        }
+        }    
 
         public static bool IsUmNG2
         {
