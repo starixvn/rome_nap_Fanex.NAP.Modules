@@ -6,33 +6,36 @@
 
 namespace Fanex.NAP.SSO
 {
-    using Fanex.Common;
-    using Fanex.NAP.Core.Criteria.User;
-    using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.Core.Service.Interface;
-    using Fanex.NAP.Core.Web.Context;
     using System;
     using System.Configuration;
     using System.Globalization;
     using System.Web.Mvc;
+    using Core.Context;
+    using Core.Models.ParameterObject;
+    using Fanex.Common;
+    using Fanex.NAP.Core.Service.Impl;
+    using Fanex.NAP.Core.Service.Interface;
+    using Fanex.NAP.Core.Web.Context;
 
     /// <summary>
     /// The Nap Single sign on controller.
     /// </summary>
     public class NapSsoController : Controller
     {
-        private ICurrentContext _currentContext;
-        private IUserService _userService;
+        private readonly ICurrentContext _currentContext;
+        private readonly ISecurityService _securityService;
 
         public NapSsoController()
-            : this(null)
+            : this(null,null)
         {
         }
 
-        public NapSsoController(IUserService userService)
+        public NapSsoController(
+            ICurrentContext currentContext,
+            ISecurityService securityService)
         {
-            this._userService = userService ?? new UserService();
-            this._currentContext = new CurrentContext();
+            this._currentContext = currentContext ?? new CurrentContext();
+            this._securityService = securityService ?? new SecurityService();
         }
 
         [ValidateInput(false)]
@@ -43,13 +46,13 @@ namespace Fanex.NAP.SSO
             if (userId != 0)
             {
                 Uri uri = HttpContext.Request.Url;
-                var checkInUser = UserCheckin(Converter.ToInt(ConfigurationManager.AppSettings["NAPHomeSiteId"], 0), userId);
+                var onlineUserId = UserCheckin(Converter.ToInt(ConfigurationManager.AppSettings["NAPHomeSiteId"], 0), userId);
                 var napHomeURL = string.Format(ConfigurationManager.AppSettings["NapHomeSSOUrl"], (uri.Host.Contains("oneops.net") ? "https" : uri.Scheme) + Uri.SchemeDelimiter + HttpContext.Request.Headers["Host"].ToString());
                 return new RedirectResult(
                     string.Format(
                         napHomeURL + "?userId={0}&onuserId={1}&time={2}",
                         Cryptography.CfsEnCrypt(userId.ToString(CultureInfo.CurrentCulture)),
-                        Cryptography.CfsEnCrypt(checkInUser.OnUserId.ToString(CultureInfo.CurrentCulture)),
+                        Cryptography.CfsEnCrypt(onlineUserId.ToString(CultureInfo.CurrentCulture)),
                         Cryptography.CfsEnCrypt(GetServerTime())));
             }
             else
@@ -59,37 +62,36 @@ namespace Fanex.NAP.SSO
         }
 
         private string GetServerTime()
-        {
-            string time = this._userService.UserSSOGetTime();
-            return time;
-        }
+            => _securityService.GetTime();
 
-        private UserCheckInUserCriteria UserCheckin(int siteId, int userId)
+        private int UserCheckin(int siteId, int userId)
         {
-            var criteria = new UserCheckInUserCriteria
-            {
-                UserId = userId,
-                SiteId = siteId,
-                NetSessionId = Session.SessionID,
-                Ip = _currentContext.IP,
-                LoginDate = DateTime.Now,
-                BrowserName = _currentContext.BrowserName,
-                CountryCode = _currentContext.CountryCode,
-                Domain = _currentContext.DomainName,
-                Platform = _currentContext.Platform
-            };
+            int onlineUserId = 0;
+
             try
             {
-                this._userService.UserCheckIn(ref criteria);
+                onlineUserId= _securityService.SSOLogin(new SSOLoginParameter
+                {
+                    UserId = userId,
+                    SiteId = siteId,
+                    NetSessionId = Session.SessionID,
+                    IP = _currentContext.IP,
+                    LoginDate = DateTime.Now,
+                    BrowserName = _currentContext.BrowserName,
+                    CountryCode = _currentContext.CountryCode,
+                    Domain = _currentContext.DomainName,
+                    Platform = _currentContext.Platform
+                });
             }
             catch (Exception ex)
             {                
-                if (criteria.OnUserId == 0)
+                if (onlineUserId == 0)
                 {
                     throw ex;
                 }                
             }
-            return criteria;
+
+            return onlineUserId;
         }
     }
 }
