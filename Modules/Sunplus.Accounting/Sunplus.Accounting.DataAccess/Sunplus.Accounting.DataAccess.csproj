@@ -58,11 +58,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AdoNet\CreditTermDAO\CreditTermGroupDAO.cs" />
-    <Compile Include="AdoNet\ExchangeRateDAO.cs" />
     <Compile Include="AdoNet\HelperDAO.cs" />
     <Compile Include="AdoNet\LogDisplayDAO\LogDisplayDAO.cs" />
     <Compile Include="AdoNet\Admin\ExternalSiteDAO.cs" />
-    <Compile Include="CustomerAdapter\ConsolidatedGroup\ConsolidatedGroupAdapter.cs" />
     <Compile Include="IBCClient\UtilsProviderClient.cs" />
     <Compile Include="IBCDLL\Customer\ViewCommDCS\IViewCommDCSRepository.cs" />
     <Compile Include="IBCDLL\Customer\ViewCommDCS\ViewCommDCSRepository.cs" />
@@ -118,7 +116,6 @@
     <Compile Include="IBCDLL\UserController.cs" />
     <Compile Include="IBCProvider.cs" />
     <Compile Include="ICustomerDAO.cs" />
-    <Compile Include="IExchangeRateDAO.cs" />
     <Compile Include="ILogDisplay\ILogDisplayDAO.cs" />
     <Compile Include="IUserDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -130,8 +127,6 @@
     <Compile Include="Provider\Log\LogProvider.cs" />
     <Compile Include="IReportDAO\ILicenseDAO.cs" />
     <Compile Include="Report\ReportUtils.cs" />
-    <Compile Include="ResetWinning\IResetWinningDAO.cs" />
-    <Compile Include="ResetWinning\ResetWinningDAO.cs" />
     <Compile Include="SettingGroup.cs" />
     <Compile Include="SiteProvider.cs" />
     <Compile Include="AdoNet\UserDAO.cs" />
@@ -179,8 +174,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.1.8-RemoveInactiveProducts4\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.1.8-RemoveInactiveProducts5\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CasinoLibrary.2.0.3.38621\lib\net40\HandHistoryLibrary.dll</HintPath>
@@ -238,12 +232,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts8\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts9\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.14, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.1.1-RemoveInactiveProducts1\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.1.1-RemoveInactiveProducts6\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Libraries.AOP.1.0.4218.28561\lib\net40\Sunplus.Libraries.AOP.dll</HintPath>

@@ -87,9 +87,8 @@
       <HintPath>..\..\..\packages\Fanex.Cryptography.Aes.1.0.0.0\lib\net461\Fanex.Cryptography.Aes.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.0\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.3.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.8-RemoveInactiveProduct001\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.CustomerSetting.Module.Core.2.0.3.9\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
@@ -135,9 +134,8 @@
       <HintPath>..\..\..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.PTEngine.1.0.4.5\lib\net40\Fanex.PTEngine.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.PTEngine, Version=1.0.4.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.PTEngine.1.0.4.9-RemoveInactiveProducts\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CasinoLibrary.2.0.3.38621\lib\net40\HandHistoryLibrary.dll</HintPath>
@@ -228,8 +226,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts8\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts9\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Agent.Utilities.3.0.0.7\lib\net40\Sunplus.Agent.Utilities.dll</HintPath>

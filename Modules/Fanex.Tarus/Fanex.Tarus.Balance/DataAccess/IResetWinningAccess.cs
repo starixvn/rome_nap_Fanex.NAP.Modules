@@ -7,8 +7,6 @@ namespace Fanex.Tarus.Balance.DataAccess
 
     public interface IResetWinningAccess
     {
-        ResetWinningDTO GetDataResetWinning(string date, int data);
-
         ResetWinning_New GetResetWinningDataAfterMoveBetDay(GetResetWinningCriteria criteria);
 
         ResetWinning_New GetResetWinningByDay(ResetWinning_New resetWinning);

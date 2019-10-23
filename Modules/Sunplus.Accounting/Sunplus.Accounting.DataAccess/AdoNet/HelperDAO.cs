@@ -37,41 +37,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             }
 
             return result;
-        }
-
-        public DataTable GetSites_Report_Licensee(Enumerations.AccountingSystem system)
-        {
-            DataTable result = null;
-            try
-            {
-                DbResult ds = null;
-                var param = new Hashtable { 
-                { 
-                    "system", 
-                    system.ToString().ToUpper()
-                }};
-
-                using (ObjectDb db = new ObjectDb("SiteSel_Report_Licensee", 600))
-                {
-                    db.AssignParamValues(param);
-                    var dataset = db.ExecuteDataSet();
-                    var output = db.GetOuputParams();
-
-                    ds = new DbResult(output, dataset);
-                }
-
-                if (ds != null && ds.ResultSet != null && ds.ResultSet.Tables.Count > 0)
-                {
-                    result = ds.ResultSet.Tables[0];
-                }
-
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-            return result;
-        }
+        }       
 
         public DataTable GetCust(Enumerations.AccountingSystem system)
         {

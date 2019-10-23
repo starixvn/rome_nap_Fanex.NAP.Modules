@@ -28,99 +28,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         //Phuong.Nguyen Modified <2008-12-02>
 
         #region Public Methods and Operators
-       
-
-        /// <summary>
-        /// @Khoa.Tran
-        /// </summary>
-        /// <param name="hash"></param>
-        /// <returns></returns>
-        public static Result Acc_CreditTermUpdRemark(Hashtable hash)
-        {
-            var result = new Result();
-            result.ErrorHandler = new System.Collections.Generic.Dictionary<int, string>();
-            try
-            {
-                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdRemark",  500))
-                {
-                    objdb.AssignParamValues(hash);
-
-                    objdb.ExecuteNonQuery();
-
-                    result.ErrorCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
-                    result.ErrorMessage = string.Format("{0}", objdb.GetParameterValue("errmsg"));
-                    result.ErrorHandler.Add(0, string.Format("{0}", objdb.GetParameterValue("accountremarkdate")));
-
-                    return result;
-                }
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-                throw ex;
-            }
-        }
-      
-
-        /// <summary>
-        /// CITS
-        /// </summary>
-        /// <param name="fdate"></param>
-        /// <returns></returns>
-        public static DbResult Acc_Rpt_CreditTerm(Hashtable p)
-        {
-            DbResult result = null;
-            try
-            {
-                using (ObjectDb db = new ObjectDb("CreditTerm",600))
-                {
-                    db.AssignParamValues(p);
-
-                    var ds = db.ExecuteDataSet();
-                    var output = db.GetOuputParams();
-
-                    result = new DbResult(output, ds);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// CITS
-        /// </summary>
-        /// <param name="fdate"></param>
-        /// <param name="roleid"></param>
-        /// <param name="custid"></param>
-        /// <returns></returns>
-        public static DbResult Acc_Rpt_InstallAmount(int roleid)
-        {
-            //DataResult result = null;
-            DbResult result = null;
-            try
-            {
-                var p = new Hashtable();
-                p.Add("roleid", roleid);
-
-                using (ObjectDb db = new ObjectDb("InstallAmount", 300))
-                {
-                    db.AssignParamValues(p);
-
-                    var ds = db.ExecuteDataSet();
-                    var output = db.GetOuputParams();
-
-                    result = new DbResult(output, ds);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-            return result;
-        }
 
 
         /// <summary>
@@ -267,40 +174,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 LogExtensions.ExceptionHandler(ex);
             }
             return rs;
-        }
-
-        /// <summary>
-        /// Excecute store procedure Rpt_AllStatementCompany
-        /// @PhuongDN
-        /// </summary>
-        /// <param name="fromDate"></param>
-        /// <param name="toDate"></param>
-        /// <returns></returns>
-        public static DbResult RptAllStatementCompany(DateTime fromDate, DateTime toDate)
-        {
-            DbResult ds = null;
-            try
-            {
-                var param = new Hashtable();
-                param.Add("fromdate", FormatHandler.ResetStartDate(fromDate));
-                param.Add("todate", FormatHandler.ResetEndDate(toDate));
-
-                using (ObjectDb db = new ObjectDb("AllStatementCompany", 600))
-                {
-                    db.AssignParamValues(param);
-
-                    var dataset = db.ExecuteDataSet();
-                    var output = db.GetOuputParams();
-
-                    ds = new DbResult(output, dataset);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-            return ds;
-        }
+        }       
 
         /// <summary>
         /// call Store Rpt_CompanyDebitCredit

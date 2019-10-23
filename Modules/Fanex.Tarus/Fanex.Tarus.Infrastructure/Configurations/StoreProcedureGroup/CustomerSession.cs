@@ -54,7 +54,6 @@ namespace Fanex.Tarus.Infrastructure.Configurations.StoreProcedureGroup
         {
             get
             {
-
                 var spCollection = (StoreProcedureCollection)this.GetType().GetProperty(name.ToString()).GetValue(this, System.Reflection.BindingFlags.GetField, null, null, null);
                 return spCollection;
             }

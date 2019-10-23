@@ -11,33 +11,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     public sealed class Credit
     {
-        /// <summary>
-        /// Select Credit for customer
-        /// SP: Acc_CustomerSelCredit
-        /// @viet hoang
-        /// </summary>
-        /// <param name="_custId"></param>
-        /// <returns></returns>
-        public static IDataReader CustomerSelectCredit(int _custId)
-        {
-            try
-            {
-                var param = new Hashtable();
-                param.Add("custid", _custId);
-                
-                using (ObjectDb db = new ObjectDb("CustomerSelCredit"))
-                {
-                    db.AssignParamValues(param);
-                    return db.ExecuteReader();
-                }
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                throw ex;
-            }
-        }
-
+       
         /// <summary>
         /// Update New Credit for customer
         /// SP: Acc_CustomerUpdCredit

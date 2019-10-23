@@ -15,28 +15,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
     public sealed class UserControl : DataAccess
     {
         /// <summary>
-        /// Select Account Admin
-        /// SP: Acc_AccAdminSel
-        /// @viet hoang
-        /// </summary>
-        /// <returns></returns>
-        public static IDataReader AccountAdminSelect()
-        {
-            try
-            {
-                using (ObjectDb db = new ObjectDb("AdminSel"))
-                {
-                    return db.ExecuteReader();                    
-                }
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                throw ex;
-            }
-        }
-
-        /// <summary>
         /// Account Admin password update
         /// SP: Acc_CustomerUpdPwdReset
         /// @viet hoang
@@ -123,145 +101,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return error;
-        }
-
-        /// <summary>
-        /// Account admin page access update
-        /// SP: Acc_AccAdminUpdPageAccess
-        /// @viet hoang
-        /// </summary>
-        /// <param name="custid"></param>
-        /// <param name="accid"></param>
-        /// <param name="role"></param>
-        /// <param name="pageAccess"></param>
-        /// Phuong.Nguyen modified
-        public static void AccountAdminPageAccessUpdate(int custid, int accid, bool role, string pageAccess)
-        {
-            try
-            {
-                var param = new Hashtable();
-                param.Add("custid", custid);
-                param.Add("userid", accid);
-                param.Add("addnew", role);
-                param.Add("updpageaccess", pageAccess);
-                param.Add("language", "E");
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
-
-                using (ObjectDb db = new ObjectDb("AdminUpdPageAccess", 180))
-                {
-                    db.AssignParamValues(param);
-                    db.ExecuteNonQuery();
-
-                    int errcode = CastAide.AsInt32(db.GetParameterValue("errcode"));
-                    string errmsg = CastAide.AsString(db.GetParameterValue("errmsg"));
-
-                    if (errcode > 0)
-                    {
-                        throw new AccException(errmsg);
-                    }
-                }
-            }
-            catch (AccException accException)
-            {
-                throw accException;
-            }
-            catch (Exception ex)
-            {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-        }
-
-
-        /// <summary>
-        /// Add new account admin
-        /// SP: Acc_AccAdminIns
-        /// @viet hoang
-        /// </summary>
-        /// <param name="accid"></param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="firstname"></param>
-        /// <param name="lastname"></param>
-        /// <param name="pageaccess"></param>
-        /// Phuong.Nguyen modified
-        public static void AccountAdminInsert(int accid, string username, string password, string firstname,
-                                              string lastname, string pageaccess)
-        {
-            try
-            {
-                var param = new Hashtable();
-                param.Add("userid", accid);
-                param.Add("username", username);
-                param.Add("userpwd", password);
-                param.Add("firstname", firstname);
-                param.Add("lastname", lastname);
-                param.Add("pageaccess", pageaccess);
-                param.Add("custid", 0);
-                param.Add("language", "E");
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
-
-                using(ObjectDb db = new ObjectDb("AdminIns", 180))
-                {
-                    db.AssignParamValues(param);
-                    db.ExecuteNonQuery();
-
-                    int errcode = CastAide.AsInt32(db.GetParameterValue("errcode"));
-                    string errmsg = CastAide.AsString(db.GetParameterValue("errmsg"));
-
-                    if (errcode > 0)
-                    {
-                        throw new AccException(errmsg);
-                    }
-                }           
-            }
-            catch (AccException accException)
-            {
-                throw accException;
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-        }
-
-        //Phuong.Nguyen modified
-        public static void AccountAdminInsertFromExistedAdmin(int accid, string username)
-        {
-            try
-            {
-                var param = new Hashtable();
-                param.Add("username", username);
-                param.Add("creator", accid);
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
-                param.Add("language", "E");
-
-                using (ObjectDb db = new ObjectDb("AdminInsFromExisted", 180))
-                {
-                    db.AssignParamValues(param);
-                    db.ExecuteNonQuery();
-
-                    int errcode = CastAide.AsInt32(db.GetParameterValue("errcode"));
-                    string errmsg = CastAide.AsString(db.GetParameterValue("errmsg"));
-
-                    if (errcode > 0)
-                    {
-                        throw new AccException(errmsg);
-                    }
-                }     
-            }
-            catch (AccException accException)
-            {
-                throw accException;
-            }
-            catch (Exception ex)
-            {                
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-        }
+        }        
 
         /// <summary>
         /// Account Admin Update Information
@@ -1063,42 +903,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return error;
-        }
-
-        /// <summary>
-        /// Add Existed Admin
-        /// SP: Acc_Con_AdminInsFromExisted        
-        /// @vu hanh
-        /// </summary>
-        /// <param name="param"></param>                
-        /// <param name="groupId"></param>                
-        /// <param name="creatorId"></param>     
-        /// Phuong.Nguyen modified           
-        public static IbcError AddExistedAdmin(Hashtable param)
-        {
-            IbcError error = IbcError.SuccessResult;
-            try
-            {                 
-                using (ObjectDb objDB = new ObjectDb("Con_AdminInsFromExisted"))
-                {
-                    objDB.AssignParamValues(param);
-                    objDB.ExecuteNonQuery();
-                    var errorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
-                    var errorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
-                    if (errorCode > 0)
-                    {
-                        error.ErrorCode = errorCode;
-                        error.ErrorMsg = errorMessage;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-            return error;
-        }       
+        }        
 
         /// <summary>
         /// Check host permission 

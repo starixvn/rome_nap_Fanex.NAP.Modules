@@ -111,35 +111,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             return rs;
         }
 
-        public static int AuthenticateMember(int custId, string username)
-        {
-            if (string.IsNullOrEmpty(username))
-            {
-                username = "";
-            }
-            int roleId = 0;
-            DbResult rs = null;
-            var param = new Hashtable();
-            param.Add("custid", custId);
-            param.Add("username", username);
-            param.Add("roleid", 0);
-            try
-            {
-                using (ObjectDb db = new ObjectDb("CustomerSelBelonging", 600))
-                {
-                    db.AssignParamValues(param);
-                    var output = db.GetOuputParams();
-
-                    roleId = Convert.ToInt32(rs.Outputs["roleid"]);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return roleId;
-        }
-
         /// <summary>
         /// Get customer list of a user id
         /// </summary>

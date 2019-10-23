@@ -111,8 +111,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts8\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts9\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -170,9 +169,8 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.2.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ThirdPartyProducts.StatusSetting.1.0.2.1\lib\net461\ThirdPartyProducts.StatusSetting.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ThirdPartyProducts.StatusSetting.1.0.2.4-RemoveInactiveProduct001\lib\net461\ThirdPartyProducts.StatusSetting.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

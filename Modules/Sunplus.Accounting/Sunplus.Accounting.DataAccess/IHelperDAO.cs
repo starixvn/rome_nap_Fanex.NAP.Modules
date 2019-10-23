@@ -9,7 +9,6 @@ namespace Sunplus.Accounting.DataAccess
         DataTable GetSites(Enumerations.AccountingSystem system);
 
         DataTable GetCust(Enumerations.AccountingSystem system);
-
-        DataTable GetSites_Report_Licensee(Enumerations.AccountingSystem system);
+       
     }
 }

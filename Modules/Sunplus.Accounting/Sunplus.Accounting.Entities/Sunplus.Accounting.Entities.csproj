@@ -119,8 +119,6 @@
     <Compile Include="CustomerDetail.cs" />
     <Compile Include="Customer\BetSetting.cs" />
     <Compile Include="Customer\CustomerExRate.cs" />
-    <Compile Include="Customer\ConsolidatedGroup\ConsolidatedGroupTable.cs" />
-    <Compile Include="Customer\ConsolidatedGroup\ConsolidatedMemberTable.cs" />
     <Compile Include="Customer\CustDetail.cs" />
     <Compile Include="Customer\ForexAccount.cs" />
     <Compile Include="Customer\MasterList.cs" />
@@ -137,7 +135,6 @@
     <Compile Include="Customer\PT\ViewPT\Bettype.cs" />
     <Compile Include="Customer\PT\ViewPT\Sport.cs" />
     <Compile Include="Customer\PT\ViewPT\ViewPtDTO.cs" />
-    <Compile Include="ResetWinning\ResetWinningDTO.cs" />
     <Compile Include="ResultNG.cs" />
     <Compile Include="Security\LoginFailedInformation.cs" />
     <Compile Include="SendMailResult.cs" />
@@ -157,7 +154,6 @@
     <Compile Include="ViewModel\DailyTransaction.cs" />
     <Compile Include="ViewModel\FinanceBettype.cs" />
     <Compile Include="ViewModel\FinanceTransaction.cs" />
-    <Compile Include="ViewModel\ResetWinning.cs" />
     <Compile Include="ViewModel\SystemBO.cs" />
     <Compile Include="ViewModel\TransactionGroup.cs" />
     <Compile Include="ViewModel\WinningTransaction.cs" />
@@ -186,7 +182,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_BuildAction="Both" BuildVersion_AssemblyInfoFilename="" BuildVersion_UseGlobalSettings="False" />
+      <UserProperties BuildVersion_UseGlobalSettings="False" BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildAction="Both" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

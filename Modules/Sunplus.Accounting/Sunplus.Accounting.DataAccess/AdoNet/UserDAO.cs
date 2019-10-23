@@ -20,76 +20,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
     /// </summary>
     public class UserDAO : DataAccess, IUserDAO
     {
-        #region IUserDAO Members
-               
-        public DbResult InsResetWinning(DateTime dateTime, int userId, string[] arrDesc, string IP)
-        {
-            DbResult result = null;
-            try
-            {
-                var hsParam = new Hashtable();
-                hsParam.Add("winlostdate", dateTime);
-                hsParam.Add("userid", userId);
-                hsParam.Add("ip", IP);
-
-                for (int i = 0; i < arrDesc.Length; i++)
-                {
-                    if (!string.IsNullOrEmpty(arrDesc[i]) && arrDesc[i] != "undefined")
-                        hsParam.Add("transdesc" + (i + 1), arrDesc[i]);
-                }
-
-                hsParam.Add("errcode", 0);
-                hsParam.Add("errmsg", string.Empty);
-
-                //return DbHelper.Execute("Acc_ResetWinning_Ins", hsParam, DBType.MAIN);
-                using (ObjectDb db = new ObjectDb("Acc_ResetWinning_Ins", 600))
-                {
-                    db.AssignParamValues(hsParam);
-
-                    var ds = db.ExecuteDataSet();
-                    var output = db.GetOuputParams();
-
-                    result = new DbResult(output, ds);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-
-            return result;
-        }
-
-        public List<ResetWinning> GetResetWinning(DateTime dtmMoveBetDate, DateTime dtmTodate)
-        {
-            var entityList = new List<ResetWinning>();
-
-            var hsParam = new Hashtable();
-            hsParam.Add("movebetdate", dtmMoveBetDate);
-            hsParam.Add("todate", dtmTodate);
-
-            using (ObjectDb db = new ObjectDb("Acc_ResetWinning_Sel", 600))
-            {
-                db.AssignParamValues(hsParam);
-                var reader = db.ExecuteReader();
-
-                if (reader != null)
-                {
-                    while (reader.Read())
-                    {
-                        var entity = new ResetWinning();
-                        entity.Date = CastAide.AsDateTime(reader["winlostdate"]);
-                        entity.Amount = CastAide.AsDecimal(reader["balance"]);
-                        entity.IsReset = CastAide.AsBoolean(reader["IsReset"]);
-                        //entity.Balance = CastAide.AsDecimal(reader["balance"]);
-
-                        entityList.Add(entity);
-                    }
-                }
-            }
-
-            return entityList;
-        }
+        #region IUserDAO Members    
 
         public List<FinanceTransaction> GetResetWinning_ByDate(DateTime transDate, bool isReset)
         {
@@ -737,41 +668,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 }
             }
             return lst;
-        }
-
-        /// <summary>
-        /// Insert customer to Site Group 
-        /// </summary>
-        /// <param name="custId"></param>
-        /// <param name="roleId"></param>
-        /// <param name="system"></param>
-        /// <returns></returns>
-        public Result InsertCustomerToGroup(int custId, int roleId, string system)
-        {
-            var result = new Result { ErrorCode = 0, ErrorMessage = string.Empty };
-            DbResult ds = null;
-            var param = new Hashtable { { "custid", custId } };
-            param.Add("roleid", roleId);
-            param.Add("system", system.ToString().ToUpper());
-
-            using (ObjectDb db = new ObjectDb("CustGroupIns", 600))
-            {
-                db.AssignParamValues(param);
-
-                var dataset = db.ExecuteDataSet();
-                var output = db.GetOuputParams();
-
-                ds = new DbResult(output, dataset);
-            }
-
-            if (ds != null)
-            {
-                result.ErrorCode = CastAide.AsInt32(ds.Outputs["errcode"]);
-                result.ErrorMessage = CastAide.AsString(ds.Outputs["errmsg"]);
-
-            }
-            return result;
-        }
+        }       
 
         public List<MenuBO> GetReportMenu(int custId, string system)
         {

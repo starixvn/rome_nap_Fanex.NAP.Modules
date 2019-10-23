@@ -69,8 +69,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.1.8-RemoveInactiveProducts4\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.1.8-RemoveInactiveProducts5\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Security.1.0.1.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -99,8 +98,7 @@
       <HintPath>..\..\..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts8\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.1-RemoveInactiveProducts9\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -146,8 +144,6 @@
     <Compile Include="Business\BACustomer\IBACustomerService.cs" />
     <Compile Include="Business\CompareBalance\CompareBalanceService.cs" />
     <Compile Include="Business\CustomerDateLimit\CustomerDateLimitService.cs" />
-    <Compile Include="Business\MailingList\ISpecialDeleteService.cs" />
-    <Compile Include="Business\MailingList\SpecialDeleteService.cs" />
     <Compile Include="Business\MaxMemberLimitBySuper\IMaxMemberLimitBySuperService.cs" />
     <Compile Include="Business\MaxMemberLimitBySuper\MaxMemberLimitBySuperService.cs" />
     <Compile Include="Business\SiteManagement\ISiteManagementService.cs" />
@@ -160,7 +156,6 @@
     <Compile Include="Controller\BACustomerController.cs" />
     <Compile Include="Controller\CompareBalanceController.cs" />
     <Compile Include="Controller\MaxNewMemberBySuperController.cs" />
-    <Compile Include="Controller\MailingList\SpecialDeleteController.cs" />
     <Compile Include="Controller\SiteManagementController.cs" />
     <Compile Include="Controller\SMAManagement\SMAManagementController.cs" />
     <Compile Include="Criteria\CompareBalance\GetCompareBalanceCriteria.cs" />
@@ -181,8 +176,6 @@
     <Compile Include="DataAccess\BACustomer\IBACustomerAccess.cs" />
     <Compile Include="DataAccess\CompareBalance\CompareBalanceDataAccess.cs" />
     <Compile Include="DataAccess\CustomerDateLimit\CustomerDateLimitDataAccess.cs" />
-    <Compile Include="DataAccess\MailingList\ISpecialDeleteAccess.cs" />
-    <Compile Include="DataAccess\MailingList\SpecialDeleteAccess.cs" />
     <Compile Include="DataAccess\MaxMemberLimitBySuper\IMaxMemberLimitBySuperDataAccess.cs" />
     <Compile Include="DataAccess\MaxMemberLimitBySuper\MaxMemberLimitBySuperDataAccess.cs" />
     <Compile Include="DataAccess\SiteManagement\ISiteManagementDataAccess.cs" />
@@ -202,7 +195,6 @@
     <Compile Include="Entities\MaxMemberLimitBySuper\MaxMemberLimitBySuperEntity.cs" />
     <Compile Include="Entities\MaxMemberLimitBySuper\MaxMemberLimitViewModel.cs" />
     <Compile Include="Entities\Licensee.cs" />
-    <Compile Include="Entities\MailingList\SpecialDeleteMailing.cs" />
     <Compile Include="Entities\CustomerDataRangeResult.cs" />
     <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\Site.cs" />

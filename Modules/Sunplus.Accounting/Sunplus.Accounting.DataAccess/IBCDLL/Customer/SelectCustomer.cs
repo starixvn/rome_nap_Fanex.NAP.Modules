@@ -499,29 +499,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return ds;
-        }       
-
-        /// <summary>
-        /// Using DNAide's Library
-        /// Tho.Nguyen updated: 12/3/2008
-        /// </summary>
-        /// <param name="custID"></param>
-        /// <returns></returns>
-        public static bool IsDirectMaster(int custID)
-        {
-            var p = new Hashtable();
-            p.Add("custid", custID);
-            p.Add("isdirect", false);
-
-            using (ObjectDb db = new ObjectDb("CustomerSelIsDirectMaster"))
-            {
-                db.AssignParamValues(p);
-                var ds = db.ExecuteDataSet();
-                var output = db.GetOuputParams();
-
-                return CastAide.AsBoolean(output["isdirect"], false);
-            }
-        }
+        }   
 
         /// <summary>
         /// Using DNAide's Library

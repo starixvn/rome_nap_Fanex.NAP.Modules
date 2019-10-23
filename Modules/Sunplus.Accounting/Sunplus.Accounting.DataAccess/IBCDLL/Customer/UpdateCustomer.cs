@@ -753,51 +753,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return error;
-        }
-
-        public static string MoveMasterDepositCustomer(string custId, string recommendId, int accId)
-        {
-            var hashParam = new Hashtable();
-
-            hashParam.Add("supername", recommendId);
-            hashParam.Add("mastername", custId);
-
-            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-            hashParam.Add("userid", accId);
-            hashParam.Add("errcode", 0);
-            hashParam.Add("errmsg", string.Empty);
-            using (var objDb = new Fanex.Data.ObjectDb("CustomerUpdMoveDepositMaster"))
-            {
-                objDb.AssignParamValues(hashParam);
-
-                objDb.ExecuteNonQuery();
-                if (CastAide.AsInt32(objDb.GetParameterValue("ErrCode")) != 0)
-                    return CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
-                return "Move master " + custId + " to super " + recommendId + " successfully!";
-            }
-        }
-
-        public static string MoveAgentDepositCustomer(string custId, string recommendId, int accId)
-        {
-            var hashParam = new Hashtable();
-
-            hashParam.Add("mastername", recommendId);
-            hashParam.Add("agentname", custId);
-
-            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-            hashParam.Add("userid", accId);
-            hashParam.Add("errcode", 0);
-            hashParam.Add("errmsg", string.Empty);
-            using (var objDb = new Fanex.Data.ObjectDb("CustomerUpdMoveDepositAgent"))
-            {
-                objDb.AssignParamValues(hashParam);
-
-                objDb.ExecuteNonQuery();
-                if (CastAide.AsInt32(objDb.GetParameterValue("ErrCode")) != 0)
-                    return CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
-                return "Move agent " + custId + " to master " + recommendId + " successfully!";
-            }
-        }
+        }        
 
         /// <summary>
         /// Nguyen Thi Minh Thu 14/12/2006

@@ -12,38 +12,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
     public sealed class AccountCredit
     {
         /// <summary>
-        /// call store CustomerSelCredit
-        /// @author: Vu Thi Hong Hanh
-        /// </summary>
-        /// <param name="custid">custid</param>
-        /// <returns></returns>
-        /// Phuong.Nguyen updated
-        public static DbResult CustomerSelCredit(int custid)
-        {
-            DbResult rs = null;
-            try
-            {
-                var hash = new Hashtable();
-                hash.Add("custid", custid);
-                
-                using (ObjectDb db = new ObjectDb("CustomerSelCredit", 600))
-                {
-                    db.AssignParamValues(hash);
-
-                    var ds = db.ExecuteDataSet();
-                    var output = db.GetOuputParams();
-
-                    rs = new DbResult(output, ds);
-                }
-            }
-            catch
-            {
-                throw;
-            }
-            return rs;
-        }
-
-        /// <summary>
         /// CITS
         /// Using DNAide's library
         /// Tho.Nguyen updated: 12/3/2008
