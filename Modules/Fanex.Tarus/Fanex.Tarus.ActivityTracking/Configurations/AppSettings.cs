@@ -1,29 +1,31 @@
-﻿using System;
-using System.Collections.Specialized;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Fanex.Tarus.ActivityTracking.Configurations
 {
     internal static class AppSettings
     {
-        [ThreadStatic]
-        private static NameValueCollection appSettingValues;
-
         static AppSettings()
         {
-            appSettingValues = ConfigurationManager.AppSettings;
+            var appSettingValues = ConfigurationManager.AppSettings;
+
+            LoggingDefaultCategory = appSettingValues["Fanex.Logging:DefaultCategory"];
+            LogLibs = appSettingValues["LogLibs"];
+            RabbitMQConnectionStrings = appSettingValues["Fanex.Logging:RabbitMQConnectionStrings"];
+            SentryBackendUrl = appSettingValues["Fanex.Logging:SentryBackendUrl"];
+            SentryUrl = appSettingValues["Fanex.Logging:SentryUrl"];
+            RavenLibPath = appSettingValues["RavenLibPath"];
         }
 
-        public static string LoggingDefaultCategory => appSettingValues["Fanex.Logging:DefaultCategory"];
+        public static string LoggingDefaultCategory { get; }
 
-        public static string LogLibs => appSettingValues["LogLibs"];
+        public static string LogLibs { get; }
 
-        public static string RabbitMQConnectionStrings => appSettingValues["Fanex.Logging:RabbitMQConnectionStrings"];
+        public static string RabbitMQConnectionStrings { get; }
 
-        public static string SentryBackendUrl => appSettingValues["Fanex.Logging:SentryBackendUrl"];
+        public static string SentryBackendUrl { get; }
 
-        public static string SentryUrl => appSettingValues["Fanex.Logging:SentryUrl"];
+        public static string SentryUrl { get; }
 
-        public static string RavenLibPath => appSettingValues["RavenLibPath"];
+        public static string RavenLibPath { get; }
     }
 }
