@@ -153,6 +153,7 @@
     <Compile Include="Entities\AccManagementViewData.cs" />
     <Compile Include="Entities\FuncManagementViewData.cs" />
     <Compile Include="Entities\FunctionBO.cs" />
+    <Compile Include="Entities\InternalLoginModel.cs" />
     <Compile Include="Entities\LogAccountInfo.cs" />
     <Compile Include="Entities\LogAdminPolicy.cs" />
     <Compile Include="Entities\LogGroupInfo.cs" />
