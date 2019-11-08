@@ -10,6 +10,7 @@ namespace Fanex.NAP.SSO
     using System.Configuration;
     using System.Globalization;
     using System.Web.Mvc;
+    using Core.Configuration;
     using Core.Context;
     using Core.Models.ParameterObject;
     using Fanex.Common;
@@ -26,7 +27,7 @@ namespace Fanex.NAP.SSO
         private readonly ISecurityService _securityService;
 
         public NapSsoController()
-            : this(null,null)
+            : this(null, null)
         {
         }
 
@@ -46,7 +47,7 @@ namespace Fanex.NAP.SSO
             if (userId != 0)
             {
                 Uri uri = HttpContext.Request.Url;
-                var onlineUserId = UserCheckin(Converter.ToInt(ConfigurationManager.AppSettings["NAPHomeSiteId"], 0), userId);
+                var onlineUserId = UserCheckin(NapSettings.Settings.SiteId, userId);
                 var napHomeURL = string.Format(ConfigurationManager.AppSettings["NapHomeSSOUrl"], (uri.Host.Contains("oneops.net") ? "https" : uri.Scheme) + Uri.SchemeDelimiter + HttpContext.Request.Headers["Host"].ToString());
                 return new RedirectResult(
                     string.Format(
@@ -70,12 +71,12 @@ namespace Fanex.NAP.SSO
 
             try
             {
-                onlineUserId= _securityService.SSOLogin(new SSOLoginParameter
+                onlineUserId = _securityService.Login(new LoginParameter
                 {
                     UserId = userId,
                     SiteId = siteId,
                     NetSessionId = Session.SessionID,
-                    IP = _currentContext.IP,
+                    Ip = _currentContext.IP,
                     LoginDate = DateTime.Now,
                     BrowserName = _currentContext.BrowserName,
                     CountryCode = _currentContext.CountryCode,
@@ -83,12 +84,12 @@ namespace Fanex.NAP.SSO
                     Platform = _currentContext.Platform
                 });
             }
-            catch (Exception ex)
-            {                
+            catch (Exception)
+            {
                 if (onlineUserId == 0)
                 {
-                    throw ex;
-                }                
+                    throw;
+                }
             }
 
             return onlineUserId;
