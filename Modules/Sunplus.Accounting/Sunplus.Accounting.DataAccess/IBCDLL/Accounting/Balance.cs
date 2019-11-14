@@ -5,60 +5,17 @@ using System.Data;
 using DNAide.Core;
 using DNAide.Data;
 using Fanex.Data;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     public sealed class Balance
     {
-        private static Core.Configurations.StoreProcedureElement GetExchangeStoreProcedure(string aliasName)
-        {
-            var sps = ExchangeRateSession.Instance[ExchangeRateSession.StoreCollection.ExchangeRateControl];
-
-            return sps != null ? sps[aliasName] : null;
-
-        }
         /// <summary>
         /// private constructor
         /// </summary>
         private Balance()
         {
-        }
-
-
-        /// <summary>
-        /// call store CustomerPwdUpd 
-        /// @author: Vu Thi Hong Hanh
-        /// </summary>
-        /// <param name="custId">custId</param>
-        /// <param name="userPwd">userPwd</param>
-        /// <param name="userId">userId</param>
-        /// <returns></returns>
-        public static Boolean CustomerPwdUpd(int custId, string userPwd, int userId)
-        {
-            Boolean isUpdate = false;
-            try
-            {
-                var hash = new Hashtable();
-                hash.Add("custid", custId);
-                hash.Add("userpwd", userPwd);
-                hash.Add("userid", userId);
-
-                using (ObjectDb db = new ObjectDb("Acc_CustomerPwdUpd", 600))
-                {
-                    db.AssignParamValues(hash);
-                    db.ExecuteNonQuery();
-                }
-
-                isUpdate = true;
-            }
-            catch (Exception ex)
-            {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-            return isUpdate;
-        }
+        }      
 
         /// <summary>
         /// Execute SP ExchangeSelAccount
@@ -495,13 +452,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 
     public sealed class CustomerBalance
     {
-        private static Core.Configurations.StoreProcedureElement GetCustomerStoreProcedure(string aliasName)
-        {
-            var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
-
-            return sps != null ? sps[aliasName] : null;
-
-        }
+       
         /// <summary>
         /// Select Customer Balance for agent
         /// SP: Update Given Credit Successfully

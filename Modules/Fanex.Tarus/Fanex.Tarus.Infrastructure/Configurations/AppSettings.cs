@@ -4,7 +4,6 @@
 namespace Fanex.Tarus.Infrastructure.Configurations
 {
     using Fanex.Common;
-    using Sunplus.Accounting.Core.Extensions;
     using System;
     using System.Configuration;
     using System.Linq;
@@ -14,34 +13,6 @@ namespace Fanex.Tarus.Infrastructure.Configurations
     /// </summary>
     public static class AppSettings
     {
-
-        public static bool _isLegendEnable;
-        public static bool IsLegendEnable
-        {
-            get
-            {
-                return _isLegendEnable;
-            }
-        }
-
-        public static int _noteViewCountToCollapse;
-        public static int NoteViewCountToCollapse
-        {
-            get
-            {
-                return _noteViewCountToCollapse;
-            }
-        }
-
-        private static int _admin_SMATurnover_FunctionId;
-        public static int Admin_SMATurnover_FunctionId
-        {
-            get
-            {
-                return _admin_SMATurnover_FunctionId;
-            }
-        }
-
         public static int ProductIdBetTrade
         {
             get
@@ -55,14 +26,6 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             get
             {
                 return Converter.ToInt(ConfigurationManager.AppSettings["ProductIdCashOut"]);
-            }
-        }
-
-        public static int ProductIdMicrogaming
-        {
-            get
-            {
-                return Converter.ToInt(ConfigurationManager.AppSettings["ProductIdMicrogaming"]);
             }
         }
 
@@ -96,32 +59,13 @@ namespace Fanex.Tarus.Infrastructure.Configurations
                 return Converter.ToInt(productId);
             }
         }
-
-        public static int ProductIdBullfighting
-        {
-            get
-            {
-                string productId = ConfigurationManager.AppSettings["ProductIdBullfighting"];
-
-                return string.IsNullOrWhiteSpace(productId) ? 0 : Converter.ToInt(productId);
-            }
-        }
+       
 
         public static int ProductIdPP
         {
             get
             {
                 string productId = ConfigurationManager.AppSettings["ProductIdPP"];
-
-                return string.IsNullOrWhiteSpace(productId) ? 0 : Converter.ToInt(productId);
-            }
-        }
-
-        public static int ProductIdPokerGames
-        {
-            get
-            {
-                string productId = ConfigurationManager.AppSettings["ProductIdPokerGames"];
 
                 return string.IsNullOrWhiteSpace(productId) ? 0 : Converter.ToInt(productId);
             }
@@ -146,20 +90,6 @@ namespace Fanex.Tarus.Infrastructure.Configurations
 
             var cn88SiteName = ConfigurationManager.AppSettings["CN88SiteName"].Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
             return cn88SiteName.Contains(site, StringComparer.OrdinalIgnoreCase);
-        }
-
-        static AppSettings()
-        {
-            try
-            {
-                _noteViewCountToCollapse = Convert.ToInt32(ConfigurationManager.AppSettings["NoteViewCountToCollapse"]);
-                _isLegendEnable = Convert.ToBoolean(ConfigurationManager.AppSettings["IsLegendEnable"]);
-                _admin_SMATurnover_FunctionId = Convert.ToInt32(ConfigurationManager.AppSettings["Admin_SMATurnover_FunctionId"]);
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
         }
     }
 }

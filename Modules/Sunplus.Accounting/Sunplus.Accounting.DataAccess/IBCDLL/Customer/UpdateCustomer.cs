@@ -464,67 +464,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 error.ErrorMsg = ex.Message;
             }
             return error;
-        }
-
-        /// <summary>
-        /// Execute SP CustOverrideUpd to update Max, Min, Mid position taking of Dead ball soccer, Live soccer, Basket ball
-        /// @PhuongDN
-        /// </summary>
-        /// <param name="p">Hashtable contain all parameter for Sp CustOverrideUpd</param>
-        /// <returns>error_message: ==""--> successfull, else error</returns>
-        public static IbcError UpdMaxMinPT(Hashtable p)
-        {
-            IbcError error = IbcError.SuccessResult;
-            try
-            {
-                DbResult ds = null;
-
-                //var spElement = new UpdateCustomer().GetStoreProcedure(StoreProcedureSection.StoreCollection.SportBooksPt, "UpdateMinMaxPT");
-                var spElement = new UpdateCustomer().GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "UpdateMinMaxPT");
-                ds = DbHelper.ExecuteCmd(spElement.Name, p, spElement.DbName, 600);
-                //ds = DbHelper.ExecuteCmd("Acc_CustOverrideUpd", p, DBType.MAIN, 600);
-                if (Convert.ToInt32(ds.Outputs["errcode"]) != 0)
-                {
-                    error.ErrorCode = Convert.ToInt32(ds.Outputs["errcode"]);
-                    error.ErrorMsg = ds.Outputs["errmsg"] + "";
-                }
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-            return error;
-        }
-
-        /// <summary>
-        /// The fuction is using update min and max of PT
-        /// Using DNAide's Library
-        /// Tho Nguyen updated: 26/11/2008
-        /// </summary>
-        /// <param name="p"></param>
-        /// <returns></returns>
-        public static IbcError UpdMaxMinPT_acc(Hashtable p)
-        {
-            IbcError error = IbcError.SuccessResult;
-            try
-            {
-                DbResult ds = null;
-                //var spElement = new UpdateCustomer().GetStoreProcedure(StoreProcedureSection.StoreCollection.SportBooksPt, "UpdateMinMaxPT");
-                var spElement = new UpdateCustomer().GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "UpdateMinMaxPT");
-                ds = DbHelper.ExecuteCmd(spElement.Name, p, spElement.DbName, 600);
-                //ds = DbHelper.ExecuteCmd("Acc_CustOverrideUpd", p, DBType.MAIN, 600);
-                if (Convert.ToInt32(ds.Outputs["errcode"]) != 0)
-                {
-                    error.ErrorCode = Convert.ToInt32(ds.Outputs["errcode"]);
-                    error.ErrorMsg = ds.Outputs["errmsg"] + "";
-                }
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-            return error;
-        }
+        } 
+       
 
         /// <summary>
         /// Execute Sp CustomerUpdEditCustomer_MAg to update agent
@@ -812,51 +753,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return error;
-        }
-
-        public static string MoveMasterDepositCustomer(string custId, string recommendId, int accId)
-        {
-            var hashParam = new Hashtable();
-
-            hashParam.Add("supername", recommendId);
-            hashParam.Add("mastername", custId);
-
-            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-            hashParam.Add("userid", accId);
-            hashParam.Add("errcode", 0);
-            hashParam.Add("errmsg", string.Empty);
-            using (var objDb = new Fanex.Data.ObjectDb("CustomerUpdMoveDepositMaster"))
-            {
-                objDb.AssignParamValues(hashParam);
-
-                objDb.ExecuteNonQuery();
-                if (CastAide.AsInt32(objDb.GetParameterValue("ErrCode")) != 0)
-                    return CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
-                return "Move master " + custId + " to super " + recommendId + " successfully!";
-            }
-        }
-
-        public static string MoveAgentDepositCustomer(string custId, string recommendId, int accId)
-        {
-            var hashParam = new Hashtable();
-
-            hashParam.Add("mastername", recommendId);
-            hashParam.Add("agentname", custId);
-
-            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-            hashParam.Add("userid", accId);
-            hashParam.Add("errcode", 0);
-            hashParam.Add("errmsg", string.Empty);
-            using (var objDb = new Fanex.Data.ObjectDb("CustomerUpdMoveDepositAgent"))
-            {
-                objDb.AssignParamValues(hashParam);
-
-                objDb.ExecuteNonQuery();
-                if (CastAide.AsInt32(objDb.GetParameterValue("ErrCode")) != 0)
-                    return CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
-                return "Move agent " + custId + " to master " + recommendId + " successfully!";
-            }
-        }
+        }        
 
         /// <summary>
         /// Nguyen Thi Minh Thu 14/12/2006
@@ -988,29 +885,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return error;
-        }
-
-        /// <summary>
-        /// Using DNAide's Lib
-        /// Tho.Nguyen updated: 12/3/2008
-        /// </summary>
-        /// <param name="hash"></param>
-        /// <returns></returns>
-        public static DbResult CustomerSelEditCustomer(Hashtable hash)
-        {
-            DbResult ds = null;
-            try
-            {
-                //var spElement = new UpdateCustomer().GetStoreProcedure(StoreProcedureSection.StoreCollection.SportBooksPt, "SelEditCustomer");
-                var spElement = new UpdateCustomer().GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "SelEditCustomer");
-                ds = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 600);
-                //ds = DbHelper.Execute("acc_CustomerSelEditCustomer", hash, DBType.ARCHIVE, 600);
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-            return ds;
         }
 
         /// <summary>

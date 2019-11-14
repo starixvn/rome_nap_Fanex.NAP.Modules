@@ -92,12 +92,7 @@ namespace Sunplus.Accounting.Core.Common
         public static class SystemCurrency
         {
             public const int Thai = 43;
-        }
-
-        public static class Domain
-        {
-            public static readonly Dictionary<string, string> External = WebSettings.ExternalSite;
-        }
+        }       
 
         #region Sport Constance
 
@@ -134,17 +129,12 @@ namespace Sunplus.Accounting.Core.Common
             public const int WinterSports = 29;
             public const int Squash = 30;
             public const int OtherSports = 99;
-            public const int HorseRacing = 151;
-            public const int Greyhound = 152;
-            public const int Harness = 153;
             public const int Financials = 201;
             public const int Casino = 251;
             public const int NumberGame = 161;
             public const int Keno = 202;
-            public const int GoldDeluxe = 255;
-            public const int MicroGamingLiveCasino = 203;
+            public const int GoldDeluxe = 255;     
             public const int Sportsbook2 = 16;
-            public const int MicroGamingRNGCasino = 205;
             public const int AGCasino = 250;
             public static readonly IEnumerable<int> Sports = new int[] { Soccer, Basketball, Football, Tennis, Baseball, Golf, Motorsports, OtherSports };
 

@@ -4,10 +4,6 @@ using System.Data;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Common;
 
-/// <summary>
-/// Summary description for ReportProvider
-/// </summary>
-
 namespace Sunplus.Accounting.DataAccess.Provider.Customer
 {
     public abstract class CustomerProvider : DataAccess

@@ -36,23 +36,6 @@ namespace Fanex.Tarus.Balance.Business
             return hasPermission;
         }
 
-        public ResetWinningDTO GetDataReportResetWinning(string date, int data)
-        {
-            var result = new ResetWinningDTO();
-
-            try
-            {
-                result = this._resetWinningAccess.GetDataResetWinning(date, data);
-                return result;
-            }
-            catch (Exception exception)
-            {
-                LogExtensions.ExceptionHandler(exception);
-            }
-
-            return result;
-        }
-
         public ResetWinning_New GetResetWinningDataAfterMoveBetDay(GetResetWinningCriteria criteria)
         {
             criteria.FromDate = Convert.ToDateTime(criteria.FromDate).ToShortDateString();

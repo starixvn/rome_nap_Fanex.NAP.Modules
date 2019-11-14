@@ -224,10 +224,5 @@ namespace Fanex.Tarus.Balance.DataAccess
 
             return result;
         }
-
-        public ResetWinningDTO GetDataResetWinning(string date, int data)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

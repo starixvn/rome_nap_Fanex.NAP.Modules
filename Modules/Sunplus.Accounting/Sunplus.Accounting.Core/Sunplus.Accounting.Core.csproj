@@ -85,8 +85,8 @@
       <HintPath>..\..\..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Logging, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Logging.1.0.4\lib\net40\Fanex.Logging.dll</HintPath>
+    <Reference Include="Fanex.Logging, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Logging.2.0.1\lib\net461\Fanex.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Logging.Extensions, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
@@ -168,8 +168,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.0.14, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.0.14\lib\net461\Sunplus.Accounting.Entities.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.1.1\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Core.Common, Version=1.1.4505.19054, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Core.Common.1.1.4505.19054\lib\net40\Sunplus.Core.Common.dll</HintPath>
@@ -237,29 +236,13 @@
     <Compile Include="Configurations\ExternalSection.cs" />
     <Compile Include="Configurations\NumberGameSection.cs" />
     <Compile Include="Configurations\HelperSection.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\Admin.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\Casino.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\BetList.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\LogDisplay.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\Helper.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\Report.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\StoreProcedureGroup.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\Transaction.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\UserControl.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\ViewPt.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\SportbookPt.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\ExchangeRate.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\Customer.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\CreditTerm.cs" />
     <Compile Include="Configurations\TransactionSection.cs" />
-    <Compile Include="Configurations\UserControlSection.cs" />
     <Compile Include="Configurations\LogSection.cs" />
     <Compile Include="Configurations\MailSection.cs" />
     <Compile Include="Configurations\StoreProceduresSection.cs" />
     <Compile Include="Configurations\WebSettings.cs" />
     <Compile Include="Constant\Error.cs" />
     <Compile Include="Constant\Sport.cs" />
-    <Compile Include="Email\SendMailBugSystem.cs" />
     <Compile Include="Extensions\CollectionExtension.cs" />
     <Compile Include="Extensions\DateTimeExtension.cs" />
     <Compile Include="Extensions\EnumerableExtension.cs" />

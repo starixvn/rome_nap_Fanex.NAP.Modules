@@ -68,8 +68,8 @@
       <HintPath>..\..\..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Logging, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Logging.1.0.4\lib\net40\Fanex.Logging.dll</HintPath>
+    <Reference Include="Fanex.Logging, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Logging.2.0.1\lib\net461\Fanex.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Logging.Extensions, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
@@ -140,8 +140,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.0\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.1\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -200,10 +199,6 @@
     <Compile Include="Configurations\KenoBetTypes\KenoBetTypesCollection.cs" />
     <Compile Include="Configurations\KenoBetTypes\KenoBetTypesElement.cs" />
     <Compile Include="Configurations\KenoBetTypes\KenoBetTypesSection.cs" />
-    <Compile Include="Configurations\MicroGamingBetTypes\MicroGamingBetTypesCollection.cs" />
-    <Compile Include="Configurations\MicroGamingBetTypes\MicroGamingBetTypesElement.cs" />
-    <Compile Include="Configurations\MicroGamingBetTypes\MicroGamingBetTypesSection.cs" />
-    <Compile Include="Configurations\MicroGamingBetTypes\MicroGamingBetTypesSectionServices.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\AdminSession.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\BetAggregatorSection.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\BetListSection.cs" />
@@ -213,11 +208,6 @@
     <Compile Include="Configurations\StoreProcedureGroup\ExchangeRateSession.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\HelperSession.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\LogDisplaySection.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\P2PSession.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\RacingSession.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\ReportSession.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\SettlementSession.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\SpecialDeleteGroupSection.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\SportbookPtSession.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\TransactionGroupSection.cs" />
     <Compile Include="Configurations\StoreProcedureGroup\UserControlSession.cs" />

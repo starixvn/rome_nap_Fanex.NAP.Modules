@@ -13,11 +13,7 @@ namespace Sunplus.Accounting.DataAccess
     /// Summary description for IUserDAO
     /// </summary>
     public interface IUserDAO
-    {
-        DbResult InsResetWinning(DateTime dateTime, int userId, string[] arrDesc, string IP);
-
-        List<ResetWinning> GetResetWinning(DateTime dtmMoveBetDate, DateTime dtmTodate);
-
+    {  
         List<FinanceTransaction> GetResetWinning_ByDate(DateTime transDate, bool isReset);
 
         DateTime MoveBetDateSel();
@@ -65,9 +61,7 @@ namespace Sunplus.Accounting.DataAccess
 
         List<MenuBO> GetGroupFunc();
 
-        List<FinanceBettype> GetFinanceBettypes();
-
-        Result InsertCustomerToGroup(int custId, int roleId, string system);
+        List<FinanceBettype> GetFinanceBettypes();   
 
         List<MenuBO> GetReportMenu(int custId, string system);
     }

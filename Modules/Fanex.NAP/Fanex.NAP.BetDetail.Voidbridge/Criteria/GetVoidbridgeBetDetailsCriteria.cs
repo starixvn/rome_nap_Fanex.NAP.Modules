@@ -19,7 +19,7 @@
 
         public override string GetSettingKey()
         {
-            return "BetList_MicroGaming_BetDetails";
+            return "Acc_BetList_RNG_Detail";
         }
 
         public override bool IsValid()

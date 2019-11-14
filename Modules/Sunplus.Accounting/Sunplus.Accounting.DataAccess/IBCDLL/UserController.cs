@@ -9,7 +9,6 @@ using IBCUtils;
 
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using Encryption = DNAide.Utils.Encryption;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL
@@ -18,16 +17,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
 
     public class UserController:DataAccess
     {
-        public static StoreProcedureElement GetUserControlStoreProcedure(UserControlSession.StoreCollection storeCollection, string alias)
-        {
-            var sps = UserControlSession.Instance[storeCollection];
-            return sps != null ? sps[alias] : null;
-        }
-        public static StoreProcedureElement GetCustomerStoreProcedure(string alias)
-        {
-            var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
-            return sps != null ? sps[alias] : null;
-        }
 
         private static readonly CultureInfo cult = CultureInfo.CurrentCulture;
 
@@ -120,35 +109,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
                 throw ex;
             }
             return rs;
-        }
-
-        public static int AuthenticateMember(int custId, string username)
-        {
-            if (string.IsNullOrEmpty(username))
-            {
-                username = "";
-            }
-            int roleId = 0;
-            DbResult rs = null;
-            var param = new Hashtable();
-            param.Add("custid", custId);
-            param.Add("username", username);
-            param.Add("roleid", 0);
-            try
-            {
-                using (ObjectDb db = new ObjectDb("CustomerSelBelonging", 600))
-                {
-                    db.AssignParamValues(param);
-                    var output = db.GetOuputParams();
-
-                    roleId = Convert.ToInt32(rs.Outputs["roleid"]);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return roleId;
         }
 
         /// <summary>
@@ -377,35 +337,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-        }
-
-        public static string GetUsernameById(string id)
-        {
-            var param = new Hashtable();
-            param.Add("inputuser", id);
-            
-            DbResult ds = null;
-            using (ObjectDb db = new ObjectDb("DBA_GetAgent"))
-            {
-                db.AssignParamValues(param);
-                var dataset = db.ExecuteDataSet();
-                var output = db.GetOuputParams();
-
-                ds = new DbResult(output, dataset);
-            }
-
-            if (ds.ResultSet.Tables[0].Rows.Count > 0)
-            {
-                if (!Convert.IsDBNull(ds.ResultSet.Tables[0].Rows[0]["membername"]))
-                    return ds.ResultSet.Tables[0].Rows[0]["membername"].ToString();
-                if (!Convert.IsDBNull(ds.ResultSet.Tables[0].Rows[0]["agentName"]))
-                    return ds.ResultSet.Tables[0].Rows[0]["agentName"].ToString();
-                if (!Convert.IsDBNull(ds.ResultSet.Tables[0].Rows[0]["masterName"]))
-                    return ds.ResultSet.Tables[0].Rows[0]["masterName"].ToString();
-                if (!Convert.IsDBNull(ds.ResultSet.Tables[0].Rows[0]["superName"]))
-                    return ds.ResultSet.Tables[0].Rows[0]["superName"].ToString();
-            }
-            return "";
         }
 
         /// <summary>

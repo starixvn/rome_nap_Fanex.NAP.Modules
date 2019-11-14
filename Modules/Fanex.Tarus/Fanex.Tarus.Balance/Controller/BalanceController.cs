@@ -27,15 +27,6 @@ namespace Fanex.Tarus.Balance.Controller
         public ViewResult ResetWinning()
         {
             return View("~/Views/Balance/ResetWinning.cshtml");
-        }
-
-        [HttpPost]
-        public JsonResult GetDataReportResetWinning(string date, int data)
-        {
-            var list = new List<ResetWinning>();
-            var result = new ResetWinningDTO();
-            result = _resetWinningService.GetDataReportResetWinning(date, data);
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        }   
     }
 }

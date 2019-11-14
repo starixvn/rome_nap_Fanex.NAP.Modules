@@ -870,13 +870,5 @@ namespace Sunplus.Accounting.DataAccess.APIClient
 
             return status;
         }
-
-        private class StoreProcedureConfiguration : DataAccess
-        {
-            public StoreProcedureElement GetStoreProcedureInfo(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.CasinoSession.StoreCollection storeCollection, string aliasName)
-            {
-                return GetStoreProcedure(storeCollection, aliasName);
-            }
-        }
     }
 }

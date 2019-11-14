@@ -70,20 +70,5 @@ namespace Sunplus.Accounting.Business.Security
                 throw ex;
             }
         }
-
-        public static bool IsValidRequestUrl(string requestUrl, string accountingSystem)
-        {
-            requestUrl = StringUtils.ExtractDomainNameFromURL(requestUrl);
-
-            if (WebSettings.ExternalSite.ContainsKey(requestUrl) && accountingSystem.ToLower().Equals(Enumerations.AccountingSystem.Accounting.ToString().ToLower()))
-                return false;
-            return true;
-        }
-
-        public static bool IsRequestFromExternalSite(string requestUrl)
-        {
-            requestUrl = StringUtils.ExtractDomainNameFromURL(requestUrl);
-            return WebSettings.ExternalSite.ContainsKey(requestUrl);
-        }
     }
 }

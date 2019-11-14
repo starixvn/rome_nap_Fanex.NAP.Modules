@@ -13,7 +13,6 @@ namespace Sunplus.Accounting.Core.Common
         public enum AccountingSystem
         {
             Accounting = 1,
-            EXTERNAL = 2,
         }
 
         #endregion AccountingSystem enum
@@ -81,42 +80,7 @@ namespace Sunplus.Accounting.Core.Common
                 AutoSuspend = 4,
                 SelectedBetting = 5,
                 Abnormal = 6
-            }
-
-            /// <summary>
-            /// </summary>
-            public enum Reports
-            {
-                Report,
-                ReportList,
-                Report2a,
-                Report2d,
-                Report2h,
-                Report2hSoccer,
-                Report2hOtherSports,
-                ReportTrader,
-                ReportTraderSoccer,
-                ReportTraderOtherSports,
-                Report18,
-                OtherReports,
-                HorseRacing,
-                ReportCasino,
-                Finance,
-                ReportM88Winloss,
-                ReportFun88Winloss,
-                Report12BETWinloss,
-                ReportingServices,
-                PunterAnalysis,
-                NonePTMemSummary,
-                ReportDetailWinlossThai,
-                ReportDailyWinlossThai,
-                ReportALogWinloss,
-                Report2HS,
-                Report2HO,
-                ReportLicenseeWinLossByLicensee,
-                SpecialMatchAnalysis
-            }
-
+            }           
             /// <summary>
             /// Ex460Rate = Ex.Rate
             /// </summary>
@@ -175,7 +139,7 @@ namespace Sunplus.Accounting.Core.Common
 
         #endregion Nested type: Functions
 
-            #region FinancialManagement enum
+        #region FinancialManagement enum
 
             public enum FinancialManagement
             {
@@ -191,7 +155,7 @@ namespace Sunplus.Accounting.Core.Common
 
             #endregion FinancialManagement enum
 
-            #region Others enum
+        #region Others enum
 
             /// <summary>
             /// Bet320List320400IP410 = Bet List (IP)
@@ -253,23 +217,7 @@ namespace Sunplus.Accounting.Core.Common
         }
 
             #endregion Others enum
-
-        public enum ReportType
-        {
-            Horse_Racing_Daily_Report_For_UK = 1,
-            Horse_Racing_Daily_Report_For_AU = 2,
-            Greyhound_Daily_Report_For_UK = 3,
-            Greyhound_Daily_Report_For_AU = 4,
-            Harness_Daily_Report_For_AU = 5,
-            Horse_Racing_Report_for_SA_Tote_NEW = 6,
-
-            Horse_Racing_Daily_Report_Detail_For_UK = 101,
-            Horse_Racing_Daily_Report_Detail_For_AU = 102,
-            Greyhound_Daily_Report_Detail_For_UK = 103,
-            Greyhound_Daily_Report_Detail_For_AU = 104,
-            Harness_Daily_Report_Detail_For_AU = 105,
-            Horse_Racing_Report_Detail_for_SA_Tote_NEW = 106,
-        }
+       
 
         public enum Admin
         {

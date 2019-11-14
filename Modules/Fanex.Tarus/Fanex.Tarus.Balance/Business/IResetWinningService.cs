@@ -9,8 +9,6 @@ namespace Fanex.Tarus.Balance.Business
     {
         bool CheckPermissionToReset();
 
-        ResetWinningDTO GetDataReportResetWinning(string date, int data);
-
         ResetWinning_New GetResetWinningDataAfterMoveBetDay(GetResetWinningCriteria criteria);
 
         ResetWinningBeforeMoveBetDay GetResetWinningDataBeforeMoveBetDay(GetResetWinningBeforeMoveBetDayCriteria criteria);

@@ -10,18 +10,13 @@ namespace Sunplus.Accounting.Entities
     public class CustomerDetail
     {
         private int _CustID;
-        private int _RoleId;
-        private bool _IsDisabledFIUL = false;
-        private bool _IsDisabledFIDL = false;
-        private bool _IsDisabledHRUL = false;
+        private int _RoleId;      
         private bool _IsDisabledNumberGame = false;
         private bool _IsDisabledNumberGameDL = false;
         private bool _IsInternalUser = false;
         private int _LimitPerIP = 0;
-
-        //@Huynguyen edited
+      
         private bool _IsClosed = false;
-
         private bool _IsSuspended = false;
         private bool _IsAutoSuspend = false;
         private bool _IsDisableCasino = false;
@@ -29,11 +24,8 @@ namespace Sunplus.Accounting.Entities
         private bool _IsSpecial = false;
         private bool _IsAllowMasterAutoPT = false;
         private bool _IsDisableOutright = false;
-        private bool _IsEnableDoubleCommLosing = false;
-
-        private bool _isEnableHorseRacingFixedOdds = false;
-        private bool _SelectedBetting;
-        //end
+        private bool _IsEnableDoubleCommLosing = false;      
+        private bool _SelectedBetting;    
 
         private string _UserName2;
         private string _UserName;
@@ -224,36 +216,6 @@ namespace Sunplus.Accounting.Entities
             }
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        public bool IsDisabledFIDL
-        {
-            get
-            {
-                return _IsDisabledFIDL;
-            }
-            set
-            {
-                _IsDisabledFIDL = value;
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public bool IsDisabledFIUL
-        {
-            get
-            {
-                return _IsDisabledFIUL;
-            }
-            set
-            {
-                _IsDisabledFIUL = value;
-            }
-        }
-
         public bool IsClosed
         {
             get
@@ -438,21 +400,7 @@ namespace Sunplus.Accounting.Entities
             {
                 _LimitPerIP = value;
             }
-        }
-
-
-        public bool IsEnableHorseRacingFixedOdds
-        {
-            get
-            {
-                return _isEnableHorseRacingFixedOdds;
-            }
-
-            set
-            {
-                _isEnableHorseRacingFixedOdds = value;
-            }
-        }
+        }       
 
         public int AccId { get; set; }
 
@@ -478,7 +426,6 @@ namespace Sunplus.Accounting.Entities
 
         public bool IsDisableCockFighting { get; set; }
 
-        public bool IsDisableCricket { get; set; }
         public bool IsDisableNG2 { get; set; }
 
         #endregion Properties

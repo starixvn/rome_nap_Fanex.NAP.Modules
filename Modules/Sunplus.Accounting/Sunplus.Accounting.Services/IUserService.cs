@@ -13,10 +13,6 @@ namespace Sunplus.Accounting.Business
     /// </summary>
     public interface IUserService
     {
-        bool InsResetWinning(DateTime dateTime, int userId, string[] arrDesc, string IP, ref string ErrMsg);
-
-        List<ResetWinning> GetResetWinning();
-
         List<FinanceTransaction> GetResetWinning_ByDate(DateTime transDate, bool isReset);
 
         DataSet InsDataTmpExcel(int userId, string arrFromCust, string arrToCust, string arrAmount, string arrExRate,
@@ -61,7 +57,6 @@ namespace Sunplus.Accounting.Business
         int GetCustomerIdByUsername(string custName);
 
         List<FinanceBettype> GetFinanceBettyles();
-
-        Result InsertCustomerToGroup(int custId, int roleId, string system);
+    
     }
 }

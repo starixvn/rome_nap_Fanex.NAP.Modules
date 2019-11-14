@@ -3,8 +3,6 @@ using System;
 using System.Configuration;
 using DNAide.Data;
 using Microsoft.Practices.EnterpriseLibrary.Data.Sql;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 
 /// <summary>
 /// Summary description for DataAccess
@@ -115,83 +113,6 @@ namespace Sunplus.Accounting.DataAccess
             return
                 Activator.CreateInstance(
                     Type.GetType(string.Format(provider, GetDAOClient(client), GetDataSource(source))));
-        }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(AdminSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = AdminSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(CasinoSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = CasinoSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(TransactionGroupSection.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = TransactionGroupSection.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(CreditTermSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = CreditTermSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(CustomerSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = CustomerSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(ExchangeRateSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = ExchangeRateSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(HelperSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = HelperSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(LogDisplaySection.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = LogDisplaySection.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-        protected virtual StoreProcedureElement GetStoreProcedure(ReportSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = ReportSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(SportbookPtSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = SportbookPtSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(ViewPtSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = ViewPtSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(BetListSection.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = BetListSection.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
-
-        protected virtual StoreProcedureElement GetStoreProcedure(UserControlSession.StoreCollection storeCollection, string aliasName)
-        {
-            var sps = UserControlSession.Instance[storeCollection];
-            return sps != null ? sps[aliasName] : null;
-        }
+        }       
     }
 }
