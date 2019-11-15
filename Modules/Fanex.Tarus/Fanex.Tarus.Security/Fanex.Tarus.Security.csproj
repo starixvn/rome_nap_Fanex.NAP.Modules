@@ -239,6 +239,7 @@
     <Compile Include="Criteria\CheckSmartPunterCriteria.cs" />
     <Compile Include="Criteria\CheckDummyAccountCriteria.cs" />
     <Compile Include="Criteria\CheckSpecialSitePermissionCriteria.cs" />
+    <Compile Include="Criteria\DetectCustomerIdCriteria.cs" />
     <Compile Include="Criteria\GetCustomerSiteCriteria.cs" />
     <Compile Include="Domain\SmartPunterActionId.cs" />
     <Compile Include="Configurations\UrlPermissionManager.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="Models\CustomerType.cs" />
     <Compile Include="Repositories\CustomerSiteDataAccess.cs" />
     <Compile Include="Repositories\CustomerTypeDataAccess.cs" />
+    <Compile Include="Repositories\DetectCustomerDataAccess.cs" />
     <Compile Include="Repositories\ICustomerSiteDataAccess.cs" />
     <Compile Include="Repositories\ICustomerTypeDataAccess.cs" />
     <Compile Include="Repositories\IUserPermissionDataAccess.cs" />
@@ -265,6 +267,7 @@
     <Compile Include="HttpModules\Services\UrlPermissionHttpContext.cs" />
     <Compile Include="Permission\CheckPermissionAttribute.cs" />
     <Compile Include="Services\CustomerAuthorizationService.cs" />
+    <Compile Include="Services\DetectCustomerService.cs" />
     <Compile Include="Services\Encryptor.cs" />
     <Compile Include="Services\IPermissionService.cs" />
     <Compile Include="Services\ISmartPunterService.cs" />

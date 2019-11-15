@@ -17,25 +17,28 @@ namespace Fanex.Tarus.Security.Services
     {
         private readonly ICustomerSiteDataAccess customerSiteDataAccess;
         private readonly ICustomerTypeDataAccess customerTypeDataAccess;
+        private readonly IDetectCustomerService detectCustomerService;
 
         internal CustomerAuthorizationService()
-            : this(null, null)
+            : this(null, null, null)
         {
         }
 
         internal CustomerAuthorizationService(
             ICustomerSiteDataAccess customerSiteDataAccess,
-            ICustomerTypeDataAccess customerTypeDataAccess)
+            ICustomerTypeDataAccess customerTypeDataAccess,
+            IDetectCustomerService detectCustomerService)
         {
             this.customerSiteDataAccess = customerSiteDataAccess ?? new CustomerSiteDataAccess();
             this.customerTypeDataAccess = customerTypeDataAccess ?? new CustomerTypeDataAccess();
+            this.detectCustomerService = detectCustomerService ?? new DetectCustomerService();
         }
 
         public IEnumerable<CustomerSite> GetCustomerSites(string custIdOrUserNameList)
         {
-            int custId;
+            int custId = detectCustomerService.GetCustId(custIdOrUserNameList);
 
-            var customers = int.TryParse(custIdOrUserNameList, out custId)
+            var customers = custId > 0
                 ? customerSiteDataAccess.GetCustomerSites(new GetCustomerSiteCriteria(custId))
                 : customerSiteDataAccess.GetCustomerSites(new GetCustomerSiteCriteria(custIdOrUserNameList));
 
@@ -44,9 +47,9 @@ namespace Fanex.Tarus.Security.Services
 
         public IEnumerable<CustomerType> GetCustomerTypes(string custIdOrUserNameList)
         {
-            int custId;
+            int custId = detectCustomerService.GetCustId(custIdOrUserNameList);
 
-            var customerTypes = int.TryParse(custIdOrUserNameList, out custId)
+            var customerTypes = custId > 0
                 ? customerTypeDataAccess.GetCustomerTypes(new GetCustomerTypeCriteria(custId))
                 : customerTypeDataAccess.GetCustomerTypes(new GetCustomerTypeCriteria(custIdOrUserNameList));
 
