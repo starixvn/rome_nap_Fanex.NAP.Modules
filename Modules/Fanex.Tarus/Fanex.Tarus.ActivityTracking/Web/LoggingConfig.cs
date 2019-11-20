@@ -20,7 +20,11 @@ namespace Fanex.Tarus.ActivityTracking.Web
 
             var regexSensitiveInfo = GetRegexToHideSensitiveInfo(sensitiveInfo ?? Enumerable.Empty<string>());
             var loggingConfiguration = GetLoggingConfiguration();
-            loggingConfiguration = loggingConfiguration.GetHttpHeaderInfo().HideSensitiveInfo(regexSensitiveInfo);
+            loggingConfiguration = loggingConfiguration
+                .GetHttpHeaderInfo()
+                .GetHttpSessionInfo()
+                .HideSensitiveInfo(regexSensitiveInfo);
+
             if (getDbExceptionInfo != null)
             {
                 loggingConfiguration = loggingConfiguration.UseGetDbExceptionInfo(getDbExceptionInfo);
