@@ -15,7 +15,7 @@ namespace Sunplus.Accounting.DataAccess.IAdmin
 
         Result RemoveSuperFromGroup(int custId, string groupName, int userId);
 
-        IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId);
+        ExternalSiteExtraPTGroup GetExtraPTGroups(int custId);
 
         Result ChangePrimaryGroup(int custId, string groupName, DateTime effectiveDate, int userId, string ip);
 

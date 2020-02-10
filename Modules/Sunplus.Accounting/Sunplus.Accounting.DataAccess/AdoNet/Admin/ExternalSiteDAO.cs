@@ -6,6 +6,7 @@ using Fanex.Data;
 using Sunplus.Accounting.DataAccess.IAdmin;
 using Sunplus.Accounting.Entities.Admin;
 using Sunplus.Accounting.Entities;
+using Fanex.CustomerSetting.Module.Core;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
 {
@@ -91,17 +92,34 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
             }
         }
 
-        public IEnumerable<ExternalSiteExtraPTGroup> GetExtraPTGroups(int custId)
+        public ExternalSiteExtraPTGroup GetExtraPTGroups(int custId)
         {
             var param = new Hashtable
             {
                 { "custid", custId }
             };
 
+            ExternalSiteExtraPTGroup result = new ExternalSiteExtraPTGroup();
+            var entities = new List<ExternalSiteExtraPTGroupEntity>();
             using (ObjectDb db = new ObjectDb("Acc_CustGroupSelExtraPTGroupByCustID"))
             {
-                return db.Query<ExternalSiteExtraPTGroup>(param);
+                var reader = db.ExecuteReader(param);
+                while (reader.Read())
+                {
+                    entities.Add(new ExternalSiteExtraPTGroupEntity
+                    {
+                        EffectiveDate = Utils.ToDateTime(reader["EffectiveDate"]),
+                        GroupName = Utils.ToString(reader["GroupName"]),
+                        IsPrimary = Utils.ToBoolean(reader["IsPrimary"])
+                    });
+                }
+
+                reader.Close();
+                result.Entities = entities;
+                result.NoOfMember = Utils.ToInt32(db.GetOuputParams()["noofmember"]);
             }
+
+            return result;
         }
 
         public Result ChangePrimaryGroup(int custId, string groupName, DateTime effectiveDate, int userId, string ip)
