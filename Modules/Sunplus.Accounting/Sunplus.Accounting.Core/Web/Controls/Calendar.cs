@@ -57,7 +57,8 @@ namespace Sunplus.Accounting.Core.Web.Controls
         /// <returns></returns>
         public static string GenCalendarControl(string mindate, string maxdate, string txtDateId, string rootPath,
                                                 string triggerId, string currentDate,
-                                                bool noJs, bool showTime, string eventOnSelect, string theme, string calobj)
+                                                bool noJs, bool showTime, string eventOnSelect, string theme, string calobj,
+                                                bool showToday = true)
         {
             CultureInfo cult = CultureInfo.CurrentCulture;
 
@@ -96,7 +97,7 @@ namespace Sunplus.Accounting.Core.Web.Controls
                 TemplateHandler.Assign(ref htmlCalendar, "{eventOnSelect}",
                                        eventOnSelect.Length > 0 ? eventOnSelect + ";" : "");
                 TemplateHandler.Assign(ref htmlCalendar, "{showTime}", showTime ? "true" : "false");
-                TemplateHandler.Assign(ref htmlCalendar, "{showToday}", "true");
+                TemplateHandler.Assign(ref htmlCalendar, "{showToday}", showToday ? "true" : "false");
                 TemplateHandler.Assign(ref htmlCalendar, "{currentDate}",
                                        string.Format(cult, "{0:MM/dd/yyyy}", Convert.ToDateTime(currentDate)));
                 TemplateHandler.Assign(ref htmlCalendar, "{SelectedDate}",
