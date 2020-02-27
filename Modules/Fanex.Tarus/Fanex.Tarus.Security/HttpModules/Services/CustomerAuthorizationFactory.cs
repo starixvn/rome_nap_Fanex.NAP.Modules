@@ -12,6 +12,9 @@
                 case "[B]":
                     return new CreditOrDepositCustomerAuthorization();
 
+                case "[C]":
+                    return new FinanceCustomerAuthorization();
+
                 default:
                     return null;
             }
