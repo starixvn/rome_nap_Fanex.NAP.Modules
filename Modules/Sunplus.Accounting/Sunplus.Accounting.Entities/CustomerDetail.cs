@@ -420,7 +420,7 @@ namespace Sunplus.Accounting.Entities
 
         public bool IsDisableColossusBets { get; set; }
 
-        public bool IsDisableAllBet { get; set; }
+        public bool IsDisableLiveCasino { get; set; }
 
         public bool IsDisableSportsbook2 { get; set; }
 

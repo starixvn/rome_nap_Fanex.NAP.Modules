@@ -399,11 +399,11 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }        
 
-        public static bool IsShowAllBet
+        public static bool IsShowLiveCasino
         {
             get
             {
-                return (ConfigurationManager.AppSettings["IsShowAllBet"] == "1");
+                return (ConfigurationManager.AppSettings["IsShowLiveCasino"] == "1");
             }
         }
 
