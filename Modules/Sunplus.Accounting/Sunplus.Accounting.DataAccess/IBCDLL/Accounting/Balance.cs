@@ -460,14 +460,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// </summary>
         /// <param name="_custid"></param>
         /// <returns></returns>
-        public static DbResult CustomerSelectClearBalance(int _custid)
+        public static DbResult CustomerSelectClearBalance(int _custid, int userId)
         {
             DbResult result = null;
             try
             {
                 var param = new Hashtable();
                 param.Add("custid", _custid);
-                
+                param.Add("userid", userId);
+
                 using (ObjectDb db = new ObjectDb("CustomerSelClearBalance", 600))
                 {
                     db.AssignParamValues(param);

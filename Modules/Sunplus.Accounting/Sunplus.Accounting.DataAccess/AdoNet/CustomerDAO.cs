@@ -141,6 +141,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 var param = new Hashtable
                 {
                     { "username", username},
+                    { "userid", AppSession.AccId},
                     { "checkcustid", checkCustId}
                 };
 
