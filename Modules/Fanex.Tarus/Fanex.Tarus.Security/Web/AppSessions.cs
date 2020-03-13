@@ -193,5 +193,13 @@ namespace Fanex.Tarus.Security.Web
                 AppSession.CurrentSession.FromSystem = value;
             }
         }
+
+        public bool IsBelongToSpecialGroups
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+        }
     }
 }
