@@ -407,6 +407,14 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
+        public static bool IsShowVirtualGames
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsShowVirtualGames"] == "1");
+            }
+        }
+
         public static bool EnableRNGCasino
         {
             get

@@ -17,6 +17,8 @@ namespace Fanex.Tarus.Security.Web
     /// </summary>
     internal class AppSessions : ICurrentSession
     {
+        private bool notApplyForNAP = false;
+
         /// <summary>
         /// Gets or sets the role access.
         /// </summary>
@@ -193,5 +195,7 @@ namespace Fanex.Tarus.Security.Web
                 AppSession.CurrentSession.FromSystem = value;
             }
         }
+
+        public bool IsBelongToSpecialGroups => notApplyForNAP;
     }
 }

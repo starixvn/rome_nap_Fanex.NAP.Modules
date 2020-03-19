@@ -54,9 +54,8 @@
       <HintPath>..\..\..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.CustomerSetting.Module.Core.2.0.3.9\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.5\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
@@ -67,8 +66,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Business.Implement.1.0.0.12\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\packages\Fanex.Tarus.Business.Implement.1.0.1\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.1.8\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>

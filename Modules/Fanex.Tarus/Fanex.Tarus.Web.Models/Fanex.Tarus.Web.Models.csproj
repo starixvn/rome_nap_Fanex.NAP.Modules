@@ -170,7 +170,7 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.2.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ThirdPartyProducts.StatusSetting.1.0.2.4-RemoveInactiveProduct001\lib\net461\ThirdPartyProducts.StatusSetting.dll</HintPath>
+      <HintPath>..\..\..\packages\ThirdPartyProducts.StatusSetting.1.0.2.4\lib\net461\ThirdPartyProducts.StatusSetting.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
