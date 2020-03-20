@@ -453,7 +453,15 @@ namespace Sunplus.Accounting.Core.Configurations
             {
                 return (ConfigurationManager.AppSettings["IsShowNG2"] == "1");
             }
-        }    
+        }
+
+        public static bool IsShowSabaclub
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsShowSabaclub"] == "1");
+            }
+        }
 
         public static bool IsUmNG2
         {
