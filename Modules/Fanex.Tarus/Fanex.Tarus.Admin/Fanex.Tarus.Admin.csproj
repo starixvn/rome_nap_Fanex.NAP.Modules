@@ -60,6 +60,9 @@
       <HintPath>..\..\..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Logging, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Logging.2.0.1\lib\net461\Fanex.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
@@ -95,6 +98,15 @@
     </Reference>
     <Reference Include="NPOI">
       <HintPath>..\..\..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.NAP.NPOI.1.0.0.0\lib\net40\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.NAP.NPOI.1.0.0.0\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.NAP.NPOI.1.0.0.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.8\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
@@ -143,6 +155,8 @@
     <Compile Include="Business\BACustomer\IBACustomerService.cs" />
     <Compile Include="Business\CompareBalance\CompareBalanceService.cs" />
     <Compile Include="Business\CustomerDateLimit\CustomerDateLimitService.cs" />
+    <Compile Include="Business\ManageBettype\ManageBettypeService.cs" />
+    <Compile Include="Business\ManageSportType\ManageSportTypeService.cs" />
     <Compile Include="Business\MaxMemberLimitBySuper\IMaxMemberLimitBySuperService.cs" />
     <Compile Include="Business\MaxMemberLimitBySuper\MaxMemberLimitBySuperService.cs" />
     <Compile Include="Business\SiteManagement\ISiteManagementService.cs" />
@@ -154,6 +168,8 @@
     <Compile Include="Controller\CustomerDateLimitController.cs" />
     <Compile Include="Controller\BACustomerController.cs" />
     <Compile Include="Controller\CompareBalanceController.cs" />
+    <Compile Include="Controller\ManageBettype\ManageBettypeController.cs" />
+    <Compile Include="Controller\ManageSporttype\ManageSportTypeController.cs" />
     <Compile Include="Controller\MaxNewMemberBySuperController.cs" />
     <Compile Include="Controller\SiteManagementController.cs" />
     <Compile Include="Controller\SMAManagement\SMAManagementController.cs" />
@@ -161,6 +177,12 @@
     <Compile Include="Criteria\CustomerDateLimit\GetCustomerDateLimitByIdCriteria.cs" />
     <Compile Include="Criteria\CustomerDateLimit\UpdateCustomerDateLimitCriteria.cs" />
     <Compile Include="Criteria\CustomerDateLimit\GetAllCustomerDateLimitCriteria.cs" />
+    <Compile Include="Criteria\ManageBettype\InsertBettypeCriteria.cs" />
+    <Compile Include="Criteria\ManageBettype\UpdateBettypeCriteria.cs" />
+    <Compile Include="Criteria\ManageBettype\SelectBettypeCriteria.cs" />
+    <Compile Include="Criteria\ManageSporttype\InsertSporttypeCriteria.cs" />
+    <Compile Include="Criteria\ManageSporttype\SelectSporttypeCriteria.cs" />
+    <Compile Include="Criteria\ManageSporttype\UpdateSporttypeCriteria.cs" />
     <Compile Include="Criteria\MaxMemberLimitBySuper\UpdateSuperCriteria.cs" />
     <Compile Include="Criteria\MaxMemberLimitBySuper\SearchSuperCriteria.cs" />
     <Compile Include="Criteria\MaxMemberLimitBySuper\GetSitesCriteria.cs" />
@@ -173,8 +195,11 @@
     <Compile Include="Criteria\SMAManagement\UpdateOwnerCriteria.cs" />
     <Compile Include="DataAccess\BACustomer\BACustomerAccess.cs" />
     <Compile Include="DataAccess\BACustomer\IBACustomerAccess.cs" />
+    <Compile Include="DataAccess\BaseDataAccess.cs" />
     <Compile Include="DataAccess\CompareBalance\CompareBalanceDataAccess.cs" />
     <Compile Include="DataAccess\CustomerDateLimit\CustomerDateLimitDataAccess.cs" />
+    <Compile Include="DataAccess\ManageBettype\ManageBettypeDataAccess.cs" />
+    <Compile Include="DataAccess\ManageSporttype\ManageSporttypeDataAccess.cs" />
     <Compile Include="DataAccess\MaxMemberLimitBySuper\IMaxMemberLimitBySuperDataAccess.cs" />
     <Compile Include="DataAccess\MaxMemberLimitBySuper\MaxMemberLimitBySuperDataAccess.cs" />
     <Compile Include="DataAccess\SiteManagement\ISiteManagementDataAccess.cs" />
@@ -189,6 +214,8 @@
     <Compile Include="Entities\CustomerSecurityCode.cs" />
     <Compile Include="Entities\FollowedCustomer.cs" />
     <Compile Include="Entities\FollowedCustomerDTO.cs" />
+    <Compile Include="Entities\ManageBettype\BettypeEntity.cs" />
+    <Compile Include="Entities\ManageSporttype\SportTypeEntity.cs" />
     <Compile Include="Entities\MaxMemberLimitBySuper\MaxMemberLimitBySuperUpdateResultEntity.cs" />
     <Compile Include="Entities\MaxMemberLimitBySuper\MaxMemberLimitBySuperSearchResult.cs" />
     <Compile Include="Entities\MaxMemberLimitBySuper\MaxMemberLimitBySuperEntity.cs" />
@@ -208,7 +235,13 @@
     <Compile Include="Enums\CustomerDataRangeType.cs" />
     <Compile Include="Enums\HeadlineType.cs" />
     <Compile Include="Enums\SiteType.cs" />
+    <Compile Include="Models\ManageBettype\BettypeModel.cs" />
+    <Compile Include="Models\ManageSporttype\SportTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\ManageBettype\SelectRequest.cs" />
+    <Compile Include="Request\ManageBettype\UpdateRequest.cs" />
+    <Compile Include="Request\ManageSportType\SelectRequest.cs" />
+    <Compile Include="Request\ManageSportType\UpdateRequest.cs" />
     <Compile Include="Resource\Error.Designer.cs">
       <DependentUpon>Error.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -241,7 +274,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
-    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.Tarus.DataAccess.Implement\Fanex.Tarus.DataAccess.Implement.csproj">
+      <Project>{9780010A-7EEC-4726-959B-D2CFFB1875EE}</Project>
+      <Name>Fanex.Tarus.DataAccess.Implement</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
