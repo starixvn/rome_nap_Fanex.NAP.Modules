@@ -540,13 +540,14 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             var memberNameList = newLicenseePostParam.MemberName.Split(new char[] { ',' });
             foreach (var memberName in memberNameList)
             {
+                newLicenseePostParam.MemberName = memberName;
                 if (string.IsNullOrWhiteSpace(memberName))
                 {
                     result.SuccessMessageList = succeededIdList;
                     return result;
                 }
-                
-                result = NewLicenseeAddNewMember(newLicenseePostParam);
+
+                result = NewLicenseeAddNewMember(newLicenseePostParam, true);
                 if (result.ErrorCode != 0)
                 {
                     result.ErrorMessage += " (" + memberName + ")";
@@ -678,9 +679,9 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             }
         }
 
-        public Result NewLicenseeAddNewMember(NewLicenseePostParam newLicenseePostParam)
+        public Result NewLicenseeAddNewMember(NewLicenseePostParam newLicenseePostParam, bool isClearBalanceAccount = false)
         {
-            var hashParam = GetAddNewHashTableParams(newLicenseePostParam);
+            var hashParam = isClearBalanceAccount ? GetAddNewHashTableParams_DummyUser(newLicenseePostParam) : GetAddNewHashTableParams(newLicenseePostParam);           
             hashParam.Add("recommend", newLicenseePostParam.AgentId);
             hashParam.Add("username", newLicenseePostParam.MemberName);
             hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
