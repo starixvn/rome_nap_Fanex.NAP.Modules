@@ -45,11 +45,11 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
-        public static int ProductIdKenoLottery
+        public static int ProductIdRNGLottery
         {
             get
             {
-                string productId = ConfigurationManager.AppSettings["ProductIdKenoLottery"];
+                string productId = ConfigurationManager.AppSettings["ProductIdRNGLottery"];
 
                 if (string.IsNullOrWhiteSpace(productId))
                 {
