@@ -8,6 +8,7 @@
 namespace Fanex.Tarus.Infrastructure.Helper
 {
     using System;
+    using System.Net;
     using System.Web;
     using DNAide.Core;
 
@@ -18,16 +19,32 @@ namespace Fanex.Tarus.Infrastructure.Helper
     {
         public static string GetClientIP()
         {
-            try
+            string ip = string.Empty;
+
+            foreach (IPAddress ipa in Dns.GetHostAddresses(HttpContext.Current.Request.UserHostAddress))
             {
-                if (HttpContext.Current.Request.IsLocal)
-                    return "127.0.0.1";
-                return CastAide.AsString(HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"], "");
+                if (ipa.AddressFamily.ToString().Equals("InterNetwork"))
+                {
+                    ip = ipa.ToString();
+                    break;
+                }
             }
-            catch (Exception ex)
+
+            if (!ip.Equals(string.Empty))
             {
-                throw ex;
+                return ip;
             }
+
+            foreach (IPAddress ipa in Dns.GetHostAddresses(Dns.GetHostName()))
+            {
+                if (ipa.AddressFamily.ToString().Equals("InterNetwork"))
+                {
+                    ip = ipa.ToString();
+                    break;
+                }
+            }
+
+            return ip.Trim();
         }
     }
 }
