@@ -1,6 +1,4 @@
-﻿using System.Web.Mvc;
-
-namespace Fanex.Tarus.Admin.Entities.ManageSporttype
+﻿namespace Fanex.Tarus.Admin.Entities.ManageSporttype
 {
     public class SportTypeEntity
     {

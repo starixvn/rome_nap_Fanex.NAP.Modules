@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Tarus.Admin.Request.ManageSportType
 {
-    public class SelectRequest
+    public class SelectSportRequest
     {
         public int SportType { get; set; }
 

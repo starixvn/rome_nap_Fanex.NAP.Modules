@@ -2,7 +2,7 @@
 {
     using Fanex.Tarus.Admin.Entities.ManageBetType;
 
-    public class UpdateRequest : BettypeEntity
+    public class UpdateBettypeRequest : BettypeEntity
     {
     }
 }

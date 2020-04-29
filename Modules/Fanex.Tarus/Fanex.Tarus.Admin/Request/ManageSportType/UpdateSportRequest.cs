@@ -2,7 +2,7 @@
 {
     using Fanex.Tarus.Admin.Entities.ManageSporttype;
 
-    public class UpdateRequest : SportTypeEntity
+    public class UpdateSportRequest : SportTypeEntity
     {
     }
 }

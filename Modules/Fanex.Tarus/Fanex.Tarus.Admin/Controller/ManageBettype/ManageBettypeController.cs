@@ -1,13 +1,12 @@
 ﻿namespace Fanex.Tarus.Admin.Controller.ManageBettype
 {
+    using System.Web;
+    using System.Web.Mvc;
     using Fanex.Tarus.Admin.Business.ManageBettype;
     using Fanex.Tarus.Admin.Criteria.ManageBettype;
-    using Fanex.Tarus.Admin.DataAccess.ManageBettype;
     using Fanex.Tarus.Admin.Request.ManageBettype;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
-    using System.Web;
-    using System.Web.Mvc;
 
     public class ManageBettypeController : BaseController
     {
@@ -31,10 +30,11 @@
 
         [AuthenticateRead]
         [HttpGet]
-        public JsonResult Select(SelectRequest request) => Json(_manageBettypeService.Select(new SelectBettypeCriteria {
+        public JsonResult SelectSport(SelectBettypeRequest request) => Json(_manageBettypeService.Select(new SelectBettypeCriteria
+        {
             TypeId = request.TypeId,
             TypeNamee = request.TypeName,
-            PageIndex =  request.PageIndex,
+            PageIndex = request.PageIndex,
             PageSize = request.PageSize
         }), JsonRequestBehavior.AllowGet);
 
@@ -45,6 +45,6 @@
         [AuthenticateHost]
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult Update(UpdateRequest request) => Json(_manageBettypeService.Update(request));
+        public JsonResult Update(UpdateBettypeRequest request) => Json(_manageBettypeService.Update(request));
     }
 }

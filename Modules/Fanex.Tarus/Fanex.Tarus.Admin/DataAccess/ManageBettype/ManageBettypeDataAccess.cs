@@ -1,13 +1,12 @@
 ﻿namespace Fanex.Tarus.Admin.DataAccess.ManageBettype
 {
+    using System.Collections.Generic;
     using Fanex.Data;
-    using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Admin.Criteria.ManageBettype;
     using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.Entities.ManageBetType;
     using Fanex.Tarus.Admin.Models.ManageBettype;
     using Fanex.Tarus.Infrastructure.Helper;
-    using System.Collections.Generic;
 
     public interface IManageBettypeDataAccess
     {
