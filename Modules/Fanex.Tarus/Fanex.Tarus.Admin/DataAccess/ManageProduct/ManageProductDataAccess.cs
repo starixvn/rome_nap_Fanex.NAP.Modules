@@ -35,13 +35,13 @@ namespace Fanex.Tarus.Admin.DataAccess.ManageProduct
                         ProductName = DataUtils.ToString(reader["ProductName"]),
                         Description = DataUtils.ToString(reader["Description"]),
                         ProductPrefix = DataUtils.ToString(reader["ProductPrefix"]),
-                        Enabled = DataUtils.ToString(reader["Enabled"]),
+                        Enabled = DataUtils.ToBoolean(reader["Enabled"]),
                         EndOfSupportDate = DataUtils.ToString(reader["EndOfSupportDate"]),
                         BalanceType = DataUtils.ToString(reader["BalanceType"]),
                         SubProductBalanceType = DataUtils.ToString(reader["SubProductBalanceType"]),
                         GroupType = DataUtils.ToString(reader["GroupType"]),
                         CasinoType = DataUtils.ToString(reader["CasinoType"]),
-                        IsOfferPlayForFun = DataUtils.ToString(reader["IsOfferPlayForFun"]),
+                        IsOfferPlayForFun = DataUtils.ToBoolean(reader["IsOfferPlayForFun"]),
                         VendorID = DataUtils.ToString(reader["VendorID"]),
                         OrderNo = DataUtils.ToString(reader["OrderNo"])
                     });

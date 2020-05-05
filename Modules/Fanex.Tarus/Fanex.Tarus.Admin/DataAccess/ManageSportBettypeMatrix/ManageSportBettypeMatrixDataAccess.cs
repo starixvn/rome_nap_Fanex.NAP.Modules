@@ -33,10 +33,10 @@ namespace Fanex.Tarus.Admin.DataAccess.ManageSportBettypeMatrix
                     {
                         SportType = DataUtils.ToString(reader["SportType"]),
                         BetType = DataUtils.ToString(reader["BetType"]),
-                        IsLive = DataUtils.ToString(reader["IsLive"]),
-                        ProductId = DataUtils.ToString(reader["ProductId"]),
-                        Enabled = DataUtils.ToString(reader["Enabled"]),
-                        IsTest = DataUtils.ToString(reader["IsTest"]),
+                        IsLive = DataUtils.ToBoolean(reader["IsLive"]),
+                        ProductId = DataUtils.ToString(reader["ProductID"]),
+                        Enabled = DataUtils.ToBoolean(reader["Enabled"]),
+                        IsTest = DataUtils.ToBoolean(reader["IsTest"]),
                         EventType = DataUtils.ToString(reader["EventType"]),
                         SubProduct = DataUtils.ToString(reader["SubProduct"]),
                         RefTable = DataUtils.ToString(reader["RefTable"])

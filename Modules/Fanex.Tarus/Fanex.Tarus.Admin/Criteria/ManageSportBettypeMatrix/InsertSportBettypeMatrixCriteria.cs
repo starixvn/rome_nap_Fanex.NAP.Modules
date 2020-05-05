@@ -27,7 +27,7 @@ namespace Fanex.Tarus.Admin.Criteria.ManageSportBettypeMatrix
                     builder.Append("SportType = \"" + entity.SportType + "\" ");
                     builder.Append("BetType = \"" + entity.BetType + "\" ");
                     builder.Append("IsLive = \"" + entity.IsLive + "\" ");
-                    builder.Append("ProductId = \"" + entity.ProductId + "\" ");
+                    builder.Append("ProductID = \"" + entity.ProductId + "\" ");
                     builder.Append("Enabled = \"" + entity.Enabled + "\" ");
                     builder.Append("IsTest = \"" + entity.IsTest + "\" ");
                     builder.Append("EventType = \"" + entity.EventType + "\" ");
