@@ -2,12 +2,15 @@
 using System.Web.Mvc;
 using Fanex.Tarus.Admin.Business.ManageBettype;
 using Fanex.Tarus.Admin.Business.ManageProduct;
+using Fanex.Tarus.Admin.Business.ManageSportBettypeMatrix;
 using Fanex.Tarus.Admin.Business.ManageSportType;
 using Fanex.Tarus.Admin.Criteria.ManageBettype;
 using Fanex.Tarus.Admin.Criteria.ManageProduct;
+using Fanex.Tarus.Admin.Criteria.ManageSportBettypeMatrix;
 using Fanex.Tarus.Admin.Criteria.ManageSporttype;
 using Fanex.Tarus.Admin.Request.ManageBettype;
 using Fanex.Tarus.Admin.Request.ManageProduct;
+using Fanex.Tarus.Admin.Request.ManageSportBettypeMatrix;
 using Fanex.Tarus.Admin.Request.ManageSportType;
 using Fanex.Tarus.Web.Controllers;
 using Fanex.Tarus.Web.Controllers.Filters;
@@ -20,12 +23,14 @@ namespace Fanex.Tarus.Admin.Controller.ManageProductSetting
         private readonly ManageProductService _manageProductService;
         private readonly ManageSportTypeService _manageSportTypeService;
         private readonly ManageBettypeService _manageBettypeService;
+        private readonly ManageSportBettypeMatrixService _manageSportBettypeMatrixService;
 
         public ManageProductSettingController()
         {
             _manageProductService = new ManageProductService();
             _manageSportTypeService = new ManageSportTypeService();
             _manageBettypeService = new ManageBettypeService();
+            _manageSportBettypeMatrixService = new ManageSportBettypeMatrixService();
         }
 
         [AuthenticateRead]
@@ -102,5 +107,30 @@ namespace Fanex.Tarus.Admin.Controller.ManageProductSetting
         public JsonResult UpdateProduct(UpdateProductRequest request) => Json(_manageProductService.Update(request));
 
         #endregion Product
+
+        #region SportBettypeMatrix
+
+        [AuthenticateRead]
+        [HttpGet]
+        public JsonResult SelectSportBettypeMatrix(SelectSportBettypeMatrixRequest request) => Json(_manageSportBettypeMatrixService.Select(new SelectSportBettypeMatrixCriteria
+        {
+            SportType = request.SportType,
+            BetType = request.BetType,
+            ProductId = request.ProductId,
+            EventType = request.EventType,
+            RefTable = request.RefTable,
+            PageIndex = request.PageIndex,
+            PageSize = request.PageSize
+        }), JsonRequestBehavior.AllowGet);
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult InsertSportBettypeMatrix(HttpPostedFileBase uploadFile) => Json(_manageSportBettypeMatrixService.Insert(uploadFile));
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult UpdateSportBettypeMatrix(UpdateSportBettypeMatrixRequest request) => Json(_manageSportBettypeMatrixService.Update(request));
+
+        #endregion SportBettypeMatrix
     }
 }

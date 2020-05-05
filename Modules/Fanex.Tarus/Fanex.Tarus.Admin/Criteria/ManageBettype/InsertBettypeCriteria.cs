@@ -1,9 +1,9 @@
 ﻿namespace Fanex.Tarus.Admin.Criteria.ManageBettype
 {
-    using Fanex.NAP.Framework.Data;
-    using Fanex.Tarus.Admin.Entities.ManageBetType;
     using System.Collections.Generic;
     using System.Text;
+    using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.Admin.Entities.ManageBetType;
 
     public class InsertBettypeCriteria : CriteriaBase
     {
