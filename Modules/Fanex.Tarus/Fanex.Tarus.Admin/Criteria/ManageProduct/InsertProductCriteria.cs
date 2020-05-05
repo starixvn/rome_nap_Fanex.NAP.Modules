@@ -24,19 +24,19 @@ namespace Fanex.Tarus.Admin.Criteria.ManageProduct
                 foreach (var entity in Entities)
                 {
                     builder.Append("<File ");
-                    builder.Append("productID = \"" + entity.ProductID + "\" ");
-                    builder.Append("productName = \"" + entity.ProductName + "\" ");
-                    builder.Append("description = \"" + entity.Description + "\" ");
-                    builder.Append("productPrefix = \"" + entity.ProductPrefix + "\" ");
-                    builder.Append("enabled = \"" + entity.Enabled + "\" ");
-                    builder.Append("endOfSupportDate = \"" + entity.EndOfSupportDate + "\" ");
-                    builder.Append("balanceType = \"" + entity.BalanceType + "\" ");
-                    builder.Append("subProductBalanceType = \"" + entity.SubProductBalanceType + "\" ");
-                    builder.Append("groupType = \"" + entity.GroupType + "\" ");
-                    builder.Append("casinoType = \"" + entity.CasinoType + "\" ");
-                    builder.Append("isOfferPlayForFun = \"" + entity.IsOfferPlayForFun + "\" ");
-                    builder.Append("vendorID = \"" + entity.VendorID + "\" ");
-                    builder.Append("orderNo = \"" + entity.OrderNo + "\" ");
+                    builder.Append("ProductID = \"" + entity.ProductID + "\" ");
+                    builder.Append("ProductName = \"" + entity.ProductName + "\" ");
+                    builder.Append("Description = \"" + entity.Description + "\" ");
+                    builder.Append("ProductPrefix = \"" + entity.ProductPrefix + "\" ");
+                    builder.Append("Enabled = \"" + entity.Enabled + "\" ");
+                    builder.Append("EndOfSupportDate = \"" + entity.EndOfSupportDate + "\" ");
+                    builder.Append("BalanceType = \"" + entity.BalanceType + "\" ");
+                    builder.Append("SubProductBalanceType = \"" + entity.SubProductBalanceType + "\" ");
+                    builder.Append("GroupType = \"" + entity.GroupType + "\" ");
+                    builder.Append("CasinoType = \"" + entity.CasinoType + "\" ");
+                    builder.Append("IsOfferPlayForFun = \"" + entity.IsOfferPlayForFun + "\" ");
+                    builder.Append("VendorID = \"" + entity.VendorID + "\" ");
+                    builder.Append("OrderNo = \"" + entity.OrderNo + "\" ");
                     builder.Append("/>");
                 }
 

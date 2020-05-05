@@ -12,16 +12,16 @@ using Fanex.Tarus.Admin.Request.ManageSportType;
 using Fanex.Tarus.Web.Controllers;
 using Fanex.Tarus.Web.Controllers.Filters;
 
-namespace Fanex.Tarus.Admin.Controller.ManageSetting
+namespace Fanex.Tarus.Admin.Controller.ManageProductSetting
 {
-    public class ManageSettingController : BaseController
+    public class ManageProductSettingController : BaseController
     {
-        private readonly string indexPath = "~/Views/Admin/ManageSetting/Index.cshtml";
+        private readonly string indexPath = "~/Views/Admin/ManageProductSetting/Index.cshtml";
         private readonly ManageProductService _manageProductService;
         private readonly ManageSportTypeService _manageSportTypeService;
         private readonly ManageBettypeService _manageBettypeService;
 
-        public ManageSettingController()
+        public ManageProductSettingController()
         {
             _manageProductService = new ManageProductService();
             _manageSportTypeService = new ManageSportTypeService();

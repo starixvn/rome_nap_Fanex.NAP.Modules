@@ -169,9 +169,7 @@
     <Compile Include="Controller\CustomerDateLimitController.cs" />
     <Compile Include="Controller\BACustomerController.cs" />
     <Compile Include="Controller\CompareBalanceController.cs" />
-    <Compile Include="Controller\ManageBettype\ManageBettypeController.cs" />
-    <Compile Include="Controller\ManageSetting\ManageSettingController.cs" />
-    <Compile Include="Controller\ManageSporttype\ManageSportTypeController.cs" />
+    <Compile Include="Controller\ManageProductSetting\ManageProductSettingController.cs" />
     <Compile Include="ManageUsernamePrefix\Criteria\DeleteCriteria.cs" />
     <Compile Include="ManageUsernamePrefix\Criteria\InsertCriteria.cs" />
     <Compile Include="ManageUsernamePrefix\Criteria\QueryCriteria.cs" />

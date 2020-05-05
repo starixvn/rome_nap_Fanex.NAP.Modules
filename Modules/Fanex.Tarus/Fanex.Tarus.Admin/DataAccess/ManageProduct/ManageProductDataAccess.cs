@@ -37,7 +37,7 @@ namespace Fanex.Tarus.Admin.DataAccess.ManageProduct
                         ProductPrefix = DataUtils.ToString(reader["ProductPrefix"]),
                         Enabled = DataUtils.ToString(reader["Enabled"]),
                         EndOfSupportDate = DataUtils.ToString(reader["EndOfSupportDate"]),
-                        BalanceType = DataUtils.ToString(reader["ProductPrefix"]),
+                        BalanceType = DataUtils.ToString(reader["BalanceType"]),
                         SubProductBalanceType = DataUtils.ToString(reader["SubProductBalanceType"]),
                         GroupType = DataUtils.ToString(reader["GroupType"]),
                         CasinoType = DataUtils.ToString(reader["CasinoType"]),
