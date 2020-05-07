@@ -78,9 +78,14 @@ namespace Fanex.Tarus.Admin.Business.ManageProduct
             return result;
         }
 
-        public Result Update(ProductEntity request) => _manageProductDataAccess.Update(new UpdateProductCriteria
+        public Result Update(ProductEntity request)
         {
-            Entities = new List<ProductEntity> { request }
-        });
+            request.SubProductBalanceType = HttpUtility.HtmlEncode(HttpUtility.UrlDecode(request.SubProductBalanceType));
+
+            return _manageProductDataAccess.Update(new UpdateProductCriteria
+            {
+                Entities = new List<ProductEntity> { request }
+            });
+        }
     }
 }

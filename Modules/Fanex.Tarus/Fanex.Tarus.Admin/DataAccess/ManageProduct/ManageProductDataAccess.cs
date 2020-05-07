@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Fanex.Common;
 using Fanex.Data;
 using Fanex.Tarus.Admin.Criteria.ManageProduct;
 using Fanex.Tarus.Admin.Entities;
@@ -36,7 +38,7 @@ namespace Fanex.Tarus.Admin.DataAccess.ManageProduct
                         Description = DataUtils.ToString(reader["Description"]),
                         ProductPrefix = DataUtils.ToString(reader["ProductPrefix"]),
                         Enabled = DataUtils.ToBoolean(reader["Enabled"]),
-                        EndOfSupportDate = DataUtils.ToString(reader["EndOfSupportDate"]),
+                        EndOfSupportDate = reader["EndOfSupportDate"] == DBNull.Value ? null : Converter.ToDateTime(reader["EndOfSupportDate"]).ToShortDateString(),
                         BalanceType = DataUtils.ToString(reader["BalanceType"]),
                         SubProductBalanceType = DataUtils.ToString(reader["SubProductBalanceType"]),
                         GroupType = DataUtils.ToString(reader["GroupType"]),
