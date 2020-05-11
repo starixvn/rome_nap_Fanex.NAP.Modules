@@ -1,0 +1,64 @@
+﻿namespace Fanex.Tarus.Admin.ManageProductSetting.DataAccess
+{
+    using System;
+    using System.Collections.Generic;
+    using Fanex.Common;
+    using Fanex.Data;
+    using Fanex.Tarus.Admin.DataAccess;
+    using Fanex.Tarus.Admin.Entities;
+    using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageProduct;
+    using Fanex.Tarus.Admin.ManageProductSetting.Entities;
+    using Fanex.Tarus.Admin.ManageProductSetting.Models;
+    using Fanex.Tarus.Infrastructure.Helper;
+
+    public interface IManageProductDataAccess
+    {
+        ProductModel Select(SelectProductCriteria criteria);
+
+        Result Insert(InsertProductCriteria criteria);
+
+        Result Update(UpdateProductCriteria criteria);
+    }
+
+    public class ManageProductDataAccess : BaseDataAccess, IManageProductDataAccess
+    {
+        public Result Insert(InsertProductCriteria criteria) => base.ExecuteNonQuery(criteria);
+
+        public ProductModel Select(SelectProductCriteria criteria)
+        {
+            var entities = new List<ProductEntity>();
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var reader = objDb.ExecuteReader(criteria.GetSpParams());
+                while (reader.Read())
+                {
+                    entities.Add(new ProductEntity
+                    {
+                        ProductID = DataUtils.ToString(reader["ProductID"]),
+                        ProductName = DataUtils.ToString(reader["ProductName"]),
+                        Description = DataUtils.ToString(reader["Description"]),
+                        ProductPrefix = DataUtils.ToString(reader["ProductPrefix"]),
+                        Enabled = reader["Enabled"] == DBNull.Value ? string.Empty : DataUtils.ToByte(reader["Enabled"]).ToString(),
+                        EndOfSupportDate = reader["EndOfSupportDate"] == DBNull.Value ? null : Converter.ToDateTime(reader["EndOfSupportDate"]).ToShortDateString(),
+                        BalanceType = DataUtils.ToString(reader["BalanceType"]),
+                        SubProductBalanceType = DataUtils.ToString(reader["SubProductBalanceType"]),
+                        GroupType = DataUtils.ToString(reader["GroupType"]),
+                        CasinoType = DataUtils.ToString(reader["CasinoType"]),
+                        IsOfferPlayForFun = reader["IsOfferPlayForFun"] == DBNull.Value ? string.Empty : DataUtils.ToByte(reader["IsOfferPlayForFun"]).ToString(),
+                        VendorID = DataUtils.ToString(reader["VendorID"]),
+                        OrderNo = DataUtils.ToString(reader["OrderNo"])
+                    });
+                }
+
+                reader.Close();
+                return new ProductModel
+                {
+                    ProductEntities = entities,
+                    TotalRows = DataUtils.ToInt32(objDb.GetOuputParams()["totalrows"])
+                };
+            }
+        }
+
+        public Result Update(UpdateProductCriteria criteria) => base.ExecuteNonQuery(criteria);
+    }
+}
