@@ -70,9 +70,6 @@
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Business.Implement.1.0.1\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.2.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.2.3\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Security.1.0.1.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
       <Private>True</Private>
@@ -95,6 +92,9 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NPOI">
       <HintPath>..\..\..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
@@ -170,6 +170,10 @@
     <Compile Include="Controller\CompareBalanceController.cs" />
     <Compile Include="Controller\ManageBettype\ManageBettypeController.cs" />
     <Compile Include="Controller\ManageSporttype\ManageSportTypeController.cs" />
+    <Compile Include="ManageUsernamePrefix\Criteria\DeleteCriteria.cs" />
+    <Compile Include="ManageUsernamePrefix\Criteria\InsertCriteria.cs" />
+    <Compile Include="ManageUsernamePrefix\Criteria\QueryCriteria.cs" />
+    <Compile Include="ManageUsernamePrefix\ManageUsernamePrefixController.cs" />
     <Compile Include="Controller\MaxNewMemberBySuperController.cs" />
     <Compile Include="Controller\SiteManagementController.cs" />
     <Compile Include="Controller\SMAManagement\SMAManagementController.cs" />
@@ -235,6 +239,12 @@
     <Compile Include="Enums\CustomerDataRangeType.cs" />
     <Compile Include="Enums\HeadlineType.cs" />
     <Compile Include="Enums\SiteType.cs" />
+    <Compile Include="ManageUsernamePrefix\Models\IndexViewModel.cs" />
+    <Compile Include="ManageUsernamePrefix\Requests\DeleteRequest.cs" />
+    <Compile Include="ManageUsernamePrefix\Requests\InsertRequest.cs" />
+    <Compile Include="ManageUsernamePrefix\Models\QueryModel.cs" />
+    <Compile Include="ManageUsernamePrefix\Requests\QueryRequest.cs" />
+    <Compile Include="ManageUsernamePrefix\Service.cs" />
     <Compile Include="Models\ManageBettype\BettypeModel.cs" />
     <Compile Include="Models\ManageSporttype\SportTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -272,13 +282,19 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Core\" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\..\Sunplus.Accounting\Sunplus.Accounting.Services\Sunplus.Accounting.Services.csproj">
+      <Project>{A09D69E5-924E-4EE6-B3CC-1B51762837F6}</Project>
+      <Name>Sunplus.Accounting.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.DataAccess.Implement\Fanex.Tarus.DataAccess.Implement.csproj">
       <Project>{9780010A-7EEC-4726-959B-D2CFFB1875EE}</Project>
       <Name>Fanex.Tarus.DataAccess.Implement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
+      <Project>{ccc0446a-42e7-4850-b09c-4dac278f23b3}</Project>
+      <Name>Fanex.Tarus.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
