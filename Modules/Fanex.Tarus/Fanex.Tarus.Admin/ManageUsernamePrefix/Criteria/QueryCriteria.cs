@@ -10,7 +10,7 @@
 
         public bool? AllowNewSuper { get; set; }
 
-        public override bool IsValid() => !string.IsNullOrWhiteSpace(GroupName);
+        public override bool IsValid() => true;
 
         public override string GetSettingKey() => "Acc_SuperPefixByGroupSel";
     }

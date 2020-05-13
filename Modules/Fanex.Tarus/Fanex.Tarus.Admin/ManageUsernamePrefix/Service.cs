@@ -34,15 +34,6 @@
 
         public IEnumerable<QueryModel> Query(QueryRequest request)
         {
-            return new List<QueryModel>
-            {
-                new QueryModel
-                {
-                    GroupName = "789",
-                    Prefix = "AA",
-                    AllowNewSuper = false
-                }
-            };
             var criteria = new QueryCriteria
             {
                 GroupName = request.GroupName,
