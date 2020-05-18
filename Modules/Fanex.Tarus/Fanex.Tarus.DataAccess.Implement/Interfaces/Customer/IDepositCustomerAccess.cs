@@ -10,7 +10,7 @@ namespace Fanex.Tarus.DataAccess.Interface.Customer
         Result NewLicenseeAddNewSuper(NewLicenseePostParam newLicenseePostParam);
         Result NewLicenseeAddNewMaster(NewLicenseePostParam newLicenseePostParam);
         Result NewLicenseeAddNewAgent(NewLicenseePostParam newLicenseePostParam);
-        Result NewLicenseeAddNewMember(NewLicenseePostParam newLicenseePostParam);
+        Result NewLicenseeAddNewMember(NewLicenseePostParam newLicenseePostParam, bool isClearBalanceAccount = false);
 
         DataSet GetSuperSetting(int custId);
         DataSet GetMasterSetting(int custId);

@@ -2,10 +2,6 @@
 
 namespace Fanex.Tarus.DataAccess.Implement.Customer
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
     using DNAide.Core;
     using DNAide.Utils;
     using Fanex.Common;
@@ -17,6 +13,10 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Helper;
     using Sunplus.Accounting.Entities;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
 
     public class DepositCustomerAccess : BaseAccess, IDepositCustomerAccess
     {
@@ -410,6 +410,22 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 duplicateNames.Add(newLicenseePostParam.AgentName);
             }
 
+            singleNameCheck = CheckDuplicateUsername(newLicenseePostParam.MemberName);
+            if (singleNameCheck.ErrorCode != 0)
+            {
+                duplicateNames.Add(newLicenseePostParam.MemberName);
+            }
+
+            var memberNameList = newLicenseePostParam.MemberName.Split(new char[] { ',' });
+            foreach (var memberName in memberNameList)
+            {
+                singleNameCheck = CheckDuplicateUsername(memberName);
+                if (singleNameCheck.ErrorCode != 0)
+                {
+                    duplicateNames.Add(memberName);
+                }
+            }
+
             singleNameCheck = CheckDuplicateUsername(newLicenseePostParam.DummyMasterName);
             if (singleNameCheck.ErrorCode != 0)
             {
@@ -519,12 +535,27 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 return result;
             }
 
-            succeededIdList.Add("Agent: " + newLicenseePostParam.AgentName.ToString());
-            if (string.IsNullOrWhiteSpace(newLicenseePostParam.DummyMasterName))
+            succeededIdList.Add("Agent: " + newLicenseePostParam.AgentName.ToString());           
+
+            var memberNameList = newLicenseePostParam.MemberName.Split(new char[] { ',' });
+            foreach (var memberName in memberNameList)
             {
-                result.SuccessMessageList = succeededIdList;
-                return result;
-            }
+                newLicenseePostParam.MemberName = memberName;
+                if (string.IsNullOrWhiteSpace(memberName))
+                {
+                    result.SuccessMessageList = succeededIdList;
+                    return result;
+                }
+
+                result = NewLicenseeAddNewMember(newLicenseePostParam, true);
+                if (result.ErrorCode != 0)
+                {
+                    result.ErrorMessage += " (" + memberName + ")";
+                    result.SuccessMessageList = succeededIdList;
+                    return result;
+                }
+                succeededIdList.Add("Member: " + memberName);
+            }           
 
             result = NewLicenseeAddNewDummyUser(ref newLicenseePostParam,
                 RoleConstants.Master,
@@ -608,6 +639,74 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 {
                     newLicenseePostParam.MasterId = CastAide.AsInt32(objDb.GetParameterValue("custid"));
                     errMsg = newLicenseePostParam.MasterId.ToString();
+                }
+
+                return new Result(errCode, errMsg);
+            }
+        }
+
+        public Result NewLicenseeAddNewAgent(NewLicenseePostParam newLicenseePostParam)
+        {
+            var hashParam = GetAddNewHashTableParams(newLicenseePostParam);
+            hashParam.Add("mrecommend", newLicenseePostParam.MasterId);
+            hashParam.Add("username", newLicenseePostParam.AgentName);
+            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+
+            hashParam.Add("custid", 0);
+            hashParam.Add("errcode", 0);
+            hashParam.Add("errmsg", string.Empty);
+
+            if (!hashParam.ContainsKey("userpwd"))
+            {
+                hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
+            }
+
+            using (var objDb = new ObjectDb("NewLicensee_AdNewAgent"))
+            {
+                objDb.AssignParamValues(hashParam);
+
+                objDb.ExecuteNonQuery();
+                var errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
+                var errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
+
+                if (errCode == 0)
+                {
+                    newLicenseePostParam.AgentId = CastAide.AsInt32(objDb.GetParameterValue("custid"));
+                    errMsg = newLicenseePostParam.AgentId.ToString();
+                }
+
+                return new Result(errCode, errMsg);
+            }
+        }
+
+        public Result NewLicenseeAddNewMember(NewLicenseePostParam newLicenseePostParam, bool isClearBalanceAccount = false)
+        {
+            var hashParam = isClearBalanceAccount ? GetAddNewHashTableParams_DummyUser(newLicenseePostParam) : GetAddNewHashTableParams(newLicenseePostParam);           
+            hashParam.Add("recommend", newLicenseePostParam.AgentId);
+            hashParam.Add("username", newLicenseePostParam.MemberName);
+            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+
+            hashParam.Add("custid", 0);
+            hashParam.Add("errcode", 0);
+            hashParam.Add("errmsg", string.Empty);
+
+            if (!hashParam.ContainsKey("userpwd"))
+            {
+                hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
+            }
+
+            using (var objDb = new ObjectDb("NewLicensee_AdNewMember"))
+            {
+                objDb.AssignParamValues(hashParam);
+
+                objDb.ExecuteNonQuery();
+                var errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
+                var errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
+
+                if (errCode == 0)
+                {
+                    newLicenseePostParam.MemberId = CastAide.AsInt32(objDb.GetParameterValue("custid"));
+                    errMsg = newLicenseePostParam.MemberId.ToString();
                 }
 
                 return new Result(errCode, errMsg);
@@ -751,75 +850,11 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             }
 
             return new Result(errCode, errMsg);
-        }
+        }    
 
-        public Result NewLicenseeAddNewAgent(NewLicenseePostParam newLicenseePostParam)
-        {
-            var hashParam = GetAddNewHashTableParams(newLicenseePostParam);
-            hashParam.Add("mrecommend", newLicenseePostParam.MasterId);
-            hashParam.Add("username", newLicenseePostParam.AgentName);
-            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
 
-            hashParam.Add("custid", 0);
-            hashParam.Add("errcode", 0);
-            hashParam.Add("errmsg", string.Empty);
 
-            if (!hashParam.ContainsKey("userpwd"))
-            {
-                hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
-            }
-
-            using (var objDb = new ObjectDb("NewLicensee_AdNewAgent"))
-            {
-                objDb.AssignParamValues(hashParam);
-
-                objDb.ExecuteNonQuery();
-                var errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
-                var errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
-
-                if (errCode == 0)
-                {
-                    newLicenseePostParam.AgentId = CastAide.AsInt32(objDb.GetParameterValue("custid"));
-                    errMsg = newLicenseePostParam.AgentId.ToString();
-                }
-
-                return new Result(errCode, errMsg);
-            }
-        }
-
-        public Result NewLicenseeAddNewMember(NewLicenseePostParam newLicenseePostParam)
-        {
-            var hashParam = GetAddNewHashTableParams(newLicenseePostParam);
-            hashParam.Add("recommend", newLicenseePostParam.AgentId);
-            hashParam.Add("username", newLicenseePostParam.MemberName);
-            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-
-            hashParam.Add("custid", 0);
-            hashParam.Add("errcode", 0);
-            hashParam.Add("errmsg", string.Empty);
-
-            if (!hashParam.ContainsKey("userpwd"))
-            {
-                hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
-            }
-
-            using (var objDb = new ObjectDb("NewLicensee_AdNewMember"))
-            {
-                objDb.AssignParamValues(hashParam);
-
-                objDb.ExecuteNonQuery();
-                var errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
-                var errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
-
-                if (errCode == 0)
-                {
-                    newLicenseePostParam.MemberId = CastAide.AsInt32(objDb.GetParameterValue("custid"));
-                    errMsg = newLicenseePostParam.MemberId.ToString();
-                }
-
-                return new Result(errCode, errMsg);
-            }
-        }
+       
 
         public DataSet GetSuperSetting(int custId)
         {
