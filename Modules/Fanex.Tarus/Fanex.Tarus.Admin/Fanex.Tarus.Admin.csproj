@@ -239,6 +239,7 @@
     <Compile Include="Enums\CustomerDataRangeType.cs" />
     <Compile Include="Enums\HeadlineType.cs" />
     <Compile Include="Enums\SiteType.cs" />
+    <Compile Include="ManageUsernamePrefix\Constants.cs" />
     <Compile Include="ManageUsernamePrefix\Models\IndexViewModel.cs" />
     <Compile Include="ManageUsernamePrefix\Requests\DeleteRequest.cs" />
     <Compile Include="ManageUsernamePrefix\Requests\InsertRequest.cs" />
