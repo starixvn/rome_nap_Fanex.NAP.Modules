@@ -20,6 +20,6 @@
             && UserID > 0
             && !string.IsNullOrWhiteSpace(IP);
 
-        public override string GetSettingKey() => "Acc_SuperPefixDel";
+        public override string GetSettingKey() => "Acc_SuperPrefixDel";
     }
 }

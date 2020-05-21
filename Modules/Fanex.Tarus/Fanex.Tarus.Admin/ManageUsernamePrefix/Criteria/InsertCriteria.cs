@@ -22,6 +22,6 @@
             && UserID > 0
             && !string.IsNullOrWhiteSpace(IP);
 
-        public override string GetSettingKey() => "Acc_SuperPefixIns";
+        public override string GetSettingKey() => "Acc_SuperPrefixIns";
     }
 }

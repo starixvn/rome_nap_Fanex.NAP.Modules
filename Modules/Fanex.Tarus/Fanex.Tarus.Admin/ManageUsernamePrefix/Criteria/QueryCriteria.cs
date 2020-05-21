@@ -12,6 +12,6 @@
 
         public override bool IsValid() => true;
 
-        public override string GetSettingKey() => "Acc_SuperPefixByGroupSel";
+        public override string GetSettingKey() => "Acc_SuperPrefixByGroupSel";
     }
 }
