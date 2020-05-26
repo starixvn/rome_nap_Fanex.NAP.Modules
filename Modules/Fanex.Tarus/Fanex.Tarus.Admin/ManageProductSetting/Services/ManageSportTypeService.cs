@@ -15,13 +15,13 @@
 
     public class ManageSportTypeService
     {
-        private readonly ManageSporttypeDataAccess _manageSportTypeDataAccess;
+        private readonly IManageSporttypeDataAccess _manageSportTypeDataAccess;
 
         public ManageSportTypeService() : this(null)
         {
         }
 
-        public ManageSportTypeService(ManageSporttypeDataAccess manageSporttypeDataAccess)
+        public ManageSportTypeService(IManageSporttypeDataAccess manageSporttypeDataAccess)
         {
             _manageSportTypeDataAccess = manageSporttypeDataAccess ?? new ManageSporttypeDataAccess();
         }

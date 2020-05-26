@@ -2,7 +2,7 @@
 {
     public class SelectSportRequest
     {
-        public int SportType { get; set; }
+        public int? SportType { get; set; }
 
         public string SportName { get; set; }
 

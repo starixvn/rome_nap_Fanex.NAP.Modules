@@ -155,7 +155,9 @@
     <Compile Include="Business\BACustomer\IBACustomerService.cs" />
     <Compile Include="Business\CompareBalance\CompareBalanceService.cs" />
     <Compile Include="Business\CustomerDateLimit\CustomerDateLimitService.cs" />
-    <Compile Include="ManageProductSetting\ManageProductSettingController.cs" />
+    <Compile Include="Controller\ManageProductSettingController.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageSportBettypeMatrix\DeleteSportBettypeMatrixCriteria.cs" />
+    <Compile Include="ManageProductSetting\Request\ManageSportBettypeMatrix\DeleteSportBettypeMatrixRequest.cs" />
     <Compile Include="ManageProductSetting\Services\ManageBettypeService.cs" />
     <Compile Include="ManageProductSetting\Services\ManageProductService.cs" />
     <Compile Include="ManageProductSetting\Services\ManageSportBettypeMatrixService.cs" />

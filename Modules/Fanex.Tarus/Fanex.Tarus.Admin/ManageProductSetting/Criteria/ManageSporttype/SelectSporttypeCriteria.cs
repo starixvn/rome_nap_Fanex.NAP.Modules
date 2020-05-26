@@ -4,7 +4,7 @@
 
     public class SelectSportTypeCriteria : CriteriaBase
     {
-        public int SportType { get; set; }
+        public int? SportType { get; set; }
 
         public string SportName { get; set; }
 

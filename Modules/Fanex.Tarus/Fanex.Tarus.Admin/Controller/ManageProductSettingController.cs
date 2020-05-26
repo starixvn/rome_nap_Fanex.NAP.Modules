@@ -1,19 +1,19 @@
-﻿using System.Web;
-using System.Web.Mvc;
-using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageBettype;
-using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageProduct;
-using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSportBettypeMatrix;
-using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSporttype;
-using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageBettype;
-using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageProduct;
-using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageSportBettypeMatrix;
-using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageSportType;
-using Fanex.Tarus.Admin.ManageProductSetting.Services;
-using Fanex.Tarus.Web.Controllers;
-using Fanex.Tarus.Web.Controllers.Filters;
-
-namespace Fanex.Tarus.Admin.ManageProductSetting
+﻿namespace Fanex.Tarus.Admin.Controller
 {
+    using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageBettype;
+    using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageProduct;
+    using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSportBettypeMatrix;
+    using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSporttype;
+    using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageBettype;
+    using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageProduct;
+    using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageSportBettypeMatrix;
+    using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageSportType;
+    using Fanex.Tarus.Admin.ManageProductSetting.Services;
+    using Fanex.Tarus.Web.Controllers;
+    using Fanex.Tarus.Web.Controllers.Filters;
+    using System.Web;
+    using System.Web.Mvc;
+
     public class ManageProductSettingController : BaseController
     {
         private readonly string indexPath = "~/Views/Admin/ManageProductSetting/Index.cshtml";
@@ -34,7 +34,7 @@ namespace Fanex.Tarus.Admin.ManageProductSetting
         [HttpGet]
         public ActionResult Index()
         {
-            return View(indexPath);
+            return View(indexPath, _manageSportBettypeMatrixService.GetListProducts());
         }
 
         #region Bettype
@@ -112,7 +112,9 @@ namespace Fanex.Tarus.Admin.ManageProductSetting
         public JsonResult SelectSportBettypeMatrix(SelectSportBettypeMatrixRequest request) => Json(_manageSportBettypeMatrixService.Select(new SelectSportBettypeMatrixCriteria
         {
             SportType = request.SportType,
+            SportName = request.SportName,
             BetType = request.BetType,
+            BetTypeName = request.BetTypeName,
             ProductId = request.ProductId,
             EventType = request.EventType,
             RefTable = request.RefTable,
@@ -127,6 +129,10 @@ namespace Fanex.Tarus.Admin.ManageProductSetting
         [AuthenticateHost]
         [HttpPost]
         public JsonResult UpdateSportBettypeMatrix(UpdateSportBettypeMatrixRequest request) => Json(_manageSportBettypeMatrixService.Update(request));
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult DeleteSportBettypeMatrix(DeleteSportBettypeMatrixRequest request) => Json(_manageSportBettypeMatrixService.Delete(request));
 
         #endregion SportBettypeMatrix
     }

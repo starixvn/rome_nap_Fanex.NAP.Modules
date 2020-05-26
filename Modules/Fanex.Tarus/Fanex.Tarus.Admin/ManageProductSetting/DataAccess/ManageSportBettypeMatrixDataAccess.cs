@@ -17,6 +17,8 @@
         Result Insert(InsertSportBettypeMatrixCriteria criteria);
 
         Result Update(UpdateSportBettypeMatrixCriteria criteria);
+
+        Result Delete(DeleteSportBettypeMatrixCriteria criteria);
     }
 
     public class ManageSportBettypeMatrixDataAccess : BaseDataAccess, IManageSportBettypeMatrixDataAccess
@@ -34,11 +36,14 @@
                     entities.Add(new SportBettypeMatrixEntity
                     {
                         SportType = DataUtils.ToString(reader["SportType"]),
+                        SportTypeName = DataUtils.ToString(reader["SportName"]),
                         BetType = DataUtils.ToString(reader["BetType"]),
-                        IsLive = reader["IsLive"] == DBNull.Value ? string.Empty : DataUtils.ToByte(reader["IsLive"]).ToString(),
+                        BetTypeName = DataUtils.ToString(reader["BettypeName"]),
+                        IsLive = DataUtils.ToString(reader["IsLive"]),
                         ProductId = DataUtils.ToString(reader["ProductID"]),
-                        Enabled = reader["Enabled"] == DBNull.Value ? string.Empty : DataUtils.ToByte(reader["Enabled"]).ToString(),
-                        IsTest = reader["IsTest"] == DBNull.Value ? string.Empty : DataUtils.ToByte(reader["IsTest"]).ToString(),
+                        ProductName = DataUtils.ToString(reader["ProductName"]),
+                        Enabled = DataUtils.ToString(reader["Enabled"]),
+                        IsTest = DataUtils.ToString(reader["IsTest"]),
                         EventType = DataUtils.ToString(reader["EventType"]),
                         SubProduct = DataUtils.ToString(reader["SubProduct"]),
                         RefTable = DataUtils.ToString(reader["RefTable"])
@@ -55,5 +60,7 @@
         }
 
         public Result Update(UpdateSportBettypeMatrixCriteria criteria) => base.ExecuteNonQuery(criteria);
+
+        public Result Delete(DeleteSportBettypeMatrixCriteria criteria) => base.ExecuteNonQuery(criteria);
     }
 }

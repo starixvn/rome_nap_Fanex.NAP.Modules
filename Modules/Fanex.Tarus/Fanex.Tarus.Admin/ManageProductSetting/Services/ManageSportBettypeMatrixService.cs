@@ -1,29 +1,47 @@
 ﻿namespace Fanex.Tarus.Admin.ManageProductSetting.Services
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Web;
     using Fanex.Tarus.Admin.Entities;
+    using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageProduct;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSportBettypeMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.DataAccess;
     using Fanex.Tarus.Admin.ManageProductSetting.Entities;
     using Fanex.Tarus.Admin.ManageProductSetting.Models;
+    using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageSportBettypeMatrix;
+    using Fanex.Tarus.Infrastructure.Caching;
     using Fanex.Tarus.Infrastructure.Common;
     using Fanex.Tarus.Infrastructure.Helper;
     using NPOI.SS.UserModel;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
 
     public class ManageSportBettypeMatrixService
     {
-        private readonly ManageSportBettypeMatrixDataAccess _manageSportBettypeMatrixDataAccess;
+        private readonly IManageSportBettypeMatrixDataAccess _manageSportBettypeMatrixDataAccess;
 
-        public ManageSportBettypeMatrixService() : this(null)
+        private readonly IManageProductDataAccess _manageProductDataAccess;
+
+        public ManageSportBettypeMatrixService() : this(null, null)
         {
         }
 
-        public ManageSportBettypeMatrixService(ManageSportBettypeMatrixDataAccess manageSportBettypeMatrixDataAccess)
+        public ManageSportBettypeMatrixService(IManageSportBettypeMatrixDataAccess manageSportBettypeMatrixDataAccess, IManageProductDataAccess manageProductDataAccess)
         {
             _manageSportBettypeMatrixDataAccess = manageSportBettypeMatrixDataAccess ?? new ManageSportBettypeMatrixDataAccess();
+            _manageProductDataAccess = manageProductDataAccess ?? new ManageProductDataAccess();
+        }
+
+        public IEnumerable<SelectListItem> GetListProducts()
+        {
+            var listProducts = _manageProductDataAccess.Select(new SelectProductCriteria() { PageSize = ushort.MaxValue, PageIndex = 1 });
+            return listProducts.ProductEntities.Select(product => new SelectListItem()
+            {
+                Text = $"[{product.ProductID}] {product.ProductName}",
+                Value = product.ProductID
+            });
         }
 
         public SportBettypeMatrixModel Select(SelectSportBettypeMatrixCriteria criteria) => _manageSportBettypeMatrixDataAccess.Select(criteria);
@@ -77,6 +95,14 @@
         public Result Update(SportBettypeMatrixEntity request) => _manageSportBettypeMatrixDataAccess.Update(new UpdateSportBettypeMatrixCriteria
         {
             Entities = new List<SportBettypeMatrixEntity> { request }
+        });
+
+        public Result Delete(DeleteSportBettypeMatrixRequest request) => _manageSportBettypeMatrixDataAccess.Delete(new DeleteSportBettypeMatrixCriteria {
+            BetType = request.BetType,
+            IsLive = request.IsLive,
+            SportType = request.SportType,
+            UserId = AppSession.AccId,
+            LoginIp = Utils.GetClientIP()
         });
     }
 }

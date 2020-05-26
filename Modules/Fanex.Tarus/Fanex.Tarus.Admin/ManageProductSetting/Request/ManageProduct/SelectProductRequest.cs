@@ -2,7 +2,7 @@
 {
     public class SelectProductRequest
     {
-        public string ProductID { get; set; }
+        public int? ProductID { get; set; }
 
         public string ProductName { get; set; }
 

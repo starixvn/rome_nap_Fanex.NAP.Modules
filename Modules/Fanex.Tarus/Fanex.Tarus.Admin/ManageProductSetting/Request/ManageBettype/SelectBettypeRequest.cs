@@ -2,7 +2,7 @@
 {
     public class SelectBettypeRequest
     {
-        public int TypeId { get; set; }
+        public int? TypeId { get; set; }
 
         public string TypeName { get; set; }
 

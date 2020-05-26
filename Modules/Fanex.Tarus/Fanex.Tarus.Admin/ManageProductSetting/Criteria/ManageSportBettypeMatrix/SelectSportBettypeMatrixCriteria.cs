@@ -4,15 +4,19 @@
 
     public class SelectSportBettypeMatrixCriteria : CriteriaBase
     {
-        public string SportType { get; set; }
+        public int? SportType { get; set; }
 
-        public string BetType { get; set; }
+        public string SportName { get; set; }
+
+        public int? BetType { get; set; }
+
+        public string BetTypeName { get; set; }
 
         public string ProductId { get; set; }
 
-        public string EventType { get; set; }
+        public int? EventType { get; set; }
 
-        public string RefTable { get; set; }
+        public int? RefTable { get; set; }
 
         public int PageSize { get; set; }
 

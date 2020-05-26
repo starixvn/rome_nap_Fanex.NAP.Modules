@@ -38,13 +38,13 @@
                         ProductName = DataUtils.ToString(reader["ProductName"]),
                         Description = DataUtils.ToString(reader["Description"]),
                         ProductPrefix = DataUtils.ToString(reader["ProductPrefix"]),
-                        Enabled = reader["Enabled"] == DBNull.Value ? string.Empty : DataUtils.ToByte(reader["Enabled"]).ToString(),
-                        EndOfSupportDate = reader["EndOfSupportDate"] == DBNull.Value ? null : Converter.ToDateTime(reader["EndOfSupportDate"]).ToShortDateString(),
+                        Enabled = DataUtils.ToString(reader["Enabled"]),
+                        EndOfSupportDate = reader["EndOfSupportDate"] == DBNull.Value ? null : DataUtils.ToDateTime(reader["EndOfSupportDate"]).ToShortDateString(),
                         BalanceType = DataUtils.ToString(reader["BalanceType"]),
                         SubProductBalanceType = DataUtils.ToString(reader["SubProductBalanceType"]),
                         GroupType = DataUtils.ToString(reader["GroupType"]),
                         CasinoType = DataUtils.ToString(reader["CasinoType"]),
-                        IsOfferPlayForFun = reader["IsOfferPlayForFun"] == DBNull.Value ? string.Empty : DataUtils.ToByte(reader["IsOfferPlayForFun"]).ToString(),
+                        IsOfferPlayForFun = DataUtils.ToString(reader["IsOfferPlayForFun"]),
                         VendorID = DataUtils.ToString(reader["VendorID"]),
                         OrderNo = DataUtils.ToString(reader["OrderNo"])
                     });

@@ -15,13 +15,13 @@
 
     public class ManageProductService
     {
-        private readonly ManageProductDataAccess _manageProductDataAccess;
+        private readonly IManageProductDataAccess _manageProductDataAccess;
 
         public ManageProductService() : this(null)
         {
         }
 
-        public ManageProductService(ManageProductDataAccess manageSporttypeDataAccess)
+        public ManageProductService(IManageProductDataAccess manageSporttypeDataAccess)
         {
             _manageProductDataAccess = manageSporttypeDataAccess ?? new ManageProductDataAccess();
         }

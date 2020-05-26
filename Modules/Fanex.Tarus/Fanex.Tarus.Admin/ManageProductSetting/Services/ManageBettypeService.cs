@@ -15,13 +15,13 @@
 
     public class ManageBettypeService
     {
-        private readonly ManageBettypeDataAccess _manageBettypeDataAccess;
+        private readonly IManageBettypeDataAccess _manageBettypeDataAccess;
 
         public ManageBettypeService() : this(null)
         {
         }
 
-        public ManageBettypeService(ManageBettypeDataAccess manageBettypeDataAccess)
+        public ManageBettypeService(IManageBettypeDataAccess manageBettypeDataAccess)
         {
             _manageBettypeDataAccess = manageBettypeDataAccess ?? new ManageBettypeDataAccess();
         }

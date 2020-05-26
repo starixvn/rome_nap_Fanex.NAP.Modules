@@ -4,7 +4,7 @@
 
     public class SelectBettypeCriteria : CriteriaBase
     {
-        public int TypeId { get; set; }
+        public int? TypeId { get; set; }
 
         public string TypeNamee { get; set; }
 
