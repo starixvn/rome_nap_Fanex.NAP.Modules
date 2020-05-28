@@ -6,5 +6,7 @@
     public interface IServiceBase
     {
         IEnumerable<T> GetData<T>(ICriteria criteria);
+
+        void ExecuteNonQuery(ICriteria criteria);
     }
 }
