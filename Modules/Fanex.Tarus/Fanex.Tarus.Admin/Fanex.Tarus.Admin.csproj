@@ -68,11 +68,13 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Business.Implement.1.0.1\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
+      <HintPath>..\..\..\packages\Fanex.Tarus.Business.Implement.1.0.1.1\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Security, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Security.1.0.1.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.2.4\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Tarus.Security, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Tarus.Security.1.0.1.6\lib\net40\Fanex.Tarus.Security.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Web.Controller.1.0.1\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
@@ -155,8 +157,13 @@
     <Compile Include="Business\BACustomer\IBACustomerService.cs" />
     <Compile Include="Business\CompareBalance\CompareBalanceService.cs" />
     <Compile Include="Business\CustomerDateLimit\CustomerDateLimitService.cs" />
-    <Compile Include="Business\ManageBettype\ManageBettypeService.cs" />
-    <Compile Include="Business\ManageSportType\ManageSportTypeService.cs" />
+    <Compile Include="Controller\ManageProductSettingController.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageSportBettypeMatrix\DeleteSportBettypeMatrixCriteria.cs" />
+    <Compile Include="ManageProductSetting\Request\ManageSportBettypeMatrix\DeleteSportBettypeMatrixRequest.cs" />
+    <Compile Include="ManageProductSetting\Services\ManageBettypeService.cs" />
+    <Compile Include="ManageProductSetting\Services\ManageProductService.cs" />
+    <Compile Include="ManageProductSetting\Services\ManageSportBettypeMatrixService.cs" />
+    <Compile Include="ManageProductSetting\Services\ManageSportTypeService.cs" />
     <Compile Include="Business\MaxMemberLimitBySuper\IMaxMemberLimitBySuperService.cs" />
     <Compile Include="Business\MaxMemberLimitBySuper\MaxMemberLimitBySuperService.cs" />
     <Compile Include="Business\SiteManagement\ISiteManagementService.cs" />
@@ -168,8 +175,6 @@
     <Compile Include="Controller\CustomerDateLimitController.cs" />
     <Compile Include="Controller\BACustomerController.cs" />
     <Compile Include="Controller\CompareBalanceController.cs" />
-    <Compile Include="Controller\ManageBettype\ManageBettypeController.cs" />
-    <Compile Include="Controller\ManageSporttype\ManageSportTypeController.cs" />
     <Compile Include="ManageUsernamePrefix\Criteria\DeleteCriteria.cs" />
     <Compile Include="ManageUsernamePrefix\Criteria\InsertCriteria.cs" />
     <Compile Include="ManageUsernamePrefix\Criteria\QueryCriteria.cs" />
@@ -181,12 +186,18 @@
     <Compile Include="Criteria\CustomerDateLimit\GetCustomerDateLimitByIdCriteria.cs" />
     <Compile Include="Criteria\CustomerDateLimit\UpdateCustomerDateLimitCriteria.cs" />
     <Compile Include="Criteria\CustomerDateLimit\GetAllCustomerDateLimitCriteria.cs" />
-    <Compile Include="Criteria\ManageBettype\InsertBettypeCriteria.cs" />
-    <Compile Include="Criteria\ManageBettype\UpdateBettypeCriteria.cs" />
-    <Compile Include="Criteria\ManageBettype\SelectBettypeCriteria.cs" />
-    <Compile Include="Criteria\ManageSporttype\InsertSporttypeCriteria.cs" />
-    <Compile Include="Criteria\ManageSporttype\SelectSporttypeCriteria.cs" />
-    <Compile Include="Criteria\ManageSporttype\UpdateSporttypeCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageBettype\InsertBettypeCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageBettype\UpdateBettypeCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageBettype\SelectBettypeCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageProduct\InsertProductCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageProduct\SelectProductCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageProduct\UpdateProductCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageSportBettypeMatrix\InsertSportBettypeMatrixCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageSportBettypeMatrix\SelectSportBettypeMatrixCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageSportBettypeMatrix\UpdateSportBettypeMatrixCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageSporttype\InsertSporttypeCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageSporttype\SelectSporttypeCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageSporttype\UpdateSporttypeCriteria.cs" />
     <Compile Include="Criteria\MaxMemberLimitBySuper\UpdateSuperCriteria.cs" />
     <Compile Include="Criteria\MaxMemberLimitBySuper\SearchSuperCriteria.cs" />
     <Compile Include="Criteria\MaxMemberLimitBySuper\GetSitesCriteria.cs" />
@@ -202,8 +213,6 @@
     <Compile Include="DataAccess\BaseDataAccess.cs" />
     <Compile Include="DataAccess\CompareBalance\CompareBalanceDataAccess.cs" />
     <Compile Include="DataAccess\CustomerDateLimit\CustomerDateLimitDataAccess.cs" />
-    <Compile Include="DataAccess\ManageBettype\ManageBettypeDataAccess.cs" />
-    <Compile Include="DataAccess\ManageSporttype\ManageSporttypeDataAccess.cs" />
     <Compile Include="DataAccess\MaxMemberLimitBySuper\IMaxMemberLimitBySuperDataAccess.cs" />
     <Compile Include="DataAccess\MaxMemberLimitBySuper\MaxMemberLimitBySuperDataAccess.cs" />
     <Compile Include="DataAccess\SiteManagement\ISiteManagementDataAccess.cs" />
@@ -218,8 +227,6 @@
     <Compile Include="Entities\CustomerSecurityCode.cs" />
     <Compile Include="Entities\FollowedCustomer.cs" />
     <Compile Include="Entities\FollowedCustomerDTO.cs" />
-    <Compile Include="Entities\ManageBettype\BettypeEntity.cs" />
-    <Compile Include="Entities\ManageSporttype\SportTypeEntity.cs" />
     <Compile Include="Entities\MaxMemberLimitBySuper\MaxMemberLimitBySuperUpdateResultEntity.cs" />
     <Compile Include="Entities\MaxMemberLimitBySuper\MaxMemberLimitBySuperSearchResult.cs" />
     <Compile Include="Entities\MaxMemberLimitBySuper\MaxMemberLimitBySuperEntity.cs" />
@@ -246,13 +253,27 @@
     <Compile Include="ManageUsernamePrefix\Models\QueryModel.cs" />
     <Compile Include="ManageUsernamePrefix\Requests\QueryRequest.cs" />
     <Compile Include="ManageUsernamePrefix\Service.cs" />
-    <Compile Include="Models\ManageBettype\BettypeModel.cs" />
-    <Compile Include="Models\ManageSporttype\SportTypeModel.cs" />
+    <Compile Include="ManageProductSetting\DataAccess\ManageBettypeDataAccess.cs" />
+    <Compile Include="ManageProductSetting\DataAccess\ManageProductDataAccess.cs" />
+    <Compile Include="ManageProductSetting\DataAccess\ManageSportBettypeMatrixDataAccess.cs" />
+    <Compile Include="ManageProductSetting\DataAccess\ManageSporttypeDataAccess.cs" />
+    <Compile Include="ManageProductSetting\Entities\BettypeEntity.cs" />
+    <Compile Include="ManageProductSetting\Entities\ProductEntity.cs" />
+    <Compile Include="ManageProductSetting\Entities\SportBettypeMatrixEntity.cs" />
+    <Compile Include="ManageProductSetting\Entities\SportTypeEntity.cs" />
+    <Compile Include="ManageProductSetting\Models\BettypeModel.cs" />
+    <Compile Include="ManageProductSetting\Models\ProductModel.cs" />
+    <Compile Include="ManageProductSetting\Models\SportBettypeMatrixModel.cs" />
+    <Compile Include="ManageProductSetting\Models\SportTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Request\ManageBettype\SelectRequest.cs" />
-    <Compile Include="Request\ManageBettype\UpdateRequest.cs" />
-    <Compile Include="Request\ManageSportType\SelectRequest.cs" />
-    <Compile Include="Request\ManageSportType\UpdateRequest.cs" />
+    <Compile Include="ManageProductSetting\Request\ManageBettype\SelectBettypeRequest.cs" />
+    <Compile Include="ManageProductSetting\Request\ManageBettype\UpdateBettypeRequest.cs" />
+    <Compile Include="ManageProductSetting\Request\ManageProduct\SelectProductRequest.cs" />
+    <Compile Include="ManageProductSetting\Request\ManageProduct\UpdateProductRequest.cs" />
+    <Compile Include="ManageProductSetting\Request\ManageSportBettypeMatrix\SelectSportBettypeMatrixRequest.cs" />
+    <Compile Include="ManageProductSetting\Request\ManageSportBettypeMatrix\UpdateSportBettypeMatrixRequest.cs" />
+    <Compile Include="ManageProductSetting\Request\ManageSportType\SelectSportRequest.cs" />
+    <Compile Include="ManageProductSetting\Request\ManageSportType\UpdateSportRequest.cs" />
     <Compile Include="Resource\Error.Designer.cs">
       <DependentUpon>Error.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -292,10 +313,6 @@
     <ProjectReference Include="..\Fanex.Tarus.DataAccess.Implement\Fanex.Tarus.DataAccess.Implement.csproj">
       <Project>{9780010A-7EEC-4726-959B-D2CFFB1875EE}</Project>
       <Name>Fanex.Tarus.DataAccess.Implement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
-      <Project>{ccc0446a-42e7-4850-b09c-4dac278f23b3}</Project>
-      <Name>Fanex.Tarus.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
