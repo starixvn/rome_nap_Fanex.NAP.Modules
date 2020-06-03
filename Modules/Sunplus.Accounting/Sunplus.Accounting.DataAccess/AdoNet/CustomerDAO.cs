@@ -18,15 +18,18 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 {
     public class MemberMBCBalanceModel
     {
-        public MemberMBCBalanceModel(decimal balance, decimal netPosition)
+        public MemberMBCBalanceModel(decimal balance, decimal netPosition, decimal pendingTransfer3rd)
         {
             Balance = balance;
             NetPosition = netPosition;
+            PendingTransfer3rd = pendingTransfer3rd;
         }
 
         public decimal Balance { get; }
 
         public decimal NetPosition { get; }
+
+        public decimal PendingTransfer3rd { get; }
     }
 
     public class CustomerDAO : DataAccess, ICustomerDAO
@@ -271,7 +274,8 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 objdb.ExecuteNonQuery();
                 return new MemberMBCBalanceModel(
                     CastAide.AsDecimal(objdb.GetParameterValue("balance")),
-                    CastAide.AsDecimal(objdb.GetParameterValue("netposition")));
+                    CastAide.AsDecimal(objdb.GetParameterValue("netposition")),
+                    CastAide.AsDecimal(objdb.GetParameterValue("PendingTransfer3rd")));
             }
         }
 
