@@ -29,9 +29,9 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
             _smaManagementAccess = smaManagementAccess ?? new SMAManagementAccess();
         }
 
-        public IEnumerable<IdNameEntity> GetSites()
+        public IEnumerable<IdNameEntity> GetSites(int mode = 0)
         {
-            return _smaManagementAccess.GetSites();
+            return _smaManagementAccess.GetSites(mode);
         }
 
         public IEnumerable<IdNameEntity> GetCurrencies(bool excludeTestCurrencies)
@@ -307,7 +307,7 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
 
                 foreach (var entity in group.CN88SMAEntities)
                 {
-                    entity.HeadlineType = MapHeadlineType(entity.HeadlineTypeId);                  
+                    entity.HeadlineType = MapHeadlineType(entity.HeadlineTypeId);
                     entity.Position = MapRole(entity.RoleId);
 
                     if (group.GroupId == 0)
@@ -492,7 +492,7 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
         {
             CellStyle cellStyle = new ExcelGemboxUtils().GetStyleTextCenter(false);
             int startCol;
-            CN88SMAEntity smaEntity; 
+            CN88SMAEntity smaEntity;
             CellRange cellRange;
             ExcelCell excelCell;
 
@@ -501,7 +501,7 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
             for (int i = 0; i < totalItems; i++)
             {
                 startCol = 0;
-                smaEntity = groupHeadline.CN88SMAEntities[i];                
+                smaEntity = groupHeadline.CN88SMAEntities[i];
 
                 if (i == 0)
                 {
@@ -548,23 +548,23 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
                 startCol += 3;
 
                 excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
-                excelCell.Style = cellStyle;               
+                excelCell.Style = cellStyle;
                 excelCell.Value = smaEntity.Username;
 
                 excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
-                excelCell.Style = cellStyle;               
+                excelCell.Style = cellStyle;
                 excelCell.Value = smaEntity.Status;
 
                 excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
-                excelCell.Style = cellStyle;             
+                excelCell.Style = cellStyle;
                 excelCell.Value = smaEntity.Site;
 
                 excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
-                excelCell.Style = cellStyle;             
+                excelCell.Style = cellStyle;
                 excelCell.Value = smaEntity.Currency;
 
                 excelCell = worksheet.Cells[startRow + nextRow, ++startCol];
-                excelCell.Style = cellStyle;              
+                excelCell.Style = cellStyle;
                 excelCell.Value = smaEntity.Position;
 
                 nextRow++;

@@ -77,8 +77,6 @@
                     });
                 }
 
-                criteria.UserID = AppSession.AccId;
-                criteria.LoginIP = Utils.GetClientIP();
                 result = this._manageSportBettypeMatrixDataAccess.Insert(criteria);
             }
             catch (Exception ex)
@@ -94,7 +92,7 @@
 
         public Result Update(SportBettypeMatrixEntity request) => _manageSportBettypeMatrixDataAccess.Update(new UpdateSportBettypeMatrixCriteria
         {
-            Entities = new List<SportBettypeMatrixEntity> { request }
+            Entities = new List<SportBettypeMatrixEntity> { request },
         });
 
         public Result Delete(DeleteSportBettypeMatrixRequest request) => _manageSportBettypeMatrixDataAccess.Delete(new DeleteSportBettypeMatrixCriteria {

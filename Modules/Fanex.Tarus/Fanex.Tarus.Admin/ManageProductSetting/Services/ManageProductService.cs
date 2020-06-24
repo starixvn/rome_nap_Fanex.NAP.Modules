@@ -67,8 +67,6 @@
                     });
                 }
 
-                criteria.UserID = AppSession.AccId;
-                criteria.LoginIP = Utils.GetClientIP();
                 result = this._manageProductDataAccess.Insert(criteria);
             }
             catch (Exception ex)

@@ -67,6 +67,9 @@
       <HintPath>..\..\..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.RemotingRef, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.RemotingRef.1.4.0\lib\net461\Fanex.RemotingRef.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Business.Implement.1.0.1.1\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
     </Reference>
@@ -82,6 +85,9 @@
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\..\..\packages\NPOI.2.0.6\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MessagePack, Version=1.7.3.7, Culture=neutral, PublicKeyToken=b4a0369545f0a1be, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\MessagePack.1.7.3.7\lib\net45\MessagePack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.Practices.EnterpriseLibrary.Caching.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
@@ -118,6 +124,27 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Net.Http.4.3.3\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Threading.Tasks.Extensions.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
@@ -158,11 +185,21 @@
     <Compile Include="Business\CompareBalance\CompareBalanceService.cs" />
     <Compile Include="Business\CustomerDateLimit\CustomerDateLimitService.cs" />
     <Compile Include="Controller\ManageProductSettingController.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageCanSee\SelectAllCurrencyCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageCanSee\SelectAllSportTypeCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageCanSee\DeleteCanSeeCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageSportBettypeMatrix\DeleteSportBettypeMatrixCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageCanSee\InsertCanSeeCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageCanSee\SelectCanSeeCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageCanSee\UpdateCanSeeCriteria.cs" />
+    <Compile Include="ManageProductSetting\DataAccess\ManageCanSeeDataAccess.cs" />
+    <Compile Include="ManageProductSetting\Entities\CanSeeEntity.cs" />
+    <Compile Include="ManageProductSetting\Models\CanSeeModel.cs" />
     <Compile Include="ManageProductSetting\Request\ManageSportBettypeMatrix\DeleteSportBettypeMatrixRequest.cs" />
     <Compile Include="ManageProductSetting\Services\ManageBettypeService.cs" />
     <Compile Include="ManageProductSetting\Services\ManageProductService.cs" />
     <Compile Include="ManageProductSetting\Services\ManageSportBettypeMatrixService.cs" />
+    <Compile Include="ManageProductSetting\Services\ManageCanSeeService.cs" />
     <Compile Include="ManageProductSetting\Services\ManageSportTypeService.cs" />
     <Compile Include="Business\MaxMemberLimitBySuper\IMaxMemberLimitBySuperService.cs" />
     <Compile Include="Business\MaxMemberLimitBySuper\MaxMemberLimitBySuperService.cs" />
@@ -175,6 +212,7 @@
     <Compile Include="Controller\CustomerDateLimitController.cs" />
     <Compile Include="Controller\BACustomerController.cs" />
     <Compile Include="Controller\CompareBalanceController.cs" />
+    <Compile Include="ManageProductSetting\ViewModel\ManageProductSettingViewModel.cs" />
     <Compile Include="ManageUsernamePrefix\Criteria\DeleteCriteria.cs" />
     <Compile Include="ManageUsernamePrefix\Criteria\InsertCriteria.cs" />
     <Compile Include="ManageUsernamePrefix\Criteria\QueryCriteria.cs" />

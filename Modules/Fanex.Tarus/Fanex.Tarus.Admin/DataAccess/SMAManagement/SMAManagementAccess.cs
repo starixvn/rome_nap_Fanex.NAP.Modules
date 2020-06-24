@@ -11,21 +11,26 @@ using Sunplus.Accounting.Core.Common;
 namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
 {
     public class SMAManagementAccess : ISMAManagementAccess
-    {       
-        public IEnumerable<IdNameEntity> GetSites()
+    {
+        public IEnumerable<IdNameEntity> GetSites(int mode)
         {
-            IList<IdNameEntity> sites = new List<IdNameEntity>(32);           
+            IList<IdNameEntity> sites = new List<IdNameEntity>(32);
             using (var db = new ObjectDb("Acc_SiteSel_Credit"))
             {
-                using (var reader = db.ExecuteReader())
+                var inputParams = new Hashtable
+                {
+                    {  "mode", mode }
+                };
+
+                using (var reader = db.ExecuteReader(inputParams))
                 {
                     while (reader.Read())
-                    {                     
+                    {
                         sites.Add(new IdNameEntity
                         {
                             Id = Convert.ToInt32(reader["siteid"]),
                             Name = reader["site"].ToString()
-                        });                      
+                        });
                     }
                 }
             }
@@ -201,7 +206,7 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
                 GroupId = Convert.ToInt32(reader["custheadlineid"]),
                 GroupName = reader["groupname"].ToString(),
                 CustId = Convert.ToInt32(reader["custid"]),
-                Username = reader["username"].ToString(),             
+                Username = reader["username"].ToString(),
                 Status = getStatusName(Convert.ToInt32(reader["status"])),
                 Site = reader["site"].ToString(),
                 Currency = reader["currencyname"].ToString(),
@@ -218,7 +223,7 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
             else
             {
                 entity.HeadlineTypeId = Convert.ToInt32(headlineType);
-            }          
+            }
 
             return entity;
         }
@@ -240,7 +245,7 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
                 default:
                     return "";
             }
-             
+
         }
     }
 }
