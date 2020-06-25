@@ -470,5 +470,13 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["IsUmNG2"] == "1");
             }
         }
+
+        public static bool IsShowSabaVirtualSports
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsShowSabaVirtualSports"] == "1");
+            }
+        }
     }
 }

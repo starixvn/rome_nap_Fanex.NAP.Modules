@@ -91,6 +91,16 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
+        public static int ProductIdSabaVirtualSports
+        {
+            get
+            {
+                string productId = ConfigurationManager.AppSettings["ProductIdSabaVirtualSports"];
+
+                return string.IsNullOrWhiteSpace(productId) ? 0 : Converter.ToInt(productId);
+            }
+        }
+
         public static bool IsCN88SiteName(string site)
         {
             if (ConfigurationManager.AppSettings["CN88SiteName"] == null)
