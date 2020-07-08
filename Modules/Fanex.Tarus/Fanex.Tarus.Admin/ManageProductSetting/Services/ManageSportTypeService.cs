@@ -69,8 +69,6 @@
                     });
                 }
 
-                criteria.UserID = AppSession.AccId;
-                criteria.LoginIP = Utils.GetClientIP();
                 result = this._manageSportTypeDataAccess.Insert(criteria);
             }
             catch (Exception ex)

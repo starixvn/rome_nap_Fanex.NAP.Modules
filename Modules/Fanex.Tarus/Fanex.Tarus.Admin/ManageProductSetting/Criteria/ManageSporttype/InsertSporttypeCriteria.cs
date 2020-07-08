@@ -4,6 +4,8 @@
     using System.Text;
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Admin.ManageProductSetting.Entities;
+    using Fanex.Tarus.Infrastructure.Common;
+    using Fanex.Tarus.Infrastructure.Helper;
 
     public class InsertSportTypeCriteria : CriteriaBase
     {
@@ -51,9 +53,9 @@
             }
         }
 
-        public string LoginIP { get; set; }
+        public string LoginIP { get; } = Utils.GetClientIP();
 
-        public int UserID { get; set; }
+        public int UserID { get; } = AppSession.AccId;
 
         public override string GetSettingKey() => "Acc_Sporttype_Ins";
     }

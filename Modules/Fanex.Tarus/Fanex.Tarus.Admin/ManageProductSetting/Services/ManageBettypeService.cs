@@ -73,8 +73,6 @@
                     });
                 }
 
-                criteria.UserID = AppSession.AccId;
-                criteria.LoginIP = Utils.GetClientIP();
                 result = this._manageBettypeDataAccess.Insert(criteria);
             }
             catch (Exception ex)

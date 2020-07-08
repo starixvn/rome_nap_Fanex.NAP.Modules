@@ -8,7 +8,7 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
 {
     public interface ISMAManagementService
     {
-        IEnumerable<IdNameEntity> GetSites();
+        IEnumerable<IdNameEntity> GetSites(int mode = 0);
 
         IEnumerable<IdNameEntity> GetCurrencies(bool excludeTestCurrencies);
 
