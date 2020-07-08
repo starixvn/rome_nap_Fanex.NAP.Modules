@@ -6,17 +6,22 @@
     using Fanex.Tarus.Admin.Business.SMAManagement;
     using Fanex.Tarus.Admin.Entities.SMAManagement;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageBettype;
+    using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageCSSportBettypeMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageProduct;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSportBettypeMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSporttype;
+    using Fanex.Tarus.Admin.ManageProductSetting.Entities;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageBettype;
+    using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageCSSportBettypeMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageProduct;
+    using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageRefResource;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageSportBettypeMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageSportType;
     using Fanex.Tarus.Admin.ManageProductSetting.Services;
     using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
+    using System;
 
     public class ManageProductSettingController : BaseController
     {
@@ -27,6 +32,8 @@
         private readonly ManageSportBettypeMatrixService _manageSportBettypeMatrixService;
         private readonly ManageCanSeeService _manageCanSeeService;
         private readonly SMAManagementService _SMAManagementService;
+        private readonly IManageCSSportBettypeMatrixService _manageCSSportBettypeMatrixService;
+        private readonly IManageRefResourceService _manageRefResourceService;
 
         public ManageProductSettingController()
         {
@@ -36,6 +43,8 @@
             _manageSportBettypeMatrixService = new ManageSportBettypeMatrixService();
             _manageCanSeeService = new ManageCanSeeService();
             _SMAManagementService = new SMAManagementService();
+            _manageCSSportBettypeMatrixService = new ManageCSSportBettypeMatrixService();
+            _manageRefResourceService = new ManageRefResourceService();
         }
 
         [AuthenticateRead]
@@ -65,6 +74,9 @@
                     Value = s.Key.ToString()
                 })
             };
+            
+            ViewBag.BetTypeGroups = _manageCSSportBettypeMatrixService.GetBetTypeGroups();
+            ViewBag.SportTypeGroups = _manageCSSportBettypeMatrixService.GetSportTypeGroups();
 
             return View(indexPath, viewModel);
         }
@@ -187,5 +199,63 @@
         public JsonResult UpdateCanSee(UpdateCanSeeCriteria request) => Json(_manageCanSeeService.Update(request));
 
         #endregion CanSee
+        
+        
+        #region CSSportBettypeMatrix
+        [AuthenticateRead]
+        [HttpGet]
+        public JsonResult SelectCSSportBettypeMatrix(SelectCSSportBettypeMatrixRequest request) => Json(_manageCSSportBettypeMatrixService.Select(new SelectCSSportBettypeMatrixCriteria
+        {
+            SportType = request.SportType,
+            SportName = request.SportName,
+            BetType = request.BetType,
+            BetTypeName = request.BetTypeName,
+            ProductId = request.ProductId == null ? "" : request.ProductId,
+            EventType = request.EventType,
+            RefTable = request.RefTable,
+            PageIndex = request.PageIndex,
+            PageSize = request.PageSize
+        }), JsonRequestBehavior.AllowGet);
+
+        [AuthenticateRead]
+        [HttpGet]
+        public JsonResult SelectSportTypeGroups() => Json(_manageCSSportBettypeMatrixService.GetSportTypeGroups(), JsonRequestBehavior.AllowGet);
+
+        [AuthenticateRead]
+        [HttpGet]
+        public JsonResult SelectBetTypeGroups() => Json(_manageCSSportBettypeMatrixService.GetBetTypeGroups(), JsonRequestBehavior.AllowGet);
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult InsertCSSportBettypeMatrix(HttpPostedFileBase uploadFile) => Json(_manageCSSportBettypeMatrixService.Insert(uploadFile));
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult UpdateCSSportBettypeMatrix(UpdateCSSportBettypeMatrixRequest request) => Json(_manageCSSportBettypeMatrixService.Update(request));
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult DeleteCSSportBettypeMatrix(DeleteCSSportBettypeMatrixRequest request) => Json(_manageCSSportBettypeMatrixService.Delete(request));
+
+        #endregion CSSportBettypeMatrix
+
+        #region RefResource
+        [AuthenticateRead]
+        [HttpGet]
+        public JsonResult SelectRefResource(SelectRefResourceRequest request) => Json(_manageRefResourceService.Select(request), JsonRequestBehavior.AllowGet);
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult InsertRefResource(HttpPostedFileBase uploadFile) => Json(_manageRefResourceService.Insert(uploadFile));
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult UpdateRefResource(UpdateRefResourceRequest request) => Json(_manageRefResourceService.Update(request));
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult DeleteRefResource(DeleteRefResourceRequest request) => Json(_manageRefResourceService.Delete(request));
+
+        #endregion
     }
 }
