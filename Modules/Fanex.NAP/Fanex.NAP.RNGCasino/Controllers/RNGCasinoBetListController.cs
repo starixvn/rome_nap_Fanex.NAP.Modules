@@ -61,7 +61,7 @@
         {
             var result = _rngCasinoService.JackpotDetails(criteria);
 
-            return View("~/Areas/RNGCasino/Views/BetDetails/Jackpot.cshtml", new JackpotDetailsViewModel { TicketDetails = result });
+            return View("~/Areas/RNGCasino/Views/BetDetails/Jackpot.cshtml", new JackpotDetailsViewModel { TicketDetails = result, Title = criteria.Title });
         }
 
         [NonAction]

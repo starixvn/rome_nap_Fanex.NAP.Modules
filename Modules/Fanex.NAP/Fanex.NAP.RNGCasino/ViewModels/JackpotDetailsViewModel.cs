@@ -9,5 +9,7 @@
         public IEnumerable<TicketDetail> TicketDetails { get; set; }
 
         public int TotalRows => TicketDetails.Count();
+
+        public string Title { get; set; }
     }
 }
