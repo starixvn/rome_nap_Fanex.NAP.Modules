@@ -94,13 +94,19 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("username", username);
                     hash.Add("groupid", groupid);
                     hash.Add("userid", userid);
-                    hash.Add("errcode", 0);
+                    hash.Add("case", 0);
+                    hash.Add("errcode", 0);                   
                     hash.Add("errmsg", "");
                     hash.Add("language", "E");
                     hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
 
                     objdb.AssignParamValues(hash);
                     objdb.ExecuteNonQuery();
+
+                    int crmUpdateHeadlineCase = CastAide.AsInt32(objdb.GetParameterValue("case"));
+                    if (crmUpdateHeadlineCase != 0) {
+                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(username, 0, crmUpdateHeadlineCase, userid);
+                    }
 
                     return new Result()
                     {
@@ -135,6 +141,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("custidlist", CustIDList);
                     hash.Add("groupid", groupid);
                     hash.Add("userid", userid);
+                    hash.Add("case", 0);
                     hash.Add("errcode", 0);
                     hash.Add("errmsg", "");
                     hash.Add("language", "E");
@@ -143,6 +150,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     objdb.AssignParamValues(hash);
 
                     objdb.ExecuteNonQuery();
+
+                    int crmUpdateHeadlineCase = CastAide.AsInt32(objdb.GetParameterValue("case"));
+                    if (crmUpdateHeadlineCase != 0)
+                    {
+                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, CastAide.AsInt32(CustIDList,0), crmUpdateHeadlineCase, userid);
+                    }
 
                     return new Result()
                     {
@@ -177,6 +190,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("custid", custid);
                     hash.Add("groupid", groupid);
                     hash.Add("userid", userid);
+                    hash.Add("case", 0);
                     hash.Add("errcode", 0);
                     hash.Add("errmsg", "");
                     hash.Add("language", "E");
@@ -185,6 +199,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     objdb.AssignParamValues(hash);
 
                     objdb.ExecuteNonQuery();
+
+                    int crmUpdateHeadlineCase = CastAide.AsInt32(objdb.GetParameterValue("case"));
+                    if (crmUpdateHeadlineCase != 0)
+                    {
+                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, custid, crmUpdateHeadlineCase, userid);
+                    }
 
                     return new Result()
                     {
@@ -331,6 +351,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("isgroupheadline", IsGroupHeadline);
 
                     hash.Add("userid", UserID);
+                    hash.Add("case", 0);
                     hash.Add("errcode", 0);
                     hash.Add("errmsg", "");
                     hash.Add("language", "E");
@@ -340,6 +361,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     objdb.AssignParamValues(hash);
 
                     objdb.ExecuteNonQuery();
+
+                    int crmUpdateHeadlineCase = CastAide.AsInt32(objdb.GetParameterValue("case"));
+                    if (crmUpdateHeadlineCase != 0)
+                    {
+                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, custid, crmUpdateHeadlineCase, UserID);
+                    }
 
                     return new Result()
                     {
