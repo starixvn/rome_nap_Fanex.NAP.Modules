@@ -95,6 +95,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("groupid", groupid);
                     hash.Add("userid", userid);
                     hash.Add("case", 0);
+                    hash.Add("headlineid_old", 0);
                     hash.Add("errcode", 0);                   
                     hash.Add("errmsg", "");
                     hash.Add("language", "E");
@@ -104,8 +105,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     objdb.ExecuteNonQuery();
 
                     int crmUpdateHeadlineCase = CastAide.AsInt32(objdb.GetParameterValue("case"));
+                    int headlineID_Old = CastAide.AsInt32(objdb.GetParameterValue("headlineid_old"));
                     if (crmUpdateHeadlineCase != 0) {
-                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(username, 0, crmUpdateHeadlineCase, userid);
+                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(username, 0, crmUpdateHeadlineCase, userid, headlineID_Old);
                     }
 
                     return new Result()
@@ -142,6 +144,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("groupid", groupid);
                     hash.Add("userid", userid);
                     hash.Add("case", 0);
+                    hash.Add("headlineid_old", 0);
                     hash.Add("errcode", 0);
                     hash.Add("errmsg", "");
                     hash.Add("language", "E");
@@ -152,9 +155,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     objdb.ExecuteNonQuery();
 
                     int crmUpdateHeadlineCase = CastAide.AsInt32(objdb.GetParameterValue("case"));
+                    int headlineID_Old = CastAide.AsInt32(objdb.GetParameterValue("headlineid_old"));
                     if (crmUpdateHeadlineCase != 0)
                     {
-                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, CastAide.AsInt32(CustIDList,0), crmUpdateHeadlineCase, userid);
+                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, CastAide.AsInt32(CustIDList,0), crmUpdateHeadlineCase, userid, headlineID_Old);
                     }
 
                     return new Result()
@@ -192,6 +196,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("userid", userid);
                     hash.Add("case", 0);
                     hash.Add("errcode", 0);
+                    hash.Add("headlineid_old", 0);
                     hash.Add("errmsg", "");
                     hash.Add("language", "E");
                     hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
@@ -201,9 +206,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     objdb.ExecuteNonQuery();
 
                     int crmUpdateHeadlineCase = CastAide.AsInt32(objdb.GetParameterValue("case"));
+                    int headlineID_Old = CastAide.AsInt32(objdb.GetParameterValue("headlineid_old"));
                     if (crmUpdateHeadlineCase != 0)
                     {
-                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, custid, crmUpdateHeadlineCase, userid);
+                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, custid, crmUpdateHeadlineCase, userid, headlineID_Old);
                     }
 
                     return new Result()
@@ -352,6 +358,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 
                     hash.Add("userid", UserID);
                     hash.Add("case", 0);
+                    hash.Add("headlineid_old", 0);
                     hash.Add("errcode", 0);
                     hash.Add("errmsg", "");
                     hash.Add("language", "E");
@@ -363,9 +370,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     objdb.ExecuteNonQuery();
 
                     int crmUpdateHeadlineCase = CastAide.AsInt32(objdb.GetParameterValue("case"));
+                    int headlineID_Old = CastAide.AsInt32(objdb.GetParameterValue("headlineid_old"));
                     if (crmUpdateHeadlineCase != 0)
                     {
-                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, custid, crmUpdateHeadlineCase, UserID);
+                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, custid, crmUpdateHeadlineCase, UserID, headlineID_Old);
                     }
 
                     return new Result()
