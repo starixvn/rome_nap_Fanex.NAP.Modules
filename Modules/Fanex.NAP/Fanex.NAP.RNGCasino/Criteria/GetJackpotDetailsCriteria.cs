@@ -4,6 +4,9 @@
 
     public class GetJackpotDetailsCriteria : CriteriaBase
     {
+        [SpParam(Ignored = true)]
+        public string Title { get; set; }
+
         public long TransId { get; set; }
 
         public int CustId { get; set; }

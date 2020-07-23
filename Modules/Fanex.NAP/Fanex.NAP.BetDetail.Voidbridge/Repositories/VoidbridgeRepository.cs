@@ -72,7 +72,10 @@
                 SuperDiscount = Converter.ToDecimal(reader["sdiscount"]),
                 BetCheck = Converter.ToString2(reader["BetCheck"]),
 
-                MatchCode = Converter.ToString2(reader["matchcode"])
+                MatchCode = Converter.ToString2(reader["matchcode"]),
+                ExtraInfo = Converter.ToString2(reader["ExtraInfo"]),
+                BetdaqId = Converter.To<long>(reader["BetdaqId"]),
+                OddsSpread = Converter.ToDecimal(reader["OddsSpread"])
             };
         }
     }
