@@ -18,8 +18,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("custid", custId);
                     hash.Add("userid", userId);
                     hash.Add("case", Case);
-                    hash.Add("case", Case);
-                    hash.Add("headlineid_old", 0);
+                    hash.Add("headlineid_old", headlineID_Old);
                     hash.Add("errcode", 0);
                     hash.Add("errmsg", "");
                     hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
