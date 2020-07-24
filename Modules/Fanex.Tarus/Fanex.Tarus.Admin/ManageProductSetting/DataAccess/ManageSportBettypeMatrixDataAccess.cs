@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Fanex.Data;
+    using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Admin.DataAccess;
     using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSportBettypeMatrix;
@@ -16,9 +17,9 @@
 
         Result Insert(InsertSportBettypeMatrixCriteria criteria);
 
-        Result Update(UpdateSportBettypeMatrixCriteria criteria);
+        Result Update(ICriteria criteria);
 
-        Result Delete(DeleteSportBettypeMatrixCriteria criteria);
+        Result Delete(ICriteria criteria);
     }
 
     public class ManageSportBettypeMatrixDataAccess : BaseDataAccess, IManageSportBettypeMatrixDataAccess
@@ -59,8 +60,8 @@
             }
         }
 
-        public Result Update(UpdateSportBettypeMatrixCriteria criteria) => base.ExecuteNonQuery(criteria);
+        public Result Update(ICriteria criteria) => base.ExecuteNonQuery(criteria);
 
-        public Result Delete(DeleteSportBettypeMatrixCriteria criteria) => base.ExecuteNonQuery(criteria);
+        public Result Delete(ICriteria criteria) => base.ExecuteNonQuery(criteria);
     }
 }

@@ -6,6 +6,7 @@
     using Fanex.Data;
     using Fanex.Tarus.Admin.DataAccess;
     using Fanex.Tarus.Admin.Entities;
+    using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageCSSportBettypeMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageProduct;
     using Fanex.Tarus.Admin.ManageProductSetting.Entities;
     using Fanex.Tarus.Admin.ManageProductSetting.Models;
@@ -18,6 +19,8 @@
         Result Insert(InsertProductCriteria criteria);
 
         Result Update(UpdateProductCriteria criteria);
+        IEnumerable<BetTypeGroupEntity> SelectBetTypeGroup(SelectBetTypeGroupCriteria selectBetTypeGroupCriteria);
+        IEnumerable<SportTypeGroupEntity> SelectSportTypeGroup(SelectSportTypeGroupCriteria selectSportTypeGroupCriteria);
     }
 
     public class ManageProductDataAccess : BaseDataAccess, IManageProductDataAccess
@@ -56,6 +59,47 @@
                     ProductEntities = entities,
                     TotalRows = DataUtils.ToInt32(objDb.GetOuputParams()["totalrows"])
                 };
+            }
+        }
+
+        public IEnumerable<BetTypeGroupEntity> SelectBetTypeGroup(SelectBetTypeGroupCriteria selectBetTypeGroupCriteria)
+        {
+            var entities = new List<BetTypeGroupEntity>();
+            using (var objDb = new ObjectDb(selectBetTypeGroupCriteria.GetSettingKey()))
+            {
+                using (var reader = objDb.ExecuteReader(selectBetTypeGroupCriteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        entities.Add(new BetTypeGroupEntity
+                        {
+                            BetTypeGroupId = DataUtils.ToString(reader["typeid"]),
+                            BetTypeGroupName = DataUtils.ToString(reader["typenamee"])
+                        });
+                    }
+                    return entities;
+                }
+            }
+        }
+
+        public IEnumerable<SportTypeGroupEntity> SelectSportTypeGroup(SelectSportTypeGroupCriteria selectSportTypeGroupCriteria)
+        {
+            var entities = new List<SportTypeGroupEntity>();
+            using (var objDb = new ObjectDb(selectSportTypeGroupCriteria.GetSettingKey()))
+            {
+                using (var reader = objDb.ExecuteReader(selectSportTypeGroupCriteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        entities.Add(new SportTypeGroupEntity
+                        {
+                            SportTypeGroupId = DataUtils.ToString(reader["SportTypeGroup"]),
+                            SportTypeGroupName = DataUtils.ToString(reader["DisplaySportName"]),
+                            ProductId = reader["ProductID"] == DBNull.Value ? null : DataUtils.ToString(reader["ProductID"])
+                        });
+                    }
+                    return entities;
+                }
             }
         }
 
