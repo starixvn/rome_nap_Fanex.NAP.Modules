@@ -7,7 +7,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     public static class CrmUpdateHeadlineInfo
     {
-        public static void Acc_CRM_HeadlineUpd(string userName, int custId, int Case, int userId, int headlineID_Old)
+        public static void Acc_CRM_HeadlineUpd(string userName, int custId, int Case, int userId, int oldHeadline, int newHeadline)
         {
             try
             {
@@ -18,7 +18,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("custid", custId);
                     hash.Add("userid", userId);
                     hash.Add("case", Case);
-                    hash.Add("headlineid_old", headlineID_Old);
+                    hash.Add("old_headline", oldHeadline);
+                    hash.Add("new_headline", newHeadline);
                     hash.Add("errcode", 0);
                     hash.Add("errmsg", "");
                     hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
