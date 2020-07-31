@@ -197,5 +197,7 @@ namespace Fanex.Tarus.Security.Web
         }
 
         public bool IsBelongToSpecialGroups => notApplyForNAP;
+
+        public string LangKey { get; set; } = "E";
     }
 }
