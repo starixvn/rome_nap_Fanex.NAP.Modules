@@ -66,7 +66,7 @@ namespace Sunplus.Accounting.Core.Helper
                 else
                 {
                     ErrorCode = Globals.ErrorCodeInvalid;
-                    ErrorMsg = Globals.ErrorMsgInvalid;
+                    ErrorMsg = ErrMsgOutPut;
                 }
             }
             catch (Exception ex)
