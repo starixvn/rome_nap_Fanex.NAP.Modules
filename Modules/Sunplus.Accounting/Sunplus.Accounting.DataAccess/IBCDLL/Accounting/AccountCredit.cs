@@ -108,8 +108,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     int crmUpdateHeadlineCase = CastAide.AsInt32(objdb.GetParameterValue("case"));
                     int oldHeadline = CastAide.AsInt32(objdb.GetParameterValue("old_headline"));
                     int newHeadline = CastAide.AsInt32(objdb.GetParameterValue("new_headline"));
+
                     if (crmUpdateHeadlineCase != 0) {
-                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(username, 0, crmUpdateHeadlineCase, userid, oldHeadline, newHeadline);
+                        var result = CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(username, 0, crmUpdateHeadlineCase, userid, oldHeadline, newHeadline);
+                        if (result.ErrorCode > 0)
+                        {
+                            return result;
+                        } 
                     }
 
                     return new Result()
@@ -162,7 +167,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     int newHeadline = CastAide.AsInt32(objdb.GetParameterValue("new_headline"));
                     if (crmUpdateHeadlineCase != 0)
                     {
-                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, CastAide.AsInt32(CustIDList, 0), crmUpdateHeadlineCase, userid, oldHeadline, newHeadline);
+                        var result = CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, CastAide.AsInt32(CustIDList, 0), crmUpdateHeadlineCase, userid, oldHeadline, newHeadline);
+                        if (result.ErrorCode > 0)
+                        {
+                            return result;
+                        }
                     }
 
                     return new Result()
@@ -215,7 +224,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     int newHeadline = CastAide.AsInt32(objdb.GetParameterValue("new_headline"));
                     if (crmUpdateHeadlineCase != 0)
                     {
-                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, custid, crmUpdateHeadlineCase, userid, oldHeadline, newHeadline);
+                        var result = CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, custid, crmUpdateHeadlineCase, userid, oldHeadline, newHeadline);
+                        if (result.ErrorCode > 0)
+                        {
+                            return result;
+                        }
                     }
 
                     return new Result()
@@ -381,7 +394,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     int newHeadline = CastAide.AsInt32(objdb.GetParameterValue("new_headline"));
                     if (crmUpdateHeadlineCase != 0)
                     {
-                        CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, custid, crmUpdateHeadlineCase, UserID, oldHeadline, newHeadline);
+                        var result = CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, custid, crmUpdateHeadlineCase, UserID, oldHeadline, newHeadline);
+                        if (result.ErrorCode > 0)
+                        {
+                            return result;
+                        }
                     }
 
                     return new Result()
