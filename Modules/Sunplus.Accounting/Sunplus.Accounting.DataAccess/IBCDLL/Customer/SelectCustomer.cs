@@ -60,14 +60,17 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         /// Tho.Nguyen updated: 12/3/2008
         /// </summary>
         /// <returns>DataResult</returns>
-        public static DbResult ExchangeSelRpt(string accountingSystem)
+        public static DbResult ExchangeSelRpt(string accountingSystem, int Offersite = 0)
         {
             DbResult dbResult = null;
             try
             {
                 using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel", 600))
                 {
-                    var param = new Hashtable { { "system", accountingSystem.ToString().ToUpper() } };
+                    var param = new Hashtable {
+                        { "system", accountingSystem.ToString().ToUpper() },
+                        { "Offersite", Offersite }
+                    };
 
                     objDB.AssignParamValues(param);
 
