@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Core.Models;
+    using Fanex.CustomerSetting.Module.Core.Web;
     using Keno.KenoSetting.Services;
     using Keno.KenoSetting.ViewModels;
     using Logging.Extensions.Web;
@@ -47,6 +48,7 @@
         private IEnumerable<Result> UpdateMemberSetting(int custId, AgentEditMemberSettingViewModel sourceSettings)
         {
             sourceSettings.CustomerInformation.CustId = custId;
+            sourceSettings.CustomerInformation.Ip = AppSession.CurrentContext.Ip4Address;
 
             foreach (var betSetting in sourceSettings.BetSettings)
             {
@@ -60,7 +62,7 @@
                 positionTaking.IsUpdateA1 = true;
             }
 
-            return _kenoService.UpdateMemberCustomerSettingInCaseOfAgentEditMember(sourceSettings);
+            return _kenoService.UpdateMemberCustomerSettingInCaseOfAgentEditMember(sourceSettings, true);
         }
     }
 }

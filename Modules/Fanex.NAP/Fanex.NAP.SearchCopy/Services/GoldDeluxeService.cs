@@ -97,7 +97,8 @@
                 Disable = custInfoIBC.GeneralInfo.GoldDeluxeDisabled,
                 ActorId = actorId,
                 SubAccId = 0,
-                Ip = ip
+                Ip = ip,
+                IsSC = true
             };
 
             return _goldDeluxeService.UpdateStatus(criteria);
