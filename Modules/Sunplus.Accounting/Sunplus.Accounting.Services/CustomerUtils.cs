@@ -60,12 +60,12 @@ namespace Sunplus.Accounting.Business.Customer
         /// <param name="isSearchFilter"></param>
         /// <param name="isAddNewSuper"></param>
         /// <returns></returns>
-        public static string GetListCurrencyBySystem(string system, bool isSearchFilter, bool isAddNewSuper, int OfferSite = 0)
+        public static string GetListCurrencyBySystem(string system, bool isSearchFilter, bool isAddNewSuper, int mode = 0)
         {
             var html = new StringBuilder();
             try
             {
-                DbResult ds = SelectCustomer.ExchangeSelRpt(system, OfferSite);
+                DbResult ds = SelectCustomer.ExchangeSelRpt(system, mode);
                 if (ds != null)
                 {
                     DataTable tbl = ds.ResultSet.Tables[0];

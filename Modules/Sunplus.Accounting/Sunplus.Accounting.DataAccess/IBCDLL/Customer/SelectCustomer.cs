@@ -60,7 +60,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         /// Tho.Nguyen updated: 12/3/2008
         /// </summary>
         /// <returns>DataResult</returns>
-        public static DbResult ExchangeSelRpt(string accountingSystem, int Offersite = 0)
+        public static DbResult ExchangeSelRpt(string accountingSystem, int mode = 0)
         {
             DbResult dbResult = null;
             try
@@ -69,7 +69,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 {
                     var param = new Hashtable {
                         { "system", accountingSystem.ToString().ToUpper() },
-                        { "Offersite", Offersite }
+                        { "mode", mode }
                     };
 
                     objDB.AssignParamValues(param);
