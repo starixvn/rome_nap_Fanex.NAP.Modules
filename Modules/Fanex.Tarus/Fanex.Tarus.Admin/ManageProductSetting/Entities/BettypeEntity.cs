@@ -25,5 +25,6 @@
         public string TypeNameMMR { get; set; }
         public string TypeNameHI { get; set; }
         public string DisplayedTypeID { get; set; }
+        public string LicSpreadBetTypeGroupId { get; set; }
     }
 }
