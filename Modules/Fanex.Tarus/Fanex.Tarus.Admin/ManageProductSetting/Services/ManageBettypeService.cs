@@ -9,8 +9,6 @@
     using Fanex.Tarus.Admin.ManageProductSetting.DataAccess;
     using Fanex.Tarus.Admin.ManageProductSetting.Entities;
     using Fanex.Tarus.Admin.ManageProductSetting.Models;
-    using Fanex.Tarus.Infrastructure.Common;
-    using Fanex.Tarus.Infrastructure.Helper;
     using NPOI.SS.UserModel;
 
     public class ManageBettypeService
@@ -45,6 +43,7 @@
                 {
                     rowCount++;
                     IRow row = (IRow)rows.Current;
+
                     criteria.Entities.Add(new BettypeEntity
                     {
                         TypeId = HttpUtility.HtmlEncode(row.GetCell(0) == null ? string.Empty : row.GetCell(0).ToString()),
@@ -69,7 +68,8 @@
                         ParentTypeid = HttpUtility.HtmlEncode(row.GetCell(19) == null ? string.Empty : row.GetCell(19).ToString()),
                         TypeNameMMR = HttpUtility.HtmlEncode(row.GetCell(20) == null ? string.Empty : row.GetCell(20).ToString()),
                         TypeNameHI = HttpUtility.HtmlEncode(row.GetCell(21) == null ? string.Empty : row.GetCell(21).ToString()),
-                        DisplayedTypeID = HttpUtility.HtmlEncode(row.GetCell(22) == null ? string.Empty : row.GetCell(22).ToString())
+                        DisplayedTypeID = HttpUtility.HtmlEncode(row.GetCell(22) == null ? string.Empty : row.GetCell(22).ToString()),
+                        LicSpreadBetTypeGroupId = HttpUtility.HtmlEncode(row.GetCell(23) == null ? string.Empty : row.GetCell(23).ToString())
                     });
                 }
 

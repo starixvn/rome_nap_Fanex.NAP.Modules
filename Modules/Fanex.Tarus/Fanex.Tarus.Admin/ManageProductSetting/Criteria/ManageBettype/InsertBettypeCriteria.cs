@@ -49,6 +49,7 @@
                     builder.Append("typenameMMR = \"" + entity.TypeNameMMR + "\" ");
                     builder.Append("typenameHI = \"" + entity.TypeNameHI + "\" ");
                     builder.Append("DisplayedTypeID = \"" + entity.DisplayedTypeID + "\" ");
+                    builder.Append("LicSpreadBetTypeGroupId = \"" + entity.LicSpreadBetTypeGroupId.ToString() + "\" ");
                     builder.Append("/>");
                 }
 
