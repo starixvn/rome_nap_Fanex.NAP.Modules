@@ -52,7 +52,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Repositories
                 {
                     if (reader.Read())
                     {
-                        custInfo.Site = criteria.IsMember ? string.Empty : reader["site"].ToString();
+                        custInfo.Site = reader["site"].ToString();
                         custInfo.Credit = ((long)Math.Ceiling((decimal)reader["credit"])).ToString();
                         custInfo.CreditMax = criteria.IsMember ? ((long)Math.Ceiling((decimal)reader["credit_max"])).ToString() : string.Empty;
                         custInfo.CurrencyId = Converter.ToInt(reader["currencyID"]);
