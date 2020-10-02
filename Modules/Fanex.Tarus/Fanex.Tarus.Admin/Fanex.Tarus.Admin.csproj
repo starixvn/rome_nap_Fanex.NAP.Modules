@@ -210,11 +210,14 @@
     <Compile Include="ManageProductSetting\Criteria\ManageCanSee\InsertCanSeeCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageCanSee\SelectCanSeeCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageCanSee\UpdateCanSeeCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageUMConfig\GetProductSettingByFunctionCriteria.cs" />
     <Compile Include="ManageProductSetting\DataAccess\ManageCanSeeDataAccess.cs" />
     <Compile Include="ManageProductSetting\DataAccess\ManageDwLListDataAccess.cs" />
+    <Compile Include="ManageProductSetting\DataAccess\ManageUMConfigDataAccess.cs" />
     <Compile Include="ManageProductSetting\DataAccess\ManageDwLListExtraPTDataAccess.cs" />
     <Compile Include="ManageProductSetting\Entities\CanSeeEntity.cs" />
     <Compile Include="ManageProductSetting\Entities\DwLListEntity.cs" />
+    <Compile Include="ManageProductSetting\Entities\UMConfig\ProductSettingByFunctionEntity.cs" />
     <Compile Include="ManageProductSetting\Entities\DwLListExtraPTEntity.cs" />
     <Compile Include="ManageProductSetting\Models\CanSeeModel.cs" />
     <Compile Include="ManageProductSetting\DataAccess\ManageCSSportBettypeMatrixDataAccess.cs" />
@@ -258,6 +261,7 @@
     <Compile Include="Controller\CustomerDateLimitController.cs" />
     <Compile Include="Controller\BACustomerController.cs" />
     <Compile Include="Controller\CompareBalanceController.cs" />
+    <Compile Include="ManageProductSetting\Services\ManageUMConfigService.cs" />
     <Compile Include="ManageProductSetting\ViewModel\ManageProductSettingViewModel.cs" />
     <Compile Include="ManageUsernamePrefix\Criteria\DeleteCriteria.cs" />
     <Compile Include="ManageUsernamePrefix\Criteria\InsertCriteria.cs" />

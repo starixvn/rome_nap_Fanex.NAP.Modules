@@ -10,7 +10,6 @@
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageProduct;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSportBettypeMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSporttype;
-    using Fanex.Tarus.Admin.ManageProductSetting.Entities;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageBettype;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageCSSportBettypeMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageProduct;
@@ -21,7 +20,6 @@
     using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
-    using System;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageResetWinning;
 
     public class ManageProductSettingController : BaseController
@@ -36,6 +34,7 @@
         private readonly IManageCSSportBettypeMatrixService _manageCSSportBettypeMatrixService;
         private readonly IManageRefResourceService _manageRefResourceService;
         private readonly IManageDwLListService _manageDwLListService;
+        private readonly IManageUMConfigService _manageUMConfigService;
         private readonly IManageDwLListExtraPTService _manageDwLListExtraPTService;
 
         public ManageProductSettingController()
@@ -49,6 +48,7 @@
             _manageCSSportBettypeMatrixService = new ManageCSSportBettypeMatrixService();
             _manageRefResourceService = new ManageRefResourceService();
             _manageDwLListService = new ManageDwLListService();
+            _manageUMConfigService = new ManageUMConfigService();
             _manageDwLListExtraPTService = new ManageDwLListExtraPTService();
         }
 
@@ -57,7 +57,9 @@
         public ActionResult Index()
         {
             var site = _SMAManagementService.GetSites(1).ToList();
+            var umSite = _SMAManagementService.GetSites().ToList();
             site.Insert(0, new IdNameEntity { Id = 0, Name = "All Sites" });
+            umSite.Insert(0, new IdNameEntity { Id = 0, Name = "All Sites" });
             var currency = _manageCanSeeService.GetCurrencies();
             var sports = _manageCanSeeService.GetAllSportType();
             var viewModel = new ManageProductSettingViewModel
@@ -77,9 +79,19 @@
                 {
                     Text = $"[{s.Key.ToString()}] {s.Value}",
                     Value = s.Key.ToString()
+                }),
+                UMCurrencies = currency.Select(c => new SelectListItem
+                {
+                    Text = $"[{c.Id.ToString()}] {c.Name}",
+                    Value = c.Id.ToString()
+                }),
+                UMSites = umSite.Select(s => new SelectListItem
+                {
+                    Text = $"[{s.Id.ToString()}] {s.Name}",
+                    Value = s.Id.ToString()
                 })
             };
-            
+
             ViewBag.BetTypeGroups = _manageCSSportBettypeMatrixService.GetBetTypeGroups();
             ViewBag.SportTypeGroups = _manageCSSportBettypeMatrixService.GetSportTypeGroups();
 
@@ -204,8 +216,8 @@
         public JsonResult UpdateCanSee(UpdateCanSeeCriteria request) => Json(_manageCanSeeService.Update(request));
 
         #endregion CanSee
-        
-        
+
+
         #region CSSportBettypeMatrix
         [AuthenticateRead]
         [HttpGet]
@@ -260,6 +272,14 @@
         [AuthenticateHost]
         [HttpPost]
         public JsonResult DeleteRefResource(DeleteRefResourceRequest request) => Json(_manageRefResourceService.Delete(request));
+
+        #endregion
+
+        #region UMConfig
+
+        [AuthenticateRead]
+        [HttpGet]
+        public JsonResult GetProductSettingByFunction() => Json(_manageUMConfigService.GetProductSettingByFunction(), JsonRequestBehavior.AllowGet);
 
         #endregion
 

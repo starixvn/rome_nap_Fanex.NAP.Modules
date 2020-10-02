@@ -12,5 +12,9 @@
         public IEnumerable<SelectListItem> Currencies { get; set; }
 
         public IEnumerable<SelectListItem> Sites { get; set; }
+
+        public IEnumerable<SelectListItem> UMCurrencies { get; set; }
+
+        public IEnumerable<SelectListItem> UMSites { get; set; }
     }
 }
