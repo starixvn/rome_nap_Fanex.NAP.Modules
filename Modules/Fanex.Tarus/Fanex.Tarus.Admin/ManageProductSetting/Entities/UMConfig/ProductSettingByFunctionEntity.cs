@@ -6,6 +6,8 @@ namespace Fanex.Tarus.Admin.ManageProductSetting.Entities.UMConfig
     {
         public string FunctionType { get; set; }
 
+        public string FunctionTypeName { get; set; }
+
         public IEnumerable<ProductSettingEntity> Products { get; set; }
     }
 
@@ -39,9 +41,11 @@ namespace Fanex.Tarus.Admin.ManageProductSetting.Entities.UMConfig
 
         public string BetType { get; set; }
 
-        public string IsLive { get; set; }
+        public bool IsLive { get; set; }
 
         public string ProductName { get; set; }
+
+        public string FunctionTypeName { get; set; }
 
         public string SportName { get; set; }
 

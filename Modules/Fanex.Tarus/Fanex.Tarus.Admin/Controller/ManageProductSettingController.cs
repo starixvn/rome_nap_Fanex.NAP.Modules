@@ -10,6 +10,7 @@
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageProduct;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSportBettypeMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSporttype;
+    using Fanex.Tarus.Admin.ManageProductSetting.Entities.UMConfig;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageBettype;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageCSSportBettypeMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageProduct;
@@ -279,7 +280,32 @@
 
         [AuthenticateRead]
         [HttpGet]
+        public JsonResult GetAllUMConfiguration() => Json(_manageUMConfigService.GetAllUMConfiguration(), JsonRequestBehavior.AllowGet);
+
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult UpdateUMConfiguration(UMConfigurationEntity entity) => Json(_manageUMConfigService.UpdateUMConfiguration(entity));
+
+        [AuthenticateRead]
+        [HttpGet]
         public JsonResult GetProductSettingByFunction() => Json(_manageUMConfigService.GetProductSettingByFunction(), JsonRequestBehavior.AllowGet);
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult InsertUMConfiguration(UMConfigurationEntity entity) => Json(_manageUMConfigService.InsertUMConfiguration(entity));
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult DeleteUMConfiguration(int configId) => Json(_manageUMConfigService.DeleteUMConfiguration(configId));
+
+        [AuthenticateHost]
+        [HttpGet]
+        public JsonResult CheckIsInUMTime(int configId) => Json(_manageUMConfigService.CheckIsInUMTime(configId), JsonRequestBehavior.AllowGet);
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult DeleteOldData() => Json(_manageUMConfigService.DeleteOldData());
 
         #endregion
 
