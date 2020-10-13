@@ -76,9 +76,9 @@
                         SportName = DataUtils.ToString(reader["SportName"]),
                         SettingName = DataUtils.ToString(reader["SettingName"]),
                         LockAddingNew = DataUtils.ToBoolean(reader["LockAddingNew"]),
-                        ShowTime = DataUtils.ToString(reader["ShowTime"]),
-                        BeginTime = DataUtils.ToString(reader["BeginTime"]),
-                        EndTime = DataUtils.ToString(reader["EndTime"]),
+                        ShowTime = DataUtils.ToDateTime(reader["ShowTime"]).ToString("MM/dd/yyyy HH:mm:ss"),
+                        BeginTime = DataUtils.ToDateTime(reader["BeginTime"]).ToString("MM/dd/yyyy HH:mm:ss"),
+                        EndTime = DataUtils.ToDateTime(reader["EndTime"]).ToString("MM/dd/yyyy HH:mm:ss"),
                         Username = DataUtils.ToString(reader["Username"]),
                         SuperId = DataUtils.ToInt32(reader["SuperId"])
                     });

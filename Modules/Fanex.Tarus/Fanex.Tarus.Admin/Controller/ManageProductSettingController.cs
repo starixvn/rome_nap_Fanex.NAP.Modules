@@ -59,8 +59,8 @@
         {
             var site = _SMAManagementService.GetSites(1).ToList();
             var umSite = _SMAManagementService.GetSites().ToList();
-            site.Insert(0, new IdNameEntity { Id = 0, Name = "All" });
-            umSite.Insert(0, new IdNameEntity { Id = 0, Name = "All" });
+            site.Insert(0, new IdNameEntity { Id = 0, Name = "All Sites" });
+            umSite.Insert(0, new IdNameEntity { Id = 0, Name = "All Sites" });
             var currency = _manageCanSeeService.GetCurrencies();
             var sports = _manageCanSeeService.GetAllSportType();
             var viewModel = new ManageProductSettingViewModel
