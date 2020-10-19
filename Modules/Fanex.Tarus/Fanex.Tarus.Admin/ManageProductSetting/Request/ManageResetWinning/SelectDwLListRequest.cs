@@ -10,7 +10,7 @@
 
         public string Product { get; set; }
 
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
 
         public bool IsTest { get; set; }
     }

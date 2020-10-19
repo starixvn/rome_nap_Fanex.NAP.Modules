@@ -12,7 +12,7 @@
 
         public string GroupName { get; set; }
 
-        public bool IsDisabled { get; set; }
+        public bool? IsDisabled { get; set; }
 
         public bool IsTest { get; set; }
 
