@@ -41,9 +41,12 @@ namespace Sunplus.Accounting.Business.Customer
                         html.Append("<option value=\"\">Select</option>");
                     bool enableDeposit = WebSettings.IsApplySplitingDepositeCustomer;
                     foreach (DataRow dr in tbl.Rows)
-                    {
+                    {                        
                         if (CastAide.AsBoolean(dr["isLicensee"]) && enableDeposit) continue;
-                        html.Append("<option value=\"" + dr["site"] + "\">" + dr["site"] + "</option>");
+                        if (!CastAide.AsString(dr["site"]).Equals("76666B"))
+                        {
+                            html.Append("<option value=\"" + dr["site"] + "\">" + dr["site"] + "</option>");
+                        }                            
                     }
                 }
             }

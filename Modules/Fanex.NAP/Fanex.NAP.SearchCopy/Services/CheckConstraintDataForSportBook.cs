@@ -82,6 +82,7 @@
             htbParameters.Add("playerdiscount", dr["playerdiscount"]);
             htbParameters.Add("playerdiscountcs", dr["playerdiscountcs"]);
             htbParameters.Add("playerdiscount1x2", dr["playerdiscount1x2"]);
+            htbParameters.Add("playerdiscountmyanmarodds", dr["playerdiscountmyanmarodds"]);
             htbParameters.Add("suspended", dr["suspended"]);
             htbParameters.Add("recommend", uplineId);
             htbParameters.Add("ugroup", dr["ugroup"]);
