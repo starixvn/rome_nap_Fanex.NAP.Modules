@@ -45,27 +45,27 @@ namespace Sunplus.Accounting.DataAccess
             return null;
         }
 
-        public virtual CSCustomerDetail GetCustInfoIBC(int _IBCCustId)
+        public virtual CSCustomerDetail GetCustInfoIBC(int _IBCCustId, byte settingStatus)
         {
             return null;
         }
 
-        public virtual CSCustomerDetail GetBasicCustInfoIBC(int _IBCCustId)
+        public virtual CSCustomerDetail GetBasicCustInfoIBC(int _IBCCustId, byte settingStatus)
         {
             return null;
         }
 
-        public virtual bool IsDisabledCasino(int custId)
+        public virtual bool IsDisabledCasino(int custId, byte settingStatus)
         {
             return false;
         }
 
-        public virtual CSCustomerDetail GetCasinoStatus(int custId)
+        public virtual CSCustomerDetail GetCasinoStatus(int custId, byte settingStatus)
         {
             return null;
         }
 
-        public virtual CustomerDetail GetCustomerStatus(int custId)
+        public virtual CustomerDetail GetCustomerStatus(int custId, byte settingStatus)
         {
             return null;
         }

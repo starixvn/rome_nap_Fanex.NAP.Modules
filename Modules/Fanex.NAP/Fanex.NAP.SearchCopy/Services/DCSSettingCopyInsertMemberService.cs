@@ -16,13 +16,14 @@
             _repository = repository ?? new DCSSettingCopyInsertMemberRepository();
         }
 
-        public Result CorrectMemberPositionTaking(int custId, int sourceCustId, int actorId, string ip)
+        public Result CorrectMemberPositionTaking(int custId, int sourceCustId, int actorId, string ip, byte settingStatus)
         {
             ICriteria criteria = new DCSSettingCopyInsertMemberCriteria(
                 custId,
                 sourceCustId,
                 actorId,
-                ip);
+                ip, 
+                settingStatus);
 
             try
             {

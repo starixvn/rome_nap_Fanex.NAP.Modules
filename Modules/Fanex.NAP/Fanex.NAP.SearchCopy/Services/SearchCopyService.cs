@@ -104,13 +104,13 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             return sportbooksSetting;
         }
 
-        public CustomerInfo GetCustomerInfoByUserId(int custId, bool isMember)
+        public CustomerInfo GetCustomerInfoByUserId(int custId, bool isMember, byte settingStatus)
         {
             var customerInfo = _searchCopyRepository.GetCustomerInfoByUserId(
                 new GetCustomerInfoByUserIdCriteria(custId, isMember));
 
-            var ng2Status = new NG2Service().GetStatus(custId);
-            customerInfo.IsSyncNG2 = Convert.ToByte(ng2Status.IsSynced || (bool)BaseRepository.CheckAllowedCurrencyAll(custId).Outputs["allowedng2"]);
+            var ng2Status = new NG2Service().GetStatus(custId, settingStatus);
+            customerInfo.IsSyncNG2 = Convert.ToByte(ng2Status.IsSynced || (bool)BaseRepository.CheckAllowedCurrencyAll(custId, settingStatus).Outputs["allowedng2"]);
             customerInfo.DisableNG2 = Convert.ToByte(ng2Status.IsDisabled);
 
             return customerInfo;
@@ -154,6 +154,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             customerInfo["uplineid"] = uplineId;
             customerInfo["copyfromcustid"] = sourceCustId;
             customerInfo["isSearchAndCopy"] = 1;
+            customerInfo["settingstatus"] = criteria.SettingStatus;
 
             var result = _searchCopyRepository.InsertMember(customerInfo);
             var custId = (int)customerInfo["custid"];
@@ -169,11 +170,11 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
                 new GoldDeluxeService().UpdateMemberData(custId, uplineId, sourceCustId, actorId, criteria.IP);
 
                 // Copy DCS.
-                new DCSSettingCopyInsertMemberService().CorrectMemberPositionTaking(custId, sourceCustId, actorId, criteria.IP);
+                new DCSSettingCopyInsertMemberService().CorrectMemberPositionTaking(custId, sourceCustId, actorId, criteria.IP, criteria.SettingStatus);
 
                 Thread.Sleep(3000);
 
-                var sourceCustInfo = GetCustomerInfoByUserId(sourceCustId, true);
+                var sourceCustInfo = GetCustomerInfoByUserId(sourceCustId, true, criteria.SettingStatus);
                 criteria.DisableCasino = sourceCustInfo.DisableCasino;
 
                 // NG2.
@@ -200,7 +201,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             {
                 Thread.Sleep(3000);
 
-                var sourceCustInfo = GetCustomerInfoByUserId(criteria.ExistingCustId, false);
+                var sourceCustInfo = GetCustomerInfoByUserId(criteria.ExistingCustId, false, criteria.SettingStatus);
                 criteria.DisableCasino = sourceCustInfo.DisableCasino;
 
                 // NG2.

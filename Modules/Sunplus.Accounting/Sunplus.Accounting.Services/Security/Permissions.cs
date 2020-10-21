@@ -21,14 +21,14 @@ namespace Sunplus.Accounting.Business.Security
     {
         public static bool IsDisabledCS(int custId)
         {
-            return CasinoManager.IsDisabledCasino(custId);
+            return CasinoManager.IsDisabledCasino(custId, WebSettings.SettingStatus);
         }
 
         public static bool IsAllowEditCasino(int parentId)
         {
             if (parentId == 0)
                 return true;
-            var cust = CasinoManager.GetCasinoStatus(parentId);
+            var cust = CasinoManager.GetCasinoStatus(parentId, WebSettings.SettingStatus);
             //if (WebSettings.disableCS || !cust.CasinoSync)
             //return false;
             //return true;
@@ -38,7 +38,7 @@ namespace Sunplus.Accounting.Business.Security
 
         public static CSCustomerDetail SelStatus3rdParty(int parentId)
         {
-            return CasinoManager.GetCasinoStatus(parentId);
+            return CasinoManager.GetCasinoStatus(parentId, WebSettings.SettingStatus);
         }
 
         public static void InitAccessPermission(Enumerations.AccountingSystem systemType)

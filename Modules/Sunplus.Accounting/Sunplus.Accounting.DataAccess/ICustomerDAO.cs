@@ -23,7 +23,7 @@ namespace Sunplus.Accounting.DataAccess
             int userId,
             string ip);
 
-        DbResult GetAllCustInfo(string username, byte checkCustId = 0);
+        DbResult GetAllCustInfo(string username, byte settingStatus, byte checkCustId = 0);
 
         BetSettingNG CheckEnableNGDownline(string username);
 

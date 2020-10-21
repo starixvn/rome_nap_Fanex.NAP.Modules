@@ -24,13 +24,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// call store procedure Acc_CheckAllowedCurrencyAll to check showed Permission.
         /// </summary>
         /// <param name="custId"></param>
-        public static DbResult CheckAllowedCurrencyAll(int custId)
+        public static DbResult CheckAllowedCurrencyAll(int custId, byte settingStatus)
         {
             DbResult dbCheckCurrency = null;
             try
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
+                param.Add("settingstatus", settingStatus);
 
                 using (ObjectDb db = new ObjectDb("CheckAllowedShow", 600))
                 {

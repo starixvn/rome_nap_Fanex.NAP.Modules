@@ -4,6 +4,6 @@
 
     internal interface IDCSSettingCopyInsertMemberService
     {
-        Result CorrectMemberPositionTaking(int custId, int sourceCustId, int actorId, string ip);
+        Result CorrectMemberPositionTaking(int custId, int sourceCustId, int actorId, string ip, byte settingStatus);
     }
 }

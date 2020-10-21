@@ -16,6 +16,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
     using Logging.Extensions.Web;
     using NAP.Framework.Data;
     using Services;
+    using Sunplus.Accounting.Core.Configurations;
     using ViewModels;
 
     [SessionState(SessionStateBehavior.ReadOnly)]
@@ -47,7 +48,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
 
         public ActionResult GetCustomerInfoByUserId(int custid, string level = "member")
         {
-            var custInfo = _searchCopyService.GetCustomerInfoByUserId(custid, IsMember(level));
+            var custInfo = _searchCopyService.GetCustomerInfoByUserId(custid, IsMember(level), WebSettings.SettingStatus);
 
             return Json(custInfo, JsonRequestBehavior.AllowGet);
         }
@@ -71,6 +72,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
             criteria.Phone = criteria.Phone ?? string.Empty;
             criteria.MobilePhone = criteria.MobilePhone ?? string.Empty;
             criteria.Fax = criteria.Fax ?? string.Empty;
+            criteria.SettingStatus = WebSettings.SettingStatus;
 
             Result result;
             var isMember = criteria.CustLevel == 1;
@@ -106,7 +108,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
         public ActionResult MultipleAccounts(MultipleAccountsViewModel viewModel)
         {
             var isMember = viewModel.ParentId > 0;
-            viewModel.Customer = _searchCopyService.GetCustomerInfoByUserId(viewModel.CustId, isMember);
+            viewModel.Customer = _searchCopyService.GetCustomerInfoByUserId(viewModel.CustId, isMember, WebSettings.SettingStatus);
 
             if (viewModel.Customer.RoleId == 4)
             {
