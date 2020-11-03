@@ -22,6 +22,7 @@
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
     using System;
+    using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageResetWinning;
 
     public class ManageProductSettingController : BaseController
     {
@@ -34,6 +35,8 @@
         private readonly SMAManagementService _SMAManagementService;
         private readonly IManageCSSportBettypeMatrixService _manageCSSportBettypeMatrixService;
         private readonly IManageRefResourceService _manageRefResourceService;
+        private readonly IManageDwLListService _manageDwLListService;
+        private readonly IManageDwLListExtraPTService _manageDwLListExtraPTService;
 
         public ManageProductSettingController()
         {
@@ -45,6 +48,8 @@
             _SMAManagementService = new SMAManagementService();
             _manageCSSportBettypeMatrixService = new ManageCSSportBettypeMatrixService();
             _manageRefResourceService = new ManageRefResourceService();
+            _manageDwLListService = new ManageDwLListService();
+            _manageDwLListExtraPTService = new ManageDwLListExtraPTService();
         }
 
         [AuthenticateRead]
@@ -257,5 +262,50 @@
         public JsonResult DeleteRefResource(DeleteRefResourceRequest request) => Json(_manageRefResourceService.Delete(request));
 
         #endregion
+
+        #region ResetWinning
+
+        [AuthenticateRead]
+        [HttpGet]
+        public JsonResult SelectDWLList(SelectDwLListRequest request) => Json(_manageDwLListService.Select(request), JsonRequestBehavior.AllowGet);
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult InsertDWLList(HttpPostedFileBase uploadFile) => Json(_manageDwLListService.Insert(uploadFile, false));
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult InsertDWLListTest(HttpPostedFileBase uploadFile) => Json(_manageDwLListService.Insert(uploadFile, true));
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult UpdateDWLList(UpdateDwLListRequest request) => Json(_manageDwLListService.Update(request));
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult DeleteDWLList(DeleteDwLListRequest request) => Json(_manageDwLListService.Delete(request));
+
+        [AuthenticateRead]
+        [HttpGet]
+        public JsonResult SelectDWLListExtraPT(SelectDwLListExtraPTRequest request) => Json(_manageDwLListExtraPTService.Select(request), JsonRequestBehavior.AllowGet);
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult InsertDWLListExtraPT(HttpPostedFileBase uploadFile) => Json(_manageDwLListExtraPTService.Insert(uploadFile, false));
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult InsertDWLListExtraPTTest(HttpPostedFileBase uploadFile) => Json(_manageDwLListExtraPTService.Insert(uploadFile, true));
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult UpdateDWLListExtraPT(UpdateDwLListExtraPTRequest request) => Json(_manageDwLListExtraPTService.Update(request));
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult DeleteDWLListExtraPT(DeleteDwLListExtraPTRequest request) => Json(_manageDwLListExtraPTService.Delete(request));
+
+        #endregion
+
     }
 }
