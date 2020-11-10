@@ -10,6 +10,7 @@ namespace Sunplus.Accounting.Core.Common
         private const byte ByAdmin = 1; // purple: #b3a2c7
         private const byte ByUpline = 2; // orange: #f79646
         private const byte WrongOTPSC = 3; // blue: #86c5e4
+        private const byte ByArchive = 4; // dark grey hi-light: #969696
 
         public CustomerClosedReason(object closedReason)
         {
@@ -38,7 +39,7 @@ namespace Sunplus.Accounting.Core.Common
             {
                 case WrongPasswordOthers:
                     ClassName += "wrongPwdOthers";
-                    ClosedReason = "This account was closed by failed login or account expired.";
+                    ClosedReason = "This account was closed by failed logins.";
                     ClosedColorForExcel = Color.FromArgb(204, 199, 186);
                     break;
 
@@ -55,9 +56,15 @@ namespace Sunplus.Accounting.Core.Common
                     break;
 
                 case WrongOTPSC:
-                    ClassName +=  "wrongOTPSC";
+                    ClassName += "wrongOTPSC";
                     ClosedReason = "This account was closed by false input of OTP/Security Code.";
                     ClosedColorForExcel = Color.FromArgb(134, 197, 228);
+                    break;
+
+                case ByArchive:
+                    ClassName += "byArchive";
+                    ClosedReason = "This account was closed by inactivity.";
+                    ClosedColorForExcel = Color.FromArgb(150, 150, 150);
                     break;
 
                 default:
