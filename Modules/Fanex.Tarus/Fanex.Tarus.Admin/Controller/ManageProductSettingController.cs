@@ -78,8 +78,8 @@
                 }),
                 SportTypes = sports.Select(s => new SelectListItem
                 {
-                    Text = $"[{s.Key.ToString()}] {s.Value}",
-                    Value = s.Key.ToString()
+                    Text = $"[{s.Id.ToString()}] {s.Name}",
+                    Value = s.Id.ToString()
                 }),
                 UMCurrencies = currency.Select(c => new SelectListItem
                 {

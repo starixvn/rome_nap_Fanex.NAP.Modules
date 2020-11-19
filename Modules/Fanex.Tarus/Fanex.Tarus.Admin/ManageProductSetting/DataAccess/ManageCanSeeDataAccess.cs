@@ -20,7 +20,7 @@
 
         Result Delete(DeleteCanSeeCriteria criteria);
 
-        Dictionary<int, string> GetAllSportType();
+        IEnumerable<IdNameEntity> GetAllSportType();
 
         IEnumerable<IdNameEntity> GetCurrencies();
     }
@@ -57,20 +57,23 @@
 
         public Result Delete(DeleteCanSeeCriteria criteria) => ExecuteNonQuery(criteria);
 
-        public Dictionary<int, string> GetAllSportType()
+        public IEnumerable<IdNameEntity> GetAllSportType()
         {
-            var exchange = new Dictionary<int, string>();
+            var sportTypes = new List<IdNameEntity>();
             var criteria = new SelectAllSportTypeCriteria();
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var reader = objDb.ExecuteReader(criteria.GetSpParams());
                 while (reader.Read())
                 {
-                    exchange.Add(CastAide.AsInt32(reader["sporttype"]), reader["sportname"].ToString());
+                    sportTypes.Add(new IdNameEntity
+                    { Id = CastAide.AsInt32(reader["sporttype"]),
+                        Name = reader["sportname"].ToString()
+                    });
                 }
             }
 
-            return exchange;
+            return sportTypes;
         }
 
         public IEnumerable<IdNameEntity> GetCurrencies()
