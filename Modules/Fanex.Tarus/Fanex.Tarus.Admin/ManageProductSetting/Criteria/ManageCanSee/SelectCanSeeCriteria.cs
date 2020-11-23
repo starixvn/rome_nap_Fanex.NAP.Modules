@@ -13,8 +13,7 @@
         [SpParam(SqlParamName = "pMutilCurrency")]
         public string Currencies { get; set; }
 
-        [SpParam(SqlParamName = "pMutilSite")]
-        public string SiteIds { get; set; }
+        public int SiteID { get; set; }
 
         public override string GetSettingKey() => "Acc_ManageCansee_Sel";
     }

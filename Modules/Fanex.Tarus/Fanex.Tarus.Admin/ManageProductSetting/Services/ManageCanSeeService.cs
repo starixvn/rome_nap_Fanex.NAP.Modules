@@ -91,8 +91,13 @@
         public Result Delete(DeleteCanSeeCriteria request)
             => _manageCanSeeDataAccess.Delete(request);
 
-        public Dictionary<int, string> GetAllSportType()
-            => _manageCanSeeDataAccess.GetAllSportType();
+        public IEnumerable<IdNameEntity> GetAllSportType()
+        {
+            var sportTypes = _manageCanSeeDataAccess.GetAllSportType().ToList();
+            sportTypes.Insert(0, new IdNameEntity { Id = 0, Name = "All SportTypes" });
+
+            return sportTypes;
+        }
 
         public IEnumerable<IdNameEntity> GetCurrencies()
         {
