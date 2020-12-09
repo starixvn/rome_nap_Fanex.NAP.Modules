@@ -59,7 +59,7 @@
                     ticketHelper.IsShowOddsWithChoice = betListHelper.IsShowOddsWithChoice(ticketDetail.Ticket.BetTypeId);
                     ticketDetail.TransDateHtml = builder.BuildTrans(ticketDetail.Ticket);
                     ticketDetail.ChoiceHtml = builder.BuildChoice(ticketDetail.Ticket, ticketHelper, outputLiveCasino, false);
-                    ticketDetail.StakeHtml = builder.BuildStake(ticketDetail.Ticket);
+                    ticketDetail.StakeHtml = builder.BuildStake(ticketDetail.Ticket, ticketHelper);
                     ticketDetail.OddHtml = builder.BuildOdds(ticketDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                     ticketDetail.StatusHtml = betListHelper.BuildStatus(builder, ticketHelper, ticketDetail.Ticket, new List<ITicketData>());
                     detailsTickets.Add(ticketDetail);
@@ -308,7 +308,7 @@
                     ticketHelper.IsShowOddsWithChoice = betListHelper.IsShowOddsWithChoice(ticketDetail.Ticket.BetTypeId);
                     ticketDetail.TransDateHtml = builder.BuildTrans(ticketDetail.Ticket);
                     ticketDetail.ChoiceHtml = builder.BuildChoice(ticketDetail.Ticket, ticketHelper, outputLiveCasino, false);
-                    ticketDetail.StakeHtml = builder.BuildStake(ticketDetail.Ticket);
+                    ticketDetail.StakeHtml = builder.BuildStake(ticketDetail.Ticket, ticketHelper);
                     ticketDetail.OddHtml = builder.BuildOdds(ticketDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                     ticketDetail.StatusHtml = betListHelper.BuildStatus(builder, ticketHelper, ticketDetail.Ticket, new List<ITicketData>());
                     detailsTickets.Add(ticketDetail);
