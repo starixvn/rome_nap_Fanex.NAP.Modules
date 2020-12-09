@@ -10,6 +10,7 @@
     using Fanex.Tarus.Admin.ManageProductSetting.Entities;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageResetWinning;
     using Fanex.Tarus.Infrastructure.Common;
+    using Fanex.Tarus.Infrastructure.Extensions;
     using Fanex.Tarus.Infrastructure.Helper;
     using NPOI.SS.UserModel;
 
@@ -74,7 +75,7 @@
             catch (Exception ex)
             {
                 var result = new Result(1, "Invalid file uploaded. Error at line: " + rowCount.ToString() + ". " + ex.Message);
-                Logging.Logger.Log.Error(result.ErrorMessage, ex);
+                LogExtensions.ExceptionHandler(ex);
 
                 return result;
             }

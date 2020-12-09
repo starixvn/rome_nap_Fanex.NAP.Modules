@@ -14,6 +14,7 @@
     using Fanex.Tarus.Admin.ManageProductSetting.Entities;
     using Fanex.Tarus.Admin.ManageProductSetting.Models;
     using NPOI.SS.UserModel;
+    using Fanex.Tarus.Infrastructure.Extensions;
 
     public class ManageCanSeeService
     {
@@ -77,7 +78,7 @@
             catch (Exception ex)
             {
                 var result = new Result(1, "Invalid file uploaded. Error at line: " + rowCount.ToString());
-                Logging.Logger.Log.Error(result.ErrorMessage, ex);
+                LogExtensions.ExceptionHandler(ex);
 
                 return result;
             }
