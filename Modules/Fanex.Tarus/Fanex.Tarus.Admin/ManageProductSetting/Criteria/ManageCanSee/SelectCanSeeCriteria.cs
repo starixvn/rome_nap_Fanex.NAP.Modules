@@ -4,7 +4,9 @@
 
     public class SelectCanSeeCriteria : CriteriaBase
     {
-        public int SportType { get; set; }
+
+        [SpParam(SqlParamName = "pMutilSportType")]
+        public string SportTypes { get; set; }
 
         public int? BetType { get; set; }
 
@@ -13,7 +15,8 @@
         [SpParam(SqlParamName = "pMutilCurrency")]
         public string Currencies { get; set; }
 
-        public int SiteID { get; set; }
+        [SpParam(SqlParamName = "pMutilSite")]
+        public string SiteIDs { get; set; }
 
         public override string GetSettingKey() => "Acc_ManageCansee_Sel";
     }
