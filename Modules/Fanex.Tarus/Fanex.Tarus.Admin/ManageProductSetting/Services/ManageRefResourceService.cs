@@ -10,6 +10,7 @@
     using Fanex.Tarus.Admin.ManageProductSetting.Models;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageRefResource;
     using Fanex.Tarus.Infrastructure.Common;
+    using Fanex.Tarus.Infrastructure.Extensions;
     using Fanex.Tarus.Infrastructure.Helper;
     using NPOI.SS.UserModel;
 
@@ -84,7 +85,7 @@
             {
                 result.ErrorCode = 1;
                 result.ErrorMessage = "Invalid file uploaded. Error at line: " + rowCount.ToString();
-                Logging.Logger.Log.Error(result.ErrorMessage, ex);
+                LogExtensions.ExceptionHandler(ex);
                 return result;
             }
 

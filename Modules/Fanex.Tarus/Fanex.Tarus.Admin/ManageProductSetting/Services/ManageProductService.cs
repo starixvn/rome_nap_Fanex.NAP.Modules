@@ -9,8 +9,7 @@
     using Fanex.Tarus.Admin.ManageProductSetting.DataAccess;
     using Fanex.Tarus.Admin.ManageProductSetting.Entities;
     using Fanex.Tarus.Admin.ManageProductSetting.Models;
-    using Fanex.Tarus.Infrastructure.Common;
-    using Fanex.Tarus.Infrastructure.Helper;
+    using Fanex.Tarus.Infrastructure.Extensions;
     using NPOI.SS.UserModel;
 
     public class ManageProductService
@@ -73,7 +72,7 @@
             {
                 result.ErrorCode = 1;
                 result.ErrorMessage = "Invalid file uploaded. Error at line: " + rowCount.ToString();
-                Logging.Logger.Log.Error(result.ErrorMessage, ex);
+                LogExtensions.ExceptionHandler(ex);
                 return result;
             }
 

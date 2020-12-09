@@ -1,21 +1,20 @@
 ﻿namespace Fanex.Tarus.Admin.ManageProductSetting.Services
 {
     using System;
-    using System.Linq;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Web;
     using Fanex.RemotingRef;
     using Fanex.Tarus.Admin.Entities;
+    using Fanex.Tarus.Admin.Entities.SMAManagement;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSporttype;
     using Fanex.Tarus.Admin.ManageProductSetting.DataAccess;
     using Fanex.Tarus.Admin.ManageProductSetting.Entities;
     using Fanex.Tarus.Admin.ManageProductSetting.Models;
-    using Fanex.Tarus.Infrastructure.Common;
-    using Fanex.Tarus.Infrastructure.Helper;
     using NPOI.SS.UserModel;
-    using Fanex.Tarus.Admin.Entities.SMAManagement;
+    using Fanex.Tarus.Infrastructure.Extensions;
 
     public class ManageCanSeeService
     {
@@ -79,7 +78,7 @@
             catch (Exception ex)
             {
                 var result = new Result(1, "Invalid file uploaded. Error at line: " + rowCount.ToString());
-                Logging.Logger.Log.Error(result.ErrorMessage, ex);
+                LogExtensions.ExceptionHandler(ex);
 
                 return result;
             }
@@ -92,12 +91,7 @@
             => _manageCanSeeDataAccess.Delete(request);
 
         public IEnumerable<IdNameEntity> GetAllSportType()
-        {
-            var sportTypes = _manageCanSeeDataAccess.GetAllSportType().ToList();
-            sportTypes.Insert(0, new IdNameEntity { Id = 0, Name = "All SportTypes" });
-
-            return sportTypes;
-        }
+            => _manageCanSeeDataAccess.GetAllSportType().ToList();
 
         public IEnumerable<IdNameEntity> GetCurrencies()
         {

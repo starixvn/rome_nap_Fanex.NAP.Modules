@@ -1,5 +1,11 @@
 ﻿namespace Fanex.Tarus.Admin.ManageProductSetting.Services
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
     using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageProduct;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSportBettypeMatrix;
@@ -7,16 +13,10 @@
     using Fanex.Tarus.Admin.ManageProductSetting.Entities;
     using Fanex.Tarus.Admin.ManageProductSetting.Models;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageSportBettypeMatrix;
-    using Fanex.Tarus.Infrastructure.Caching;
     using Fanex.Tarus.Infrastructure.Common;
+    using Fanex.Tarus.Infrastructure.Extensions;
     using Fanex.Tarus.Infrastructure.Helper;
     using NPOI.SS.UserModel;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
 
     public class ManageSportBettypeMatrixService
     {
@@ -83,7 +83,8 @@
             {
                 result.ErrorCode = 1;
                 result.ErrorMessage = "Invalid file uploaded. Error at line: " + rowCount.ToString();
-                Logging.Logger.Log.Error(result.ErrorMessage, ex);
+                LogExtensions.ExceptionHandler(ex);
+
                 return result;
             }
 
