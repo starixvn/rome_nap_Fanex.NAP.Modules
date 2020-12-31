@@ -59,7 +59,8 @@
                             MatchCode = Converter.ToString2(reader["matchcode"]),
                             OddsSpread = Converter.ToDecimal(reader["OddsSpread"]),
                             BetdaqId = Converter.To<long>(reader["BetdaqId"]),
-                            ExtraInfo = Converter.ToString2(reader["ExtraInfo"])
+                            ExtraInfo = Converter.ToString2(reader["ExtraInfo"]),
+                            EventDate = Converter.ToDateTime(reader["eventdate"])
                         });
                     }
                 }
