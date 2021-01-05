@@ -96,9 +96,9 @@ namespace Sunplus.Accounting.Core.Configurations
                 }
 
                 EnableAbnormal = (ConfigurationManager.AppSettings["EnableAbnormal"] == "1");
-             
+
                 _hiddenCurrencies = CastAide.AsString(ConfigurationManager.AppSettings["HiddenCurrencies"], "");
-               
+
                 _IsApplySplitingDepositeCustomer = ConfigurationManager.AppSettings["IsApplySplitingDepositeCustomer"] == "1";
 
                 _isShowCustomerSettingRenovation = CastAide.AsInt32(ConfigurationManager.AppSettings["IsShowCustomerSettingRenovation"]);
@@ -178,6 +178,9 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return (ConfigurationManager.AppSettings["LocalTest"] == "1"); }
         }
 
+        public static byte SettingStatus 
+            => ConfigurationManager.AppSettings["SettingStatus"] == null ? (byte)0 : byte.Parse(ConfigurationManager.AppSettings["SettingStatus"]);
+
         public static bool disableAutoM
         {
             get { return _disableAutoM; }
@@ -255,10 +258,10 @@ namespace Sunplus.Accounting.Core.Configurations
         public static string IgnoreGroups
         {
             get { return _IgnoreGroups; }
-        }        
+        }
 
         public static bool EnableAbnormal { get; set; }
-        
+
 
         public static string HiddenCurrencies
         {
@@ -397,7 +400,7 @@ namespace Sunplus.Accounting.Core.Configurations
             {
                 return (ConfigurationManager.AppSettings["IsShowSportsbook2"] == "1");
             }
-        }        
+        }
 
         public static bool IsShowLiveCasino
         {

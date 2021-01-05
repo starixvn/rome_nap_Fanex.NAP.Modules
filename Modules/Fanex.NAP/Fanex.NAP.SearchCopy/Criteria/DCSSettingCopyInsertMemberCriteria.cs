@@ -4,12 +4,13 @@
 
     internal class DCSSettingCopyInsertMemberCriteria : CriteriaBase
     {
-        public DCSSettingCopyInsertMemberCriteria(int custId, int existingCustId, int userId, string ip)
+        public DCSSettingCopyInsertMemberCriteria(int custId, int existingCustId, int userId, string ip, byte settingStatus)
         {
             CustId = custId;
             ExistingCustId = existingCustId;
             UserId = userId;
             IP = ip;
+            SettingStatus = settingStatus;
         }
 
         public int CustId { get; }
@@ -21,6 +22,8 @@
         public string IP { get; }
 
         public int SubAccId { get; } = 0;
+
+        public byte SettingStatus { get; set; }
 
         public int ErrCode { get; } = 0;
 

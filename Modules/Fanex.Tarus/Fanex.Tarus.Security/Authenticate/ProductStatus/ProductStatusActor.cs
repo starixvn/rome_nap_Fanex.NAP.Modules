@@ -1,5 +1,6 @@
 ﻿using Fanex.CustomerSetting.Module.Core.Web;
 using Fanex.ProductStatus.Setting.Services;
+using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
 
 namespace Fanex.Tarus.Security.Authenticate.ProductStatus
@@ -10,8 +11,10 @@ namespace Fanex.Tarus.Security.Authenticate.ProductStatus
 
         public string Name => AppSession.AccUserName;
 
-        public string ClientIP=> Utils.GetClientIP();
+        public string ClientIP => Utils.GetClientIP();
 
-        public byte SystemId { get; } = Sunplus.Accounting.Core.Common.AccCommon.SystemId;
+        public byte SystemId => Sunplus.Accounting.Core.Common.AccCommon.SystemId;
+
+        public byte SettingStatus => WebSettings.SettingStatus;
     }
 }

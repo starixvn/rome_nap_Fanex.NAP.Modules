@@ -14,7 +14,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
 
         Hashtable GetSportBookSettingMember(int custId, int uplineId, int userId);
 
-        CustomerInfo GetCustomerInfoByUserId(int custId, bool isMember);
+        CustomerInfo GetCustomerInfoByUserId(int custId, bool isMember, byte settingStatus);
 
         IEnumerable<Site> GetSitesExistingSuper(int userId);
 

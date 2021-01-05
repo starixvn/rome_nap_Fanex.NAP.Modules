@@ -135,7 +135,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             }
         }
 
-        public DbResult GetAllCustInfo(string username, byte checkCustId = 0)
+        public DbResult GetAllCustInfo(string username, byte settingStatus, byte checkCustId = 0)
         {
             DbResult result = null;
 
@@ -143,8 +143,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             {
                 var param = new Hashtable
                 {
-                    { "username", username},
-                    { "checkcustid", checkCustId}
+                    { "username", username },
+                    { "checkcustid", checkCustId },
+                    { "settingstatus", settingStatus }
                 };
 
                 using (var db = new ObjectDb("SelAllInfo", 600))

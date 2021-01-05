@@ -23,13 +23,14 @@ namespace Sunplus.Accounting.DataAccess.APIClient
 {
     public class IBCLibProvider : IBCCustomerProvider
     {
-        public override CSCustomerDetail GetBasicCustInfoIBC(int _IBCCustId)
+        public override CSCustomerDetail GetBasicCustInfoIBC(int _IBCCustId, byte settingStatus)
         {
             var _custSetting = new CSCustomerDetail();
             try
             {
                 var param = new Hashtable();
                 param.Add("custid", _IBCCustId);
+                param.Add("settingstatus", settingStatus);
 
                 DbResult drCustomer = null;
                 using (ObjectDb db = new ObjectDb("Age_CustomerSelUserInfo", 600))
@@ -93,13 +94,14 @@ namespace Sunplus.Accounting.DataAccess.APIClient
         /// <param name="_IBCCustId"></param>
         /// <returns></returns>
         /// 
-        public override CSCustomerDetail GetCustInfoIBC(int _IBCCustId)
+        public override CSCustomerDetail GetCustInfoIBC(int _IBCCustId, byte settingStatus)
         {
             var _custSetting = new CSCustomerDetail();
             try
             {
                 var param = new Hashtable();
                 param.Add("custid", _IBCCustId);
+                param.Add("settingstatus", settingStatus);
 
                 DbResult drCustomer = null;
 
@@ -301,13 +303,14 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                                                AppSession.AccId, AppSession.Username, 3);
         }
 
-        public override bool IsDisabledCasino(int custId)
+        public override bool IsDisabledCasino(int custId, byte settingStatus)
         {
             bool isDisabledCasino = false;
             try
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
+                param.Add("settingstatus", settingStatus);
                 using (ObjectDb objDB = new ObjectDb("CustomerSelStatus", 300))
                 {
                     objDB.AssignParamValues(param);
@@ -326,13 +329,14 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             return isDisabledCasino;
         }
 
-        public override CSCustomerDetail GetCasinoStatus(int custId)
+        public override CSCustomerDetail GetCasinoStatus(int custId, byte settingStatus)
         {
             var _cust = new CSCustomerDetail();
             try
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
+                param.Add("settingstatus", settingStatus);
                 DbResult drCustomer = null;
                 using (ObjectDb objDB = new ObjectDb("CustomerSelStatus", 300))
                 {
@@ -358,14 +362,14 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             return _cust;
         }
 
-        public override CustomerDetail GetCustomerStatus(int custId)
+        public override CustomerDetail GetCustomerStatus(int custId, byte settingStatus)
         {
             var _cust = new CustomerDetail();
             try
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
-
+                param.Add("settingstatus", settingStatus);
                 DbResult drCustomer = null;
                 using (ObjectDb objDB = new ObjectDb("CustomerSelStatus", 300))
                 {

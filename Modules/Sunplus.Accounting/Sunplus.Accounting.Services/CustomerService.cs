@@ -63,7 +63,7 @@ namespace Sunplus.Accounting.Business.Customer
 
             if (IsBelongSystem(userName, accountingSystem))
             {
-                return _customerDAO.GetAllCustInfo(userName, checkCustId);
+                return _customerDAO.GetAllCustInfo(userName, WebSettings.SettingStatus, checkCustId);
             }
 
             return null;
@@ -368,7 +368,7 @@ namespace Sunplus.Accounting.Business.Customer
             if (!string.IsNullOrEmpty(uplineId))
             {
                 //UpLineId = ;
-                uplineDetail = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(CastAide.AsInt32(uplineId));
+                uplineDetail = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(CastAide.AsInt32(uplineId), WebSettings.SettingStatus);
 
                 customer.SuperId = uplineDetail.SIBCCustID;
                 customer.MasterId = uplineDetail.MIBCCustID;

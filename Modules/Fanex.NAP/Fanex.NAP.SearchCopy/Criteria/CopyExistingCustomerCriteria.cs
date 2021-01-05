@@ -52,6 +52,8 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Criteria
 
         public bool IsSyncNG2 { get; set; }
 
+        public byte SettingStatus { get; set; }
+
         public override string GetSettingKey()
             => "Acc_CustomerInsMember_CloneSetting_Com";
 

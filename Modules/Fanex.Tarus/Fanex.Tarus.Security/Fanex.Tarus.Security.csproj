@@ -100,8 +100,8 @@
       <HintPath>..\..\..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.2.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.ProductStatus.Setting.1.0.2.2\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.3.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.ProductStatus.Setting.1.0.3.2\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.RemotingRef, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.RemotingRef.1.1.1\lib\net461\Fanex.RemotingRef.dll</HintPath>
@@ -143,11 +143,11 @@
     <Reference Include="RestSharp">
       <HintPath>..\..\..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.2.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.2.8\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.3.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.3.1\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.2.15, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.2.19\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.3.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.3.1\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Agent.Utilities.3.0.1\lib\net40\Sunplus.Agent.Utilities.dll</HintPath>

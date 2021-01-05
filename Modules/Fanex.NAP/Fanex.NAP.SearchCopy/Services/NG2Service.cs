@@ -21,7 +21,7 @@
 
         public void SyncCustomer(CopyExistingCustomerCriteria criteria, byte systemId)
         {
-            var disabled = GetStatus(criteria.ExistingCustId).IsDisabled;
+            var disabled = GetStatus(criteria.ExistingCustId, criteria.SettingStatus).IsDisabled;
 
             _ng2StatusService.AutoInsertAccount(
                 criteria.CustId,
@@ -35,7 +35,7 @@
                 systemId);
         }
 
-        public NG2Status GetStatus(int custId)
-            => _ng2Repository.GetStatus(new GetNG2StatusCriteria(custId));
+        public NG2Status GetStatus(int custId, byte settingStatus)
+            => _ng2Repository.GetStatus(new GetNG2StatusCriteria(custId, settingStatus));
     }
 }
