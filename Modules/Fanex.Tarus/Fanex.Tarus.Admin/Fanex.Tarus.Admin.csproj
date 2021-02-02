@@ -191,6 +191,7 @@
     <Compile Include="Business\CompareBalance\CompareBalanceService.cs" />
     <Compile Include="Business\CustomerDateLimit\CustomerDateLimitService.cs" />
     <Compile Include="Controller\ManageProductSettingController.cs" />
+    <Compile Include="Controller\MoveBetScheduleController.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageCanSee\SelectAllCurrencyCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageCanSee\SelectAllSportTypeCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageCanSee\DeleteCanSeeCriteria.cs" />
