@@ -32,6 +32,11 @@ namespace Fanex.Tarus.Web.Controllers.Admin
             //return Json(_ticketToHeadlineService.GetFakeData((int?)criteria.PageSize, (int?)criteria.PageIndex, 1001));
         }
 
+        public ActionResult NotifyHeadline()
+        {
+            return Json(_ticketToHeadlineService.NotifyHeadline(), "text/html");
+        }
+
         public ActionResult ExportExcel(HttpPostedFileBase uploadFile, TicketToHeadlineCriteria criteria)
         {
             criteria.PageIndex = null;

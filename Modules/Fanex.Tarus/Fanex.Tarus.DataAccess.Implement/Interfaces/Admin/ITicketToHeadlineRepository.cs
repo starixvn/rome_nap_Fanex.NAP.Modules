@@ -10,7 +10,7 @@ namespace Fanex.Tarus.DataAccess.Interface.Admin
     {
         List<SelectListItem> GetSuportedProduct(GetTicketToHeadlineSupportedProductCriteria criteria);
 
-        TicketToHeadlineViewModel GetData(TicketToHeadlineCriteria criteria);
+        TicketToHeadlineViewModel GetData(TicketToHeadlineCriteria criteria, bool isInsertNotifyHeadline = false);
 
         TicketToHeadlineViewModel GetFakeData(int? pageSize, int? pageIndex, int rowNo = 400);
 

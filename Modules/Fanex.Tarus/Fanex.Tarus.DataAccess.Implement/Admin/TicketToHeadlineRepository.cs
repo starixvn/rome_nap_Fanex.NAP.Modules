@@ -4,8 +4,12 @@ using Fanex.Tarus.DataAccess.Interface.Admin;
 using Fanex.Tarus.Entities.Criteria;
 using Fanex.Tarus.Entities.Criteria.Admin;
 using Fanex.Tarus.Web.Models.Admin;
+using Sunplus.Accounting.Entities;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 
 namespace Fanex.Tarus.DataAccess.Implement.Admin
@@ -45,10 +49,12 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             return result;
         }
 
-        public TicketToHeadlineViewModel GetData(TicketToHeadlineCriteria criteria)
+        public TicketToHeadlineViewModel GetData(TicketToHeadlineCriteria criteria, bool isInsertNotifyHeadline = false)
         {
-            var result = new TicketToHeadlineViewModel();
+            var viewModel = new TicketToHeadlineViewModel();
             TicketToHeadline trackingDataRow = new TicketToHeadline();
+            var xmlEvent = string.Empty;
+            var xmlTicket = string.Empty;
             using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
             {
                 db.AssignParamValues(criteria.GetSpParams());
@@ -71,24 +77,112 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
                         Super = Utils.ToString(reader["Super"])
                     };
 
-                    result.TicketToHeadlineCollection.Add(currentDataRow);
+                    viewModel.TicketToHeadlineCollection.Add(currentDataRow);
                     GenerateMergeRowNumber(trackingDataRow, currentDataRow, rowCount, criteria.PageSize);
                 }
 
+                if (reader.NextResult())
+                {
+                    xmlTicket = BuildXmlTicketInputParam(reader);
+                }
+
+                if (reader.NextResult())
+                {
+                    xmlEvent = BuildXmlEventInputParam(reader);
+                }
+
                 reader.Close();
-                result.TotalRows = Utils.ToInt32(db.GetOuputParams()["totalrows"]);
+                var outputs = db.GetOuputParams();
+                viewModel.TotalRows = Utils.ToInt32(outputs["totalrows"]);
+                viewModel.ErrorCode = Utils.ToInt32(outputs["errcode"]);
+                viewModel.ErrorMessage = Utils.ToString(outputs["errmsg"]);
             }
 
             criteria.PageSize = criteria.PageSize ?? 1000;
-            int endMergedPage = result.TicketToHeadlineCollection.Count % (int)criteria.PageSize;
+            int endMergedPage = viewModel.TicketToHeadlineCollection.Count % (int)criteria.PageSize;
             endMergedPage = endMergedPage == 0 ? (int)criteria.PageSize : endMergedPage;
             groupHeadlineDataChangeRowNumber.Add(endMergedPage);
             //superDataChangeRowNumber.Add(endMergedPage);
             //masterDataChangeRowNumber.Add(endMergedPage);
             //agentDataChangeRowNumber.Add(endMergedPage);
 
-            ReassignMergeRowNum(result.TicketToHeadlineCollection);
-            return result;
+            ReassignMergeRowNum(viewModel.TicketToHeadlineCollection);
+            if (viewModel.ErrorCode == 0)
+            {
+                var result = ValidateAndInsertNotification(xmlEvent, xmlTicket, isInsertNotifyHeadline);
+                viewModel.ErrorCode = result.ErrorCode;
+                viewModel.ErrorMessage = result.ErrorMessage;
+            }
+
+            viewModel.IsNotifyHeadline = isInsertNotifyHeadline;
+            return viewModel;
+        }
+
+        public TicketToHeadlineViewModel NotifyHeadline(TicketToHeadlineCriteria criteria)
+        {
+            return GetData(criteria, true);
+        }
+
+        private string BuildXmlTicketInputParam(IDataReader reader)
+        {
+            StringBuilder xmlTicket = new StringBuilder();
+            xmlTicket.Append("<root>");
+            while (reader.Read())
+            {
+                xmlTicket.Append("<r ");
+                xmlTicket.Append(reader["RowAt"] != DBNull.Value ? $"RowAt=\"{reader["RowAt"].ToString()}\" " : string.Empty);
+                xmlTicket.Append(reader["Custid"] != DBNull.Value ? $"Custid=\"{reader["Custid"].ToString()}\" " : string.Empty);
+                xmlTicket.Append(reader["Username"] != DBNull.Value ? $"Username=\"{reader["Username"].ToString()}\" " : string.Empty);
+                xmlTicket.Append(reader["RefNo"] != DBNull.Value ? $"RefNo=\"{reader["RefNo"].ToString()}\" " : string.Empty);
+                xmlTicket.Append(reader["RefTable"] != DBNull.Value ? $"RefTable=\"{reader["RefTable"].ToString()}\" " : string.Empty);
+                xmlTicket.Append(reader["Bettype"] != DBNull.Value ? $"Bettype=\"{reader["Bettype"].ToString()}\" " : string.Empty);
+                xmlTicket.Append(reader["HeadlineId"] != DBNull.Value ? $"HeadlineId=\"{reader["HeadlineId"].ToString()}\" " : string.Empty);
+                xmlTicket.Append("/>");
+            }
+
+            xmlTicket.Append("</root>");
+            return xmlTicket.ToString();
+        }
+
+        private string BuildXmlEventInputParam(IDataReader reader)
+        {
+            StringBuilder xmlEvent = new StringBuilder();
+            reader.Read();
+            xmlEvent.Append("<r ");
+            xmlEvent.Append(reader["ProductId"] != DBNull.Value ? $"ProductId=\"{reader["ProductId"].ToString()}\" " : string.Empty);
+            xmlEvent.Append(reader["Sporttype"] != DBNull.Value ? $"Sporttype=\"{reader["Sporttype"].ToString()}\" " : string.Empty);
+            xmlEvent.Append(reader["MatchId"] != DBNull.Value ? $"MatchId=\"{reader["MatchId"].ToString()}\" " : string.Empty);
+            xmlEvent.Append(reader["MatchCode"] != DBNull.Value ? $"MatchCode=\"{reader["MatchCode"].ToString()}\" " : string.Empty);
+            xmlEvent.Append(reader["EventType"] != DBNull.Value ? $"EventType=\"{reader["EventType"].ToString()}\" " : string.Empty);
+            xmlEvent.Append(reader["EventDate"] != DBNull.Value ? $"EventDate=\"{reader["EventDate"].ToString()}\" " : string.Empty);
+            xmlEvent.Append(reader["ActualResult"] != DBNull.Value ? $"ActualResult=\"{reader["ActualResult"].ToString()}\" " : string.Empty);
+            xmlEvent.Append(reader["WrongResult"] != DBNull.Value ? $"WrongResult=\"{reader["WrongResult"].ToString()}\" " : string.Empty);
+            xmlEvent.Append("/>");
+
+            return xmlEvent.ToString();
+        }
+
+        private Result ValidateAndInsertNotification(string xmlEvent, string xmlTicket, bool isInsertNotifyHeadline)
+        {
+            CheckAndInsertNotifyHeadlineCriteria criteria = new CheckAndInsertNotifyHeadlineCriteria()
+            {
+                IsNotify = isInsertNotifyHeadline,
+                XmlEvent = xmlEvent,
+                XmlTicket = xmlTicket
+            };
+
+            return Acc_Amendment_CheckAndNotifyNotification(criteria);
+        }
+
+        private Result Acc_Amendment_CheckAndNotifyNotification(CheckAndInsertNotifyHeadlineCriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.AssignParamValues(criteria.GetSpParams());
+                db.ExecuteNonQuery();
+                var outputs = db.GetOuputParams();
+                return new Result(Utils.ToInt32(outputs["errcode"]), outputs["errmsg"].ToString());
+            }
         }
 
         public TicketToHeadlineViewModel GetFakeData(int? pageSize, int? pageIndex, int rowNo = 400)

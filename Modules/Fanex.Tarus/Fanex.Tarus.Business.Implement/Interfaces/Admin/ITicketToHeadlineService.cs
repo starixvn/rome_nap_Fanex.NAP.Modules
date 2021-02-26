@@ -13,6 +13,8 @@ namespace Fanex.Tarus.Business.Interface.Admin
 
         TicketToHeadlineViewModel GetData(HttpPostedFileBase uploadFile, TicketToHeadlineCriteria criteria);
 
+        TicketToHeadlineViewModel NotifyHeadline();
+
         TicketToHeadlineViewModel GetFakeData(int? pageSize, int? pageIndex, int rowNo = 400);
     }
 }
