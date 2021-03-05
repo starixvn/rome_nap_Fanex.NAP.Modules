@@ -3,6 +3,7 @@ using Fanex.Data;
 using Fanex.Tarus.DataAccess.Interface.Admin;
 using Fanex.Tarus.Entities.Criteria;
 using Fanex.Tarus.Entities.Criteria.Admin;
+using Fanex.Tarus.Infrastructure.Extensions;
 using Fanex.Tarus.Web.Models.Admin;
 using Sunplus.Accounting.Entities;
 using System;
@@ -110,6 +111,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             if (viewModel.ErrorCode == 0)
             {
                 var result = ValidateAndInsertNotification(xmlEvent, xmlTicket, isInsertNotifyHeadline);
+                ValidateAndInsertNotificationOnDB053(xmlEvent, xmlTicket, isInsertNotifyHeadline);
                 viewModel.ErrorCode = result.ErrorCode;
                 viewModel.ErrorMessage = result.ErrorMessage;
             }
@@ -131,7 +133,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             {
                 xmlTicket.Append("<r ");
                 xmlTicket.Append(reader["RowAt"] != DBNull.Value ? $"RowAt=\"{reader["RowAt"].ToString()}\" " : string.Empty);
-                xmlTicket.Append(reader["Custid"] != DBNull.Value ? $"Custid=\"{reader["Custid"].ToString()}\" " : string.Empty);
+                xmlTicket.Append(reader["Custid"] != DBNull.Value ? $"CustId=\"{reader["Custid"].ToString()}\" " : string.Empty);
                 xmlTicket.Append(reader["Username"] != DBNull.Value ? $"Username=\"{reader["Username"].ToString()}\" " : string.Empty);
                 xmlTicket.Append(reader["RefNo"] != DBNull.Value ? $"RefNo=\"{reader["RefNo"].ToString()}\" " : string.Empty);
                 xmlTicket.Append(reader["RefTable"] != DBNull.Value ? $"RefTable=\"{reader["RefTable"].ToString()}\" " : string.Empty);
@@ -147,10 +149,10 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
         private string BuildXmlEventInputParam(IDataReader reader)
         {
             StringBuilder xmlEvent = new StringBuilder();
+            xmlEvent.Append("<root>");
             reader.Read();
             xmlEvent.Append("<r ");
             xmlEvent.Append(reader["ProductId"] != DBNull.Value ? $"ProductId=\"{reader["ProductId"].ToString()}\" " : string.Empty);
-            xmlEvent.Append(reader["Sporttype"] != DBNull.Value ? $"Sporttype=\"{reader["Sporttype"].ToString()}\" " : string.Empty);
             xmlEvent.Append(reader["MatchId"] != DBNull.Value ? $"MatchId=\"{reader["MatchId"].ToString()}\" " : string.Empty);
             xmlEvent.Append(reader["MatchCode"] != DBNull.Value ? $"MatchCode=\"{reader["MatchCode"].ToString()}\" " : string.Empty);
             xmlEvent.Append(reader["EventType"] != DBNull.Value ? $"EventType=\"{reader["EventType"].ToString()}\" " : string.Empty);
@@ -159,6 +161,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             xmlEvent.Append(reader["WrongResult"] != DBNull.Value ? $"WrongResult=\"{reader["WrongResult"].ToString()}\" " : string.Empty);
             xmlEvent.Append("/>");
 
+            xmlEvent.Append("</root>");
             return xmlEvent.ToString();
         }
 
@@ -172,6 +175,25 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             };
 
             return Acc_Amendment_CheckAndNotifyNotification(criteria);
+        }
+
+        private void ValidateAndInsertNotificationOnDB053(string xmlEvent, string xmlTicket, bool isInsertNotifyHeadline)
+        {
+            try
+            {
+                CheckAndInsertNotifyHeadlineCriteriaOnDB053 criteria = new CheckAndInsertNotifyHeadlineCriteriaOnDB053()
+                {
+                    IsNotify = isInsertNotifyHeadline,
+                    XmlEvent = xmlEvent,
+                    XmlTicket = xmlTicket
+                };
+
+                Acc_Amendment_CheckAndNotifyNotification(criteria);
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex, System.Diagnostics.TraceEventType.Information);
+            }
         }
 
         private Result Acc_Amendment_CheckAndNotifyNotification(CheckAndInsertNotifyHeadlineCriteria criteria)

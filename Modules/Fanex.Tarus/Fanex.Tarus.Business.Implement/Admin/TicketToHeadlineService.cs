@@ -71,8 +71,8 @@ namespace Fanex.Tarus.Business.Implement.Admin
                 return new TicketToHeadlineViewModel { ErrorCode = 500, ErrorMessage = "Invalid file uploaded." };
             }
 
-            HttpContext.Current.Session[_cacheGetDataCriteria] = new TicketToHeadlineCached(criteria);
             result = this._ticketToHeadlineRepository.GetData(criteria);
+            HttpContext.Current.Session[_cacheGetDataCriteria] = result.ErrorCode == 0 ? new TicketToHeadlineCached(criteria) : null;
 
             return result;
         }

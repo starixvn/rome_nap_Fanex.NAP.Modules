@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Admin\AgentAccess.cs" />
     <Compile Include="Admin\QuickLink.cs" />
+    <Compile Include="Criteria\Admin\CheckAndInsertNotifyHeadlineCriteriaOnDB053.cs" />
     <Compile Include="Criteria\Admin\GetTicketToHeadlineSupportedProductCriteria.cs" />
     <Compile Include="Criteria\Admin\CheckAndInsertNotifyHeadlineCriteria.cs" />
     <Compile Include="Criteria\Admin\TicketToHeadlineCached.cs" />

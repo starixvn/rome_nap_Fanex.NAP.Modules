@@ -141,6 +141,10 @@
       <Project>{0d0f3c0d-f85c-4b0d-b033-16424e1ae5e0}</Project>
       <Name>Fanex.Tarus.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
+      <Project>{ccc0446a-42e7-4850-b09c-4dac278f23b3}</Project>
+      <Name>Fanex.Tarus.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Web.Models\Fanex.Tarus.Web.Models.csproj">
       <Project>{3ada1c70-fd55-4c89-bfef-1b695b1042cd}</Project>
       <Name>Fanex.Tarus.Web.Models</Name>
