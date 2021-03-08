@@ -4,6 +4,7 @@
     using Criteria.MoveBetSchedule;
     using Data;
     using Entities.MoveBetSchedule;
+    using Fanex.Tarus.Admin.Entities;
     using System.Collections.Generic;
     using System.Data;
 
@@ -24,6 +25,27 @@
                     }
                 }
             }
+        }
+
+        public Result UpdateMoveBetSchedule(UpdateMoveBetScheduleCriteria criteria)
+        {
+            if (criteria.IsValid())
+            {
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    db.ExecuteNonQuery(criteria.GetSpParams());
+
+                    var outputParams = db.GetOuputParams();
+                    if (outputParams != null)
+                    {
+                        return new Result(
+                            (int)outputParams["errcode"],
+                            outputParams["errmsg"].ToString());
+                    }
+                }
+            }
+
+            return null;
         }
 
         private static MoveBetDay BuildMoveBetDay(IDataReader reader, bool isDefaut)

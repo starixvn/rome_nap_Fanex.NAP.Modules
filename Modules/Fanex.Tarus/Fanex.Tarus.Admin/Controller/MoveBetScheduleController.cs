@@ -26,6 +26,10 @@
 
         [AuthenticateRead]
         public JsonResult GetMoveBetSchedule(GetMoveBetScheduleCriteria criteria)
-            => Json(moveBetScheduleService.GetMoveBetSchedule(criteria), JsonRequestBehavior.AllowGet);
+            => Json(moveBetScheduleService.GetMoveBetSchedule(criteria), JsonRequestBehavior.DenyGet);
+
+        [AuthenticateHost]
+        public JsonResult UpdateMoveBetSchedule(UpdateMoveBetScheduleCriteria criteria)
+            => Json(moveBetScheduleService.UpdateMoveBetSchedule(criteria), JsonRequestBehavior.DenyGet);
     }
 }

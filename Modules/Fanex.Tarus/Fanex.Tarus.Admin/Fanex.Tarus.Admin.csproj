@@ -195,6 +195,7 @@
     <Compile Include="Controller\ManageProductSettingController.cs" />
     <Compile Include="Controller\MoveBetScheduleController.cs" />
     <Compile Include="Criteria\MoveBetSchedule\GetMoveBetScheduleCriteria.cs" />
+    <Compile Include="Criteria\MoveBetSchedule\UpdateMoveBetScheduleCriteria.cs" />
     <Compile Include="DataAccess\MoveBetSchedule\IMoveBetScheduleDataAccess.cs" />
     <Compile Include="DataAccess\MoveBetSchedule\MoveBetScheduleDataAccess.cs" />
     <Compile Include="Entities\MoveBetSchedule\MoveBetDay.cs" />
