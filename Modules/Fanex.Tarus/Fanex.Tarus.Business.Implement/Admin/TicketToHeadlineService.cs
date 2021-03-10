@@ -56,6 +56,17 @@ namespace Fanex.Tarus.Business.Implement.Admin
                     xmlParam.Append($"<File UserName=\"{userName.Trim()}\" RefNo=\"{refno.Trim()}\" />");
                     if (rowCount == 2)
                     {
+                        string matchId = HttpUtility.HtmlEncode(row.GetCell(2) == null ? string.Empty : row.GetCell(2).ToString());
+                        if ((criteria.ProductId == 1 || criteria.ProductId == 5 || criteria.ProductId == 27) && string.IsNullOrWhiteSpace(matchId))
+                        {
+                            if (string.IsNullOrWhiteSpace(matchId))
+                            {
+                                return new TicketToHeadlineViewModel { ErrorCode = 500, ErrorMessage = "Match ID is required!" };
+                            }
+
+                            criteria.MatchId = Convert.ToInt32(matchId);
+                        }
+
                         criteria.ActualResult = HttpUtility.HtmlEncode(row.GetCell(3) == null ? string.Empty : row.GetCell(3).ToString());
                         criteria.WrongResult = HttpUtility.HtmlEncode(row.GetCell(4) == null ? string.Empty : row.GetCell(4).ToString());
                     }
