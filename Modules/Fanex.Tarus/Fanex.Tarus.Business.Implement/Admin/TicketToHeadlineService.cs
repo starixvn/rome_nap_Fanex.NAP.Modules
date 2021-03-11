@@ -26,6 +26,8 @@ namespace Fanex.Tarus.Business.Implement.Admin
 
         private readonly string _cacheGetDataCriteria = "TicketToHeadlineCritaria";
 
+        private readonly int[] SupportedNotifyHeadlineProducts = { 1, 3, 5, 27 };
+
         public TicketToHeadlineService()
         {
             this._ticketToHeadlineRepository = new TicketToHeadlineRepository();
@@ -57,14 +59,9 @@ namespace Fanex.Tarus.Business.Implement.Admin
                     if (rowCount == 2)
                     {
                         string matchId = HttpUtility.HtmlEncode(row.GetCell(2) == null ? string.Empty : row.GetCell(2).ToString());
-                        if ((criteria.ProductId == 1 || criteria.ProductId == 5 || criteria.ProductId == 27) && string.IsNullOrWhiteSpace(matchId))
+                        if (SupportedNotifyHeadlineProducts.Contains(criteria.ProductId))
                         {
-                            if (string.IsNullOrWhiteSpace(matchId))
-                            {
-                                return new TicketToHeadlineViewModel { ErrorCode = 500, ErrorMessage = "Match ID is required!" };
-                            }
-
-                            criteria.MatchId = Convert.ToInt32(matchId);
+                            criteria.MatchId = string.IsNullOrWhiteSpace(matchId) ? 0 : Convert.ToInt32(matchId);
                         }
 
                         criteria.ActualResult = HttpUtility.HtmlEncode(row.GetCell(3) == null ? string.Empty : row.GetCell(3).ToString());
