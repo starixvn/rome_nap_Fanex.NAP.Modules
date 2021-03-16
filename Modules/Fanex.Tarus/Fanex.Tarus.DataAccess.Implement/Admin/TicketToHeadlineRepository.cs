@@ -159,6 +159,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             xmlEvent.Append(reader["EventDate"] != DBNull.Value ? $"EventDate=\"{reader["EventDate"].ToString()}\" " : string.Empty);
             xmlEvent.Append(reader["ActualResult"] != DBNull.Value ? $"ActualResult=\"{reader["ActualResult"].ToString()}\" " : string.Empty);
             xmlEvent.Append(reader["WrongResult"] != DBNull.Value ? $"WrongResult=\"{reader["WrongResult"].ToString()}\" " : string.Empty);
+            xmlEvent.Append(reader["Type"] != DBNull.Value ? $"Type=\"{reader["Type"].ToString()}\" " : string.Empty);
             xmlEvent.Append("/>");
 
             xmlEvent.Append("</root>");
