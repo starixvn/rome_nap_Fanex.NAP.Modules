@@ -198,7 +198,7 @@ namespace Fanex.Tarus.ExchangeRate.Business
                         {
                             startColumnIndex++;
                             wsOandaExRate.Cells[startRowIndex, startColumnIndex].Style = style;
-                            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Value = CastAide.AsDecimal(baseCurr[j].Value);
+                            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Value = baseCurr[j].Value;
 
                         }
 
