@@ -15,7 +15,7 @@ using System.Web.Mvc;
 
 namespace Fanex.Tarus.DataAccess.Implement.Admin
 {
-    public class TicketToHeadlineRepository : ITicketToHeadlineRepository
+    public class TicketToHeadlineRepository : BaseRepository, ITicketToHeadlineRepository
     {
 
         private List<int> groupHeadlineDataChangeRowNumber;
@@ -56,6 +56,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             TicketToHeadline trackingDataRow = new TicketToHeadline();
             var xmlEvent = string.Empty;
             var xmlTicket = string.Empty;
+            bool isOutright = false;
             using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
             {
                 db.AssignParamValues(criteria.GetSpParams());
@@ -94,9 +95,20 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
 
                 reader.Close();
                 var outputs = db.GetOuputParams();
+                isOutright = Utils.ToBoolean(outputs["isoutright"]);
                 viewModel.TotalRows = Utils.ToInt32(outputs["totalrows"]);
                 viewModel.ErrorCode = Utils.ToInt32(outputs["errcode"]);
                 viewModel.ErrorMessage = Utils.ToString(outputs["errmsg"]);
+
+                if (isOutright)
+                {
+                    var checkMesssageIdResult = CheckMessageIdExisted(new CheckMessageIdCriteria() { MessageId = criteria.MessageId });
+                    if (checkMesssageIdResult.ErrorCode > 0)
+                    {
+                        viewModel.ErrorCode = checkMesssageIdResult.ErrorCode;
+                        viewModel.ErrorMessage = checkMesssageIdResult.ErrorMessage;
+                    }
+                }
             }
 
             criteria.PageSize = criteria.PageSize ?? 1000;
@@ -159,7 +171,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             xmlEvent.Append(reader["EventDate"] != DBNull.Value ? $"EventDate=\"{reader["EventDate"].ToString()}\" " : string.Empty);
             xmlEvent.Append(reader["ActualResult"] != DBNull.Value ? $"ActualResult=\"{reader["ActualResult"].ToString()}\" " : string.Empty);
             xmlEvent.Append(reader["WrongResult"] != DBNull.Value ? $"WrongResult=\"{reader["WrongResult"].ToString()}\" " : string.Empty);
-            xmlEvent.Append(reader["Type"] != DBNull.Value ? $"Type=\"{reader["Type"].ToString()}\" " : string.Empty);
+            xmlEvent.Append(reader["MessageId"] != DBNull.Value ? $"MessageId=\"{reader["MessageId"].ToString()}\" " : string.Empty);
             xmlEvent.Append("/>");
 
             xmlEvent.Append("</root>");
@@ -197,16 +209,9 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             }
         }
 
-        private Result Acc_Amendment_CheckAndNotifyNotification(CheckAndInsertNotifyHeadlineCriteria criteria)
-        {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.AssignParamValues(criteria.GetSpParams());
-                db.ExecuteNonQuery();
-                var outputs = db.GetOuputParams();
-                return new Result(Utils.ToInt32(outputs["errcode"]), outputs["errmsg"].ToString());
-            }
-        }
+        private Result Acc_Amendment_CheckAndNotifyNotification(CheckAndInsertNotifyHeadlineCriteria criteria) => ExecuteNonQuery(criteria);
+
+        private Result CheckMessageIdExisted(CheckMessageIdCriteria criteria) => ExecuteNonQuery(criteria);
 
         public TicketToHeadlineViewModel GetFakeData(int? pageSize, int? pageIndex, int rowNo = 400)
         {

@@ -17,6 +17,7 @@ namespace Fanex.Tarus.Entities.Criteria
             HeadlineType = criteria.HeadlineType;
             ProductId = criteria.ProductId;
             MatchId = criteria.MatchId;
+            MessageId = criteria.MessageId;
             ActualResult = criteria.ActualResult;
             WrongResult = criteria.WrongResult;
             PageIndex = criteria.PageIndex;
@@ -32,6 +33,8 @@ namespace Fanex.Tarus.Entities.Criteria
         public int ProductId { get; set; }
 
         public int MatchId { get; set; }
+
+        public int MessageId { get; set; }
 
         public string ActualResult { get; set; }
 

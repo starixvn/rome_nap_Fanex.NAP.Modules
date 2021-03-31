@@ -59,9 +59,11 @@ namespace Fanex.Tarus.Business.Implement.Admin
                     if (rowCount == 2)
                     {
                         string matchId = HttpUtility.HtmlEncode(row.GetCell(2) == null ? string.Empty : row.GetCell(2).ToString());
+                        string messageId = HttpUtility.HtmlEncode(row.GetCell(5) == null ? string.Empty : row.GetCell(5).ToString());
                         if (SupportedNotifyHeadlineProducts.Contains(criteria.ProductId))
                         {
                             criteria.MatchId = string.IsNullOrWhiteSpace(matchId) ? 0 : Convert.ToInt32(matchId);
+                            criteria.MessageId = string.IsNullOrWhiteSpace(messageId) ? 0 : Convert.ToInt32(messageId);
                         }
 
                         criteria.ActualResult = HttpUtility.HtmlEncode(row.GetCell(3) == null ? string.Empty : row.GetCell(3).ToString());
