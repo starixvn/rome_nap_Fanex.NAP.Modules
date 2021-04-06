@@ -17,10 +17,10 @@ namespace Sunplus.Accounting.Business.CacheManager
         {
             get
             {
-                object exchange = null;
+                Dictionary<int, string> exchange = null;
                 try
                 {
-                    exchange = CacheHelper.Get("exchange");
+                    exchange = CacheHelper.Get<Dictionary<int, string>>("exchange");
                     if (exchange == null)
                     {
                         exchange = IBCProvider.Utils.GetExchange();
@@ -32,7 +32,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                     exchange = IBCProvider.Utils.GetExchange();
                 }
 
-                return exchange as Dictionary<int, string>;
+                return exchange;
             }
             set { CacheHelper.Set("exchange", value, DateTime.Now.AddHours(5)); }
         }
