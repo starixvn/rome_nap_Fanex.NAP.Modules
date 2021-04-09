@@ -167,7 +167,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
                 new KenoService().UpdateMemberData(custId, sourceCustId, actorId);
 
                 // Copy Gold Deluxe.
-                new GoldDeluxeService().UpdateMemberData(custId, uplineId, sourceCustId, actorId, criteria.IP);
+                //new GoldDeluxeService().UpdateMemberData(custId, uplineId, sourceCustId, actorId, criteria.IP);
 
                 // Copy DCS.
                 new DCSSettingCopyInsertMemberService().CorrectMemberPositionTaking(custId, sourceCustId, actorId, criteria.IP, criteria.SettingStatus);
