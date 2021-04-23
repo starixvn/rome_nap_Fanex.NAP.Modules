@@ -19,7 +19,6 @@
         public ActionResult BetDetails(GetVoidbridgeBetDetailsCriteria criteria)
         {
             var result = GetBetDetailReport(criteria);
-
             return View("~/Areas/Voidbridge/Views/BetDetails/Index.cshtml", result);
         }
 
