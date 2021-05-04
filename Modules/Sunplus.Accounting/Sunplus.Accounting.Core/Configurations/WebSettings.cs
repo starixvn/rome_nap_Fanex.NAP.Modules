@@ -466,6 +466,14 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
+        public static bool IsShowVGaming
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsShowVGaming"] == "1");
+            }
+        }
+
         public static bool IsUmNG2
         {
             get
