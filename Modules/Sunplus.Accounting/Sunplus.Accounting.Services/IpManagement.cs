@@ -32,7 +32,7 @@ namespace Sunplus.Accounting.Business
                 {
                     try
                     {
-                        _ipVNList = CacheHelper.Get("ipvnlist") as List<IPVNBean> ?? IBCProvider.Utils.GetIPVN();
+                        _ipVNList = CacheHelper.Get<List<IPVNBean>>("ipvnlist") as List<IPVNBean> ?? IBCProvider.Utils.GetIPVN();
                     }
                     catch
                     {

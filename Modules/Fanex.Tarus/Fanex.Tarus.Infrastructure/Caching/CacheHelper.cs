@@ -8,16 +8,6 @@ namespace Fanex.Tarus.Infrastructure.Caching
     {
         private static ICacheService cacheService = new CacheService();
 
-        public static object Get(string key)
-        {
-            return cacheService.Get<object>(key);
-        }
-
-        public static void Set(string key, object value)
-        {
-            cacheService.Set(key, value);
-        }
-
         public static T Get<T>(string key)
         {
             return cacheService.Get<T>(key);

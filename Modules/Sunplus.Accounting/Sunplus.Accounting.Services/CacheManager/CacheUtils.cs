@@ -43,7 +43,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CacheHelper.Get("AccGetAllSiteNames") as string;
+                    return CacheHelper.Get<string>("AccGetAllSiteNames");
                 }
                 catch
                 {

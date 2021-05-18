@@ -32,7 +32,7 @@ namespace Fanex.Tarus.Finance
             var listForexAccount = new List<string>();
             try
             {
-                var objForexAccounts = CacheHelper.Get(ForexAccountsKey);
+                var objForexAccounts = CacheHelper.Get<List<string>>(ForexAccountsKey);
 
                 if (objForexAccounts != null) return objForexAccounts as List<string>;
 

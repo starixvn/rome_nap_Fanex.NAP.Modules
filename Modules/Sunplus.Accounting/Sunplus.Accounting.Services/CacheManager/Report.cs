@@ -21,7 +21,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.Get("acctrader." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get<string>("acctrader." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -42,7 +42,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.Get("accdirectbal." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get<string>("accdirectbal." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -63,7 +63,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.Get("accreport2amatchwl." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get<string>("accreport2amatchwl." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -84,7 +84,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.Get("acctraderdetail." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get<string>("acctraderdetail." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -105,7 +105,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.Get("accsupermovementbase." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get<string>("accsupermovementbase." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -126,7 +126,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.Get("accsupermovementoriginal." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get<string>("accsupermovementoriginal." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -147,7 +147,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.Get("accreportcomstatement." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get<string>("accreportcomstatement." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -168,7 +168,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.Get("accreportstatement." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get<string>("accreportstatement." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -189,7 +189,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.Get("accreportstatementdetail." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get<string>("accreportstatementdetail." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -210,7 +210,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.Get("accreportstatementaudit." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get<string>("accreportstatementaudit." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -232,7 +232,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                 try
                 {
                     return
-                        CastAide.AsString(SCCACHE.Get("accreportleaguewinlosssport." + AppSession.Username));
+                        CastAide.AsString(SCCACHE.Get<string>("accreportleaguewinlosssport." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -253,7 +253,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.Get("accreportm88winlossdaily." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get<string>("accreportm88winlossdaily." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -275,7 +275,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                 try
                 {
                     return
-                        CastAide.AsString(SCCACHE.Get("accreportm88winlossmonthly." + AppSession.Username));
+                        CastAide.AsString(SCCACHE.Get<string>("accreportm88winlossmonthly." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -296,7 +296,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.Get("accreportm88winlosssport." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get<string>("accreportm88winlosssport." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
@@ -317,7 +317,7 @@ namespace Sunplus.Accounting.Business.CacheManager
             {
                 try
                 {
-                    return CastAide.AsString(SCCACHE.Get("accreportm88winlossdetail." + AppSession.Username));
+                    return CastAide.AsString(SCCACHE.Get<string>("accreportm88winlossdetail." + AppSession.Username));
                 }
                 catch (Exception ex)
                 {
