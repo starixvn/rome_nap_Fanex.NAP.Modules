@@ -8,16 +8,6 @@ namespace Fanex.Tarus.Infrastructure.Caching
     {
         private static ICacheService cacheService = new CacheService();
 
-        public static object Get(string key)
-        {
-            return cacheService.Get<object>(key);
-        }
-
-        public static void Set(string key, object value)
-        {
-            cacheService.Set(key, value);
-        }
-
         public static T Get<T>(string key)
         {
             return cacheService.Get<T>(key);
@@ -36,16 +26,6 @@ namespace Fanex.Tarus.Infrastructure.Caching
         public static void Set<T>(string key, T value, TimeSpan slidingExpire)
         {
             cacheService.Set<T>(key, value, new CacheItemOptions().SetSlidingExpiration(slidingExpire));
-        }
-
-        public static void Set(string key, object value, TimeSpan expire)
-        {
-            cacheService.Set(key, value, new CacheItemOptions().SetSlidingExpiration(expire));
-        }
-
-        public static void Set(string key, object value, DateTime absoluteExpire)
-        {
-            cacheService.Set(key, value, new CacheItemOptions().SetAbsoluteExpiration(absoluteExpire));
         }
 
         public static void Remove(string key)
