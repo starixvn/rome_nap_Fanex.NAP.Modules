@@ -45,7 +45,7 @@
                     rowCount++;
                     IRow row = (IRow)rows.Current;
 
-                    criteria.Entities.Add(new VenderGlobalEntity
+                    criteria.Entities.Add(new VendorGlobalEntity
                     {
                         VendorId = HttpUtility.HtmlEncode(row.GetCell(0) == null ? string.Empty : row.GetCell(0).ToString()),
                         VendorName = HttpUtility.HtmlEncode(row.GetCell(1) == null ? string.Empty : row.GetCell(1).ToString()),
@@ -68,12 +68,12 @@
             return result;
         }
 
-        public Result Update(VenderGlobalEntity request) => dataAccess.Update(new UpdateVendorGlobalCriteria
+        public Result Update(VendorGlobalEntity request) => dataAccess.Update(new UpdateVendorGlobalCriteria
         {
-            Entities = new List<VenderGlobalEntity> { request }
+            Entities = new List<VendorGlobalEntity> { request }
         });
 
-        public Result Delete(VenderGlobalEntity request) => dataAccess.Delete(new DeleteVendorGlobalCriteria
+        public Result Delete(VendorGlobalEntity request) => dataAccess.Delete(new DeleteVendorGlobalCriteria
         {
             VendorId = request.VendorId,
             VName = request.VendorName

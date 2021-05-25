@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Tarus.Admin.ManageVendorGlobalSetting.Models
 {
-    public class VenderGlobalEntity
+    public class VendorGlobalEntity
     {
         public string RowNum { get; set; }
 

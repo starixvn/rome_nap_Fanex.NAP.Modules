@@ -21,7 +21,7 @@
         [HttpPost]
         public JsonResult Select(SelectVendorRequest request) => Json(_manageVendorService.Select(new SelectVendorGlobalCriteria
         {
-            VenderId = request.VendorId,
+            VendorId = request.VendorId,
             VName = request.VendorName,
             NumberValue = request.NumberValue,
             BetType = request.BetType,
@@ -37,11 +37,11 @@
         [AuthenticateHost]
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult Update(VenderGlobalEntity request) => Json(_manageVendorService.Update(request));
+        public JsonResult Update(VendorGlobalEntity request) => Json(_manageVendorService.Update(request));
 
         [AuthenticateHost]
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult Delete(VenderGlobalEntity request) => Json(_manageVendorService.Delete(request));
+        public JsonResult Delete(VendorGlobalEntity request) => Json(_manageVendorService.Delete(request));
     }
 }

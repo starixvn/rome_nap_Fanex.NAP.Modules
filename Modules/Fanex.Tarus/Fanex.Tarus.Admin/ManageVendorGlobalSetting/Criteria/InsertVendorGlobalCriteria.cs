@@ -11,11 +11,11 @@
     {
         public InsertVendorGlobalCriteria()
         {
-            Entities = new List<VenderGlobalEntity>();
+            Entities = new List<VendorGlobalEntity>();
         }
 
         [SpParam(Ignored = true)]
-        public List<VenderGlobalEntity> Entities { get; set; }
+        public List<VendorGlobalEntity> Entities { get; set; }
 
         public string File
         {

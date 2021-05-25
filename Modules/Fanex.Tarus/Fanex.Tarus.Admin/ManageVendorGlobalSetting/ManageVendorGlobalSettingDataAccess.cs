@@ -23,13 +23,13 @@
     {
         public VendorGlobalModel Select(SelectVendorGlobalCriteria criteria)
         {
-            var entities = new List<VenderGlobalEntity>();
+            var entities = new List<VendorGlobalEntity>();
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var reader = objDb.ExecuteReader(criteria.GetSpParams());
                 while (reader.Read())
                 {
-                    entities.Add(new VenderGlobalEntity
+                    entities.Add(new VendorGlobalEntity
                     {
                         RowNum = DataUtils.ToString(reader["rownum"]),
                         VendorId = DataUtils.ToString(reader["vendorid"]),

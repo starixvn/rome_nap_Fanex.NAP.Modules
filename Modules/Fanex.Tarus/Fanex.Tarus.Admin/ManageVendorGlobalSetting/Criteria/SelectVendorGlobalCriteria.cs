@@ -4,7 +4,7 @@
 
     public class SelectVendorGlobalCriteria : CriteriaBase
     {
-        public string VenderId { get; set; }
+        public string VendorId { get; set; }
 
         public string VName { get; set; }
 

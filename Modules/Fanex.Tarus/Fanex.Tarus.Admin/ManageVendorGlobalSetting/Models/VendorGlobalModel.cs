@@ -4,7 +4,7 @@
 
     public class VendorGlobalModel
     {
-        public IEnumerable<VenderGlobalEntity> VendorGlobalEntities { get; set; }
+        public IEnumerable<VendorGlobalEntity> VendorGlobalEntities { get; set; }
 
         public int TotalRows { get; set; }
     }
