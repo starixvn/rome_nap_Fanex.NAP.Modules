@@ -7,7 +7,7 @@
 
     public interface IMoveBetScheduleService
     {
-        IEnumerable<MoveBetDay> GetMoveBetSchedule(GetMoveBetScheduleCriteriaBase criteria);
+        IEnumerable<MoveBetDayViewModel> GetMoveBetSchedule(GetMoveBetScheduleCriteriaBase criteria);
 
         Result UpdateMoveBetSchedule(UpdateMoveBetScheduleCriteria criteria);
     }

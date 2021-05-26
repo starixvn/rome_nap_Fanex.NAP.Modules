@@ -15,8 +15,13 @@
             this.moveBetScheduleDataAccess = moveBetScheduleDataAccess ?? new MoveBetScheduleDataAccess();
         }
 
-        public IEnumerable<MoveBetDay> GetMoveBetSchedule(GetMoveBetScheduleCriteriaBase criteria)
-            => moveBetScheduleDataAccess.GetMoveBetSchedule(criteria);
+        public IEnumerable<MoveBetDayViewModel> GetMoveBetSchedule(GetMoveBetScheduleCriteriaBase criteria)
+        {
+            foreach (var item in moveBetScheduleDataAccess.GetMoveBetSchedule(criteria))
+            {
+                yield return new MoveBetDayViewModel(item);
+            }
+        }
 
         public Result UpdateMoveBetSchedule(UpdateMoveBetScheduleCriteria criteria)
             => moveBetScheduleDataAccess.UpdateMoveBetSchedule(criteria);

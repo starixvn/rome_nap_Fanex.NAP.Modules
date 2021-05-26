@@ -5,6 +5,7 @@
     using Data;
     using Entities.MoveBetSchedule;
     using Fanex.Tarus.Admin.Entities;
+    using System;
     using System.Collections.Generic;
     using System.Data;
 
@@ -48,20 +49,17 @@
             return null;
         }
 
-        private static MoveBetDay BuildMoveBetDay(IDataReader reader, bool isDefaut)
-            => new MoveBetDay
-            {
-                Date = isDefaut ? string.Empty : reader.ToString("scheduleDate"),
-                WeekDay = isDefaut ? reader.ToInt("_weekDay") - 1 : reader.ToInt("weekday_") - 1,
-                Options = new bool[] {
-                    reader.ToBool("Isbackday1"),
-                    reader.ToBool("Isbackday2"),
-                    reader.ToBool("Isbackday3"),
-                    reader.ToBool("Isbackday4"),
-                    reader.ToBool("Isbackday5"),
-                    reader.ToBool("Isbackday6"),
-                    reader.ToBool("Isbackday7")
-                }
-            };
+        private static MoveBetDay BuildMoveBetDay(IDataReader reader, bool isDefault)
+            => new MoveBetDay(
+                isDefault ? DateTime.MinValue : reader.ToDateTime("scheduledate"),
+                isDefault ? reader.ToInt("_weekday") : reader.ToInt("weekday_"),
+                reader.ToBool("isbackday1"),
+                reader.ToBool("isbackday2"),
+                reader.ToBool("isbackday3"),
+                reader.ToBool("isbackday4"),
+                reader.ToBool("isbackday5"),
+                reader.ToBool("isbackday6"),
+                reader.ToBool("isbackday7")
+            );
     }
 }
