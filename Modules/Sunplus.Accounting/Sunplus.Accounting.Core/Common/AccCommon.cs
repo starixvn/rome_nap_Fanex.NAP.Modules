@@ -26,6 +26,9 @@ namespace Sunplus.Accounting.Core.Common
             get { return (CastAide.AsString(ConfigurationManager.AppSettings["LocalTest"]) == "1"); }
         }
 
+        public static bool IsEnabledRecheckin
+            => ConfigurationManager.AppSettings["Recheckin"] == "1";
+
         public static byte SystemId
         {
             get { return CastAide.AsByte(ConfigurationManager.AppSettings["SystemId"]); }
