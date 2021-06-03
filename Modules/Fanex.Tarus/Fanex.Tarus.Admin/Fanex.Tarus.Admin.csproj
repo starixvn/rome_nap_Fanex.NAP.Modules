@@ -190,7 +190,15 @@
     <Compile Include="Business\BACustomer\IBACustomerService.cs" />
     <Compile Include="Business\CompareBalance\CompareBalanceService.cs" />
     <Compile Include="Business\CustomerDateLimit\CustomerDateLimitService.cs" />
+    <Compile Include="Business\MoveBetSchedule\IMoveBetScheduleService.cs" />
+    <Compile Include="Business\MoveBetSchedule\MoveBetScheduleService.cs" />
     <Compile Include="Controller\ManageProductSettingController.cs" />
+    <Compile Include="Controller\MoveBetScheduleController.cs" />
+    <Compile Include="Criteria\MoveBetSchedule\GetMoveBetScheduleCriteria.cs" />
+    <Compile Include="Criteria\MoveBetSchedule\UpdateMoveBetScheduleCriteria.cs" />
+    <Compile Include="DataAccess\MoveBetSchedule\IMoveBetScheduleDataAccess.cs" />
+    <Compile Include="DataAccess\MoveBetSchedule\MoveBetScheduleDataAccess.cs" />
+    <Compile Include="Entities\MoveBetSchedule\MoveBetDay.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageCanSee\SelectAllCurrencyCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageCanSee\SelectAllSportTypeCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageCanSee\DeleteCanSeeCriteria.cs" />
