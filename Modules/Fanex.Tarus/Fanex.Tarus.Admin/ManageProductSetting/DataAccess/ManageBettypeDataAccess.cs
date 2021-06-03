@@ -53,7 +53,8 @@
                         TypeNameMMR = DataUtils.ToString(reader["typenameMMR"]),
                         TypeNameHI = DataUtils.ToString(reader["typenameHI"]),
                         DisplayedTypeID = DataUtils.ToString(reader["DisplayedTypeID"]),
-                        LicSpreadBetTypeGroupId = DataUtils.ToString(reader["LicSpreadBetTypeGroupId"])
+                        LicSpreadBetTypeGroupId = DataUtils.ToString(reader["LicSpreadBetTypeGroupId"]),
+                        Is3rdParty = DataUtils.ToString(reader["Is3rdParty"])
                     });
                 }
 
