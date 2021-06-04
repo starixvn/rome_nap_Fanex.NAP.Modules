@@ -26,5 +26,6 @@
         public string TypeNameHI { get; set; }
         public string DisplayedTypeID { get; set; }
         public string LicSpreadBetTypeGroupId { get; set; }
+        public string Is3rdParty { get; set; }
     }
 }
