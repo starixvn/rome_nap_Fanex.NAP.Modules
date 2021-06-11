@@ -48,8 +48,10 @@ namespace Fanex.Tarus.Balance.Business
             try
             {
                 var resetWinningData = this._resetWinningAccess.GetResetWinningDataAfterMoveBetDay(criteria);
-                result = this._resetWinningAccess.GetResetWinningByDay(resetWinningData);
-                return result;
+
+                return resetWinningData.IsError
+                    ? resetWinningData
+                    : this._resetWinningAccess.GetResetWinningByDay(resetWinningData);
             }
             catch (Exception exception)
             {
@@ -125,7 +127,10 @@ namespace Fanex.Tarus.Balance.Business
             try
             {
                 ResetWinning_New resetWinningData = this._resetWinningAccess.GetResetWinningDataAfterMoveBetDay(criteria);
-                result = this.BuidResetWinningData(resetWinningData);
+
+                return resetWinningData.IsError
+                    ? resetWinningData
+                    : this.BuidResetWinningData(resetWinningData);
             }
             catch (Exception ex)
             {

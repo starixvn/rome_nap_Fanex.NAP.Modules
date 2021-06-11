@@ -42,10 +42,21 @@ namespace Fanex.Tarus.Balance.DataAccess
             _params.Add("mode", criteria.ViewOrResetStatus);
             _params.Add("creator", criteria.Creator);
             _params.Add("ip", criteria.IP);
+            _params.Add("errcode", 0);
+            _params.Add("errmsg", string.Empty);
 
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKeys()))
             {
                 var resetWinningDataSet = objDb.ExecuteDataSet(_params);
+
+                var ouputParams = objDb.GetOuputParams();
+                result.ErrorCode = Convert.ToInt32(ouputParams["errcode"]);
+                if (result.IsError)
+                {
+                    result.ErrorMessage = ouputParams["errmsg"].ToString();
+                    return result;
+                }
+
                 resetWinningTable = resetWinningDataSet.Tables[0];
             }
 
