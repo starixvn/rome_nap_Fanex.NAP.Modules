@@ -1,4 +1,5 @@
 ﻿using Fanex.NAP.Framework.Data;
+using System;
 
 namespace Fanex.Tarus.Entities.Criteria
 {
@@ -9,6 +10,8 @@ namespace Fanex.Tarus.Entities.Criteria
         public string XmlTicket { get; set; }
 
         public bool IsNotify { get; set; }
+
+        public DateTime SubmitDate { get; set; }
 
         public int ErrCode { get; set; }
 

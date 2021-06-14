@@ -122,8 +122,13 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             ReassignMergeRowNum(viewModel.TicketToHeadlineCollection);
             if (viewModel.ErrorCode == 0)
             {
-                var result = ValidateAndInsertNotification(xmlEvent, xmlTicket, isInsertNotifyHeadline);
-                ValidateAndInsertNotificationOnDB053(xmlEvent, xmlTicket, isInsertNotifyHeadline);
+                var submitDate = DateTime.Now;
+                var result = ValidateAndInsertNotification(xmlEvent, xmlTicket, isInsertNotifyHeadline, submitDate);
+                if (result.ErrorCode == 0)
+                {
+                    ValidateAndInsertNotificationOnDB053(xmlEvent, xmlTicket, isInsertNotifyHeadline, submitDate);
+                }
+
                 viewModel.ErrorCode = result.ErrorCode;
                 viewModel.ErrorMessage = result.ErrorMessage;
             }
@@ -178,19 +183,20 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             return xmlEvent.ToString();
         }
 
-        private Result ValidateAndInsertNotification(string xmlEvent, string xmlTicket, bool isInsertNotifyHeadline)
+        private Result ValidateAndInsertNotification(string xmlEvent, string xmlTicket, bool isInsertNotifyHeadline, DateTime submitDate)
         {
             CheckAndInsertNotifyHeadlineCriteria criteria = new CheckAndInsertNotifyHeadlineCriteria()
             {
                 IsNotify = isInsertNotifyHeadline,
                 XmlEvent = xmlEvent,
-                XmlTicket = xmlTicket
+                XmlTicket = xmlTicket,
+                SubmitDate = submitDate
             };
 
             return Acc_Amendment_CheckAndNotifyNotification(criteria);
         }
 
-        private void ValidateAndInsertNotificationOnDB053(string xmlEvent, string xmlTicket, bool isInsertNotifyHeadline)
+        private void ValidateAndInsertNotificationOnDB053(string xmlEvent, string xmlTicket, bool isInsertNotifyHeadline, DateTime submitDate)
         {
             try
             {
@@ -198,7 +204,8 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
                 {
                     IsNotify = isInsertNotifyHeadline,
                     XmlEvent = xmlEvent,
-                    XmlTicket = xmlTicket
+                    XmlTicket = xmlTicket,
+                    SubmitDate = submitDate
                 };
 
                 Acc_Amendment_CheckAndNotifyNotification(criteria);
