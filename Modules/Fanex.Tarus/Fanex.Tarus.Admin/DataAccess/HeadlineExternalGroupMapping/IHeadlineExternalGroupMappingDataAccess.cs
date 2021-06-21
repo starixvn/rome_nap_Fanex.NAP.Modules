@@ -16,14 +16,14 @@
 
         IEnumerable<IdNameEntity> SelHeadline(GetHeadlineCriteria criteria);
 
-        ResultResponse Insert(InsExternalGroupHeadlineMappingCriteia criteria);
+        Result Insert(InsExternalGroupHeadlineMappingCriteia criteria);
 
-        ResultResponse Update(UpdExternalGroupHeadlineMappingCriteia criteria);
+        Result Update(UpdExternalGroupHeadlineMappingCriteia criteria);
 
         ResultResponse Delete(DelExternalGroupHeadlineMappingCriteia criteria);
 
         IEnumerable<HeadlineExternalGroupMappingModel> SelectMapping(SelExternalGroupHeadlineMappingCriteia criteria);
 
-        IEnumerable<ExternalGroupHeadlineMappingSuper> GetMappingSuper(MappingSuperCriteria criteria);
+        MappingSuperResult GetMappingSuper(MappingSuperCriteria criteria);
     }
 }

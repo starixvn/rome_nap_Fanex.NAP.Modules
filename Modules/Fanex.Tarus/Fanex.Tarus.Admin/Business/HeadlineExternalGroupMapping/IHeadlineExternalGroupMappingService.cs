@@ -18,12 +18,12 @@
 
         IEnumerable<HeadlineExternalGroupMappingModel> Select(SelExternalGroupHeadlineMappingCriteia request);
 
-        ResultResponse Insert(HeadlineExternalGroupMappingModel request, int userId);
+        Result Insert(HeadlineExternalGroupMappingModel request, int userId);
 
-        ResultResponse Update(HeadlineExternalGroupMappingModel request, int userId);
+        Result Update(HeadlineExternalGroupMappingModel request, int userId);
 
         ResultResponse Delete(HeadlineExternalGroupMappingModel request, int userId);
 
-        IEnumerable<ExternalGroupHeadlineMappingSuper> GetMappingSuper(string usernames, int groupId);
+        MappingSuperResult GetMappingSuper(string usernames, int groupId);
     }
 }

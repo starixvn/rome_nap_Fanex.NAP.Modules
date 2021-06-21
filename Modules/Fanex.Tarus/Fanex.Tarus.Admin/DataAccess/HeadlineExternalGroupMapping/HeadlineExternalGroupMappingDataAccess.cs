@@ -3,7 +3,6 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using DNAide.Core;
     using Fanex.Data;
     using Fanex.Tarus.Admin.Criteria.HeadlineExternalGroupMapping;
@@ -72,20 +71,17 @@
             return groups;
         }
 
-        public ResultResponse Insert(InsExternalGroupHeadlineMappingCriteia criteria)
+        public Result Insert(InsExternalGroupHeadlineMappingCriteia criteria)
             => ExecuteNonQuery(criteria.GetSettingKey(), criteria.GetSpParams());
 
-        public ResultResponse Update(UpdExternalGroupHeadlineMappingCriteia criteria)
+        public Result Update(UpdExternalGroupHeadlineMappingCriteia criteria)
             => ExecuteNonQuery(criteria.GetSettingKey(), criteria.GetSpParams());
 
         public ResultResponse Delete(DelExternalGroupHeadlineMappingCriteia criteria)
-            => ExecuteNonQuery(criteria.GetSettingKey(), criteria.GetSpParams());
-
-        private ResultResponse ExecuteNonQuery(string settingKey, Hashtable inputParams)
         {
-            using (var db = new ObjectDb(settingKey))
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(inputParams);
+                db.ExecuteNonQuery(criteria.GetSpParams());
                 var outputParams = db.GetOuputParams();
 
                 if (outputParams != null)
@@ -94,9 +90,27 @@
                     {
                         AffectedSupers = outputParams["affectedsupers"].ToString()
                     };
-                } else
+                }
+                else
                 {
                     return new ResultResponse(0, string.Empty);
+                }
+            }
+        }
+
+        private Result ExecuteNonQuery(string settingKey, Hashtable inputParams)
+        {
+            using (var db = new ObjectDb(settingKey))
+            {
+                db.ExecuteNonQuery(inputParams);
+                var outputParams = db.GetOuputParams();
+
+                if (outputParams != null)
+                {
+                    return new Result((int)outputParams["errcode"], outputParams["errmsg"].ToString());
+                } else
+                {
+                    return new Result(0, string.Empty);
                 }
             }
         }
@@ -154,11 +168,12 @@
             return headlines;
         }
 
-        public IEnumerable<ExternalGroupHeadlineMappingSuper> GetMappingSuper(MappingSuperCriteria criteria)
+        public MappingSuperResult GetMappingSuper(MappingSuperCriteria criteria)
         {
-            IList<ExternalGroupHeadlineMappingSuper> mappings = new List<ExternalGroupHeadlineMappingSuper>();
+            var result = new MappingSuperResult();
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
+                IList<ExternalGroupHeadlineMappingSuper> mappings = new List<ExternalGroupHeadlineMappingSuper>();
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
@@ -178,9 +193,11 @@
                         mappings.Add(mapping);
                     }
                 }
+
+                result.Supers = mappings;
             }
 
-            return mappings;
+            return result;
         }
     }
 }

@@ -208,6 +208,7 @@
     <Compile Include="Criteria\MoveBetSchedule\UpdateMoveBetScheduleCriteria.cs" />
     <Compile Include="DataAccess\MoveBetSchedule\IMoveBetScheduleDataAccess.cs" />
     <Compile Include="DataAccess\MoveBetSchedule\MoveBetScheduleDataAccess.cs" />
+    <Compile Include="Entities\HeadlineExternalGroupMapping\MappingSuperResult.cs" />
     <Compile Include="Entities\MoveBetSchedule\MoveBetDay.cs" />
     <Compile Include="Controller\ManageVendorGlobalSettingController.cs" />
     <Compile Include="ManageProduct3rd\Criteria\DeleteProduct3RDCriteria.cs" />

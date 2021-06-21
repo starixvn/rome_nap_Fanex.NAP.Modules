@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using Fanex.Tarus.Admin.Criteria.HeadlineExternalGroupMapping;
     using Fanex.Tarus.Admin.DataAccess.HeadlineExternalGroupMapping;
+    using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.Entities.HeadlineExternalGroupMapping;
 
     public class HeadlineExternalGroupMappingService : IHeadlineExternalGroupMappingService
@@ -39,7 +40,7 @@
             => _dataAccess.SelHeadline(new GetHeadlineCriteria())
                 .Select(headline => new SelectListItem { Text = headline.Name, Value = headline.Id.ToString() }).ToList();
 
-        public IEnumerable<ExternalGroupHeadlineMappingSuper> GetMappingSuper(string usernames, int groupId)
+        public MappingSuperResult GetMappingSuper(string usernames, int groupId)
         {
             var criteria = new MappingSuperCriteria(usernames, groupId);
 
@@ -56,7 +57,7 @@
             return groups;
         }
 
-        public ResultResponse Insert(HeadlineExternalGroupMappingModel request, int userId)
+        public Result Insert(HeadlineExternalGroupMappingModel request, int userId)
         {
             var criteria = new InsExternalGroupHeadlineMappingCriteia(request, userId)
             {
@@ -69,7 +70,7 @@
         public IEnumerable<HeadlineExternalGroupMappingModel> Select(SelExternalGroupHeadlineMappingCriteia request)
             => _dataAccess.SelectMapping(request);
 
-        public ResultResponse Update(HeadlineExternalGroupMappingModel request, int userId)
+        public Result Update(HeadlineExternalGroupMappingModel request, int userId)
         {
             var criteria = new UpdExternalGroupHeadlineMappingCriteia(request, userId)
             {

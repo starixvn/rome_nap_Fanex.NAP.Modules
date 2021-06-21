@@ -8,6 +8,8 @@ namespace Fanex.Tarus.Admin.Criteria.HeadlineExternalGroupMapping
         {
         }
 
+        public string AffectedSupers { get; set; }
+
         public override string GetSettingKey()
         => "Acc_ExternalGroupHeadline_Del";
     }
