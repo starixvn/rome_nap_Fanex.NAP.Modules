@@ -8,12 +8,18 @@
 namespace Fanex.Tarus.Infrastructure.Extensions
 {
     using System;
+    using System.Diagnostics;
 
     public class LogExtensions
     {
         public static void ExceptionHandler(Exception ex)
         {
             Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex);
+        }
+
+        public static void ExceptionHandler(Exception ex, TraceEventType traceEventType)
+        {
+            Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex, traceEventType);
         }
     }
 }

@@ -7,11 +7,15 @@ namespace Fanex.Tarus.Web.Models.Admin
 {
     public class TicketToHeadlineViewModel
     {
+        public int ErrorCode { get; set; }
+
         public string ErrorMessage { get; set; }
 
         public int TotalRows { get; set; }
 
         public List<TicketToHeadline> TicketToHeadlineCollection { get; set; }
+
+        public bool IsNotifyHeadline { get; set; }
 
         public TicketToHeadlineViewModel()
         {
