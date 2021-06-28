@@ -81,28 +81,24 @@ namespace Fanex.Tarus.Business.Implement.Admin
             }
 
             result = this._ticketToHeadlineRepository.GetData(criteria);
-            HttpContext.Current.Session[_cacheGetDataCriteria] = result.ErrorCode == 0 ? new TicketToHeadlineCached(criteria) : null;
+            HttpContext.Current.Session[_cacheGetDataCriteria] = new TicketToHeadlineCached(criteria);
 
             return result;
         }
 
-        public TicketToHeadlineViewModel NotifyHeadline()
+        public TicketToHeadlineViewModel NotifyHeadline() => this._ticketToHeadlineRepository.GetData(GetCachedCriteria(), true);
+
+        public TicketToHeadlineCriteria GetCachedCriteria()
         {
             if (HttpContext.Current.Session[_cacheGetDataCriteria] == null || HttpContext.Current.Session[_cacheGetDataCriteria].GetType() != typeof(TicketToHeadlineCached))
             {
                 throw new InvalidOperationException("TicketToHeadlineCriteria in Session can not be null. Must Submit before Notify Headline.");
             }
 
-            var criteria = new TicketToHeadlineCriteria((TicketToHeadlineCached)HttpContext.Current.Session[_cacheGetDataCriteria]);
-            return this._ticketToHeadlineRepository.GetData(criteria, true);
+            return new TicketToHeadlineCriteria((TicketToHeadlineCached)HttpContext.Current.Session[_cacheGetDataCriteria]);
         }
 
-        public IWorkbook ExportExcel(TicketToHeadlineViewModel data)
-        {
-            TicketToHeadlineExcelService excelService = new TicketToHeadlineExcelService(data);
-            return excelService.Export();
-        }
-
+        public TicketToHeadlineViewModel GetDataFromCachedCriteria() => this._ticketToHeadlineRepository.GetData(GetCachedCriteria());
 
         public TicketToHeadlineViewModel GetFakeData(int? pageSize, int? pageIndex, int rowNo = 400)
         {

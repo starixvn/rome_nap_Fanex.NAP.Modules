@@ -41,7 +41,7 @@ namespace Fanex.Tarus.Web.Controllers.Admin
         {
             criteria.PageIndex = null;
             criteria.PageSize = null;
-            var data = _ticketToHeadlineService.GetData(uploadFile, criteria);
+            var data = _ticketToHeadlineService.GetDataFromCachedCriteria();
             var excelService = new TicketToHeadlineExcelService(data);
             ExcelExtension.ResponseStreamExcel(excelService.Export(), GetExcelFileName());
             return new EmptyResult();
