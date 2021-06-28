@@ -41,22 +41,21 @@ namespace Fanex.Tarus.Business.Implement.Admin
         public TicketToHeadlineViewModel GetData(HttpPostedFileBase uploadFile, TicketToHeadlineCriteria criteria)
         {
             TicketToHeadlineViewModel result;
-            int rowCount = 1;
             StringBuilder xmlParam = new StringBuilder("<ROOT>");
+            int i = 0;
             try
             {
                 IWorkbook workbook = WorkbookFactory.Create(uploadFile.InputStream);
                 ISheet sheet = workbook.GetSheetAt(0);
                 RemoveLastEmptyRows(sheet);
                 var lastRowNum = sheet.LastRowNum;
-
-                for (int i = 1; i <= lastRowNum; i++)
+                for (i = 1; i <= lastRowNum; i++)
                 {
                     IRow row = sheet.GetRow(i);
                     string userName = HttpUtility.HtmlEncode(row?.GetCell(0) == null ? string.Empty : row?.GetCell(0).ToString());
                     string refno = HttpUtility.HtmlEncode(row?.GetCell(1) == null ? string.Empty : row?.GetCell(1).ToString());
                     xmlParam.Append($"<File UserName=\"{userName.Trim()}\" RefNo=\"{refno.Trim()}\" />");
-                    if (rowCount == 2)
+                    if (i == 1)
                     {
                         string matchId = HttpUtility.HtmlEncode(row?.GetCell(2) == null ? string.Empty : row?.GetCell(2).ToString());
                         string messageId = HttpUtility.HtmlEncode(row?.GetCell(5) == null ? string.Empty : row?.GetCell(5).ToString());
@@ -77,7 +76,7 @@ namespace Fanex.Tarus.Business.Implement.Admin
             }
             catch (Exception ex)
             {
-                Logging.Logger.Log.Error("Invalid file uploaded. Error at line: " + rowCount.ToString(), ex);
+                Logging.Logger.Log.Error("Invalid file uploaded. Error at line: " + i.ToString(), ex);
                 return new TicketToHeadlineViewModel { ErrorCode = 500, ErrorMessage = "Invalid file uploaded." };
             }
 
@@ -123,7 +122,7 @@ namespace Fanex.Tarus.Business.Implement.Admin
 
                     for (int j = 0; j <= lastCellNum; j++)
                     {
-                        var cellValue = HttpUtility.HtmlEncode(row.GetCell(0) == null ? string.Empty : row.GetCell(0).ToString());
+                        var cellValue = HttpUtility.HtmlEncode(row.GetCell(j) == null ? string.Empty : row.GetCell(j).ToString());
                         if (!string.IsNullOrWhiteSpace(cellValue))
                         {
                             isAllCellEmpty = false;
