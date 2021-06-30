@@ -621,25 +621,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             throw new NotImplementedException();
         }
 
-        public override bool UpdateCustClosed(int IBCCustID, bool Closed, string FromIP, string siteName)
-        {
-            bool isUpdateSuccessfull = false;
-            try
-            {
-                var csCustomer = new Customer();
-                csCustomer.SiteName = siteName;
-                isUpdateSuccessfull = csCustomer.UpdateCustClosed(IBCCustID, Closed, FromIP, AppSession.AccId,
-                                                                  AppSession.Username, 3);
-            }
-            catch (Exception ex)
-            {
-                // error assigning the datareader value to a property
-                throw ex;
-            }
-
-            return isUpdateSuccessfull;
-        }
-
         public override bool UpdateCustEnableCasino(int IBCCustID, bool EnabledCasino, bool UpdateDownline,
                                                     string FromIP, string siteName)
         {
@@ -689,31 +670,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             }
 
             return isUpdatedSuccessfull;
-        }
-
-        public override bool UpdateCustSuspend(int IBCCustID, bool Suspended, string FromIP, string siteName)
-        {
-            bool isUpdateSuccessfull = false;
-
-            try
-            {
-                var csCustomer = new Customer();
-                csCustomer.SiteName = siteName;
-
-                isUpdateSuccessfull = csCustomer.UpdateCustSuspend(IBCCustID, Suspended, FromIP, AppSession.AccId,
-                                                                   AppSession.Username, 3);
-            }
-            catch (ErrorException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                // error assigning the datareader value to a property
-                throw ex;
-            }
-
-            return isUpdateSuccessfull;
         }
 
         /// <summary>
