@@ -106,17 +106,7 @@ namespace Sunplus.Accounting.DataAccess
         {
             throw new NotImplementedException();
         }
-
-        public virtual bool UpdateCustSuspend(int IBCCustID, bool Suspended, string FromIP, string siteName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual bool UpdateCustClosed(int IBCCustID, bool Closed, string FromIP, string siteName)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public virtual bool UpdateCustEnableCasino(int IBCCustID, bool EnabledCasino, bool UpdateDownline, string FromIP, string siteName)
         {
             throw new NotImplementedException();
