@@ -17,6 +17,8 @@ namespace Fanex.Tarus.Business.Interface.Admin
 
         TicketToHeadlineViewModel GetDataFromCachedCriteria();
 
+        TicketToHeadlineViewModel GetDataFromCachedCriteria(int? pageSize, int? pageIndex);
+
         TicketToHeadlineViewModel NotifyHeadline();
 
         TicketToHeadlineViewModel GetFakeData(int? pageSize, int? pageIndex, int rowNo = 400);

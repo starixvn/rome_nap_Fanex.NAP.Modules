@@ -100,6 +100,15 @@ namespace Fanex.Tarus.Business.Implement.Admin
 
         public TicketToHeadlineViewModel GetDataFromCachedCriteria() => this._ticketToHeadlineRepository.GetData(GetCachedCriteria());
 
+        public TicketToHeadlineViewModel GetDataFromCachedCriteria(int? pageSize, int? pageIndex)
+        {
+            var criteria = GetCachedCriteria();
+            criteria.PageSize = pageSize;
+            criteria.PageIndex = pageIndex;
+
+            return this._ticketToHeadlineRepository.GetData(criteria);
+        }
+
         public TicketToHeadlineViewModel GetFakeData(int? pageSize, int? pageIndex, int rowNo = 400)
         {
             return _ticketToHeadlineRepository.GetFakeData(pageSize, pageIndex, rowNo);

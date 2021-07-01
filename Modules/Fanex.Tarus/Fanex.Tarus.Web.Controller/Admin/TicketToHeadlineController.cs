@@ -32,16 +32,19 @@ namespace Fanex.Tarus.Web.Controllers.Admin
             //return Json(_ticketToHeadlineService.GetFakeData((int?)criteria.PageSize, (int?)criteria.PageIndex, 1001));
         }
 
+        public ActionResult GetDataForPaging(TicketToHeadlineCriteria criteria)
+        {
+            return Json(_ticketToHeadlineService.GetDataFromCachedCriteria(criteria.PageSize, criteria.PageIndex));
+        }
+
         public ActionResult NotifyHeadline()
         {
             return Json(_ticketToHeadlineService.NotifyHeadline(), "text/html");
         }
 
-        public ActionResult ExportExcel(HttpPostedFileBase uploadFile, TicketToHeadlineCriteria criteria)
+        public ActionResult ExportExcel()
         {
-            criteria.PageIndex = null;
-            criteria.PageSize = null;
-            var data = _ticketToHeadlineService.GetDataFromCachedCriteria();
+            var data = _ticketToHeadlineService.GetDataFromCachedCriteria(null, null);
             var excelService = new TicketToHeadlineExcelService(data);
             ExcelExtension.ResponseStreamExcel(excelService.Export(), GetExcelFileName());
             return new EmptyResult();
