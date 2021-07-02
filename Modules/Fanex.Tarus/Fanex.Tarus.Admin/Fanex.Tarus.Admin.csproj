@@ -238,6 +238,7 @@
     <Compile Include="ManageProductSetting\Criteria\ManageUMConfig\CheckInUMCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageUMConfig\DeleteOldDateCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageUMConfig\DeleteUMConfigurationCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageUMConfig\GetAllSitesCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageUMConfig\GetAllUMConfigurationCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageUMConfig\GetProductSettingByFunctionCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageUMConfig\InsertUMConfigurationCriteria.cs" />
