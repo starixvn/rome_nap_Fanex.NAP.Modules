@@ -79,11 +79,110 @@ namespace Fanex.Tarus.Admin.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Archived Agent.
+        /// </summary>
+        public static string ArchivedAgent {
+            get {
+                return ResourceManager.GetString("ArchivedAgent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archive Date Close.
+        /// </summary>
+        public static string ArchiveDateClose {
+            get {
+                return ResourceManager.GetString("ArchiveDateClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archive Date Del. Account.
+        /// </summary>
+        public static string ArchiveDateDelAccount {
+            get {
+                return ResourceManager.GetString("ArchiveDateDelAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archive Date Del. Setting.
+        /// </summary>
+        public static string ArchiveDateDelSetting {
+            get {
+                return ResourceManager.GetString("ArchiveDateDelSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archive Date Disable.
+        /// </summary>
+        public static string ArchiveDateDisable {
+            get {
+                return ResourceManager.GetString("ArchiveDateDisable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archived Master.
+        /// </summary>
+        public static string ArchivedMaster {
+            get {
+                return ResourceManager.GetString("ArchivedMaster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archived Member.
+        /// </summary>
+        public static string ArchivedMember {
+            get {
+                return ResourceManager.GetString("ArchivedMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archive Stage.
+        /// </summary>
+        public static string ArchiveStage {
+            get {
+                return ResourceManager.GetString("ArchiveStage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cleared Given Credit.
+        /// </summary>
+        public static string ClearedGivenCredit {
+            get {
+                return ResourceManager.GetString("ClearedGivenCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close Account.
+        /// </summary>
+        public static string CloseAccount {
+            get {
+                return ResourceManager.GetString("CloseAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Closed.
         /// </summary>
         public static string Closed {
             get {
                 return ResourceManager.GetString("Closed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close Date.
+        /// </summary>
+        public static string CloseDate {
+            get {
+                return ResourceManager.GetString("CloseDate", resourceCulture);
             }
         }
         
@@ -106,6 +205,60 @@ namespace Fanex.Tarus.Admin.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Account.
+        /// </summary>
+        public static string DeleteAccount {
+            get {
+                return ResourceManager.GetString("DeleteAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Account Date.
+        /// </summary>
+        public static string DeleteAccountDate {
+            get {
+                return ResourceManager.GetString("DeleteAccountDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Setting.
+        /// </summary>
+        public static string DeleteSetting {
+            get {
+                return ResourceManager.GetString("DeleteSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Setting Date.
+        /// </summary>
+        public static string DeleteSettingDate {
+            get {
+                return ResourceManager.GetString("DeleteSettingDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Direct Account.
+        /// </summary>
+        public static string DirectAccount {
+            get {
+                return ResourceManager.GetString("DirectAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable Account.
+        /// </summary>
+        public static string DisableAccount {
+            get {
+                return ResourceManager.GetString("DisableAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disabled.
         /// </summary>
         public static string Disabled {
@@ -115,11 +268,65 @@ namespace Fanex.Tarus.Admin.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disable Date.
+        /// </summary>
+        public static string DisableDate {
+            get {
+                return ResourceManager.GetString("DisableDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Max Members Limit by Super.
         /// </summary>
         public static string EditMaxMembersLimitbySuper {
             get {
                 return ResourceManager.GetString("EditMaxMembersLimitbySuper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group Headline.
+        /// </summary>
+        public static string GroupHeadline {
+            get {
+                return ResourceManager.GetString("GroupHeadline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Headline.
+        /// </summary>
+        public static string Headline {
+            get {
+                return ResourceManager.GetString("Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Headline Type.
+        /// </summary>
+        public static string HeadlineType {
+            get {
+                return ResourceManager.GetString("HeadlineType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Login.
+        /// </summary>
+        public static string LastLogin {
+            get {
+                return ResourceManager.GetString("LastLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Level.
+        /// </summary>
+        public static string Level {
+            get {
+                return ResourceManager.GetString("Level", resourceCulture);
             }
         }
         
@@ -178,6 +385,15 @@ namespace Fanex.Tarus.Admin.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string Submit {
@@ -205,6 +421,42 @@ namespace Fanex.Tarus.Admin.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To be Cleared Given Credit.
+        /// </summary>
+        public static string TobeClearedGivenCredit {
+            get {
+                return ResourceManager.GetString("TobeClearedGivenCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Archived Agents.
+        /// </summary>
+        public static string TotalArchivedAgent {
+            get {
+                return ResourceManager.GetString("TotalArchivedAgent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Archived Masters.
+        /// </summary>
+        public static string TotalArchivedMaster {
+            get {
+                return ResourceManager.GetString("TotalArchivedMaster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Archived Members.
+        /// </summary>
+        public static string TotalArchivedMember {
+            get {
+                return ResourceManager.GetString("TotalArchivedMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unlimited.
         /// </summary>
         public static string Unlimited {
@@ -214,11 +466,29 @@ namespace Fanex.Tarus.Admin.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string Username {
+            get {
+                return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to VIP.
         /// </summary>
         public static string VIP {
             get {
                 return ResourceManager.GetString("VIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yesterday Balance.
+        /// </summary>
+        public static string YesterdayBalance {
+            get {
+                return ResourceManager.GetString("YesterdayBalance", resourceCulture);
             }
         }
     }

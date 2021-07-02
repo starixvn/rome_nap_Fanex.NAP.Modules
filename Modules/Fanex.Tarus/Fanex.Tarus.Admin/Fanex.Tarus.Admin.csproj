@@ -28,7 +28,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\..\accounting-website\packages\Fanex.Tarus.Admin.1.0.3.8-dormantaccount-14\lib\net461\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -193,12 +193,33 @@
     <Compile Include="Business\MoveBetSchedule\IMoveBetScheduleService.cs" />
     <Compile Include="Controller\ManageProduct3RDController.cs" />
     <Compile Include="Business\MoveBetSchedule\MoveBetScheduleService.cs" />
+    <Compile Include="Controller\DormantAccountController.cs" />
     <Compile Include="Controller\ManageProductSettingController.cs" />
     <Compile Include="Controller\MoveBetScheduleController.cs" />
     <Compile Include="Criteria\MoveBetSchedule\GetMoveBetScheduleCriteria.cs" />
     <Compile Include="Criteria\MoveBetSchedule\UpdateMoveBetScheduleCriteria.cs" />
     <Compile Include="DataAccess\MoveBetSchedule\IMoveBetScheduleDataAccess.cs" />
     <Compile Include="DataAccess\MoveBetSchedule\MoveBetScheduleDataAccess.cs" />
+    <Compile Include="DormantAccount\Constants\HeadlineTypeConstant.cs" />
+    <Compile Include="DormantAccount\Criteria\DrilldownDormantByDateTypeCriteria.cs" />
+    <Compile Include="DormantAccount\Criteria\SelectDormantByUsernameCriteria.cs" />
+    <Compile Include="DormantAccount\Criteria\SelectDormantByDateTypeCriteria.cs" />
+    <Compile Include="DormantAccount\DataAccess\DormantAccountDataAccess.cs" />
+    <Compile Include="DormantAccount\Constants\ArchiveDateConstant.cs" />
+    <Compile Include="DormantAccount\Constants\ArchiveStageConstant.cs" />
+    <Compile Include="DormantAccount\Constants\UserLevelConstant.cs" />
+    <Compile Include="DormantAccount\Models\DormantAccountModel.cs" />
+    <Compile Include="DormantAccount\Models\DormantBalanceModel.cs" />
+    <Compile Include="DormantAccount\Models\DormantDateTypeModel.cs" />
+    <Compile Include="DormantAccount\Models\DormantUsernameModel.cs" />
+    <Compile Include="DormantAccount\Models\DormantBreadscrumbModel.cs" />
+    <Compile Include="DormantAccount\Models\NumberArchivedInfo.cs" />
+    <Compile Include="DormantAccount\Request\SelectDormantAccountRequest.cs" />
+    <Compile Include="DormantAccount\Services\DormantAccountExcelService.cs" />
+    <Compile Include="DormantAccount\Services\DormantAccountService.cs" />
+    <Compile Include="DormantAccount\ViewModel\BreadScrumbInfoViewModel.cs" />
+    <Compile Include="DormantAccount\ViewModel\DormantAccountFilter.cs" />
+    <Compile Include="DormantAccount\ViewModel\DormantAccountViewModel.cs" />
     <Compile Include="Entities\MoveBetSchedule\MoveBetDay.cs" />
     <Compile Include="Controller\ManageVendorGlobalSettingController.cs" />
     <Compile Include="ManageProduct3rd\Criteria\DeleteProduct3RDCriteria.cs" />
