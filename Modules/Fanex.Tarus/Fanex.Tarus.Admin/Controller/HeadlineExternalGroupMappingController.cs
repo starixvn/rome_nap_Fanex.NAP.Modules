@@ -65,6 +65,18 @@
         }
 
         [AuthenticateRead]
+        public JsonResult GetHeadlines()
+            => Json(_headlineExternalGroupMappingService.GetHeadline(), JsonRequestBehavior.AllowGet);
+
+        [AuthenticateRead]
+        public JsonResult GetExternalGroups()
+            => Json(_headlineExternalGroupMappingService.GetExternalGroups(), JsonRequestBehavior.AllowGet);
+
+        [AuthenticateRead]
+        public JsonResult GetPrimaryGroups()
+            => Json(_headlineExternalGroupMappingService.GetPrimaryGroups(), JsonRequestBehavior.AllowGet);
+
+        [AuthenticateRead]
         public JsonResult Select(SelExternalGroupHeadlineMappingCriteia request)
             => Json(_headlineExternalGroupMappingService.Select(request), JsonRequestBehavior.AllowGet);
 
