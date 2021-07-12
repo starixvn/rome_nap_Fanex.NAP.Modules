@@ -74,29 +74,11 @@
         public Result Insert(InsExternalGroupHeadlineMappingCriteia criteria)
             => ExecuteNonQuery(criteria.GetSettingKey(), criteria.GetSpParams());
 
-        public Result Update(UpdExternalGroupHeadlineMappingCriteia criteria)
-            => ExecuteNonQuery(criteria.GetSettingKey(), criteria.GetSpParams());
+        public ResultResponse Update(UpdExternalGroupHeadlineMappingCriteia criteria)
+            => ExecuteNonQueryWithAffectedSuper(criteria.GetSettingKey(), criteria.GetSpParams());
 
         public ResultResponse Delete(DelExternalGroupHeadlineMappingCriteia criteria)
-        {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
-
-                if (outputParams != null)
-                {
-                    return new ResultResponse((int)outputParams["errcode"], outputParams["errmsg"].ToString())
-                    {
-                        AffectedSupers = outputParams["affectedsupers"].ToString()
-                    };
-                }
-                else
-                {
-                    return new ResultResponse(0, string.Empty);
-                }
-            }
-        }
+            => ExecuteNonQueryWithAffectedSuper(criteria.GetSettingKey(), criteria.GetSpParams());
 
         private Result ExecuteNonQuery(string settingKey, Hashtable inputParams)
         {
@@ -111,6 +93,27 @@
                 } else
                 {
                     return new Result(0, string.Empty);
+                }
+            }
+        }
+
+        private ResultResponse ExecuteNonQueryWithAffectedSuper(string settingKey, Hashtable inputParams)
+        {
+            using (var db = new ObjectDb(settingKey))
+            {
+                db.ExecuteNonQuery(inputParams);
+                var outputParams = db.GetOuputParams();
+
+                if (outputParams != null)
+                {
+                    return new ResultResponse((int)outputParams["errcode"], outputParams["errmsg"].ToString())
+                    {
+                        AffectedSupers = outputParams["affectedsupers"].ToString()
+                    };
+                }
+                else
+                {
+                    return new ResultResponse(0, string.Empty);
                 }
             }
         }
