@@ -74,8 +74,8 @@
         public Result Insert(InsExternalGroupHeadlineMappingCriteia criteria)
             => ExecuteNonQuery(criteria.GetSettingKey(), criteria.GetSpParams());
 
-        public ResultResponse Update(UpdExternalGroupHeadlineMappingCriteia criteria)
-            => ExecuteNonQueryWithAffectedSuper(criteria.GetSettingKey(), criteria.GetSpParams());
+        public Result Update(UpdExternalGroupHeadlineMappingCriteia criteria)
+            => ExecuteNonQuery(criteria.GetSettingKey(), criteria.GetSpParams());
 
         public ResultResponse Delete(DelExternalGroupHeadlineMappingCriteia criteria)
             => ExecuteNonQueryWithAffectedSuper(criteria.GetSettingKey(), criteria.GetSpParams());

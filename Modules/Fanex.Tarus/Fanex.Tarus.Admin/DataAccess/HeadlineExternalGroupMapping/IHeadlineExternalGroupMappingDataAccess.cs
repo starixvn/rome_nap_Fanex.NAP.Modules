@@ -18,7 +18,7 @@
 
         Result Insert(InsExternalGroupHeadlineMappingCriteia criteria);
 
-        ResultResponse Update(UpdExternalGroupHeadlineMappingCriteia criteria);
+        Result Update(UpdExternalGroupHeadlineMappingCriteia criteria);
 
         ResultResponse Delete(DelExternalGroupHeadlineMappingCriteia criteria);
 

@@ -360,7 +360,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <param name="IsGroupHeadline"></param>
         /// <param name="UserID"></param>
         /// <returns></returns>
-        public static Result Acc_CreditTermUpdCustomer(int custid, string creditgrade, double preagreeamount,
+        public static ResultWithAffectedSupers Acc_CreditTermUpdCustomer(int custid, string creditgrade, double preagreeamount,
                                                          double installmentamount, string installmentdate,
                                                          string accountremark, int groupID, int IsGroupHeadline,
                                                          int UserID, int checkerid)
@@ -389,6 +389,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("language", "E");
                     hash.Add("checker", checkerid);
                     hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
+                    hash.Add("affectedsupers", "");
 
                     objdb.AssignParamValues(hash);
 
@@ -402,14 +403,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                         var result = CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, custid, crmUpdateHeadlineCase, UserID, oldHeadline, newHeadline);
                         if (result.ErrorCode > 0)
                         {
-                            return result;
+                            return new ResultWithAffectedSupers(result.ErrorCode, result.ErrorMessage);
                         }
                     }
 
-                    return new Result()
+                    return new ResultWithAffectedSupers()
                     {
                         ErrorCode = CastAide.AsInt32(objdb.GetParameterValue("errcode")),
-                        ErrorMessage = string.Format("{0}", objdb.GetParameterValue("errmsg"))
+                        ErrorMessage = string.Format("{0}", objdb.GetParameterValue("errmsg")),
+                        AffectedSupers = string.Format("{0}", objdb.GetParameterValue("affectedsupers"))
                     };
                 }
             }
