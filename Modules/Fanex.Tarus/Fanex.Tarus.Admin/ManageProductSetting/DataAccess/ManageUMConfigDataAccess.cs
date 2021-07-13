@@ -1,11 +1,13 @@
 ﻿namespace Fanex.Tarus.Admin.ManageProductSetting.DataAccess
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Data;
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Admin.DataAccess;
     using Fanex.Tarus.Admin.Entities;
+    using Fanex.Tarus.Admin.Entities.SMAManagement;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageUMConfig;
     using Fanex.Tarus.Admin.ManageProductSetting.Entities.UMConfig;
     using Fanex.Tarus.Infrastructure.Helper;
@@ -25,6 +27,8 @@
         Result DeleteOldData(DeleteOldDateCriteria criteria);
 
         bool CheckIsInUMTime(CheckInUMCriteria criteria);
+
+        IEnumerable<IdNameEntity> GetAllSites(ICriteria criteria);
     }
     public class ManageUMConfigDataAccess : BaseDataAccess, IManageUMConfigDataAccess
     {
@@ -182,7 +186,7 @@
                 errors.Add(errorMessage);
             }
 
-            if(errors.Count > 0)
+            if (errors.Count > 0)
             {
                 return new Result(1, string.Join(". ", errors));
             }
@@ -192,5 +196,23 @@
 
         public Result UpdUMConfiguration(UpdUMConfigurationCriteria criteria)
          => base.ExecuteNonQuery(criteria);
+
+        public IEnumerable<IdNameEntity> GetAllSites(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return new IdNameEntity
+                        {
+                            Id = Convert.ToInt32(reader["siteid"]),
+                            Name = reader["site"].ToString()
+                        };
+                    }
+                }
+            }
+        }
     }
 }

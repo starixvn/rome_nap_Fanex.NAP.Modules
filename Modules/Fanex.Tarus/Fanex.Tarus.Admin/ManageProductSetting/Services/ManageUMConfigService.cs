@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Web;
     using Fanex.Tarus.Admin.Entities;
+    using Fanex.Tarus.Admin.Entities.SMAManagement;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageUMConfig;
     using Fanex.Tarus.Admin.ManageProductSetting.DataAccess;
     using Fanex.Tarus.Admin.ManageProductSetting.Entities.UMConfig;
@@ -23,6 +24,8 @@
         Result DeleteOldData();
 
         bool CheckIsInUMTime(int configId);
+
+        IEnumerable<IdNameEntity> GetAllSites();
     }
 
     public class ManageUMConfigService : IManageUMConfigService
@@ -47,6 +50,9 @@
                 UserId = AppSession.AccId,
                 IP = HttpContext.Current.Request.UserHostAddress
             });
+
+        public IEnumerable<IdNameEntity> GetAllSites()
+            => dataAccess.GetAllSites(new GetAllSitesCriteria(AppSession.AccId));
 
         public IEnumerable<UMConfigurationEntity> GetAllUMConfiguration()
             => dataAccess.GetAllUMConfiguration(new GetAllUMConfigurationCriteria());

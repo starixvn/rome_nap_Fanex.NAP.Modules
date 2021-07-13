@@ -58,9 +58,7 @@
         public ActionResult Index()
         {
             var site = _SMAManagementService.GetSites(1).ToList();
-            var umSite = _SMAManagementService.GetSites().ToList();
             site.Insert(0, new IdNameEntity { Id = 0, Name = "All Sites" });
-            umSite.Insert(0, new IdNameEntity { Id = 0, Name = "All Sites" });
             var currency = _manageCanSeeService.GetCurrencies();
             var sports = _manageCanSeeService.GetAllSportType();
             var viewModel = new ManageProductSettingViewModel
@@ -85,11 +83,6 @@
                 {
                     Text = $"[{c.Id.ToString()}] {c.Name}",
                     Value = c.Id.ToString()
-                }),
-                UMSites = umSite.Select(s => new SelectListItem
-                {
-                    Text = $"[{s.Id.ToString()}] {s.Name}",
-                    Value = s.Id.ToString()
                 })
             };
 
@@ -306,6 +299,33 @@
         [AuthenticateHost]
         [HttpPost]
         public JsonResult DeleteOldData() => Json(_manageUMConfigService.DeleteOldData());
+
+        [AuthenticateRead]
+        [HttpGet]
+        public JsonResult GetCreditSites() {
+            var sites = _SMAManagementService.GetSites().ToList();
+            sites.Insert(0, new IdNameEntity { Id = 0, Name = "All Sites" });
+
+            return Json(sites.Select(s => new SelectListItem
+            {
+                Text = $"[{s.Id.ToString()}] {s.Name}",
+                Value = s.Id.ToString()
+            }), JsonRequestBehavior.AllowGet);
+        }
+
+        [AuthenticateRead]
+        [HttpGet]
+        public JsonResult GetAllSites()
+        {
+            var sites = _manageUMConfigService.GetAllSites().ToList();
+            sites.Insert(0, new IdNameEntity { Id = 0, Name = "All Sites" });
+
+            return Json(sites.Select(s => new SelectListItem
+            {
+                Text = $"[{s.Id.ToString()}] {s.Name}",
+                Value = s.Id.ToString()
+            }), JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 
