@@ -50,13 +50,6 @@ namespace Fanex.Tarus.Finance.Business.Customer
 
         private CustomerInfo BuildSuperEntity(DataRow row)
         {
-            var status = string.Empty;
-            if (CastAide.AsBoolean(row["closed"]))
-                status = "Closed";
-            else if (CastAide.AsBoolean(row["suspended"]))
-                status = "Suspended";
-            else status = "Open";
-
             var custInfo = new CustomerInfo
             {
                 Id = CastAide.AsInt64(row["custid"]),
@@ -64,7 +57,6 @@ namespace Fanex.Tarus.Finance.Business.Customer
                 UserName2 = CastAide.AsString(row["username2"]),
                 FirstName = CastAide.AsString(row["firstname"]),
                 LastName = CastAide.AsString(row["lastname"]),
-                Status = status,
                 Order = CastAide.AsInt64(row["rownumber"]),
                 Type = "Super",
                 RoleId = CastAide.AsInt32(row["roleid"]),
