@@ -56,6 +56,9 @@ namespace Sunplus.Accounting.Entities.LogDisplay.SettingPT
 
         [DataMember]
         public string Val { get; set; } // value
+
+        [DataMember]
+        public int DiffRowIndex { get; set; }
     }
 
     [Serializable]
