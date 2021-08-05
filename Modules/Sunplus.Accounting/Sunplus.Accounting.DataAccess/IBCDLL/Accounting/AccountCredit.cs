@@ -85,7 +85,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// </summary>
         /// <param name="groupid"></param>
         /// <returns></returns>
-        public static Result Acc_CreditTermUpdAddToGroup(string username, int groupid, int userid)
+        public static ResultWithAffectedSupers Acc_CreditTermUpdAddToGroup(string username, int groupid, int userid)
         {
             try
             {
@@ -102,6 +102,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("errmsg", "");
                     hash.Add("language", "E");
                     hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
+                    hash.Add("affectedsupers", "");
 
                     objdb.AssignParamValues(hash);
                     objdb.ExecuteNonQuery();
@@ -109,19 +110,24 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     int crmUpdateHeadlineCase = CastAide.AsInt32(objdb.GetParameterValue("case"));
                     int oldHeadline = CastAide.AsInt32(objdb.GetParameterValue("old_headline"));
                     int newHeadline = CastAide.AsInt32(objdb.GetParameterValue("new_headline"));
+                    string affectedSupers = objdb.GetParameterValue("affectedsupers").ToString();
 
                     if (crmUpdateHeadlineCase != 0) {
                         var result = CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(username, 0, crmUpdateHeadlineCase, userid, oldHeadline, newHeadline);
                         if (result.ErrorCode > 0)
                         {
-                            return result;
+                            return new ResultWithAffectedSupers(result.ErrorCode, result.ErrorMessage)
+                            {
+                                AffectedSupers = affectedSupers
+                            };
                         } 
                     }
 
-                    return new Result()
+                    return new ResultWithAffectedSupers()
                     {
                         ErrorCode = CastAide.AsInt32(objdb.GetParameterValue("errcode")),
-                        ErrorMessage = string.Format("{0}", objdb.GetParameterValue("errmsg"))
+                        ErrorMessage = string.Format("{0}", objdb.GetParameterValue("errmsg")),
+                        AffectedSupers = affectedSupers
                     };
                 }
             }
@@ -360,7 +366,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <param name="IsGroupHeadline"></param>
         /// <param name="UserID"></param>
         /// <returns></returns>
-        public static ResultWithAffectedSupers Acc_CreditTermUpdCustomer(int custid, string creditgrade, double preagreeamount,
+        public static Result Acc_CreditTermUpdCustomer(int custid, string creditgrade, double preagreeamount,
                                                          double installmentamount, string installmentdate,
                                                          string accountremark, int groupID, int IsGroupHeadline,
                                                          int UserID, int checkerid)
@@ -389,7 +395,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("language", "E");
                     hash.Add("checker", checkerid);
                     hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
-                    hash.Add("affectedsupers", "");
 
                     objdb.AssignParamValues(hash);
 
@@ -403,15 +408,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                         var result = CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, custid, crmUpdateHeadlineCase, UserID, oldHeadline, newHeadline);
                         if (result.ErrorCode > 0)
                         {
-                            return new ResultWithAffectedSupers(result.ErrorCode, result.ErrorMessage);
+                            return new Result(result.ErrorCode, result.ErrorMessage);
                         }
                     }
 
-                    return new ResultWithAffectedSupers()
+                    return new Result()
                     {
                         ErrorCode = CastAide.AsInt32(objdb.GetParameterValue("errcode")),
-                        ErrorMessage = string.Format("{0}", objdb.GetParameterValue("errmsg")),
-                        AffectedSupers = string.Format("{0}", objdb.GetParameterValue("affectedsupers"))
+                        ErrorMessage = string.Format("{0}", objdb.GetParameterValue("errmsg"))
                     };
                 }
             }
