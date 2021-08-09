@@ -6,6 +6,7 @@ using DNAide.Core;
 using DNAide.Data;
 using Fanex.Data;
 using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.CreditTerm;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -84,7 +85,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// </summary>
         /// <param name="groupid"></param>
         /// <returns></returns>
-        public static Result Acc_CreditTermUpdAddToGroup(string username, int groupid, int userid)
+        public static ResultWithAffectedSupers Acc_CreditTermUpdAddToGroup(string username, int groupid, int userid)
         {
             try
             {
@@ -101,6 +102,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("errmsg", "");
                     hash.Add("language", "E");
                     hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
+                    hash.Add("affectedsupers", "");
 
                     objdb.AssignParamValues(hash);
                     objdb.ExecuteNonQuery();
@@ -108,19 +110,24 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     int crmUpdateHeadlineCase = CastAide.AsInt32(objdb.GetParameterValue("case"));
                     int oldHeadline = CastAide.AsInt32(objdb.GetParameterValue("old_headline"));
                     int newHeadline = CastAide.AsInt32(objdb.GetParameterValue("new_headline"));
+                    string affectedSupers = objdb.GetParameterValue("affectedsupers").ToString();
 
                     if (crmUpdateHeadlineCase != 0) {
                         var result = CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(username, 0, crmUpdateHeadlineCase, userid, oldHeadline, newHeadline);
                         if (result.ErrorCode > 0)
                         {
-                            return result;
+                            return new ResultWithAffectedSupers(result.ErrorCode, result.ErrorMessage)
+                            {
+                                AffectedSupers = affectedSupers
+                            };
                         } 
                     }
 
-                    return new Result()
+                    return new ResultWithAffectedSupers()
                     {
                         ErrorCode = CastAide.AsInt32(objdb.GetParameterValue("errcode")),
-                        ErrorMessage = string.Format("{0}", objdb.GetParameterValue("errmsg"))
+                        ErrorMessage = string.Format("{0}", objdb.GetParameterValue("errmsg")),
+                        AffectedSupers = affectedSupers
                     };
                 }
             }
@@ -140,7 +147,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <param name="groupid"></param>
         /// <param name="userid"></param>
         /// <returns></returns>
-        public static Result Acc_CreditTermUpdRemoveFromGroup(string CustIDList, int groupid, int userid)
+        public static ResultWithAffectedSupers Acc_CreditTermUpdRemoveFromGroup(string CustIDList, int groupid, int userid)
         {
             try
             {
@@ -155,6 +162,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("new_headline", 0);
                     hash.Add("errcode", 0);
                     hash.Add("errmsg", "");
+                    hash.Add("affectedsupers", "");
                     hash.Add("language", "E");
                     hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
 
@@ -165,19 +173,22 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     int crmUpdateHeadlineCase = CastAide.AsInt32(objdb.GetParameterValue("case"));
                     int oldHeadline = CastAide.AsInt32(objdb.GetParameterValue("old_headline"));
                     int newHeadline = CastAide.AsInt32(objdb.GetParameterValue("new_headline"));
+                    string affectedSupers = objdb.GetParameterValue("affectedsupers").ToString();
                     if (crmUpdateHeadlineCase != 0)
                     {
                         var result = CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, CastAide.AsInt32(CustIDList, 0), crmUpdateHeadlineCase, userid, oldHeadline, newHeadline);
                         if (result.ErrorCode > 0)
                         {
-                            return result;
+                            return new ResultWithAffectedSupers(result.ErrorCode, result.ErrorMessage)
+                            {
+                                AffectedSupers = affectedSupers
+                            };
                         }
                     }
 
-                    return new Result()
+                    return new ResultWithAffectedSupers(CastAide.AsInt32(objdb.GetParameterValue("errcode")), string.Format("{0}", objdb.GetParameterValue("errmsg"))) 
                     {
-                        ErrorCode = CastAide.AsInt32(objdb.GetParameterValue("errcode")),
-                        ErrorMessage = string.Format("{0}", objdb.GetParameterValue("errmsg")),
+                        AffectedSupers = affectedSupers
                     };
                 }
             }
@@ -397,7 +408,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                         var result = CrmUpdateHeadlineInfo.Acc_CRM_HeadlineUpd(string.Empty, custid, crmUpdateHeadlineCase, UserID, oldHeadline, newHeadline);
                         if (result.ErrorCode > 0)
                         {
-                            return result;
+                            return new Result(result.ErrorCode, result.ErrorMessage);
                         }
                     }
 

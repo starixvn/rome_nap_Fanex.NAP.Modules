@@ -123,8 +123,14 @@
   <data name="All" xml:space="preserve">
     <value>All</value>
   </data>
+  <data name="CloseAccount" xml:space="preserve">
+    <value>Close Account</value>
+  </data>
   <data name="Closed" xml:space="preserve">
     <value>Closed</value>
+  </data>
+  <data name="CloseDate" xml:space="preserve">
+    <value>Close Date</value>
   </data>
   <data name="CompareBalance" xml:space="preserve">
     <value>Compare Balance</value>
@@ -132,8 +138,26 @@
   <data name="Configuration" xml:space="preserve">
     <value>Configuration</value>
   </data>
+  <data name="DeleteAccount" xml:space="preserve">
+    <value>Delete Account</value>
+  </data>
+  <data name="DeleteAccountDate" xml:space="preserve">
+    <value>Delete Account Date</value>
+  </data>
+  <data name="DeleteSetting" xml:space="preserve">
+    <value>Delete Setting</value>
+  </data>
+  <data name="DeleteSettingDate" xml:space="preserve">
+    <value>Delete Setting Date</value>
+  </data>
+  <data name="DisableAccount" xml:space="preserve">
+    <value>Disable Account</value>
+  </data>
   <data name="Disabled" xml:space="preserve">
     <value>Disabled</value>
+  </data>
+  <data name="DisableDate" xml:space="preserve">
+    <value>Disable Date</value>
   </data>
   <data name="EditMaxMembersLimitbySuper" xml:space="preserve">
     <value>Edit Max Members Limit by Super</value>
@@ -170,5 +194,71 @@
   </data>
   <data name="VIP" xml:space="preserve">
     <value>VIP</value>
+  </data>
+  <data name="Headline" xml:space="preserve">
+    <value>Headline</value>
+  </data>
+  <data name="ArchivedAgent" xml:space="preserve">
+    <value>Archived Agent</value>
+  </data>
+  <data name="ArchiveDateClose" xml:space="preserve">
+    <value>Archive Date Close</value>
+  </data>
+  <data name="ArchiveDateDelAccount" xml:space="preserve">
+    <value>Archive Date Del. Account</value>
+  </data>
+  <data name="ArchiveDateDelSetting" xml:space="preserve">
+    <value>Archive Date Del. Setting</value>
+  </data>
+  <data name="ArchiveDateDisable" xml:space="preserve">
+    <value>Archive Date Disable</value>
+  </data>
+  <data name="ArchivedMaster" xml:space="preserve">
+    <value>Archived Master</value>
+  </data>
+  <data name="ArchivedMember" xml:space="preserve">
+    <value>Archived Member</value>
+  </data>
+  <data name="ArchiveStage" xml:space="preserve">
+    <value>Archive Stage</value>
+  </data>
+  <data name="ClearedGivenCredit" xml:space="preserve">
+    <value>Cleared Given Credit</value>
+  </data>
+  <data name="DirectAccount" xml:space="preserve">
+    <value>Direct Account</value>
+  </data>
+  <data name="GroupHeadline" xml:space="preserve">
+    <value>Group Headline</value>
+  </data>
+  <data name="HeadlineType" xml:space="preserve">
+    <value>Headline Type</value>
+  </data>
+  <data name="LastLogin" xml:space="preserve">
+    <value>Last Login</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="TobeClearedGivenCredit" xml:space="preserve">
+    <value>To be Cleared Given Credit</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="YesterdayBalance" xml:space="preserve">
+    <value>Yesterday Balance</value>
+  </data>
+  <data name="TotalArchivedAgent" xml:space="preserve">
+    <value>Total Archived Agents</value>
+  </data>
+  <data name="TotalArchivedMaster" xml:space="preserve">
+    <value>Total Archived Masters</value>
+  </data>
+  <data name="TotalArchivedMember" xml:space="preserve">
+    <value>Total Archived Members</value>
   </data>
 </root>
