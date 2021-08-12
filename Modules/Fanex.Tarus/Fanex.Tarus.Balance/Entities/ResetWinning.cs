@@ -60,5 +60,11 @@ namespace Fanex.Tarus.Balance.Entities
         public string UserReset { get; set; }
 
         public List<ResetWinning_New> ReportRows { get; set; }
+
+        public int ErrorCode { get; set; }
+
+        public string ErrorMessage { get; set; }
+
+        public bool IsError => ErrorCode != 0;
     }
 }

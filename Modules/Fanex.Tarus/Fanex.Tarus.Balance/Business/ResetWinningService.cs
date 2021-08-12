@@ -4,6 +4,8 @@ using Fanex.Tarus.Security.Services;
 
 namespace Fanex.Tarus.Balance.Business
 {
+    using System;
+    using System.Threading;
     using DNAide.Utils;
     using Fanex.Tarus.Balance.Criteria;
     using Fanex.Tarus.Balance.DataAccess;
@@ -11,8 +13,6 @@ namespace Fanex.Tarus.Balance.Business
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.Core.Helper;
-    using System;
-    using System.Threading;
 
     public class ResetWinningService : IResetWinningService
     {
@@ -45,20 +45,20 @@ namespace Fanex.Tarus.Balance.Business
             criteria.Creator = AppSession.AccId;
             criteria.IP = Utils.GetClientIP();
 
-            var result = new ResetWinning_New();
-
             try
             {
                 var resetWinningData = this._resetWinningAccess.GetResetWinningDataAfterMoveBetDay(criteria);
-                result = this._resetWinningAccess.GetResetWinningByDay(resetWinningData);
-                return result;
+
+                return resetWinningData.IsError
+                    ? resetWinningData
+                    : this._resetWinningAccess.GetResetWinningByDay(resetWinningData);
             }
             catch (Exception exception)
             {
                 LogExtensions.ExceptionHandler(exception);
             }
 
-            return result;
+            return new ResetWinning_New();
         }
 
         public ResetWinningBeforeMoveBetDay GetResetWinningDataBeforeMoveBetDay(GetResetWinningBeforeMoveBetDayCriteria criteria)
@@ -127,7 +127,10 @@ namespace Fanex.Tarus.Balance.Business
             try
             {
                 ResetWinning_New resetWinningData = this._resetWinningAccess.GetResetWinningDataAfterMoveBetDay(criteria);
-                result = this.BuidResetWinningData(resetWinningData);
+
+                return resetWinningData.IsError
+                    ? resetWinningData
+                    : this.BuidResetWinningData(resetWinningData);
             }
             catch (Exception ex)
             {
