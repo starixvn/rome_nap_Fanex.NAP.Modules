@@ -474,6 +474,14 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
+        public static bool IsShowBitcoinBetting
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsShowBitcoinBetting"] == "1");
+            }
+        }
+
         public static bool IsUmNG2
         {
             get
