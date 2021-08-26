@@ -63,7 +63,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
                         statementDetail.IsVerify = CastAide.AsBoolean(row["IsAllowVerify"]);
                         statementDetail.IsReverse = CastAide.AsBoolean(row["IsReversal"]);
                         statementDetail.IsExpand = CastAide.AsBoolean(row["IsExpand"]);
-                        statementDetail.IsShowReversal = (winlossDatetmp >= CastAide.AsDateTime(balanceUpDay) && (statementDetail.IsReverse == false)) ? true : false;
+                        statementDetail.IsShowReversal = (winlossDatetmp >= CastAide.AsDateTime(balanceUpDay) && (statementDetail.IsReverse == false) && !CastAide.AsBoolean(row["IsMoving"])) ? true : false;
 
                         var trans = new Transaction();
 
