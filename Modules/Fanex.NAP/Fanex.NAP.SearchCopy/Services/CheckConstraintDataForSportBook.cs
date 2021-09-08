@@ -168,7 +168,7 @@
                         string formatParam = string.Format(param, item);
                         if (!htbParameters.ContainsKey(formatParam))
                         {
-                            if (param == "maxpopermatchv{0}" && item != "1mp" && item != "99mp" && item != "161" && item != "164")
+                            if (param == "maxpopermatchv{0}" && item != "161" && item != "164")
                             {
                                 htbParameters.Add(formatParam, dr[string.Format("maxpayoutpermatchv{0}", item)]);
                             }
