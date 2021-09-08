@@ -138,7 +138,7 @@
 
         public void GenerateBettingLimit(DataRow dr, ref Hashtable htbParameters)
         {
-            string[] sportTypes = new string[] { "1", "1mp", "2", "3", "5", "8", "10", "11", "99", "99mp", "161", "164" };
+            string[] sportTypes = new string[] { "1", "1mp", "1saba", "2", "2saba", "3", "5", "8", "10", "11", "99", "99mp", "161", "164" };
             string[] parameters = new string[]
                                     {
                                         "minbetv{0}",
