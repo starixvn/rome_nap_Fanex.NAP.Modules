@@ -7,18 +7,13 @@
 // <history>
 //   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
 // </history>
-
-using ONEbook.UM.Models;
-using ONEbook.UM.Services;
-using ONEbook.UM.Services.Impl;
-
 namespace Fanex.Tarus.Business.Implement
 {
     using System;
-    using System.Web;
     using Fanex.Tarus.Business.Interface;
     using Fanex.Tarus.Entities;
-    using Sunplus.Accounting.Core.Configurations;
+    using ONEbook.UM;
+    using ONEbook.UM.Services;
     using Sunplus.Accounting.Core.Extensions;
 
     /// <summary>
@@ -28,7 +23,12 @@ namespace Fanex.Tarus.Business.Implement
     {
         public Downtime GetDowntimeInfo()
         {
-            IMaintenanceService umservice = new MaintenanceService();
+            var maintenanceService = new MaintenanceService(
+                      UMClientManager.RestClient,
+                      UMClientManager.CacheService,
+                      UMClientManager.UMClientConfigs,
+                      UMClientManager.HttpContext);
+            var underMaintenanceInfo = maintenanceService.GetUnderMaintenanceTime();
 
             Downtime noDowntime = new Downtime
             {
@@ -39,17 +39,15 @@ namespace Fanex.Tarus.Business.Implement
 
             try
             {
-                if (!umservice.IsUnderMaintenance())
+                if (!maintenanceService.IsUnderMaintenance())
                 {
                     return noDowntime;
                 }
 
-                UnderMaintenanceTime underMaintenanceTime = umservice.GetUnderMaintenanceTime();
-
                 return new Downtime
                 {
-                    From = underMaintenanceTime.From,
-                    To = underMaintenanceTime.To,
+                    From = underMaintenanceInfo.From,
+                    To = underMaintenanceInfo.To,
                     IsDowntime = true
                 };
             }
