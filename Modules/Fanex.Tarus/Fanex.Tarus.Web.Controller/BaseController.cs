@@ -41,18 +41,10 @@ namespace Fanex.Tarus.Web.Controllers
 
             if (downTime.IsDowntime)
             {
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
-                {
-                    controller = "Common",
-                    action =
-                "UnderMaintenance",
-                    from = downTime.From,
-                    to = downTime.To
-                }));
-
-
+                string appPath = Request.ApplicationPath;
+                if (appPath != "/") appPath += "/";
+                filterContext.Result = Redirect(appPath + "UnderMaintenance.aspx");
             }
-
             else
             {
                 if (!WebSettings.NotAuthenticateAction.Contains(filterContext.ActionDescriptor.ActionName.ToLower()))

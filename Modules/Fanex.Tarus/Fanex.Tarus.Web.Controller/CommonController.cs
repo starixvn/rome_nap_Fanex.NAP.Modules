@@ -39,11 +39,6 @@ namespace Fanex.Tarus.Web.Controllers
             //return Json(jsonResult, JsonRequestBehavior.AllowGet);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        
-        public ActionResult UnderMaintenance(string from, string to)
-        {
-            return PartialView(new UnderMaintenanceModel {From = from, To = to});
-        }
 
         public JsonResult UnhandleException()
         {
