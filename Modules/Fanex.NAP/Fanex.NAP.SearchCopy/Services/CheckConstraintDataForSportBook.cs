@@ -139,11 +139,12 @@
         public void GenerateBettingLimit(DataRow dr, ref Hashtable htbParameters)
         {
             string[] sportTypes = new string[] { "1", "1mp", "2", "3", "5", "8", "10", "11", "99", "99mp", "161", "164" };
-            string[] parameters = new string[] 
+            string[] parameters = new string[]
                                     {
                                         "minbetv{0}",
                                         "maxbetv{0}",
-                                        "maxpermatchv{0}"
+                                        "maxpermatchv{0}",
+                                        "maxpopermatchv{0}"
                                     };
 
             foreach (string item in sportTypes)
@@ -153,6 +154,7 @@
                     htbParameters.Add("minbet", dr["minbet"]);
                     htbParameters.Add("maxbet", dr["maxbet"]);
                     htbParameters.Add("maxpermatch", dr["maxpermatch"]);
+                    htbParameters.Add("maxpopermatch", dr["maxpayoutpermatch"]);
                 }
                 else
                 {
@@ -166,7 +168,15 @@
                         string formatParam = string.Format(param, item);
                         if (!htbParameters.ContainsKey(formatParam))
                         {
-                            htbParameters.Add(formatParam, dr[formatParam]);
+                            if (param == "maxpopermatchv{0}" && item != "1mp" && item != "99mp" && item != "161" && item != "164")
+                            {
+                                htbParameters.Add(formatParam, dr[string.Format("maxpayoutpermatchv{0}", item)]);
+                            }
+
+                            if (param != "maxpopermatchv{0}")
+                            {
+                                htbParameters.Add(formatParam, dr[formatParam]);
+                            }
                         }
                     }
                 }
