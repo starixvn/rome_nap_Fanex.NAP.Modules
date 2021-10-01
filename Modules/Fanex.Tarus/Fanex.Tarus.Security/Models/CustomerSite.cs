@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Tarus.Security.Models
 {
-    internal sealed class CustomerSite
+    public sealed class CustomerSite
     {
         public CustomerSite(string custInfo, string site, bool isValid)
         {

@@ -5,21 +5,24 @@
     using System.Web;
     using Configurations;
     using Constants;
+    using Fanex.Tarus.Security.Services;
     using Models;
     using Services;
 
     public sealed class CustomerAuthorizationHttpModule : IHttpModule
     {
         private readonly UrlPermissionHttpContext currentContext;
+        private readonly ICustomerAuthorizationService customerAuthorizationService;
 
         public CustomerAuthorizationHttpModule()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        internal CustomerAuthorizationHttpModule(UrlPermissionHttpContext currentContext)
+        internal CustomerAuthorizationHttpModule(UrlPermissionHttpContext currentContext, ICustomerAuthorizationService customerAuthorizationService)
         {
-            this.currentContext = new UrlPermissionHttpContext();
+            this.currentContext = currentContext ?? new UrlPermissionHttpContext();
+            this.customerAuthorizationService = customerAuthorizationService ?? new CustomerAuthorizationService();
         }
 
         public void Dispose()
@@ -73,10 +76,9 @@
         {
             ICustomerAuthorization authorize;
             AuthorizationResult result;
-
             foreach (var filter in urlPermission.Filters)
             {
-                authorize = CustomerAuthorizationFactory.GetInstance(filter);
+                authorize = CustomerAuthorizationFactory.GetInstance(filter, paramValue);
 
                 if (authorize != null)
                 {

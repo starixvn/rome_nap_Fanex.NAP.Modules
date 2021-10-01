@@ -10,16 +10,18 @@
     public sealed class CreditOrDepositCustomerAuthorization : ICustomerAuthorization
     {
         private const string CN88SiteName = "cn88";
-        private readonly ICustomerAuthorizationService customerAuthorizationService;
+        private readonly IEnumerable<CustomerType> customerTypes;
+        private readonly IEnumerable<CustomerSite> customerSites;
 
         public CreditOrDepositCustomerAuthorization()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        internal CreditOrDepositCustomerAuthorization(ICustomerAuthorizationService customerAuthorizationService)
+        internal CreditOrDepositCustomerAuthorization(IEnumerable<CustomerSite> customerSites, IEnumerable<CustomerType> customerTypes)
         {
-            this.customerAuthorizationService = customerAuthorizationService ?? new CustomerAuthorizationService();
+            this.customerTypes = customerTypes;
+            this.customerSites = customerSites;
         }
 
         public AuthorizationResult CanRead(string parameterValue, int userId)
@@ -30,33 +32,34 @@
 
         public AuthorizationResult CanAccess(string parameterValue, int userId, byte urlPolicy)
         {
-            var customerSites = customerAuthorizationService.GetCustomerSites(parameterValue).ToList();
-
-            var permissions = MangeAccountInfoPermissionBuilder.GetManageAccountInfoPermissions(userId, urlPolicy);
-            var hasCN88SitePermission = permissions.ContainsKey(ManageAccountInfoConst.CN88SiteFunctionName);
             AuthorizationResult result = AuthorizationResult.Ok();
-
-            if (hasCN88SitePermission)
+            if (IsNeedToCheck())
             {
-                if (HasCreditSiteOrDepositSitePermission(permissions))
+                var permissions = MangeAccountInfoPermissionBuilder.GetManageAccountInfoPermissions(userId, urlPolicy);
+                var hasCN88SitePermission = permissions.ContainsKey(ManageAccountInfoConst.CN88SiteFunctionName);
+
+                if (hasCN88SitePermission)
                 {
-                    if (customerSites.Any(c => !c.Site.Equals(CN88SiteName, StringComparison.OrdinalIgnoreCase)))
+                    if (HasCreditSiteOrDepositSitePermission(permissions))
                     {
-                        return CheckCreditSiteOrDepositSitePermission(permissions, parameterValue);
+                        if (customerSites.Any(c => !c.Site.Equals(CN88SiteName, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            return CheckCreditSiteOrDepositSitePermission(permissions);
+                        }
+                    }
+                    else
+                    {
+                        result = CheckCN88SitePermission(customerSites, false);
                     }
                 }
                 else
                 {
-                    result = CheckCN88SitePermission(customerSites, false);
-                }
-            }
-            else
-            {
-                result = CheckCN88SitePermission(customerSites, true);
+                    result = CheckCN88SitePermission(customerSites, true);
 
-                if (result.IsOk)
-                {
-                    return CheckCreditSiteOrDepositSitePermission(permissions, parameterValue);
+                    if (result.IsOk)
+                    {
+                        return CheckCreditSiteOrDepositSitePermission(permissions);
+                    }
                 }
             }
 
@@ -83,15 +86,13 @@
             || permissions.ContainsKey(ManageAccountInfoConst.DepositSiteFunctionName);
 
         private AuthorizationResult CheckCreditSiteOrDepositSitePermission(
-            IDictionary<string, byte> permissions,
-            string parameterValue)
+            IDictionary<string, byte> permissions)
         {
-            var customerTypes = customerAuthorizationService.GetCustomerTypes(parameterValue).ToList();
-            var customerTypesCount = customerTypes.Count;
+            var customerTypesCount = customerTypes.Count();
 
             if (customerTypesCount == 1)
             {
-                return CanAccess(permissions, customerTypes[0]);
+                return CanAccess(permissions, customerTypes.First());
             }
             else if (customerTypesCount > 1)
             {
@@ -148,5 +149,8 @@
 
         private static string BuildInvalidUsernamesError(IEnumerable<string> usernames)
             => $"Invalid usernames: {string.Join(", ", usernames)}";
+
+        private bool IsNeedToCheck()
+            => customerSites.Any(m => m.Site.Equals(CN88SiteName, StringComparison.OrdinalIgnoreCase)) || !customerTypes.Any(m => m.IsInternal);
     }
 }
