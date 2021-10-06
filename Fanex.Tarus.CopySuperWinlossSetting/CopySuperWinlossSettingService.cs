@@ -14,7 +14,8 @@
     {
         private readonly ICopySuperWinlossSettingRepository _repo;
 
-        private List<WinlossSettingItem> _sourceSettings;
+        private List<WinlossSettingItem> _sourceSettingsSettingType6;
+        private List<WinlossSettingItem> _sourceSettingsSettingType12;
 
         private const string WinLossLimitXmlFormat = "<Limit SportType=\"{0}\" BetType=\"{1}\" MaxWinLimit=\"{3}\" MaxLossLimit=\"{4}\" IsAutoReset=\"{5}\" />";
 
@@ -24,7 +25,8 @@
         internal CopySuperWinlossSettingService(ICopySuperWinlossSettingRepository repo)
         {
             _repo = repo ?? new CopySuperWinlossSettingRepository();
-            _sourceSettings = new List<WinlossSettingItem>();
+            _sourceSettingsSettingType6 = new List<WinlossSettingItem>();
+            _sourceSettingsSettingType12 = new List<WinlossSettingItem>();
         }
 
         public IEnumerable<Result> Copy(CopySuperWinlossSettingRequest request)
@@ -48,14 +50,14 @@
 
             foreach (var product in request.Products)
             {
-                _sourceSettings.AddRange(_repo.GetCustomerWinLimit(new GetWinlossSettingCriteria
+                _sourceSettingsSettingType6.AddRange(_repo.GetCustomerWinLimit(new GetWinlossSettingCriteria
                 {
                     CustId = request.SourceCustId,
                     ProductId = product.ProductId,
                     SettingType = DCSSettingType.WinlossLimit
                 }));
 
-                _sourceSettings.AddRange(_repo.GetCustomerWinLimit(new GetWinlossSettingCriteria
+                _sourceSettingsSettingType12.AddRange(_repo.GetCustomerWinLimit(new GetWinlossSettingCriteria
                 {
                     CustId = request.SourceCustId,
                     ProductId = product.ProductId,
@@ -63,17 +65,39 @@
                 }));
             }
 
-            _sourceSettings = _sourceSettings.Where(settingItem => request.Contains(settingItem.SportTypeId)).ToList();
+            _sourceSettingsSettingType6 = _sourceSettingsSettingType6.Where(settingItem => request.Contains(settingItem.SportTypeId)).ToList();
+            _sourceSettingsSettingType12 = _sourceSettingsSettingType12.Where(settingItem => request.Contains(settingItem.SportTypeId)).ToList();
+
 
             foreach (var targetCustId in Split(request.TargetCustIds))
             {
-                results.Add(_repo.UpdateCustomerWinLossLimit(new UpdateWinlossSettingCriteria
+                Result resultUpdateSettingType6 = new Result(), resultUpdateSettingType12 = new Result();
+                if (_sourceSettingsSettingType6.Any())
                 {
-                    CustId = targetCustId,
-                    IP = request.IP,
-                    UserId = request.UserId,
-                    Limit = ComposeUpdateXml(_sourceSettings)
-                }));
+                    resultUpdateSettingType6 = _repo.UpdateCustomerWinLossLimit(new UpdateWinlossSettingCriteria
+                    {
+                        CustId = targetCustId,
+                        IP = request.IP,
+                        UserId = request.UserId,
+                        SourceUsername = request.SourceUsername,
+                        Limit = ComposeUpdateXml(_sourceSettingsSettingType6)
+                    });
+                }
+
+                if (_sourceSettingsSettingType12.Any())
+                {
+                    resultUpdateSettingType12 = _repo.UpdateCustomerWinLossLimit(new UpdateWinlossSettingCriteria
+                    {
+                        CustId = targetCustId,
+                        IP = request.IP,
+                        UserId = request.UserId,
+                        SourceUsername = request.SourceUsername,
+                        SettingType = DCSSettingType.LossLimit,
+                        Limit = ComposeUpdateXml(_sourceSettingsSettingType12)
+                    });
+                }
+
+                results.Add(_sourceSettingsSettingType12.Any() && resultUpdateSettingType12.IsSuccess ? resultUpdateSettingType6 : resultUpdateSettingType12);
             }
 
             return results;

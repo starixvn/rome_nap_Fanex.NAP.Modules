@@ -4,7 +4,7 @@ using Fanex.Tarus.CopySuperWinlossSetting.Constant;
 
 namespace Fanex.Tarus.CopySuperWinlossSetting.Criteria
 {
-    internal class GetWinlossSettingCriteria: CriteriaBase
+    public class GetWinlossSettingCriteria: CriteriaBase
     {
         public int CustId { get; set; }
 

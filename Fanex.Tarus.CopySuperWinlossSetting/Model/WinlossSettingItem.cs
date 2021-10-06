@@ -22,6 +22,8 @@
 
         public bool IsAutoResetUpline { get; set; }
 
+        public int SettingType { get; set; }
+
         public string ToXml()
         {
             return string.Format(WinLossLimitXmlFormat, SportTypeId, BetTypeId, WinLimit, LossLimit, IsAutoReset ? 1 : 0);
