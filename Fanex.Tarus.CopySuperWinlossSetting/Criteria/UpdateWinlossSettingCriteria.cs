@@ -1,11 +1,6 @@
 ﻿namespace Fanex.Tarus.CopySuperWinlossSetting.Criteria
 {
     using Fanex.NAP.Framework.Data;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     internal class UpdateWinlossSettingCriteria: CriteriaBase
     {
@@ -18,6 +13,10 @@
         public string IP { get; set; }
 
         public string Limit { get; set; }
+
+        public int? SettingType { get; set; }
+
+        public string SourceUsername { get; set; }
 
         public override bool IsValid()
         {

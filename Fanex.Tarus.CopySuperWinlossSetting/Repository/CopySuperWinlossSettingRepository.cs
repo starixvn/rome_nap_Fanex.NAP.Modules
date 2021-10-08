@@ -4,19 +4,20 @@
     using Fanex.CustomerSetting.Module.Core.Models;
     using Fanex.Data;
     using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.CopySuperWinlossSetting.Criteria;
     using Fanex.Tarus.CopySuperWinlossSetting.Model;
     using System.Collections.Generic;
 
     public interface ICopySuperWinlossSettingRepository
     {
-        IEnumerable<WinlossSettingItem> GetCustomerWinLimit(ICriteria criteria);
+        IEnumerable<WinlossSettingItem> GetCustomerWinLimit(GetWinlossSettingCriteria criteria);
 
         Result UpdateCustomerWinLossLimit(ICriteria criteria);
     }
 
     internal class CopySuperWinlossSettingRepository: ICopySuperWinlossSettingRepository
     {
-        public IEnumerable<WinlossSettingItem> GetCustomerWinLimit(ICriteria criteria)
+        public IEnumerable<WinlossSettingItem> GetCustomerWinLimit(GetWinlossSettingCriteria criteria)
         {
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -34,7 +35,8 @@
                         MinLossRange = Utils.ToDecimal(reader["MinLossRange"]),
                         MaxLossRange = Utils.ToDecimal(reader["MaxLossRange"]),
                         IsAutoReset = Utils.ToBoolean(reader["IsAutoReset"]),
-                        IsAutoResetUpline = Utils.ToBoolean(reader["IsAutoResetUpline"])
+                        IsAutoResetUpline = Utils.ToBoolean(reader["IsAutoResetUpline"]),
+                        SettingType = criteria.SettingType
                     };
                 }
             }

@@ -10,6 +10,8 @@ namespace Fanex.Tarus.CopySuperWinlossSetting.Model
     {
         public int SourceCustId { get; set; }
 
+        public string SourceUsername { get; set; }
+
         public string TargetCustIds { get; set; }
 
         public List<Product> Products { get; set; }
