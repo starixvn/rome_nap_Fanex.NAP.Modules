@@ -55,30 +55,6 @@ namespace Fanex.Tarus.Web.Controllers.Customer
                 productStatusModel,
                 isDeposit);
 
-            if (productId == (int)Product.Casino && result[0].ErrorCode.Equals("0"))
-            {
-                var customer = new CasinoLibrary.SBAgent.Customer();
-                try
-                {
-                    customer.UpdateCustEnableCasino(
-                        custId,
-                        !productStatusModel[0].IsDisabled,
-                        !productStatusModel[0].IsDisabledDownline,
-                        Utils.GetClientIP(),
-                        AppSession.AccId,
-                        AppSession.AccUserName,
-                        3);
-                }
-                catch (ErrorException casinoEx)
-                {
-                    ExceptionHandler.Handle(new Exception(casinoEx.Message), TraceEventType.Warning);
-                }
-                catch (Exception ex)
-                {
-                    ExceptionHandler.Handle(ex, TraceEventType.Warning);
-                }
-            }
-
             return Json(result);
         }
     }

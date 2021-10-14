@@ -638,6 +638,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
 
                     bool status = CastAide.AsBoolean(db.GetParameterValue("status"));
                     if (!status) throw new Exception(db.GetParameterValue("errmsg").ToString());
+                    return status;
                 }
             }
             catch (Exception ex)
@@ -646,12 +647,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
-
-            var cust = new Customer();
-            cust.SiteName = siteName;
-            return cust.UpdateCustEnableCasino(custid, !bDisabledCS, true,
-                                               HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"],
-                                               AppSession.AccId, AppSession.Username, 3);
         }
 
         public override bool UpdateCSStatus(int custid, bool bSyncCS, bool bDisabledCS, bool isUpdDownline, string siteName)
@@ -675,6 +670,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
 
                     bool status = CastAide.AsBoolean(db.GetParameterValue("status"));
                     if (!status) throw new Exception(db.GetParameterValue("errmsg").ToString());
+                    return status;
                 }
             }
             catch (Exception ex)
@@ -683,12 +679,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
-
-            var cust = new Customer();
-            cust.SiteName = siteName;
-            return cust.UpdateCustEnableCasino(custid, !bDisabledCS, isUpdDownline,
-                                               HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"],
-                                               AppSession.AccId, AppSession.Username, 3);
         }
 
         public override bool UpdateCSStatusAfterSync(int custid, bool bSyncCS, bool bDisabledCS, int userId, string ip)

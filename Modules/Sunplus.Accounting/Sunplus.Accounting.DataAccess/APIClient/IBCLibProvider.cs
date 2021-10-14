@@ -222,85 +222,55 @@ namespace Sunplus.Accounting.DataAccess.APIClient
 
         public override bool UpdateCSStatus(int custid, bool bSyncCS, bool bDisabledCS, string rngSite)
         {
-            try
+            using (ObjectDb db = new ObjectDb("Acc_UpdCSStatus", 300))
             {
+                var param = new Hashtable();
+                param.Add("custid", custid);
+                param.Add("disabledcs", bDisabledCS);
+                param.Add("synccs", bSyncCS);
+                param.Add("enabledownline", false);
 
-                using (ObjectDb db = new ObjectDb("Acc_UpdCSStatus", 300))
-                {
-                    var param = new Hashtable();
-                    param.Add("custid", custid);
-                    param.Add("disabledcs", bDisabledCS);
-                    param.Add("synccs", bSyncCS);
-                    param.Add("enabledownline", false);
+                param.Add("userid", AppSession.AccId);
+                param.Add("subaccid", 0);
+                param.Add("loginip", HttpContext.Current.Request.UserHostAddress);
+                param.Add("errcode", 0);
+                param.Add("errmsg", string.Empty);
 
-                    param.Add("userid", AppSession.AccId);
-                    param.Add("subaccid", 0);
-                    param.Add("loginip", HttpContext.Current.Request.UserHostAddress);
-                    param.Add("errcode", 0);
-                    param.Add("errmsg", string.Empty);
+                db.AssignParamValues(param);
+                db.ExecuteNonQuery();
+                var status = CastAide.AsInt32(db.GetParameterValue("errcode")) == 0;
+                if (!status)
+                    throw new AccException(CastAide.AsString(db.GetParameterValue("errmsg")));
 
-                    db.AssignParamValues(param);
-                    db.ExecuteNonQuery();
-
-                    if (CastAide.AsInt32(db.GetParameterValue("errcode")) > 0)
-                        throw new AccException(CastAide.AsString(db.GetParameterValue("errmsg")));
-                }
+                return status;
             }
-            catch (AccException accException)
-            {
-                throw accException;
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-                throw ex;
-            }
-            var cust = new Customer();
-            cust.SiteName = rngSite;
-            return cust.UpdateCustEnableCasino(custid, !bDisabledCS, true,
-                                               HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"],
-                                               AppSession.AccId, AppSession.Username, 3);
         }
 
         public override bool UpdateCSStatus(int custid, bool bSyncCS, bool bDisabledCS, bool isUpdDownline, string rngSite)
         {
-            try
+            using (ObjectDb db = new ObjectDb("Acc_UpdCSStatus", 300))
             {
-                using (ObjectDb db = new ObjectDb("Acc_UpdCSStatus", 300))
-                {
-                    var param = new Hashtable();
-                    param.Add("custid", custid);
-                    param.Add("disabledcs", bDisabledCS);
-                    param.Add("synccs", bSyncCS);
-                    param.Add("enabledownline", isUpdDownline);
+                var param = new Hashtable();
+                param.Add("custid", custid);
+                param.Add("disabledcs", bDisabledCS);
+                param.Add("synccs", bSyncCS);
+                param.Add("enabledownline", isUpdDownline);
 
-                    param.Add("userid", AppSession.AccId);
-                    param.Add("subaccid", 0);
-                    param.Add("loginip", HttpContext.Current.Request.UserHostAddress);
-                    param.Add("errcode", 0);
-                    param.Add("errmsg", string.Empty);
+                param.Add("userid", AppSession.AccId);
+                param.Add("subaccid", 0);
+                param.Add("loginip", HttpContext.Current.Request.UserHostAddress);
+                param.Add("errcode", 0);
+                param.Add("errmsg", string.Empty);
 
-                    db.AssignParamValues(param);
-                    db.ExecuteNonQuery();
+                db.AssignParamValues(param);
+                db.ExecuteNonQuery();
 
-                    if (CastAide.AsInt32(db.GetParameterValue("errcode")) > 0)
-                        throw new AccException(CastAide.AsString(db.GetParameterValue("errmsg")));
-                }
+                var status = CastAide.AsInt32(db.GetParameterValue("errcode")) == 0;
+                if (!status)
+                    throw new AccException(CastAide.AsString(db.GetParameterValue("errmsg")));
+
+                return status;
             }
-            catch (AccException accException)
-            {
-                throw accException;
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-                throw ex;
-            }
-            var cust = new Customer();
-            cust.SiteName = rngSite;
-            return cust.UpdateCustEnableCasino(custid, !bDisabledCS, isUpdDownline,
-                                               HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"],
-                                               AppSession.AccId, AppSession.Username, 3);
         }
 
         public override bool IsDisabledCasino(int custId, byte settingStatus)
@@ -413,7 +383,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
 
                 _cust.IsDisableColossusBets = WebSettings.IsShowColossusBets ?
                     drCustomer.ResultSet.Tables[0].Columns.Contains("DisableColossusBet") ?
-                        CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableColossusBet"], false) : 
+                        CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableColossusBet"], false) :
                         true :
                     true;
 
@@ -467,6 +437,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 throw ex;
             }
             return _cust;
-        }       
+        }
     }
 }
