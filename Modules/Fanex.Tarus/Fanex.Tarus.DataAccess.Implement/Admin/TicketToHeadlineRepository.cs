@@ -56,7 +56,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
             TicketToHeadline trackingDataRow = new TicketToHeadline();
             var xmlEvent = string.Empty;
             var xmlTicket = string.Empty;
-            bool isOutright = false;
+            bool isCheckMessage = false;
             using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
             {
                 db.AssignParamValues(criteria.GetSpParams());
@@ -95,12 +95,12 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
 
                 reader.Close();
                 var outputs = db.GetOuputParams();
-                isOutright = Utils.ToBoolean(outputs["isoutright"]);
+                isCheckMessage = Utils.ToBoolean(outputs["ischeckmessage"]);
                 viewModel.TotalRows = Utils.ToInt32(outputs["totalrows"]);
                 viewModel.ErrorCode = Utils.ToInt32(outputs["errcode"]);
                 viewModel.ErrorMessage = Utils.ToString(outputs["errmsg"]);
 
-                if (isOutright)
+                if (isCheckMessage)
                 {
                     var checkMesssageIdResult = CheckMessageIdExisted(new CheckMessageIdCriteria() { MessageId = criteria.MessageId });
                     if (checkMesssageIdResult.ErrorCode > 0)
