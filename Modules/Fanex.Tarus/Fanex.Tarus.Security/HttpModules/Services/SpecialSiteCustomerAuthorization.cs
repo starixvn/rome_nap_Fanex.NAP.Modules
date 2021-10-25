@@ -83,7 +83,12 @@
                 ? new string[0]
                 : value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
+        /// <summary>
+        /// Is Need to check Special Site Permission
+        /// </summary>
+        /// <param name="customerTypes"> null mean force to check Special Site permission regardless IsInternal or not</param>
+        /// <returns></returns>
         private bool IsNeedToCheck(IEnumerable<CustomerType> customerTypes)
-            => !customerTypes.Any(m => m.IsInternal);
+            => customerTypes == null || !customerTypes.Any(m => m.IsInternal);
     }
 }
