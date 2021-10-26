@@ -904,7 +904,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
         }
 
-        public static void KickoutCustomer(int custId, byte roleId = 0, int serverId = 0, string ip = null)
+        public static void KickoutCustomer(int custId, byte roleId = 0, int serverId = 0, string ip = null, string mode = null)
         {
             try
             {
@@ -915,7 +915,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                         ["custid"] = custId,
                         ["roleid"] = roleId == 0 ? AppSession.CustRoleId : roleId,
                         ["serverid"] = serverId == 0 ? WebSettings.ServerId : serverId,
-                        ["ip"] = ip ?? Utils.GetClientIP()
+                        ["ip"] = ip ?? Utils.GetClientIP(),
+                        ["mode"] = mode
                     });
 
                     db.ExecuteNonQuery();
