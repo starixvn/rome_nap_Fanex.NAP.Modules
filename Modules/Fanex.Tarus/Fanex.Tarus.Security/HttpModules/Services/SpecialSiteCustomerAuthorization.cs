@@ -1,17 +1,27 @@
 ﻿namespace Fanex.Tarus.Security.HttpModules.Services
 {
-    using System;
     using Criteria;
     using Models;
     using Repositories;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public sealed class SpecialSiteCustomerAuthorization : ICustomerAuthorization
     {
         private readonly IUserPermissionDataAccess permissionDataAccess;
+        private readonly IEnumerable<CustomerType> customerTypes;
 
-        public SpecialSiteCustomerAuthorization(IUserPermissionDataAccess permissionDataAccess = null)
+        internal SpecialSiteCustomerAuthorization() : this(null, null)
+        { }
+
+        internal SpecialSiteCustomerAuthorization(IEnumerable<CustomerType> customerTypes) : this(null, customerTypes)
+        { }
+
+        internal SpecialSiteCustomerAuthorization(IUserPermissionDataAccess permissionDataAccess, IEnumerable<CustomerType> customerTypes)
         {
             this.permissionDataAccess = permissionDataAccess ?? new UserPermissionDataAccess();
+            this.customerTypes = customerTypes;
         }
 
         public AuthorizationResult CanRead(string parameterValue, int userId)
@@ -22,6 +32,11 @@
 
         private AuthorizationResult CheckSpecialSitePermission(string parameterValue, int userId)
         {
+            if (!IsNeedToCheck(this.customerTypes))
+            {
+                return AuthorizationResult.Ok();
+            }
+
             int custId;
 
             if (int.TryParse(parameterValue, out custId))
@@ -67,5 +82,13 @@
             => string.IsNullOrWhiteSpace(value)
                 ? new string[0]
                 : value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+        /// <summary>
+        /// Is Need to check Special Site Permission
+        /// </summary>
+        /// <param name="customerTypes"> null mean force to check Special Site permission regardless IsInternal or not</param>
+        /// <returns></returns>
+        private bool IsNeedToCheck(IEnumerable<CustomerType> customerTypes)
+            => customerTypes == null || !customerTypes.Any(m => m.IsInternal);
     }
 }

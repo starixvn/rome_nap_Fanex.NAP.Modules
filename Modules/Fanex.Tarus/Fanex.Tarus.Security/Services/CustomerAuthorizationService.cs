@@ -6,20 +6,20 @@ using Fanex.Tarus.Security.Repositories;
 
 namespace Fanex.Tarus.Security.Services
 {
-    internal interface ICustomerAuthorizationService
+    public interface ICustomerAuthorizationService
     {
         IEnumerable<CustomerSite> GetCustomerSites(string custIdOrUserNameList);
 
         IEnumerable<CustomerType> GetCustomerTypes(string custIdOrUserNameList);
     }
 
-    internal class CustomerAuthorizationService : ICustomerAuthorizationService
+    public class CustomerAuthorizationService : ICustomerAuthorizationService
     {
         private readonly ICustomerSiteDataAccess customerSiteDataAccess;
         private readonly ICustomerTypeDataAccess customerTypeDataAccess;
         private readonly IDetectCustomerService detectCustomerService;
 
-        internal CustomerAuthorizationService()
+        public CustomerAuthorizationService()
             : this(null, null, null)
         {
         }
