@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Numerics;
 using System.Text.RegularExpressions;
 using Fanex.Tarus.Infrastructure.Caching;
 using Sunplus.Accounting.Core.Common;
@@ -17,14 +20,14 @@ namespace Sunplus.Accounting.Business
     /// </summary>
     public static class IpManagement
     {
-        private static List<IPVNBean> _ipVNList;
+        private static IpRange _ipVNList;
 
         static IpManagement()
         {
             _ipVNList = IPVNList;
         }
 
-        public static List<IPVNBean> IPVNList
+        public static IpRange IPVNList
         {
             get
             {
@@ -32,7 +35,7 @@ namespace Sunplus.Accounting.Business
                 {
                     try
                     {
-                        _ipVNList = CacheHelper.Get<List<IPVNBean>>("ipvnlist") as List<IPVNBean> ?? IBCProvider.Utils.GetIPVN();
+                        _ipVNList = CacheHelper.Get<IpRange>("ipvnlist") as IpRange ?? IBCProvider.Utils.GetIPVN();
                     }
                     catch
                     {
@@ -51,73 +54,29 @@ namespace Sunplus.Accounting.Business
 
         public static bool IsVNIP(string IP)
         {
-            try
+            var isIpv6 = IsIPV6(IP);
+            if (isIpv6)
             {
-                double ipNumber = 0;
-                ipNumber = IP2Number(IP);
-                List<IPVNBean> listIPVN = IPVNList;
-                int total = listIPVN.Count;
-                for (int i = 0; i < total; i++)
-                {
-                    IPVNBean item = listIPVN[i];
-                    if (item == null)
-                        return false;
-                    if (item.IPFrom <= ipNumber && ipNumber <= item.IPTo)
-                    {
-                        return true;
-                    }
-                }
-                return false;
+                var ipv6Number = ConvertIpv6ToNumber(IP);
+                return IPVNList.Ipv6List.Any(ip => ip.FromNumber <= ipv6Number && ipv6Number <= ip.ToNumber);
             }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                return false;
-            }
+
+            double ipNumber = IP2Number(IP);
+            return IPVNList.Ipv4List.Any(ip => ip.IPFrom <= ipNumber && ipNumber <= ip.IPTo);
         }
 
-        public static bool IsVNIP(string IP, List<IPVNBean> _listIPVN)
+        public static bool IsVNIP(string IP, IpRange _listIPVN)
         {
-            try
+            var isIpv6 = IsIPV6(IP);
+            if (isIpv6)
             {
-                double IPNumber = 0;
-                IPNumber = IP2Number(IP);
-                foreach (IPVNBean item in _listIPVN)
-                {
-                    if (item.IPFrom <= IPNumber && IPNumber <= item.IPTo)
-                    {
-                        return true;
-                    }
-                }
-                return false;
+                var ipv6Number = ConvertIpv6ToNumber(IP);
+                return _listIPVN.Ipv6List.Any(ip => ip.FromNumber <= ipv6Number && ipv6Number <= ip.ToNumber);
             }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                return false;
-            }
-        }
 
-        public static bool IsVNIP_Linq(string IP)
-        {
-            try
-            {
-                double ipNumber = 0;
-                ipNumber = IP2Number(IP);
-                List<IPVNBean> listIPVN = IPVNList;
-                IEnumerable<IPVNBean> query = from IPVNBean bean in listIPVN
-                                              where bean.IPFrom <= ipNumber && ipNumber <= bean.IPTo
-                                              select bean;
-                if (query.Count() > 0)
-                    return true;
-                else return false;
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                return false;
-            }
-        }
+            double ipNumber = IP2Number(IP);
+            return _listIPVN.Ipv4List.Any(ip => ip.IPFrom <= ipNumber && ipNumber <= ip.IPTo);
+        }        
 
         //Check input string is a valid IP4 format
         public static bool IsValidIP(string addr)
@@ -170,7 +129,7 @@ namespace Sunplus.Accounting.Business
             }
         }
 
-        public static string ReplaceVNIP(string IP, List<IPVNBean> _IPVNList)
+        public static string ReplaceVNIP(string IP, IpRange _IPVNList)
         {
             if (AppSession.ViewIPVN)
             {
@@ -218,6 +177,28 @@ namespace Sunplus.Accounting.Business
         public static string FormatIPs(string content)
         {
             return new AccountingIPFormat("").FormatAll(content);
+        }
+
+        private static bool IsIPV6(string clientIP)
+            => IPAddress.TryParse(clientIP, out IPAddress address)
+                && address.AddressFamily == AddressFamily.InterNetworkV6;
+
+        public static BigInteger ConvertIpv6ToNumber(string ipv6)
+        {
+            BigInteger bigInteger = 0;
+            if (IPAddress.TryParse(ipv6, out IPAddress address))
+            {
+                byte[] numArray = address.GetAddressBytes();
+                if (BitConverter.IsLittleEndian)
+                {
+                    List<byte> byteList = new List<byte>(numArray);
+                    byteList.Reverse();
+                    numArray = byteList.ToArray();
+                }
+                bigInteger = numArray.Length <= 8 ? BitConverter.ToUInt32(numArray, 0) : ((BigInteger)BitConverter.ToUInt64(numArray, 8) << 64) + BitConverter.ToUInt64(numArray, 0);
+            }
+
+            return bigInteger;
         }
     }
 }

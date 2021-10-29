@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data;
 using DNAide.Core;
 using Fanex.Data;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Entities;
 
 /// <summary>
@@ -15,35 +14,40 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
 {
     public class UtilsProviderClient : UtilsProvider
     {
-        public override List<IPVNBean> GetIPVN()
+        public override IpRange GetIPVN()
         {
-            var listIPVN = new List<IPVNBean>();
-            try
-            {
-                //get data from database
-                DataSet ds = new DataSet();
-                using (ObjectDb db = new ObjectDb("GetIPVN"))
-                {
-                    ds = db.ExecuteDataSet();
-                }
-                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                {
-                    DataRow[] rows = ds.Tables[0].Select();
-                    Array.ForEach(rows,
-                                  row =>
-                                  listIPVN.Add(new IPVNBean(CastAide.AsDouble(row["IPFrom"]),
-                                                            CastAide.AsDouble(row["IPTo"]))));
-                }
-            }
-            catch (Exception ex)
-            {
+            var ipv4List = new List<IPVNBean>();
+            var ipv6List = new List<Ipv6Range>();
 
-                {
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                }
+            //get data from database
+            DataSet ds = new DataSet();
+            using (ObjectDb db = new ObjectDb("GetIPVN"))
+            {
+                ds = db.ExecuteDataSet();
+            }
+            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                DataRow[] ipv4Rows = ds.Tables[0].Select();
+                Array.ForEach(ipv4Rows,
+                              row =>
+                              ipv4List.Add(new IPVNBean(CastAide.AsDouble(row["IPFrom"]),
+                                                        CastAide.AsDouble(row["IPTo"]))));
             }
 
-            return listIPVN;
+            if (ds.Tables.Count > 1 && ds.Tables[1].Rows.Count > 0)
+            {
+                DataRow[] ipv6Rows = ds.Tables[1].Select();
+                Array.ForEach(ipv6Rows,
+                              row =>
+                              ipv6List.Add(new Ipv6Range
+                              {
+                                  From = CastAide.AsString(row["IPFrom"]),
+                                  To = CastAide.AsString(row["IPTo"])
+                              }));
+            }
+
+
+            return new IpRange { Ipv4List = ipv4List, Ipv6List = ipv6List };
         }
 
         public override Dictionary<int, string> GetExchange()
@@ -69,7 +73,7 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             }
             catch (Exception ex)
             {
-                
+
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
