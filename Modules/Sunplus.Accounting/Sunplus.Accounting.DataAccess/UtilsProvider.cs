@@ -32,6 +32,11 @@ namespace Sunplus.Accounting.DataAccess
             throw new NotImplementedException();
         }
 
+        public virtual IPInformation GetIPInformation(string ip)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual Dictionary<int, string> GetExchange()
         {
             throw new NotImplementedException();

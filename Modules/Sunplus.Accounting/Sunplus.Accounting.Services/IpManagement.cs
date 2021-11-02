@@ -76,7 +76,7 @@ namespace Sunplus.Accounting.Business
 
             double ipNumber = IP2Number(IP);
             return _listIPVN.Ipv4List.Any(ip => ip.IPFrom <= ipNumber && ipNumber <= ip.IPTo);
-        }        
+        }
 
         //Check input string is a valid IP4 format
         public static bool IsValidIP(string addr)
@@ -114,18 +114,17 @@ namespace Sunplus.Accounting.Business
 
         public static string ReplaceCountryName(string IP)
         {
-            var ipManager = new IpManager();
-            string countryName = ipManager.GetCountryNameByIp(IP);
+            var ipInformation = IBCProvider.Utils.GetIPInformation(IP);
             if (IsVNIP(IP))
             {
                 if (AppSession.ViewIPVN || WebSettings.IPVNReplace == "1")
-                    return countryName;
+                    return ipInformation != null ? ipInformation.CountryLong : string.Empty;
                 else
                     return "-";
             }
             else
             {
-                return countryName;
+                return ipInformation != null ? ipInformation.CountryLong : string.Empty;
             }
         }
 
