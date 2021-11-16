@@ -27,7 +27,12 @@ namespace Sunplus.Accounting.DataAccess
             set { _Instance = value; }
         }
 
-        public virtual List<IPVNBean> GetIPVN()
+        public virtual IpRange GetIPVN()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual IPInformation GetIPInformation(string ip)
         {
             throw new NotImplementedException();
         }

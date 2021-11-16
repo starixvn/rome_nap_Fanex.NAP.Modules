@@ -19,7 +19,6 @@ namespace Sunplus.Accounting.Core.Configurations
         private static readonly string _internalAgentUMToken;
         private static readonly string _directBAUrl;
 
-        private static readonly string _getCountry;
         private static readonly string _virtualDir;
         private static readonly bool _isSslLogin;
 
@@ -66,7 +65,6 @@ namespace Sunplus.Accounting.Core.Configurations
                 _internalAgentUrl = ConfigurationManager.AppSettings["int_agent_url"];
                 _internalAgentUMToken = ConfigurationManager.AppSettings["int_agent_UMToken"];
                 _directBAUrl = ConfigurationManager.AppSettings["link_BA_url"];
-                _getCountry = ConfigurationManager.AppSettings["link_Country_url"];
                 _ipvnreplace = ConfigurationManager.AppSettings["ipvnreplace"];
                 _isSslLogin = (ConfigurationManager.AppSettings["ssl_login"] == "1");
                 _disableAutoM = (ConfigurationManager.AppSettings["disableAutoMaster"] == "1");
@@ -156,11 +154,6 @@ namespace Sunplus.Accounting.Core.Configurations
         public static string DirectBAUrl
         {
             get { return _directBAUrl; }
-        }
-
-        public static string getCountryName
-        {
-            get { return _getCountry; }
         }
 
         public static bool VirtualDir
