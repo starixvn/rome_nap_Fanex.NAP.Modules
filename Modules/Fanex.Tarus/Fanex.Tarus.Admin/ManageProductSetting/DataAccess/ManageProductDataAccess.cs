@@ -32,33 +32,34 @@
             var entities = new List<ProductEntity>();
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                var reader = objDb.ExecuteReader(criteria.GetSpParams());
-                while (reader.Read())
+                using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
                 {
-                    entities.Add(new ProductEntity
+                    while (reader.Read())
                     {
-                        ProductID = DataUtils.ToString(reader["ProductID"]),
-                        ProductName = DataUtils.ToString(reader["ProductName"]),
-                        Description = DataUtils.ToString(reader["Description"]),
-                        ProductPrefix = DataUtils.ToString(reader["ProductPrefix"]),
-                        Enabled = DataUtils.ToString(reader["Enabled"]),
-                        EndOfSupportDate = reader["EndOfSupportDate"] == DBNull.Value ? null : DataUtils.ToDateTime(reader["EndOfSupportDate"]).ToShortDateString(),
-                        BalanceType = DataUtils.ToString(reader["BalanceType"]),
-                        SubProductBalanceType = DataUtils.ToString(reader["SubProductBalanceType"]),
-                        GroupType = DataUtils.ToString(reader["GroupType"]),
-                        CasinoType = DataUtils.ToString(reader["CasinoType"]),
-                        IsOfferPlayForFun = DataUtils.ToString(reader["IsOfferPlayForFun"]),
-                        VendorID = DataUtils.ToString(reader["VendorID"]),
-                        OrderNo = DataUtils.ToString(reader["OrderNo"])
-                    });
-                }
-
-                reader.Close();
-                return new ProductModel
-                {
-                    ProductEntities = entities,
-                    TotalRows = DataUtils.ToInt32(objDb.GetOuputParams()["totalrows"])
-                };
+                        entities.Add(new ProductEntity
+                        {
+                            ProductID = DataUtils.ToString(reader["ProductID"]),
+                            ProductName = DataUtils.ToString(reader["ProductName"]),
+                            Description = DataUtils.ToString(reader["Description"]),
+                            ProductPrefix = DataUtils.ToString(reader["ProductPrefix"]),
+                            Enabled = DataUtils.ToString(reader["Enabled"]),
+                            EndOfSupportDate = reader["EndOfSupportDate"] == DBNull.Value ? null : DataUtils.ToDateTime(reader["EndOfSupportDate"]).ToShortDateString(),
+                            BalanceType = DataUtils.ToString(reader["BalanceType"]),
+                            SubProductBalanceType = DataUtils.ToString(reader["SubProductBalanceType"]),
+                            GroupType = DataUtils.ToString(reader["GroupType"]),
+                            CasinoType = DataUtils.ToString(reader["CasinoType"]),
+                            IsOfferPlayForFun = DataUtils.ToString(reader["IsOfferPlayForFun"]),
+                            VendorID = DataUtils.ToString(reader["VendorID"]),
+                            OrderNo = DataUtils.ToString(reader["OrderNo"])
+                        });
+                    }
+                    
+                    return new ProductModel
+                    {
+                        ProductEntities = entities,
+                        TotalRows = DataUtils.ToInt32(objDb.GetOuputParams()["totalrows"])
+                    };
+                } 
             }
         }
 
