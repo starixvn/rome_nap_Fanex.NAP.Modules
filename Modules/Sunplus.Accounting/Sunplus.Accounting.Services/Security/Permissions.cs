@@ -13,34 +13,11 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Entities.Casino;
 
 namespace Sunplus.Accounting.Business.Security
 {
     public class Permissions
     {
-        public static bool IsDisabledCS(int custId)
-        {
-            return CasinoManager.IsDisabledCasino(custId, WebSettings.SettingStatus);
-        }
-
-        public static bool IsAllowEditCasino(int parentId)
-        {
-            if (parentId == 0)
-                return true;
-            var cust = CasinoManager.GetCasinoStatus(parentId, WebSettings.SettingStatus);
-            //if (WebSettings.disableCS || !cust.CasinoSync)
-            //return false;
-            //return true;
-
-            return cust.CasinoSync;
-        }
-
-        public static CSCustomerDetail SelStatus3rdParty(int parentId)
-        {
-            return CasinoManager.GetCasinoStatus(parentId, WebSettings.SettingStatus);
-        }
-
         public static void InitAccessPermission(Enumerations.AccountingSystem systemType)
         {
             var pages = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -310,22 +287,6 @@ namespace Sunplus.Accounting.Business.Security
             return AppSession.RoleAccess.ContainsKey(funcName.ToLower());
         }
 
-        public static bool IsAllowCasino()
-        {
-            if (WebSettings.disableCS || !AppSession.IsSyncCSCurrentCust)
-                return false;
-            return true;
-        }
-
-        public static bool IsAllowEditCasino(int parentId, bool syncCasino)
-        {
-            if (parentId == 0)
-                return true;
-            if (WebSettings.disableCS || !syncCasino)
-                return false;
-            return true;
-        }
-
         public static bool IsEnabledAutoMaster(bool isAllowedAutoMaster)
         {
             if (WebSettings.disableAutoM)
@@ -368,11 +329,6 @@ namespace Sunplus.Accounting.Business.Security
             if (!WebSettings.EnableVirtualSports || hideVirtualSports)
                 return false;
             return true;
-        }
-
-        public static bool IsAllowEditGoldDeluxe(int parentId)
-        {
-            return parentId == 0 || WebSettings.EnableGoldDeluxe;
         }
 
         #region Settlement

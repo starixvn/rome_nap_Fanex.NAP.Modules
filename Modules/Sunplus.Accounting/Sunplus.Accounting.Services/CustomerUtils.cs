@@ -1168,9 +1168,8 @@ namespace Sunplus.Accounting.Business.Customer
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        public static CustDetail GetCustomer(string username)
+        public static int GetCustomerIdByUserName(string username)
         {
-            CustDetail custDetail = null;
             if (!string.IsNullOrEmpty(username))
             {
                 var rs = SelectCustomer.CustSelByUsername(username, AppSession.SYSTEM);
@@ -1179,16 +1178,12 @@ namespace Sunplus.Accounting.Business.Customer
                     if (rs != null && rs.Tables.Count > 0)
                         if (rs.Tables[0].Rows.Count > 0)
                         {
-                            custDetail = new CustDetail
-                                             {
-                                                 CustId = CastAide.AsInt32(rs.Tables[0].Rows[0]["custid"]),
-                                                 RoleId = CastAide.AsInt32(rs.Tables[0].Rows[0]["roleid"])
-                                             };
+                            return CastAide.AsInt32(rs.Tables[0].Rows[0]["custid"]);
                         }
                 }
             }
 
-            return custDetail;
+            return 0;
         }
 
         #region Check Permission for Accout

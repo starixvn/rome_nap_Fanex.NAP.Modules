@@ -59,12 +59,6 @@ namespace Sunplus.Accounting.Entities.Customer
         [DataMember]
         public int CurrencyId { get; set; }
 
-        public int SuperId { get; set; }
-
-        public int MasterId { get; set; }
-
-        public int AgentId { get; set; }
-
         public int UpLineId { get; set; }
 
         public string Address { get; set; }
@@ -87,10 +81,6 @@ namespace Sunplus.Accounting.Entities.Customer
 
         [DataMember]
         public string LastLoginIp { get; set; }
-
-        public bool IsUplineSyncCasino { get; set; }
-
-        public bool IsUplineDisableCasino { get; set; }
 
         [DataMember]
         public int ErrorCode { get; set; }

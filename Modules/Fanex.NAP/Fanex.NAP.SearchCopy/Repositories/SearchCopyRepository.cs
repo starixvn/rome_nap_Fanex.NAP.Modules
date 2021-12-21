@@ -57,9 +57,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Repositories
                         custInfo.CreditMax = criteria.IsMember ? ((long)Math.Ceiling((decimal)reader["credit_max"])).ToString() : string.Empty;
                         custInfo.CurrencyId = Converter.ToInt(reader["currencyID"]);
                         custInfo.Currency = criteria.IsMember ? string.Empty : reader["currencyName"].ToString();
-                        custInfo.IsSyncCasino = Converter.To<byte>(reader["synccasino"]);
                         custInfo.RoleId = Converter.ToInt(reader["roleid"]);
-                        custInfo.DisableCasino = Utils.ToBoolean(reader["disableCasino"]);
                         custInfo.IsDirectCustomer = Utils.ToBoolean(reader["IsDirectCustomer"]);
                     }
                 }

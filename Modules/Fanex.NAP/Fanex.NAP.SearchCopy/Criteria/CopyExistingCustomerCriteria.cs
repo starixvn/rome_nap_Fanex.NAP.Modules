@@ -46,8 +46,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Criteria
 
         public string IP { get; set; }
 
-        public bool DisableCasino { get; set; }
-
         public bool DisableNG2 { get; set; }
 
         public bool IsSyncNG2 { get; set; }

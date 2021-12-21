@@ -7,6 +7,7 @@ using System;
 using Fanex.Data;
 using System.Data;
 using Fanex.Tarus.Infrastructure.Extensions;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
 {
@@ -32,29 +33,36 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
             return result;
         }
 
-        public override void ExchangeIns(Hashtable param, ref int errcode, ref string errmsg, ref int exchangeid)
+        public override Result ExchangeIns(Hashtable param)
         {
-
-            try
+            var result = new Result();
+            int exchangeid;
+            using (ObjectDb objDB = new ObjectDb("Acc_ExchangeIns", 600))
             {
 
-                using (ObjectDb objDB = new ObjectDb("Acc_ExchangeIns", 600))
-                {
+                objDB.AssignParamValues(param);
 
-                    objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
 
-                    objDB.ExecuteNonQuery();
-
-                    errcode = Convert.ToInt32(objDB.GetParameterValue("errcode"));
-                    errmsg = Convert.ToString(objDB.GetParameterValue("errmsg"));
-                    exchangeid = Convert.ToInt32(objDB.GetParameterValue("exchangeid"));
-                }
+                result.ErrorCode = Convert.ToInt32(objDB.GetParameterValue("errcode"));
+                result.ErrorMessage = Convert.ToString(objDB.GetParameterValue("errmsg"));
+                exchangeid = Convert.ToInt32(objDB.GetParameterValue("exchangeid"));
             }
-            catch (Exception ex)
+
+            if (result.ErrorCode == 0)
             {
-                errcode = 100;
-                errmsg = ex.Message;
+                var hash = new Hashtable();
+                hash.Add("CasinoID", "01");
+                hash.Add("IBCExchangeID", exchangeid);
+                hash.Add("Currency", param["currency"]);
+                hash.Add("ISOCode", param["code"]);
+                hash.Add("Actualrate", param["actualrate"]);
+                hash.Add("Sysdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
+                hash.Add("IP", param["ip"]);
+                ExchangeUpdToCSDB(hash);
             }
+
+            return result;
         }
 
         public override DbResult ExchangeSelByID(int exid)
@@ -81,8 +89,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
             return result;
         }
 
-        public override void ExchangeUpd(Hashtable param, ref int errcode, ref string errmsg)
+        public override Result ExchangeUpd(Hashtable param)
         {
+            var result = new Result();
             try
             {
                 using (ObjectDb objDB = new ObjectDb("EchangeUpd", 600))
@@ -90,34 +99,53 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
                     objDB.AssignParamValues(param);
                     objDB.ExecuteNonQuery();
 
-                    errcode = Convert.ToInt32(objDB.GetParameterValue("errcode"));
-                    errmsg = Convert.ToString(objDB.GetParameterValue("errmsg"));
+                    result.ErrorCode = Convert.ToInt32(objDB.GetParameterValue("errcode"));
+                    result.ErrorMessage = Convert.ToString(objDB.GetParameterValue("errmsg"));
+                }
+
+                if (result.ErrorCode == 0)
+                {
+                    var hash = new Hashtable();
+                    hash.Add("CasinoID", "01");
+                    hash.Add("IBCExchangeID", param["exchangeid"]);
+                    hash.Add("Currency", param["currency"]);
+                    hash.Add("ISOCode", param["code"]);
+                    hash.Add("Actualrate", param["actualrate"]);
+                    hash.Add("Sysdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
+                    hash.Add("IP", param["ip"]);
+                    ExchangeUpdToCSDB(hash);
                 }
             }
             catch (Exception ex)
             {
-                errcode = 100;
-                errmsg = ex.Message;
+                result.ErrorCode = 100;
+                result.ErrorMessage = ex.Message;
             }
+
+            return result;
         }
 
-        public override void ExchangeMultiBaseRateUpd(Hashtable param, ref int errcode, ref string errmsg)
+        private void ExchangeUpdToCSDB(Hashtable param)
         {
-            try
+            using (ObjectDb objDB = new ObjectDb("CS_TP_Admin_Exchange_UpdateExchange", 600))
             {
-                using (ObjectDb objDB = new ObjectDb("Acc_ExchangeMultiBaseRateUpd"))
-                {
-                    objDB.AssignParamValues(param);
-                    objDB.ExecuteNonQuery();
+                objDB.AssignParamValues(param);
 
-                    errcode = Convert.ToInt32(objDB.GetParameterValue("errcode"));
-                    errmsg = Convert.ToString(objDB.GetParameterValue("errmsg"));
-                }
+                objDB.ExecuteNonQuery();
             }
-            catch (Exception ex)
+
+            using (ObjectDb objDB = new ObjectDb("VG_TP_Admin_Exchange_UpdateExchange", 600))
             {
-                errcode = 100;
-                errmsg = ex.Message;
+                objDB.AssignParamValues(param);
+
+                objDB.ExecuteNonQuery();
+            }
+
+            using (ObjectDb objDB = new ObjectDb("Lotto_TP_Admin_Exchange_UpdateExchange", 600))
+            {
+                objDB.AssignParamValues(param);
+
+                objDB.ExecuteNonQuery();
             }
         }
 
