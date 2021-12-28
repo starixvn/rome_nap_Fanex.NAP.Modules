@@ -459,5 +459,13 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["IsShowSabaVirtualSports"] == "1");
             }
         }
+
+        public static bool IsShowSabaCasino
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsShowSabaCasino"] == "1");
+            }
+        }
     }
 }
