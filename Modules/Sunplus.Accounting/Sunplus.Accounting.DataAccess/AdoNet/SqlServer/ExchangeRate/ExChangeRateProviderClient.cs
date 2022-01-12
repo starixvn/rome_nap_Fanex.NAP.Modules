@@ -34,14 +34,14 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
 
         public override void ExchangeIns(Hashtable param, ref int errcode, ref string errmsg, ref int exchangeid)
         {
-            
+
             try
             {
 
                 using (ObjectDb objDB = new ObjectDb("Acc_ExchangeIns", 600))
                 {
 
-                    objDB.AssignParamValues(param); 
+                    objDB.AssignParamValues(param);
 
                     objDB.ExecuteNonQuery();
 
@@ -60,7 +60,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
         public override DbResult ExchangeSelByID(int exid)
         {
             DbResult result = null;
-            var hash = new Hashtable {{"exchangeid", exid}};
+            var hash = new Hashtable { { "exchangeid", exid } };
 
             try
             {
@@ -98,6 +98,55 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
             {
                 errcode = 100;
                 errmsg = ex.Message;
+            }
+        }
+
+        public override void ExchangeMultiBaseRateUpd(Hashtable param, ref int errcode, ref string errmsg)
+        {
+            try
+            {
+                using (ObjectDb objDB = new ObjectDb("Acc_ExchangeMultiBaseRateUpd"))
+                {
+                    objDB.AssignParamValues(param);
+                    objDB.ExecuteNonQuery();
+
+                    errcode = Convert.ToInt32(objDB.GetParameterValue("errcode"));
+                    errmsg = Convert.ToString(objDB.GetParameterValue("errmsg"));
+                }
+            }
+            catch (Exception ex)
+            {
+                errcode = 100;
+                errmsg = ex.Message;
+            }
+        }
+
+        public override void ExchangeMultiBaseRatePrepareUpd(Hashtable param, ref int errcode, ref string errmsg)
+        {
+            try
+            {
+                using (ObjectDb objDB = new ObjectDb("Acc_ChangeRate_Prepare_Upd"))
+                {
+                    objDB.AssignParamValues(param);
+                    objDB.ExecuteNonQuery();
+
+                    errcode = Convert.ToInt32(objDB.GetParameterValue("errcode"));
+                    errmsg = Convert.ToString(objDB.GetParameterValue("errmsg"));
+                }
+            }
+            catch (Exception ex)
+            {
+                errcode = 100;
+                errmsg = ex.Message;
+            }
+        }
+
+        public override void ExchangeMultiBaseRateUpdateForTable(Hashtable param)
+        {
+            using (ObjectDb objDB = new ObjectDb("Acc_ChangeRate_Main_Upd"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
             }
         }
     }
