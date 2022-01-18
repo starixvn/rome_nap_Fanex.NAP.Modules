@@ -52,13 +52,13 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
             if (result.ErrorCode == 0)
             {
                 var hash = new Hashtable();
-                hash.Add("CasinoID", "01");
-                hash.Add("IBCExchangeID", exchangeid);
-                hash.Add("Currency", param["currency"]);
-                hash.Add("ISOCode", param["code"]);
-                hash.Add("Actualrate", param["actualrate"]);
-                hash.Add("Sysdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
-                hash.Add("IP", param["ip"]);
+                hash.Add("casinoid", "01");
+                hash.Add("ibcexchangeid", exchangeid);
+                hash.Add("currency", param["currency"]);
+                hash.Add("isocode", param["code"]);
+                hash.Add("actualrate", param["actualrate"]);
+                hash.Add("sysdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
+                hash.Add("ip", param["ip"]);
                 ExchangeUpdToCSDB(hash);
             }
 
@@ -106,13 +106,13 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
                 if (result.ErrorCode == 0)
                 {
                     var hash = new Hashtable();
-                    hash.Add("CasinoID", "01");
-                    hash.Add("IBCExchangeID", param["exchangeid"]);
-                    hash.Add("Currency", param["currency"]);
-                    hash.Add("ISOCode", param["code"]);
-                    hash.Add("Actualrate", param["actualrate"]);
-                    hash.Add("Sysdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
-                    hash.Add("IP", param["ip"]);
+                    hash.Add("casinoid", 1);
+                    hash.Add("ibcexchangeid", param["exchangeid"]);
+                    hash.Add("currency", param["currency"]);
+                    hash.Add("isocode", param["code"]);
+                    hash.Add("actualrate", param["actualrate"]);
+                    hash.Add("sysdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
+                    hash.Add("ip", param["ip"]);
                     ExchangeUpdToCSDB(hash);
                 }
             }
@@ -129,23 +129,17 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
         {
             using (ObjectDb objDB = new ObjectDb("CS_TP_Admin_Exchange_UpdateExchange", 600))
             {
-                objDB.AssignParamValues(param);
-
-                objDB.ExecuteNonQuery();
+                objDB.ExecuteNonQuery(param);
             }
 
             using (ObjectDb objDB = new ObjectDb("VG_TP_Admin_Exchange_UpdateExchange", 600))
             {
-                objDB.AssignParamValues(param);
-
-                objDB.ExecuteNonQuery();
+                objDB.ExecuteNonQuery(param);
             }
 
             using (ObjectDb objDB = new ObjectDb("Lotto_TP_Admin_Exchange_UpdateExchange", 600))
             {
-                objDB.AssignParamValues(param);
-
-                objDB.ExecuteNonQuery();
+                objDB.ExecuteNonQuery(param);
             }
         }
 

@@ -29,8 +29,6 @@ namespace Sunplus.Accounting.DataAccess
 
         Result UpdateBetSettingNGDownline(string username, int isEnable, string maxBet, string minBet, string maxMatch, string maxBall);
 
-        string GetRNGSiteNameByCustId(int custId);
-
         MemberMBCBalanceModel GetMemberMBCBalanceModel(int custId);
 
         decimal GetMemberOustandingMBC(int custId);

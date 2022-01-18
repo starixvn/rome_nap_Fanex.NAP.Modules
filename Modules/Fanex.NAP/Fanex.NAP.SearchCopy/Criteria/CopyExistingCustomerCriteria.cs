@@ -36,8 +36,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Criteria
 
         public int CurrencyId { get; set; }
 
-        public bool IsSyncCasino { get; set; }
-
         public int Creator { get; set; }
 
         public string CreatorName { get; set; }
