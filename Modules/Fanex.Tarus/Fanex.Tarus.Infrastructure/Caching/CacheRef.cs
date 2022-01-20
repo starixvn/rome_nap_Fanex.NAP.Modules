@@ -18,35 +18,22 @@ namespace Fanex.Tarus.Infrastructure.Caching
     {
         private static readonly IRemotingRefService remotingRefService = new RemotingRefService();
 
-        public static string GetBettype(object bettypeID)
-        {
-            return remotingRefService.GetBetTypeName(bettypeID.ToString(), Thread.CurrentThread.CurrentCulture.Name);
-        }
+        public static string GetBettype(object bettypeID) => remotingRefService.GetBetTypeName(bettypeID.ToString(), Thread.CurrentThread.CurrentCulture.Name);
 
         public static string GetSportName(object sportID)
-        {
-            return remotingRefService.GetSportName(sportID.ToString(), Thread.CurrentThread.CurrentCulture.Name, string.Empty);
-        }
+            => remotingRefService.GetSportName(sportID.ToString(), Thread.CurrentThread.CurrentCulture.Name, null) ?? remotingRefService.GetResourceDataByRefIdAndResourceId(
+                "DummySport",
+                sportID.ToString(),
+                Thread.CurrentThread.CurrentCulture.Name,
+                string.Empty);
 
-        public static string GetTeamName(object teamID)
-        {
-            return remotingRefService.GetTeamName(teamID.ToString(), Thread.CurrentThread.CurrentCulture.Name, string.Empty);
-        }
+        public static string GetTeamName(object teamID) => remotingRefService.GetTeamName(teamID.ToString(), Thread.CurrentThread.CurrentCulture.Name, string.Empty);
 
-        public static string GetLeagueName(object leagueID)
-        {
-            return remotingRefService.GetLeagueName(leagueID.ToString(), Thread.CurrentThread.CurrentCulture.Name, string.Empty);
-        }
+        public static string GetLeagueName(object leagueID) => remotingRefService.GetLeagueName(leagueID.ToString(), Thread.CurrentThread.CurrentCulture.Name, string.Empty);
 
-        public static string GetHorseTeamName(object CodeID)
-        {
-            return remotingRefService.GetHorseTeamName(CastAide.AsString(CodeID), Thread.CurrentThread.CurrentCulture.Name);
-        }
+        public static string GetHorseTeamName(object CodeID) => remotingRefService.GetHorseTeamName(CastAide.AsString(CodeID), Thread.CurrentThread.CurrentCulture.Name);
 
-        public static string GetOddsTypeName(object OddsType)
-        {
-            return remotingRefService.GetOddsTypeName(CastAide.AsString(OddsType), Thread.CurrentThread.CurrentCulture.Name);
-        }
+        public static string GetOddsTypeName(object OddsType) => remotingRefService.GetOddsTypeName(CastAide.AsString(OddsType), Thread.CurrentThread.CurrentCulture.Name);
 
         public static string GetCombinationName(string betteam)
         {
@@ -78,7 +65,7 @@ namespace Fanex.Tarus.Infrastructure.Caching
         public static string GetLiveCasinoResult(int resultId)
         {
             string result = string.Empty;
-            
+
             return remotingRefService.GetCasinoBetItem(resultId.ToString(), Thread.CurrentThread.CurrentCulture.Name);
         }
 
