@@ -12,7 +12,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
     using Core.Web;
     using Core.Web.Controllers;
     using Criteria;
-    using GoldDeluxe.CoreSetting.CommandResult;
     using Logging.Extensions.Web;
     using NAP.Framework.Data;
     using Services;
