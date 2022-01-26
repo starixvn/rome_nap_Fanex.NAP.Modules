@@ -1,25 +1,31 @@
 ﻿namespace Fanex.Tarus.Admin.Criteria.FinanceGroupsConfig
 {
     using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.Admin.FinanceGroupsConfig;
     using Fanex.Tarus.Infrastructure.Common;
     using Fanex.Tarus.Infrastructure.Helper;
+    using System.Collections.Generic;
+    using System.Text;
 
     public class FinanceGroupIsViewUpdCriteria : CriteriaBase
     {
         [SpParam(Ignored = true)]
-        public string GroupId { get; set; }
-
-        [SpParam(Ignored = true)]
-        public string UserName { get; set; }
-
-        [SpParam(Ignored = true)]
-        public int IsView { get; set; }
+        public List<FinanceCodeSelectModel> FinanceCodes { get; set; } = new List<FinanceCodeSelectModel>();
 
         public string XmlData
         {
             get
             {
-                return $"<root><r GroupId=\"{GroupId}\" UserName=\"{UserName}\" IsView=\"{IsView}\"/></root>";
+                var builder = new StringBuilder();
+
+                builder.Append("<root>");
+                foreach (var code in FinanceCodes)
+                {
+                    builder.Append($"<r GroupId=\"{code.GroupId}\" UserName=\"{code.FinanceCode}\" IsView=\"{code.IsView}\"/>");
+                }
+                builder.Append("</root>");
+
+                return builder.ToString();
             }
         }
 
