@@ -3,6 +3,7 @@
     using Fanex.Tarus.Admin.Business.FinanceGroupsConfig;
     using Fanex.Tarus.Admin.Criteria.FinanceGroupsConfig;
     using Fanex.Tarus.Admin.Entities.FinanceGroupsConfig;
+    using Fanex.Tarus.Admin.Requests.FinanceGroupsConfig;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
     using System.Web.Mvc;

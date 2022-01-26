@@ -4,20 +4,21 @@
     using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.Entities.FinanceGroupsConfig;
     using Fanex.Tarus.Admin.Entities.SMAManagement;
+    using Fanex.Tarus.Admin.ViewModel.FinanceGroupsConfig;
     using System.Collections.Generic;
 
     public interface IFinanceGroupsConfigDataAccess
     {
         IEnumerable<IdNameEntity> GroupSel(GetGroupsCriteria criteria);
-        FinanceGroupSelectResult FinanceGroupSel(FinanceGroupSelCriteria criteria);
+        FinanceGroupSelectViewModel FinanceGroupSel(FinanceGroupSelCriteria criteria);
         Result FinanceGroupUpd(FinanceGroupUpdCriteria criteria);
         Result FinanceGroupIsViewUpd(FinanceGroupIsViewUpdCriteria criteria);
         Result FinanceGroupDel(FinanceGroupDelCriteria criteria);
-        FinanceGroupValidateResult FinanceGroupInsValidation(FinanceGroupInsValidationCriteria critera);
-        FinanceGroupInsertResult FinanceGroupIns(FinanceGroupInsCriteria critera);
-        FinanceUserValidateResult FinanceUserInsValidation(FinanceUserInsValidationCriteria critera);
-        FinanceUserInsertResult FinanceUserIns(FinanceUserInsCriteria critera);
-        FinanceCodeValidateResult FinanceCodeInsValidation(FinanceCodeInsValidationCriteria critera);
-        FinanceCodeInsertResult FinanceCodeIns(FinanceCodeInsCriteria critera);
+        FinanceGroupValidateViewModel FinanceGroupInsValidation(FinanceGroupInsValidationCriteria critera);
+        FinanceGroupInsertViewModel FinanceGroupIns(FinanceGroupInsCriteria critera);
+        FinanceUserValidateViewModel FinanceUserInsValidation(FinanceUserInsValidationCriteria critera);
+        FinanceUserInsertViewModel FinanceUserIns(FinanceUserInsCriteria critera);
+        FinanceCodeValidateViewModel FinanceCodeInsValidation(FinanceCodeInsValidationCriteria critera);
+        FinanceCodeInsertViewModel FinanceCodeIns(FinanceCodeInsCriteria critera);
     }
 }

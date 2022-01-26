@@ -1,4 +1,4 @@
-﻿namespace Fanex.Tarus.Admin.Entities.FinanceGroupsConfig
+﻿namespace Fanex.Tarus.Admin.FinanceGroupsConfig
 {
     public class FinanceCodeSelectModel
     {

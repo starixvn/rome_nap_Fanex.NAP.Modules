@@ -1,8 +1,10 @@
-﻿namespace Fanex.Tarus.Admin.Entities.FinanceGroupsConfig
+﻿namespace Fanex.Tarus.Admin.ViewModel.FinanceGroupsConfig
 {
+    using Fanex.Tarus.Admin.Entities;
+    using Fanex.Tarus.Admin.Entities.FinanceGroupsConfig;
     using System.Collections.Generic;
 
-    public class FinanceCodeValidateResult : Result
+    public class FinanceCodeValidateViewModel : Result
     {
         public IList<FinanceCodeValidateModel> FinanceCodes { get; set; } = new List<FinanceCodeValidateModel>();
         public byte IsAssignCodes { get; set; }

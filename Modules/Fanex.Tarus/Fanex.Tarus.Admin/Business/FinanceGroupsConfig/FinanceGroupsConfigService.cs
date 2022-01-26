@@ -5,6 +5,8 @@
     using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.Entities.FinanceGroupsConfig;
     using Fanex.Tarus.Admin.Entities.SMAManagement;
+    using Fanex.Tarus.Admin.Requests.FinanceGroupsConfig;
+    using Fanex.Tarus.Admin.ViewModel.FinanceGroupsConfig;
     using System.Collections.Generic;
 
     public class FinanceGroupsConfigService : IFinanceGroupsConfigService
@@ -19,7 +21,7 @@
         public IEnumerable<IdNameEntity> GetGroups()
             => _dataAccess.GroupSel(new GetGroupsCriteria());
 
-        public FinanceGroupSelectResult Select(FinanceGroupSelCriteria request)
+        public FinanceGroupSelectViewModel Select(FinanceGroupSelCriteria request)
             => _dataAccess.FinanceGroupSel(request);
 
         public Result Update(FinanceGroupUpdCriteria request)
@@ -60,22 +62,22 @@
             return _dataAccess.FinanceGroupDel(delCriteria);
         }
 
-        public FinanceGroupValidateResult ValidateGroupInsertion(FinanceGroupInsValidationCriteria request)
+        public FinanceGroupValidateViewModel ValidateGroupInsertion(FinanceGroupInsValidationCriteria request)
             => _dataAccess.FinanceGroupInsValidation(request);
 
-        public FinanceGroupInsertResult InsertGroup(FinanceGroupInsCriteria request)
+        public FinanceGroupInsertViewModel InsertGroup(FinanceGroupInsCriteria request)
             => _dataAccess.FinanceGroupIns(request);
 
-        public FinanceUserValidateResult ValidateUserInsertion(FinanceUserInsValidationCriteria request)
+        public FinanceUserValidateViewModel ValidateUserInsertion(FinanceUserInsValidationCriteria request)
             => _dataAccess.FinanceUserInsValidation(request);
 
-        public FinanceUserInsertResult InsertUser(FinanceUserInsCriteria request)
+        public FinanceUserInsertViewModel InsertUser(FinanceUserInsCriteria request)
          => _dataAccess.FinanceUserIns(request);
 
-        public FinanceCodeValidateResult ValidateCodeInsertion(FinanceCodeInsValidationCriteria request)
+        public FinanceCodeValidateViewModel ValidateCodeInsertion(FinanceCodeInsValidationCriteria request)
             => _dataAccess.FinanceCodeInsValidation(request);
 
-        public FinanceCodeInsertResult InsertCode(FinanceCodeInsCriteria request)
+        public FinanceCodeInsertViewModel InsertCode(FinanceCodeInsCriteria request)
             => _dataAccess.FinanceCodeIns(request);
     }
 }

@@ -6,6 +6,8 @@
     using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.Entities.FinanceGroupsConfig;
     using Fanex.Tarus.Admin.Entities.SMAManagement;
+    using Fanex.Tarus.Admin.FinanceGroupsConfig;
+    using Fanex.Tarus.Admin.ViewModel.FinanceGroupsConfig;
     using System.Collections;
     using System.Collections.Generic;
 
@@ -50,9 +52,9 @@
             return groups;
         }
 
-        public FinanceGroupSelectResult FinanceGroupSel(FinanceGroupSelCriteria critera)
+        public FinanceGroupSelectViewModel FinanceGroupSel(FinanceGroupSelCriteria critera)
         {
-            var result = new FinanceGroupSelectResult();
+            var result = new FinanceGroupSelectViewModel();
             using (var db = new ObjectDb(critera.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(critera.GetSpParams()))
@@ -108,9 +110,9 @@
         public Result FinanceGroupDel(FinanceGroupDelCriteria criteria)
             => ExecuteNonQuery(criteria.GetSettingKey(), criteria.GetSpParams());
 
-        public FinanceGroupValidateResult FinanceGroupInsValidation(FinanceGroupInsValidationCriteria critera)
+        public FinanceGroupValidateViewModel FinanceGroupInsValidation(FinanceGroupInsValidationCriteria critera)
         {
-            var record = new FinanceGroupValidateResult();
+            var record = new FinanceGroupValidateViewModel();
             using (var db = new ObjectDb(critera.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(critera.GetSpParams()))
@@ -154,9 +156,9 @@
             return record;
         }
 
-        public FinanceGroupInsertResult FinanceGroupIns(FinanceGroupInsCriteria critera)
+        public FinanceGroupInsertViewModel FinanceGroupIns(FinanceGroupInsCriteria critera)
         {
-            var result = new FinanceGroupInsertResult();
+            var result = new FinanceGroupInsertViewModel();
             using (var db = new ObjectDb(critera.GetSettingKey()))
             {
                 db.ExecuteNonQuery(critera.GetSpParams());
@@ -175,9 +177,9 @@
             return result;
         }
 
-        public FinanceUserValidateResult FinanceUserInsValidation(FinanceUserInsValidationCriteria critera)
+        public FinanceUserValidateViewModel FinanceUserInsValidation(FinanceUserInsValidationCriteria critera)
         {
-            var record = new FinanceUserValidateResult();
+            var record = new FinanceUserValidateViewModel();
             using (var db = new ObjectDb(critera.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(critera.GetSpParams()))
@@ -208,9 +210,9 @@
             return record;
         }
 
-        public FinanceUserInsertResult FinanceUserIns(FinanceUserInsCriteria critera)
+        public FinanceUserInsertViewModel FinanceUserIns(FinanceUserInsCriteria critera)
         {
-            var result = new FinanceUserInsertResult();
+            var result = new FinanceUserInsertViewModel();
             using (var db = new ObjectDb(critera.GetSettingKey()))
             {
                 db.ExecuteNonQuery(critera.GetSpParams());
@@ -227,9 +229,9 @@
             return result;
         }
 
-        public FinanceCodeValidateResult FinanceCodeInsValidation(FinanceCodeInsValidationCriteria critera)
+        public FinanceCodeValidateViewModel FinanceCodeInsValidation(FinanceCodeInsValidationCriteria critera)
         {
-            var record = new FinanceCodeValidateResult();
+            var record = new FinanceCodeValidateViewModel();
             using (var db = new ObjectDb(critera.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(critera.GetSpParams()))
@@ -260,9 +262,9 @@
             return record;
         }
 
-        public FinanceCodeInsertResult FinanceCodeIns(FinanceCodeInsCriteria critera)
+        public FinanceCodeInsertViewModel FinanceCodeIns(FinanceCodeInsCriteria critera)
         {
-            var result = new FinanceCodeInsertResult();
+            var result = new FinanceCodeInsertViewModel();
             using (var db = new ObjectDb(critera.GetSettingKey()))
             {
                 db.ExecuteNonQuery(critera.GetSpParams());
