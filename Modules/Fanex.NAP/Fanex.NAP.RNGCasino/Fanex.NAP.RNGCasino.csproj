@@ -237,25 +237,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configurations\OWRNGCasinoCollection.cs" />
-    <Compile Include="Configurations\OWRNGCasinoElement.cs" />
-    <Compile Include="Configurations\OWRNGCasinoSection.cs" />
-    <Compile Include="Constants\BetTypeConstants.cs" />
-    <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Controllers\RNGCasinoBetListController.cs" />
     <Compile Include="Criteria\GetJackpotDetailsCriteria.cs" />
     <Compile Include="Criteria\GetResultCriteria.cs" />
     <Compile Include="Criteria\GetRNGCasinoBetDetailsCriteria.cs" />
-    <Compile Include="Criteria\GetRNGCasinoResultCriteria.cs" />
     <Compile Include="Criteria\GetVoidbridgeResultCriteria.cs" />
     <Compile Include="Helpers\BetListHelper.cs" />
     <Compile Include="Models\BetDetail.cs" />
     <Compile Include="Models\HandHistory\HandHistoryModel.cs" />
-    <Compile Include="Models\HandHistory\AuthInfo.cs" />
-    <Compile Include="Models\HandHistory\CallInfo.cs" />
-    <Compile Include="Models\HandHistory\TokenResponse.cs" />
-    <Compile Include="Models\HandHistory\RequestInfo.cs" />
-    <Compile Include="Models\HandHistory\TokenResult.cs" />
     <Compile Include="Models\ResultDetail.cs" />
     <Compile Include="Models\TicketDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
