@@ -49,6 +49,7 @@
 
                 Odds = Converter.ToDecimal(reader["odds"]),
                 Currency = Converter.ToString2(reader["currency"]),
+                CurrencyId = Converter.ToInt(reader["currencyid"]),
                 Stake = Converter.ToDecimal(reader["stake"]),
                 ActualStake = Converter.ToDecimal(reader["actual_stake"]),
                 Winlost = Converter.ToDecimal(reader["WinLost"]),
@@ -71,11 +72,13 @@
                 SuperComm = Converter.ToDecimal(reader["scomm"]),
                 SuperDiscount = Converter.ToDecimal(reader["sdiscount"]),
                 BetCheck = Converter.ToString2(reader["BetCheck"]),
+                BetTeam = Converter.ToString2(reader["BetTeam"]),
 
                 MatchCode = Converter.ToString2(reader["matchcode"]),
                 ExtraInfo = Converter.ToString2(reader["ExtraInfo"]),
                 BetdaqId = Converter.To<long>(reader["BetdaqId"]),
-                OddsSpread = Converter.ToDecimal(reader["OddsSpread"])
+                OddsSpread = Converter.ToDecimal(reader["OddsSpread"]),
+                SiteId = Converter.ToString2(reader["SiteId"])
             };
         }
     }

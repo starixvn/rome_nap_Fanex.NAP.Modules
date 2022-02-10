@@ -33,6 +33,7 @@
 
                             Odds = Converter.ToDecimal(reader["odds"]),
                             Currency = Converter.ToString2(reader["currency"]),
+                            CurrencyId = Converter.ToInt(reader["currencyid"]),
                             Stake = Converter.ToDecimal(reader["stake"]),
                             ActualStake = Converter.ToDecimal(reader["actual_stake"]),
                             Winlost = Converter.ToDecimal(reader["WinLost"]),
@@ -62,6 +63,7 @@
                             ExtraInfo = Converter.ToString2(reader["ExtraInfo"]),
                             EventDate = Converter.ToDateTime(reader["eventdate"]),
                             BetTeam = Converter.ToString2(reader["BetTeam"]),
+                            SiteId = Converter.ToString2(reader["SiteId"])
                         });
                     }
                 }

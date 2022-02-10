@@ -34,14 +34,6 @@
         }
 
         [HttpGet]
-        public ActionResult GetHandHistory(GetRNGCasinoResultCriteria criteria)
-        {
-            ViewBag.ProductName = BetListResources.Product_6;
-            var result = _rngCasinoService.GetHandHistory(criteria);
-            return View("~/Areas/RNGCasino/Views/HandHistory_API/Index.cshtml", result);
-        }
-
-        [HttpGet]
         public ActionResult GetVoidbridgeResult(GetVoidbridgeResultCriteria criteria)
         {
             ViewBag.ProductName = BetListResources.Voidbridge;
