@@ -37,6 +37,8 @@ namespace Fanex.Tarus.Web.Models.Customer.Balance
 
         public double YesterdayBalance { get; set; }
 
+        public double PendingTransfer3rd { get; set; }        
+
         public double Cash { get; set; }
 
         public double YesterdayCash { get; set; }

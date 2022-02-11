@@ -68,6 +68,9 @@
       <HintPath>..\..\..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.2-Beta01\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.3\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
@@ -186,10 +189,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.DataAccess.Implement\Fanex.Tarus.DataAccess.Implement.csproj">
-      <Project>{9780010a-7eec-4726-959b-d2cffb1875ee}</Project>
-      <Name>Fanex.Tarus.DataAccess.Implement</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Entities\Fanex.Tarus.Entities.csproj">
       <Project>{0d0f3c0d-f85c-4b0d-b033-16424e1ae5e0}</Project>
       <Name>Fanex.Tarus.Entities</Name>
