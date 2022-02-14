@@ -33,6 +33,6 @@
 
         public int UserID { get; } = AppSession.AccId;
 
-        public override string GetSettingKey() => "Acc_FinanceGroupsConfig_FinanceGroupDel";
+        public override string GetSettingKey() => "Acc_FinanceGroupsConfig_FinanceCodeDel";
     }
 }

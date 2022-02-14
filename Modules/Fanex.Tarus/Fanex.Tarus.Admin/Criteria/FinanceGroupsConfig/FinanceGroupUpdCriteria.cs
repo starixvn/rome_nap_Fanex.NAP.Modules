@@ -17,6 +17,6 @@
         public int UserID { get; } = AppSession.AccId;
 
         public override string GetSettingKey()
-            => "Acc_FinanceGroupsConfig_FinanceGroup_GroupUpd";
+            => "Acc_FinanceGroupsConfig_FinanceUser_GroupUpd";
     }
 }

@@ -33,6 +33,6 @@
 
         public int UserID { get; } = AppSession.AccId;
 
-        public override string GetSettingKey() => "Acc_FinanceGroupsConfig_FinanceGroup_IsViewUpd";
+        public override string GetSettingKey() => "Acc_FinanceGroupsConfig_FinanceCode_IsViewUpd";
     }
 }
