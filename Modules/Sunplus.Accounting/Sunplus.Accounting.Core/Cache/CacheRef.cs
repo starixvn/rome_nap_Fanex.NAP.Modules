@@ -17,9 +17,11 @@ namespace Sunplus.Accounting.Core.Cache
         }
 
         public static string GetSportName(object sportID)
-        {
-            return remotingRefService.GetSportName(sportID.ToString(), Thread.CurrentThread.CurrentCulture.Name, string.Empty);
-        }
+            => remotingRefService.GetSportName(sportID.ToString(), Thread.CurrentThread.CurrentCulture.Name, null) ?? remotingRefService.GetResourceDataByRefIdAndResourceId(
+                "DummySport",
+                sportID.ToString(),
+                Thread.CurrentThread.CurrentCulture.Name,
+                string.Empty);
 
         public static string GetTeamName(object teamID)
         {
