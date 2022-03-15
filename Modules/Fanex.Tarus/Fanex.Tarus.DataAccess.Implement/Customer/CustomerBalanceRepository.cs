@@ -50,8 +50,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 GivenCredit = Utils.ToDouble(reader["GivenCredit"]),
                 AvailableCredit = Utils.ToDouble(reader["AvailableCredit"]),
                 Recommend = Utils.ToDouble(reader["Recommend"]),
-                MRecommend = Utils.ToDouble(reader["MRecommend"]),
-                SyncCasino = Utils.ToBoolean(reader["SyncCasino"])
+                MRecommend = Utils.ToDouble(reader["MRecommend"])
             };
 
             if (customerBalance.Closed)

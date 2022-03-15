@@ -61,8 +61,7 @@ namespace Fanex.Tarus.Finance.Business.Customer
                 Type = "Super",
                 RoleId = CastAide.AsInt32(row["roleid"]),
                 ParentId = 0,
-                IsAgent = 0,          
-                DisableCS = WebSettings.disableCS,
+                IsAgent = 0
             };
             if (custInfo.RoleId == 2)
             {
