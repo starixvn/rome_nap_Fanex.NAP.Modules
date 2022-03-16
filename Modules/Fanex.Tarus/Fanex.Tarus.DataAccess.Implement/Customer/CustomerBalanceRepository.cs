@@ -44,6 +44,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 Outstanding = Utils.ToDouble(reader["Outstanding"]),
                 Balance = Utils.ToDouble(reader["Balance"]),
                 YesterdayBalance = Utils.ToDouble(reader["YesterdayBalance"]),
+                PendingTransfer3rd = Utils.ToDouble(reader["PendingTransfer3rd"]),
                 Cash = Utils.ToDouble(reader["Cash"]),
                 YesterdayCash = Utils.ToDouble(reader["YesterdayCash"]),
                 GivenCredit = Utils.ToDouble(reader["GivenCredit"]),
