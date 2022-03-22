@@ -96,6 +96,26 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
             return result;
         }
 
+        public override void ExchangeMultiBaseRateUpd(Hashtable param, ref int errcode, ref string errmsg)
+        {
+            try
+            {
+                using (ObjectDb objDB = new ObjectDb("Acc_ExchangeMultiBaseRateUpd"))
+                {
+                    objDB.AssignParamValues(param);
+                    objDB.ExecuteNonQuery();
+
+                    errcode = Convert.ToInt32(objDB.GetParameterValue("errcode"));
+                    errmsg = Convert.ToString(objDB.GetParameterValue("errmsg"));
+                }
+            }
+            catch (Exception ex)
+            {
+                errcode = 100;
+                errmsg = ex.Message;
+            }
+        }
+
         public override void ExchangeMultiBaseRatePrepareUpd(Hashtable param, ref int errcode, ref string errmsg)
         {
             try
