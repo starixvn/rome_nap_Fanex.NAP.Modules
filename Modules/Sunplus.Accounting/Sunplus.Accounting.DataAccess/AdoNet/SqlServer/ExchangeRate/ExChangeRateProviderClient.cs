@@ -31,10 +31,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
             return result;
         }
 
-        public override Result ExchangeIns(Hashtable param)
+        public override Result ExchangeIns(Hashtable param, ref int exchangeid)
         {
             var result = new Result();
-            int exchangeid;
             using (ObjectDb objDB = new ObjectDb("Acc_ExchangeIns", 600))
             {
 
