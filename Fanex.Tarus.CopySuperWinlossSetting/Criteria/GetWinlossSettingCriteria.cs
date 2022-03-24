@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using Fanex.NAP.Framework.Data;
-using Fanex.Tarus.CopySuperWinlossSetting.Constant;
+﻿using Fanex.NAP.Framework.Data;
+using Sunplus.Accounting.Core.Configurations;
 
 namespace Fanex.Tarus.CopySuperWinlossSetting.Criteria
 {
@@ -11,6 +10,8 @@ namespace Fanex.Tarus.CopySuperWinlossSetting.Criteria
         public int ProductId { get; set; }
 
         public int SettingType { get; set; }
+
+        public int SettingStatus => WebSettings.SettingStatus;
 
         public override bool IsValid()
         {
