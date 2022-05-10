@@ -32,16 +32,7 @@ namespace Sunplus.Accounting.Core.Common
         public static readonly string TAG_BETTING_LIMIT = "betting_limit";
         public static readonly string TAG_BET_SETTING = "cs-bet-setting";
 
-        public static readonly string TAG_CASINO_EDIT = "casino-edit";
         public static readonly string TAG_FINANCE_EDIT = "finance-edit";
-
-        //path to template
-        public static readonly string CASINO_PT_TEMPLATE = "Customer/v2/CasinoPT.htm";
-
-        public static readonly string CASINO_PT_HEADER_TEMPLATE = "Customer/v2/CasinoPTHeader.htm";
-
-        public static readonly string CASINO_P2P_PT_TEMPLATE = "Customer/v2/CasinoP2PPT.htm";
-        public static readonly string CASINO_OTHERS_PT_TEMPLATE = "Customer/v2/CasinoOthersPT.htm";
 
         ////////////////////////////////
 
@@ -219,9 +210,6 @@ namespace Sunplus.Accounting.Core.Common
         public static readonly string CTR_OPTIONS_PREFIX = "opt";
 
         //Define ID
-        public static readonly string ID_CHECKBOX_DISABLEDCASINO = "chkDisabledCasino";
-
-        public static readonly string ID_CHECKBOX_DISABLEDCASINO_DL = "chkDisabledCasino_DL";
         public static readonly string ID_SPAN_DOWNLINE_OPT = "spanDownlineOpt";
         public static readonly string ID_CHECKBOX_CLOSED = "chkClosed";
         public static readonly string ID_CHECKBOX_SUSPEND = "chkSuspend";
@@ -286,9 +274,6 @@ namespace Sunplus.Accounting.Core.Common
         public static readonly string CS_SUBMIT_FUNC = "DelayReloadPage(); obj('btnSubmit').click();";
         //////////END
 
-        //Define provider type
-        public static readonly string PROVIDER_CS_API = "DAL.APIClient.APICasinoProvider";
-
         public static readonly string PROVIDER_IBC_LIB = "DAL.APIClient.IBCLibProvider";
         ///////
 
@@ -317,37 +302,6 @@ namespace Sunplus.Accounting.Core.Common
             Button = 4, Text = 3, Hidden = 2, CheckBox = 1
         }
 
-        //Casino Group
-        public enum CasinoGroup
-        {
-            Group1 = 1, Group2 = 2
-        }
-
-        public static readonly string CASINO_GROUP1 = "01";
-        public static readonly string CASINO_GROUP2 = "02";
-
-        public static string GetCasinoGroup(CasinoGroup group)
-        {
-            try
-            {
-                switch (group)
-                {
-                    case CasinoGroup.Group1:
-                        return CASINO_GROUP1;
-                    case CasinoGroup.Group2:
-                        return CASINO_GROUP2;
-                }
-                return "";
-            }
-            catch (Exception ex)
-            {
-                {
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                }
-                return string.Empty;
-            }
-        }
-
         public static string GetInputType(InputType input)
         {
             try
@@ -369,21 +323,6 @@ namespace Sunplus.Accounting.Core.Common
             {
                 return string.Empty;
             }
-        }
-
-        public enum CasinoError : int
-        {
-            Not_Casino_Customer = 0
-        }
-
-        public static string GetCasinoError(CasinoError errorCode)
-        {
-            switch (errorCode)
-            {
-                case CasinoError.Not_Casino_Customer:
-                    return "Not casino's Customer";
-            }
-            return "";
         }
 
         //User type

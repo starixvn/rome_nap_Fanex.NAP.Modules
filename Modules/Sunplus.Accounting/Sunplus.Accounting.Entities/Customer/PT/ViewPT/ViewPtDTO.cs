@@ -54,12 +54,6 @@ namespace Sunplus.Accounting.Entities.Customer.PT.ViewPT
         public CustomerRelation CustomerInfo { get; set; }
 
         [DataMember]
-        public bool IsCasino { get; set; }
-
-        [DataMember]
-        public bool IsGoldDeluxe { get; set; }       
-
-        [DataMember]
         public bool IsAGCasino { get; set; }
 
         [DataMember]

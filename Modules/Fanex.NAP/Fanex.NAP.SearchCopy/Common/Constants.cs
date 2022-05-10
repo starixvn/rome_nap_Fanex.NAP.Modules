@@ -9,9 +9,4 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Common
         public const string SuccessMember = "Created Member Successfully !";
         public const string FailedMember = "Unable to copy the Member, please try again !";
     }
-
-    internal static class FailedSyncMessageConstant
-    {
-        public const string Casino = "RNG Casino failed to synchronize !";
-    }
 }

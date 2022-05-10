@@ -165,8 +165,7 @@ namespace Sunplus.Accounting.Core.Common
                 Other,
                 ExportStatement,
                 BetListByIp,
-                MeetingComm,
-                CasinoSync
+                MeetingComm
             }
 
             /// <summary>

@@ -40,7 +40,6 @@ namespace Sunplus.Accounting.Core.Constant
         public static readonly int Squash = 30;
         public static readonly int OtherSports = 99;
         public static readonly int Financials = 201;
-        public static readonly int Casino = 251;
         public static readonly int Games = 252;
 
         public static readonly IEnumerable<int> Sports = new[]
@@ -158,9 +157,6 @@ namespace Sunplus.Accounting.Core.Constant
         public static readonly int FortyFiveMinOE = 64;
         public static readonly int SixtyMinOE = 65;
         public static readonly int EndofdayOE = 66;
-        public static readonly int CasinoGames = 71;
-        public static readonly int P2PGames = 72;
-        public static readonly int CasinoMiniGame = 73;
 
         //Live Bettype
 

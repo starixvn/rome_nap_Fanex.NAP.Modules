@@ -141,8 +141,8 @@
     <Reference Include="StackExchange.Redis, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c219ff1ca8c2ce46, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\StackExchange.Redis.2.0.519\lib\net461\StackExchange.Redis.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.4.6\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.4.11\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -221,19 +221,6 @@
     <Compile Include="Configurations\KenoBetTypes\KenoBetTypesCollection.cs" />
     <Compile Include="Configurations\KenoBetTypes\KenoBetTypesElement.cs" />
     <Compile Include="Configurations\KenoBetTypes\KenoBetTypesSection.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\AdminSession.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\BetAggregatorSection.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\BetListSection.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\CasinoSession.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\CreditTermSession.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\CustomerSession.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\ExchangeRateSession.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\HelperSession.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\LogDisplaySection.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\SportbookPtSession.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\TransactionGroupSection.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\UserControlSession.cs" />
-    <Compile Include="Configurations\StoreProcedureGroup\ViewPtSession.cs" />
     <Compile Include="Configurations\StoreProcedureSection.cs" />
     <Compile Include="Configurations\VirtualRate\VirtualRateCollection.cs" />
     <Compile Include="Configurations\VirtualRate\VirtualRateElement.cs" />

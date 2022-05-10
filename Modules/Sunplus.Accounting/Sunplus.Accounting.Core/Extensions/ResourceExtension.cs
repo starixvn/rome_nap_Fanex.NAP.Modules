@@ -8,7 +8,7 @@ namespace Sunplus.Accounting.Core.Extensions
     {
         public enum Resources
         {
-            Casino, ErrorMsg, Language, MiniTemplate, Viewlog, MoveCust, Racing, ViewlogV2, CategorizeStatus,
+            ErrorMsg, Language, MiniTemplate, Viewlog, MoveCust, Racing, ViewlogV2, CategorizeStatus,
             VirtualSports
         }
 

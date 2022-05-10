@@ -15,7 +15,6 @@ using Sunplus.Accounting.Core.Cache.Extension;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Accounting.Entities;
 using Fanex.Module.NG2.Services;
@@ -358,27 +357,7 @@ namespace Sunplus.Accounting.Business.Customer
         public static CustDetail GetCustInfo(HttpRequest data)
         {
             string uplineId = data["uplineid"] ?? data["agentId"];
-            var uplineDetail = new CSCustomerDetail();
-            var customer = new CustDetail
-            {
-                Closed = false,
-                Suspend = false
-            };
-
-            if (!string.IsNullOrEmpty(uplineId))
-            {
-                //UpLineId = ;
-                uplineDetail = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(CastAide.AsInt32(uplineId), WebSettings.SettingStatus);
-
-                customer.SuperId = uplineDetail.SIBCCustID;
-                customer.MasterId = uplineDetail.MIBCCustID;
-                customer.AgentId = uplineDetail.AIBCCustID;
-
-                customer.Closed = uplineDetail.Closed;
-                customer.Suspend = uplineDetail.Suspend;
-                customer.IsUplineSyncCasino = uplineDetail.CasinoSync;
-                customer.IsUplineDisableCasino = uplineDetail.CasinoDisabled;
-            }
+            var customer = new CustDetail();
 
             customer.FirstName = data["txtFirstname"] ?? data["txtFName"];
             customer.LastName = data["txtLastname"] ?? data["txtLName"];
@@ -400,7 +379,7 @@ namespace Sunplus.Accounting.Business.Customer
             customer.Password = (data["txtPwd"] == null) ? "" : Encryption.CfsEnCode(data["txtPwd"].Trim());
             if (data["hdCurr"] != null || uplineId != null)
             {
-                string currency = data["hdCurr"] ?? uplineDetail.Currency.ToString();
+                string currency = data["hdCurr"];
                 customer.CurrencyId = CastAide.AsInt32(currency);
                 customer.CurrencyName = CacheUtils.GetExchangeName(CacheUtils.Exchange, customer.CurrencyId);
             }
@@ -408,32 +387,23 @@ namespace Sunplus.Accounting.Business.Customer
             return customer;
         }
 
-        public Result AutoInsertThridPartyAccount(CSCustomerDetail custInfo, CustDetail uplineInfo, int userId, string userName, string ip)
+        public Result AutoInsertThridPartyAccount(int custId, string userName, int roleId, int uplineId, bool isDisableNG2Upline, int currencyId, bool isSyncNG2Upline, int userId, string ip)
         {
             // Delay 3 sec to allow system do replication.
             System.Threading.Thread.Sleep(3000);
 
             var result = new Result();
-            if (uplineInfo.IsUplineSyncCasino)
-            {
-                System.Threading.Thread.Sleep(3000);
-                var csService = new PT.Casino.CasinoManager();
-                //custInfo.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(custInfo.IBCCustID);                
-
-                csService.AutoInsertCasinoAccount(custInfo, userId, userName, ip);
-            }
-
-            if (uplineInfo.IsUplineSyncNG2)
+            if (isSyncNG2Upline)
             {
                 ING2StatusService syncService = new NG2StatusService();
                 syncService.AutoInsertAccount(
-                    custInfo.IBCCustID, 
-                    custInfo.UserName, 
-                    (Fanex.Module.NG2.Entities.RoleId)custInfo.RoleId, 
-                    custInfo.UpperCustID, 
-                    custInfo.IsDisableNG2Upline,
-                    Fanex.Module.NG2.Entities.SiteId.NAP, 
-                    custInfo.Currency, 
+                    custId,
+                    userName, 
+                    (Fanex.Module.NG2.Entities.RoleId)roleId,
+                    uplineId,
+                    isDisableNG2Upline,
+                    Fanex.Module.NG2.Entities.SiteId.NAP,
+                    currencyId, 
                     AppSession.AccId, 
                     AccCommon.SystemId);
             }

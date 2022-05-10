@@ -16,13 +16,9 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Entities
 
         public string Currency { get; set; }
 
-        public byte IsSyncCasino { get; set; }
-
         public bool IsDirectCustomer { get; set; }
 
         public byte IsSyncNG2 { get; set; }
-
-        public bool DisableCasino { get; set; }
 
         public byte DisableNG2 { get; internal set; }
     }

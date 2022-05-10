@@ -15,18 +15,6 @@ namespace Sunplus.Accounting.Core.Common
     /// </summary>
     public class AppSession
     {
-        public static bool IsSyncCSCurrentCust
-        {
-            get { return CastAide.AsBoolean(HttpContext.Current.Session["IsSyncCSCurrentCust"], false); }
-            set { HttpContext.Current.Session["IsSyncCSCurrentCust"] = value; }
-        }
-
-        public static bool IsSyncLCSCurrentCust
-        {
-            get { return CastAide.AsBoolean(HttpContext.Current.Session["IsSyncLCSCurrentCust"], false); }
-            set { HttpContext.Current.Session["IsSyncLCSCurrentCust"] = value; }
-        }
-
         public static List<MenuBO> UserMenu
         {
             get

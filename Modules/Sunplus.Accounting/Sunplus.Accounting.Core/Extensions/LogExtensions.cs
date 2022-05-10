@@ -17,10 +17,5 @@ namespace Sunplus.Accounting.Core.Extensions
         {
             Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex);
         }
-
-        public static void CasinoExceptionHandler(Exception casinoEx)
-        {
-            Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(casinoEx, TraceEventType.Information);
-        }
     }
 }

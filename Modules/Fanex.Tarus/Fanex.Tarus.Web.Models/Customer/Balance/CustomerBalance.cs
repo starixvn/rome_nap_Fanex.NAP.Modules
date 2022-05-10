@@ -50,7 +50,5 @@ namespace Fanex.Tarus.Web.Models.Customer.Balance
         public double Recommend { get; set; }
 
         public double MRecommend { get; set; }
-
-        public bool SyncCasino { get; set; }
     }
 }

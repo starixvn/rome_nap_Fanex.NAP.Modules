@@ -6,11 +6,6 @@ namespace Sunplus.Accounting.DataAccess
 {
     public static class IBCProvider
     {
-        public static CasinoProvider Casino
-        {
-            get { return CasinoProvider.Instance; }
-        }
-
         public static IBCCustomerProvider IBCCustomer
         {
             get { return IBCCustomerProvider.Instance; }

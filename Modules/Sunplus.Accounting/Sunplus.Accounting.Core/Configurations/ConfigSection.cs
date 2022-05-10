@@ -5,12 +5,6 @@ namespace Sunplus.Accounting.Core.Configurations
 {
     public class IBCAccounting : ConfigurationSection
     {
-        [ConfigurationProperty("Casino", IsRequired = true)]
-        public CasinoElements Casino
-        {
-            get { return (CasinoElements)base["Casino"]; }
-        }
-
         [ConfigurationProperty("IBCCustomer", IsRequired = true)]
         public IBCCustomerElements IBCCustomer
         {
@@ -63,41 +57,6 @@ namespace Sunplus.Accounting.Core.Configurations
         public ExportStatementElements ExportStatement
         {
             get { return (ExportStatementElements)base["ExportStatement"]; }
-        }
-    }
-
-    public class CasinoElements : ConfigurationElement
-    {
-        private string _ProviderType;
-        private bool _UseWebConfigProviderType = true;
-
-        public bool UseWebConfigProviderType
-        {
-            get { return _UseWebConfigProviderType; }
-            set { _UseWebConfigProviderType = value; }
-        }
-
-        [ConfigurationProperty("providerType", DefaultValue = "Sunplus.Accounting.DataAccess.APIClient.APICasinoProvider")]
-        public string ProviderType
-        {
-            get { return (_UseWebConfigProviderType) ? (string)base["providerType"] : _ProviderType; }
-            set
-            {
-                if (_UseWebConfigProviderType)
-                    base["providerType"] = value;
-                else
-                    _ProviderType = value;
-            }
-        }
-
-        [ConfigurationProperty("showBetSetting", DefaultValue = false)]
-        public bool ShowBetSetting
-        {
-            get
-            {
-                return true; // CastAide.AsBoolean(base["showBetSetting"], false);
-            }
-            set { base["showBetSetting"] = value; }
         }
     }
 

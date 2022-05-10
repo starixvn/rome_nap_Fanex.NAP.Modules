@@ -80,5 +80,26 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
                 return new Result { ErrorCode = errorCode, ErrorMessage = errorMessage };
             }
         }
+
+        public Result UpdateCSPJUnitPrice(int currenctyId, decimal pjUnitPrice)
+        {
+            using (var objDB = new ObjectDb("TP_Admin_Exchange_UpdatePJExchange"))
+            {
+                var param = new Hashtable();
+                param.Add("casinoid", Globals.CASINO_GROUP1);
+                param.Add("IBCExchangeID", currenctyId);
+                param.Add("PJUnitPrice", pjUnitPrice);
+                param.Add("Sysdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
+                param.Add("IP", Utils.GetClientIP());
+
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+
+                var errorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                var errorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+
+                return new Result { ErrorCode = errorCode, ErrorMessage = errorMessage };
+            }
+        }
     }
 }

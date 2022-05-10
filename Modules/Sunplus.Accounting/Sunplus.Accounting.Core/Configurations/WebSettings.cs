@@ -23,7 +23,6 @@ namespace Sunplus.Accounting.Core.Configurations
         private static readonly bool _isSslLogin;
 
         private static readonly bool _disableAutoM;
-        private static readonly bool _disableCS;
         private static readonly bool _disableOR;
         private static readonly bool _disableInternal;
         private static readonly bool _IncludeAccuBalInStatement;
@@ -68,7 +67,6 @@ namespace Sunplus.Accounting.Core.Configurations
                 _ipvnreplace = ConfigurationManager.AppSettings["ipvnreplace"];
                 _isSslLogin = (ConfigurationManager.AppSettings["ssl_login"] == "1");
                 _disableAutoM = (ConfigurationManager.AppSettings["disableAutoMaster"] == "1");
-                _disableCS = (ConfigurationManager.AppSettings["disabledCS"] == "1");
                 _disableOR = (ConfigurationManager.AppSettings["disabledOR"] == "1");
                 _Disable1x2Comm = (ConfigurationManager.AppSettings["disable1x2Comm"] == "1");
                 _Group1x2Max = CastAide.AsDouble(ConfigurationManager.AppSettings["group1x2max"]);
@@ -177,11 +175,6 @@ namespace Sunplus.Accounting.Core.Configurations
         public static bool disableAutoM
         {
             get { return _disableAutoM; }
-        }
-
-        public static bool disableCS
-        {
-            get { return _disableCS; }
         }
 
         public static bool disableOR
@@ -307,22 +300,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-        public static bool EnableGoldDeluxe
-        {
-            get
-            {
-                return (ConfigurationManager.AppSettings["EnableGoldDeluxe"] == "1");
-            }
-        }
-
-        public static bool IsShowGoldDeluxeSettingForCredit
-        {
-            get
-            {
-                return (ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "1");
-            }
-        }
-
         public static bool EnableBetTrade
         {
             get
@@ -411,14 +388,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-        public static bool EnableRNGCasino
-        {
-            get
-            {
-                return (ConfigurationManager.AppSettings["EnableRNGCasino"] == "1");
-            }
-        }
-
         public static bool IsShowVoidbridge
         {
             get
@@ -488,6 +457,14 @@ namespace Sunplus.Accounting.Core.Configurations
             get
             {
                 return (ConfigurationManager.AppSettings["IsShowSabaVirtualSports"] == "1");
+            }
+        }
+
+        public static bool IsShowSabaCasino
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["IsShowSabaCasino"] == "1");
             }
         }
     }

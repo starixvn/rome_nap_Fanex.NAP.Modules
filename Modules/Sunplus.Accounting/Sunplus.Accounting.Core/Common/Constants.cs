@@ -130,10 +130,8 @@ namespace Sunplus.Accounting.Core.Common
             public const int Squash = 30;
             public const int OtherSports = 99;
             public const int Financials = 201;
-            public const int Casino = 251;
             public const int NumberGame = 161;
             public const int Keno = 202;
-            public const int GoldDeluxe = 255;     
             public const int Sportsbook2 = 16;
             public const int AGCasino = 250;
             public static readonly IEnumerable<int> Sports = new int[] { Soccer, Basketball, Football, Tennis, Baseball, Golf, Motorsports, OtherSports };
@@ -249,9 +247,7 @@ namespace Sunplus.Accounting.Core.Common
             public static readonly int FortyFiveMinOE = 64;
             public static readonly int SixtyMinOE = 65;
             public static readonly int EndofdayOE = 66;
-            public static readonly int CasinoGames = 71;
             public static readonly int P2PGames = 72;
-            public static readonly int CasinoMiniGame = 73;
             public static readonly int FirstLastOU = 81;
             public static readonly int NextOU = 85;
             public static readonly int Warrior = 88;

@@ -166,27 +166,17 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
                 // Copy Keno.
                 new KenoService().UpdateMemberData(custId, sourceCustId, actorId);
 
-                // Copy Gold Deluxe.
-                //new GoldDeluxeService().UpdateMemberData(custId, uplineId, sourceCustId, actorId, criteria.IP);
-
                 // Copy DCS.
                 new DCSSettingCopyInsertMemberService().CorrectMemberPositionTaking(custId, sourceCustId, actorId, criteria.IP, criteria.SettingStatus);
 
                 Thread.Sleep(3000);
 
                 var sourceCustInfo = GetCustomerInfoByUserId(sourceCustId, true, criteria.SettingStatus);
-                criteria.DisableCasino = sourceCustInfo.DisableCasino;
 
                 // NG2.
                 if (sourceCustInfo.IsSyncNG2 == 1)
                 {
                     new NG2Service().SyncCustomer(criteria, systemId);
-                }
-
-                // Casino.
-                if (sourceCustInfo.IsSyncCasino == 1)
-                {
-                    new CasinoService().UpdateMemberData(criteria, systemId, fromSystem);
                 }
             }
 
@@ -200,20 +190,12 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             if (result.IsSuccess)
             {
                 Thread.Sleep(3000);
-
                 var sourceCustInfo = GetCustomerInfoByUserId(criteria.ExistingCustId, false, criteria.SettingStatus);
-                criteria.DisableCasino = sourceCustInfo.DisableCasino;
 
                 // NG2.
                 if (sourceCustInfo.IsSyncNG2 == 1)
                 {
                     new NG2Service().SyncCustomer(criteria, systemId);
-                }
-
-                // Casino.
-                if (sourceCustInfo.IsSyncCasino == 1)
-                {
-                    new CasinoService().UpdateSuperData(criteria, fromSystem);
                 }
             }
 

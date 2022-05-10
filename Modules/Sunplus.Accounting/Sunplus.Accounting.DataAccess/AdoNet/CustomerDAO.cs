@@ -247,22 +247,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         }
 
         #endregion
-
-        public string GetRNGSiteNameByCustId(int custId)
-        {
-            using (ObjectDb objdb = new ObjectDb("Acc_SiteSel_RNGCS", 180))
-            {
-                var param = new Hashtable();
-                param.Add("custid", custId);
-
-                objdb.AssignParamValues(param);
-                objdb.ExecuteNonQuery();
-                var errorCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
-                if (errorCode == 0)
-                    return CastAide.AsString(objdb.GetParameterValue("siterng"));
-                return null;
-            }
-        }
         
         public MemberMBCBalanceModel GetMemberMBCBalanceModel(int custId)
         {

@@ -19,8 +19,6 @@ namespace Sunplus.Accounting.Entities
         private bool _IsClosed = false;
         private bool _IsSuspended = false;
         private bool _IsAutoSuspend = false;
-        private bool _IsDisableCasino = false;
-        private bool _IsCasinoSync = false;
         private bool _IsSpecial = false;
         private bool _IsAllowMasterAutoPT = false;
         private bool _IsDisableOutright = false;
@@ -252,30 +250,6 @@ namespace Sunplus.Accounting.Entities
             }
         }
 
-        public bool IsDisableCasino
-        {
-            get
-            {
-                return _IsDisableCasino;
-            }
-            set
-            {
-                _IsDisableCasino = value;
-            }
-        }
-
-        public bool IsCasinoSync
-        {
-            get
-            {
-                return _IsCasinoSync;
-            }
-            set
-            {
-                _IsCasinoSync = value;
-            }
-        }
-
         public bool IsSpecial
         {
             get
@@ -411,10 +385,10 @@ namespace Sunplus.Accounting.Entities
         public int MasterId { get; set; }
 
         public bool IsDisableVirtualSports { get; set; }
-        public bool IsHideVirtualSports { get; set; }
-        public bool IsDisableEsports { get; set; }
 
-        public bool IsDisableGoldDeluxe { get; set; }
+        public bool IsHideVirtualSports { get; set; }
+
+        public bool IsDisableEsports { get; set; }
 
         public bool IsDisableMetricGaming { get; set; }
 
@@ -427,6 +401,8 @@ namespace Sunplus.Accounting.Entities
         public bool IsDisableCockFighting { get; set; }
 
         public bool IsDisableNG2 { get; set; }
+
+        public bool IsSyncNG2 { get; set; }
 
         #endregion Properties
     }

@@ -22,7 +22,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <param name="custid"></param>
         /// <param name="isClosed"></param>
         ///  protected StoreProcedureElement GetStoreProcedure(string site)
-        public static void CustomerUpdateClosed(int accid, int custid, bool isClosed, string Ip, int roleId = 0)
+        public static void CustomerUpdateClosed(int accid, int custid, bool isClosed, string Ip)
         {
             try
             {              

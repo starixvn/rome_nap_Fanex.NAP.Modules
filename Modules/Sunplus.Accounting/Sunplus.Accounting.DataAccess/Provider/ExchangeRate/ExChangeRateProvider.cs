@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Entities;
 
 /// <summary>
 /// Summary description for ExChangeRateProvider
@@ -26,7 +27,7 @@ namespace Sunplus.Accounting.DataAccess.Provider.ExchangeRate
             throw new NotImplementedException();
         }
 
-        public virtual void ExchangeIns(Hashtable param, ref int errcode, ref string errmsg, ref int exchangeid)
+        public virtual Result ExchangeIns(Hashtable param, ref int exchangeid)
         {
             throw new NotImplementedException();
         }
@@ -36,7 +37,7 @@ namespace Sunplus.Accounting.DataAccess.Provider.ExchangeRate
             throw new NotImplementedException();
         }
 
-        public virtual void ExchangeUpd(Hashtable param, ref int errcode, ref string errmsg)
+        public virtual Result ExchangeUpd(Hashtable param)
         {
             throw new NotImplementedException();
         }
