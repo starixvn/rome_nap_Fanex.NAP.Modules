@@ -285,7 +285,13 @@ namespace Sunplus.Accounting.Core.Common
         {
             get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsFinishUMTime"]); }
             set { HttpContext.Current.Session["IsFinishUMTime"] = value; }
-        }        
+        }
+
+        public static bool IsOTPVerified
+        {
+            get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["OTPVerified"]); }
+            set { HttpContext.Current.Session["OTPVerified"] = value; }
+        }
 
         public static void AddSession(HttpSessionState sessionState, string key, object value)
         {
