@@ -8,8 +8,15 @@ namespace Sunplus.Accounting.Core.Extensions
     {
         public enum Resources
         {
-            ErrorMsg, Language, MiniTemplate, Viewlog, MoveCust, Racing, ViewlogV2, CategorizeStatus,
-            VirtualSports
+            ErrorMsg = 1,
+            Language = 2,
+            MiniTemplate = 3,
+            Viewlog = 4,
+            MoveCust = 5,
+            Racing = 6 ,
+            ViewlogV2 = 7,
+            CategorizeStatus = 8,
+            VirtualSports = 9
         }
 
         public static string GetResourceValue(Resources resource, string key)
