@@ -336,6 +336,8 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 return resultCashOut;
             }
 
+            succeededIdList.Add("Dummy Member: " + newLicenseePostParam.AgentName.ToString() + "CashOut");
+
             result.SuccessMessageList = succeededIdList;
             return result;
         }
