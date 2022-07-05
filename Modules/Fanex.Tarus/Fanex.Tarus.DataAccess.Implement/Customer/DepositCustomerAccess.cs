@@ -10,6 +10,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
     using Fanex.Tarus.DataAccess.Interface.Customer;
     using Fanex.Tarus.Entities.Customer.DepositCustomer;
     using Fanex.Tarus.Infrastructure.Configurations;
+    using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Helper;
     using Sunplus.Accounting.Entities;
@@ -327,6 +328,12 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                     result.SuccessMessageList = succeededIdList;
                     return result;
                 }
+            }
+
+            var resultCashOut = InitCashOutStatus(newLicenseePostParam.SuperId);
+            if (resultCashOut.ErrorCode != 0)
+            {              
+                return resultCashOut;
             }
 
             result.SuccessMessageList = succeededIdList;
@@ -834,6 +841,26 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 var hashParam = new Hashtable { { "custid", custId } };
                 objDb.AssignParamValues(hashParam);
                 return objDb.ExecuteDataSet();
+            }
+        }
+
+        public Result InitCashOutStatus(int SuperId)
+        {
+            var hashParam = new Hashtable { { "custid", SuperId } };
+            hashParam.Add("productid", 25);
+            hashParam.Add("isenable", 1);
+            hashParam.Add("applytomember", 1);
+            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+            hashParam.Add("userid", AppSession.AccId); 
+            hashParam.Add("errmsg", string.Empty);
+
+            using (var objDb = new ObjectDb("Acc_3rdProductUpdSuperStatus"))
+            {
+                objDb.AssignParamValues(hashParam);
+                objDb.ExecuteNonQuery();
+                var errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
+
+                return new Result(string.IsNullOrEmpty(errMsg) ? 0:500 , errMsg);
             }
         }
     }
