@@ -40,31 +40,5 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         {
             throw new NotImplementedException();
         }
-
-        public DataTable GetSiteDBConfig(int custId)
-        {
-            var param = new Hashtable {{ "custid", custId }};
-            DataTable result = new DataTable();
-
-            try
-            {
-                using (ObjectDb db = new ObjectDb("Acc_SiteDBConfigSel", 600))
-                {
-                    db.AssignParamValues(param);
-
-                    var ds = db.ExecuteDataSet();
-                    if (ds != null && ds.Tables.Count > 0)
-                    {
-                        result = ds.Tables[0];
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-
-            return result;
-        }
     }
 }

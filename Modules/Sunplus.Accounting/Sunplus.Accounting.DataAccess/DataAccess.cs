@@ -115,12 +115,5 @@ namespace Sunplus.Accounting.DataAccess
                 Activator.CreateInstance(
                     Type.GetType(string.Format(provider, GetDAOClient(client), GetDataSource(source))));
         }
-
-        protected static string BuildConnectionString(string serverIP, string connectionString)
-        {
-            var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
-            sqlConnectionStringBuilder.DataSource = serverIP;
-            return sqlConnectionStringBuilder.ToString();
-        }
     }
 }

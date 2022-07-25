@@ -236,6 +236,7 @@
     <Compile Include="Constants\TransactionTypeConstants.cs" />
     <Compile Include="Extensions\ExcelExtension.cs" />
     <Compile Include="Extensions\LogExtensions.cs" />
+    <Compile Include="Extensions\ObjectDbExtensions.cs" />
     <Compile Include="Extensions\ResourceExtension.cs" />
     <Compile Include="Extensions\SendMailExtension.cs" />
     <Compile Include="Helper\AlertMessage.cs" />

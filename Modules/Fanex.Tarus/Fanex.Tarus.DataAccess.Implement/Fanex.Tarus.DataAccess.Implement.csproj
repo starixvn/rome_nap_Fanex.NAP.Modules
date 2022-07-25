@@ -61,9 +61,6 @@
       <HintPath>..\..\..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.4.2\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Web.Models.1.0.0.9\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
     </Reference>
@@ -146,6 +143,13 @@
       <Project>{0d0f3c0d-f85c-4b0d-b033-16424e1ae5e0}</Project>
       <Name>Fanex.Tarus.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
+      <Project>{ccc0446a-42e7-4850-b09c-4dac278f23b3}</Project>
+      <Name>Fanex.Tarus.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

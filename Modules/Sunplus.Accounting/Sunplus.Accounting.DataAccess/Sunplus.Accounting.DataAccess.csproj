@@ -215,9 +215,6 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.4.11\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.1.9\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
@@ -261,10 +258,16 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sunplus.Accounting.Core\Sunplus.Accounting.Core.csproj">
+      <Project>{09b74f02-6c21-4c5e-a52c-b6d56595a262}</Project>
+      <Name>Sunplus.Accounting.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ReplaceNonNumerics="False" BuildVersion_UseGlobalSettings="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UseGlobalSettings="True" BuildVersion_ReplaceNonNumerics="False" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
