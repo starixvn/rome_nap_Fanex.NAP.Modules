@@ -252,15 +252,20 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         {
             using (ObjectDb objdb = new ObjectDb("Acc_BalanceMemberSel", 180))
             {
+                string oldConnectionString = objdb.DbSetting.ConnectionString;
+                var helperDAO = new HelperDAO();
+                DataTable tblSiteConfig = helperDAO.GetSiteDBConfig(custId);
+                objdb.DbSetting.ConnectionString = BuildConnectionString(tblSiteConfig.Rows[0]["AGIP"].ToString(), oldConnectionString);               
                 var param = new Hashtable();
                 param.Add("custid", custId);
-
                 objdb.AssignParamValues(param);
                 objdb.ExecuteNonQuery();
+                objdb.DbSetting.ConnectionString = oldConnectionString;
                 return new MemberMBCBalanceModel(
                     CastAide.AsDecimal(objdb.GetParameterValue("balance")),
                     CastAide.AsDecimal(objdb.GetParameterValue("netposition")),
                     CastAide.AsDecimal(objdb.GetParameterValue("PendingTransfer3rd")));
+               
             }
         }
 
