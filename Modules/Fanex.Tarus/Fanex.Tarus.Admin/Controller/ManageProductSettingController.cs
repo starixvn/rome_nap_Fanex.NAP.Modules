@@ -15,13 +15,13 @@
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageCSSportBettypeMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageProduct;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageRefResource;
+    using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageResetWinning;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageSportBettypeMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageSportType;
     using Fanex.Tarus.Admin.ManageProductSetting.Services;
     using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
-    using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageResetWinning;
 
     public class ManageProductSettingController : BaseController
     {
@@ -211,7 +211,6 @@
 
         #endregion CanSee
 
-
         #region CSSportBettypeMatrix
         [AuthenticateRead]
         [HttpGet]
@@ -327,6 +326,21 @@
             }), JsonRequestBehavior.AllowGet);
         }
 
+        [AuthenticateRead]
+        [HttpGet]
+        public JsonResult GetMarkets()
+        {
+            var markets = _manageUMConfigService
+                .GetMarkets()
+                .Select(m => new SelectListItem
+                {
+                    Text = $"[{m.Id}] {m.Name}",
+                    Value = m.Id.ToString()
+                });
+
+            return Json(markets, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region ResetWinning
@@ -372,6 +386,5 @@
         public JsonResult DeleteDWLListExtraPT(DeleteDwLListExtraPTRequest request) => Json(_manageDwLListExtraPTService.Delete(request));
 
         #endregion
-
     }
 }
