@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option or rebuild the Visual Studio project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class ErrorMsg {
@@ -129,51 +129,6 @@ namespace Resources {
         internal static string error_LockUpdateStatus {
             get {
                 return ResourceManager.GetString("error_LockUpdateStatus", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error from Accounting: {0}.
-        /// </summary>
-        internal static string error_MoveCust_Accounting {
-            get {
-                return ResourceManager.GetString("error_MoveCust_Accounting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error from Casino: {0}.
-        /// </summary>
-        internal static string error_MoveCust_Casino {
-            get {
-                return ResourceManager.GetString("error_MoveCust_Casino", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error: {0} was not synchronized to Casino System..
-        /// </summary>
-        internal static string error_MoveCust_NotSync {
-            get {
-                return ResourceManager.GetString("error_MoveCust_NotSync", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move {0} successfully..
-        /// </summary>
-        internal static string error_MoveCust_Successfully {
-            get {
-                return ResourceManager.GetString("error_MoveCust_Successfully", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move {0} unsuccessfully..
-        /// </summary>
-        internal static string error_MoveCust_UnSuccessfully {
-            get {
-                return ResourceManager.GetString("error_MoveCust_UnSuccessfully", resourceCulture);
             }
         }
         

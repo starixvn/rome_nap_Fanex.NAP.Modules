@@ -54,12 +54,7 @@ namespace Sunplus.Accounting.Core.Common
             public static bool IsAllowResetMaxTransfer
             {
                 get { return IsVisibleFunction(Enumerations.Functions.Customer.ResetMaxTransfer); }
-            }
-
-            public static bool AllowMoveCustomer
-            {
-                get { return IsVisibleFunction(Enumerations.Functions.Customer.MoveCustomer); }
-            }
+            }          
 
             public static bool AllowViewLog
             {

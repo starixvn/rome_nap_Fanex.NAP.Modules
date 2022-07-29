@@ -106,7 +106,6 @@ namespace Sunplus.Accounting.Core.Common
                 Customer,
                 ViewPT,
                 EditUserName,
-                MoveCustomer,
                 ChangeUserGroup,
                 SuspendCustList,
                 DailyTransaction,
