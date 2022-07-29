@@ -24,7 +24,7 @@ namespace Sunplus.Accounting.Core.Extensions
         public static int ExecuteNonQuery2(this ObjectDb objdb)
         {
             string oldConnectionString = objdb.DbSetting.ConnectionString;
-            var siteConfigs = GetSiteDBConfigByCustId((int)objdb.GetParameterValue("custid")).FirstOrDefault();
+            var siteConfigs = GetSiteDBConfigByCustId((int)objdb.GetParameterValue("custid"));
             if (siteConfigs != null && !IsCreditSite(siteConfigs.SiteDBGroupID))
             {
                 objdb.DbSetting.ConnectionString = BuildConnectionString(siteConfigs.AGIP, oldConnectionString);
@@ -44,11 +44,11 @@ namespace Sunplus.Accounting.Core.Extensions
             return result;
         }
 
-        public static IEnumerable<SiteDB> GetSiteDBConfigByCustId(int custId)
-            => GetSiteDBConfig(new Hashtable { { "custid", custId } });
+        public static SiteDB GetSiteDBConfigByCustId(int custId)
+            => GetSiteDBConfig(new Hashtable { { "custid", custId } }).FirstOrDefault();
 
         public static IEnumerable<SiteDB> GetSiteDBConfigBySiteGroupId(int siteGroupId)
-            => GetSiteDBConfig(new Hashtable { { "sitegroupid", siteGroupId } });
+            => GetSiteDBConfig(new Hashtable { { "sitedbgroupid", siteGroupId } });
 
         private static bool IsCreditSite(int siteGroupId) => siteGroupId == 0;
 

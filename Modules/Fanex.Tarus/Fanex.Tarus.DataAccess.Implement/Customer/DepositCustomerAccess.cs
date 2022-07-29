@@ -595,12 +595,9 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         public void InsertBalanceWhenCreateNewAgent(int agentId, string insertBalanceCustList, string insertExceptionBalanceCustList)
         {
-            var siteDBs = ObjectDbExtensions.GetSiteDBConfigByCustId(agentId);
-            foreach (var siteDB in siteDBs)
-            {
-                InsertBalanceOnSiteDB(siteDB.AGIP, insertBalanceCustList);
-                InsertExceptionBalanceOnSiteDB(siteDB.AGIP, insertExceptionBalanceCustList);
-            }
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(agentId);
+            InsertBalanceOnSiteDB(siteDB.AGIP, insertBalanceCustList);
+            InsertExceptionBalanceOnSiteDB(siteDB.AGIP, insertExceptionBalanceCustList);
         }
 
         private void InsertBalanceOnSiteDB(string AGIP, string insertBalanceCustList)
