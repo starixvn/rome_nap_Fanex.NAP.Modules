@@ -3,6 +3,7 @@ using DNAide.Data;
 using Fanex.Data;
 using System;
 using System.Collections;
+using Sunplus.Accounting.Core.Extensions;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -45,7 +46,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("ip", ip);
 
                     db.AssignParamValues(hash);
-                    db.ExecuteNonQuery();
+                    db.ExecuteNonQuery2();
 
                     res[0] = string.Format("{0}", db.GetParameterValue("transid"));
                     res[1] = string.Format("{0}", db.GetParameterValue("errcode"));
