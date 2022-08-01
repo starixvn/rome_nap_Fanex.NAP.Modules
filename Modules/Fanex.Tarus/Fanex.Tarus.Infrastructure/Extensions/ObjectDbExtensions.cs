@@ -1,4 +1,5 @@
 ﻿using Fanex.Data;
+using Fanex.Tarus.Infrastructure.Caching;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,12 +24,33 @@ namespace Fanex.Tarus.Infrastructure.Extensions
 
     public static class ObjectDbExtensions
     {
-        public static int ExecuteNonQuery2(this ObjectDb objdb)
+        private static string cacheSiteDBKey = "SiteDBs";
+
+        private const int cacheSiteDBExpireTimeInHours = 1;
+
+        public static DataSet ExecuteDataSetScaleoutDB(this ObjectDb objdb, int custId)
         {
             string oldConnectionString = objdb.DbSetting.ConnectionString;
-            var siteConfigs = GetSiteDBConfigByCustId((int)objdb.GetParameterValue("custid"));
+            var siteConfigs = GetSiteDBConfigByCustId(custId);
             if (siteConfigs != null && !IsCreditSite(siteConfigs.SiteDBGroupID))
-            { 
+            {
+                objdb.DbSetting.ConnectionString = BuildConnectionString(siteConfigs.AGIP, oldConnectionString);
+            }
+
+            DataSet result = objdb.ExecuteDataSet();
+            objdb.DbSetting.ConnectionString = oldConnectionString;
+            return result;
+        }
+
+        public static int ExecuteNonQueryScaleoutDB(this ObjectDb objdb)
+            => objdb.ExecuteNonQueryScaleoutDB((int)objdb.GetParameterValue("custid"));
+
+        public static int ExecuteNonQueryScaleoutDB(this ObjectDb objdb, int custId)
+        {
+            string oldConnectionString = objdb.DbSetting.ConnectionString;
+            var siteConfigs = GetSiteDBConfigByCustId(custId);
+            if (siteConfigs != null && !IsCreditSite(siteConfigs.SiteDBGroupID))
+            {
                 objdb.DbSetting.ConnectionString = BuildConnectionString(siteConfigs.AGIP, oldConnectionString);
             }
 
@@ -37,7 +59,7 @@ namespace Fanex.Tarus.Infrastructure.Extensions
             return result;
         }
 
-        public static int ExecuteNonQuery2(this ObjectDb objdb, string AGIP)
+        public static int ExecuteNonQueryScaleoutDB(this ObjectDb objdb, string AGIP)
         {
             string oldConnectionString = objdb.DbSetting.ConnectionString;
             objdb.DbSetting.ConnectionString = BuildConnectionString(AGIP, oldConnectionString);
@@ -54,22 +76,38 @@ namespace Fanex.Tarus.Infrastructure.Extensions
 
         private static bool IsCreditSite(int siteGroupId) => siteGroupId == 0;
 
-        private static IEnumerable<SiteDB> GetSiteDBConfig(Hashtable param)
+        private static List<SiteDB> GetSiteDBConfig(Hashtable param)
         {
-            using (ObjectDb db = new ObjectDb("Acc_SiteDBConfigSel", 600))
+            List<SiteDB> siteDBs = null;
+            if (IsGetAllSiteDBs(param))
             {
-                var reader = db.ExecuteReader(param);
-                while (reader.Read())
+                siteDBs = CacheHelper.Get<List<SiteDB>>(cacheSiteDBKey);
+            }
+
+            if (siteDBs == null)
+            {
+                siteDBs = new List<SiteDB>();
+                using (ObjectDb db = new ObjectDb("Acc_SiteDBConfigSel", 600))
                 {
-                    yield return new SiteDB()
+                    var reader = db.ExecuteReader(param);
+                    while (reader.Read())
                     {
-                        SiteDBGroupID = Convert.ToInt32(reader["SiteDBGroupID"]),
-                        AGIP = reader["AGIP"].ToString(),
-                        ClientAccessName = reader["ClientAccessName"].ToString(),
-                        LinkedServerName = reader["LinkedServerName"].ToString()
-                    };
+                        siteDBs.Add(new SiteDB()
+                        {
+                            SiteDBGroupID = Convert.ToInt32(reader["SiteDBGroupID"]),
+                            AGIP = reader["AGIP"].ToString(),
+                            ClientAccessName = reader["ClientAccessName"].ToString(),
+                            LinkedServerName = reader["LinkedServerName"].ToString()
+                        });
+                    }
+                }
+                if (IsGetAllSiteDBs(param))
+                {
+                    CacheHelper.Set(cacheSiteDBKey, siteDBs, new DateTime().AddHours(cacheSiteDBExpireTimeInHours));
                 }
             }
+
+            return siteDBs;
         }
 
         private static string BuildConnectionString(string serverIP, string connectionString)
@@ -77,6 +115,26 @@ namespace Fanex.Tarus.Infrastructure.Extensions
             var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
             sqlConnectionStringBuilder.DataSource = serverIP;
             return sqlConnectionStringBuilder.ToString();
+        }
+
+        private static bool IsGetAllSiteDBs(Hashtable param)
+        {
+            if (param == null)
+            {
+                return true;
+            }
+
+            if (param.ContainsKey("custid"))
+            {
+                return Convert.ToInt32(param["custid"]) == 0;
+            }
+
+            if (param.ContainsKey("sitedbgroupid"))
+            {
+                return Convert.ToInt32(param["sitedbgroupid"]) == 0;
+            }
+
+            return false;
         }
     }
 }

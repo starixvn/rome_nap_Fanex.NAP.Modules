@@ -255,7 +255,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 var param = new Hashtable();
                 param.Add("custid", custId);
                 objdb.AssignParamValues(param);
-                objdb.ExecuteNonQuery2();
+                objdb.ExecuteNonQueryScaleoutDB();
                 return new MemberMBCBalanceModel(
                     CastAide.AsDecimal(objdb.GetParameterValue("balance")),
                     CastAide.AsDecimal(objdb.GetParameterValue("netposition")),

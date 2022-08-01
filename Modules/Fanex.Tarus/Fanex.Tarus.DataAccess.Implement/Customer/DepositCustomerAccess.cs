@@ -435,11 +435,20 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 objDb.ExecuteNonQuery();
                 var errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
                 var errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
-
+                var outCustId = CastAide.AsInt32(objDb.GetOuputParams()["custid"]);
                 if (errCode == 0)
                 {
                     newLicenseePostParam.MemberId = CastAide.AsInt32(objDb.GetParameterValue("custid"));
                     errMsg = newLicenseePostParam.MemberId.ToString();
+                    using (var db = new ObjectDb("Task_Cust_CheckBalance_Exception_Ins"))
+                    {
+                        var param = new Hashtable() {
+                            {"custid" , outCustId },
+                            { "username", newLicenseePostParam.MemberName}
+                        };
+
+                        db.ExecuteNonQueryScaleoutDB(outCustId);
+                    }
                 }
 
                 return new Result(errCode, errMsg);
@@ -608,14 +617,14 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 {
                     var param = new Hashtable() { { "custid", custId } };
                     db.AssignParamValues(param);
-                    db.ExecuteNonQuery2(AGIP);
+                    db.ExecuteNonQueryScaleoutDB(AGIP);
                 }
 
                 using (var db = new ObjectDb("Dot_BalanceInsDebit"))
                 {
                     var param = new Hashtable() { { "custid", custId } };
                     db.AssignParamValues(param);
-                    db.ExecuteNonQuery2(AGIP);
+                    db.ExecuteNonQueryScaleoutDB(AGIP);
                 }
             }
         }
@@ -633,7 +642,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                             { "username", custInfo.Split(';')[1] }
                         };
                     db.AssignParamValues(param);
-                    db.ExecuteNonQuery2(AGIP);
+                    db.ExecuteNonQueryScaleoutDB(AGIP);
                 }
             }
         }
