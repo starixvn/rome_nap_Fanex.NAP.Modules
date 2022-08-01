@@ -272,7 +272,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 param.Add("custid", custId);
 
                 objdb.AssignParamValues(param);
-                objdb.ExecuteNonQuery2();
+                objdb.ExecuteNonQueryScaleoutDB();
                 return CastAide.AsDecimal(objdb.GetParameterValue("outstanding"));
             }
         }

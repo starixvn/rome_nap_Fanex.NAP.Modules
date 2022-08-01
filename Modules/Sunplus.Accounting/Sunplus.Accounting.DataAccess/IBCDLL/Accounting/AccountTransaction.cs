@@ -46,7 +46,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("ip", ip);
 
                     db.AssignParamValues(hash);
-                    db.ExecuteNonQuery2();
+                    db.ExecuteNonQueryScaleoutDB();
 
                     res[0] = string.Format("{0}", db.GetParameterValue("transid"));
                     res[1] = string.Format("{0}", db.GetParameterValue("errcode"));
