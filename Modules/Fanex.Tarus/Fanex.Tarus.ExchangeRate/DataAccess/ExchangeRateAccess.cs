@@ -86,7 +86,7 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
             using (var objDB = new ObjectDb("TP_Admin_Exchange_UpdatePJExchange"))
             {
                 var param = new Hashtable();
-                param.Add("casinoid", Globals.CASINO_GROUP1);
+                param.Add("casinoid", "01");
                 param.Add("IBCExchangeID", currenctyId);
                 param.Add("PJUnitPrice", pjUnitPrice);
                 param.Add("Sysdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));

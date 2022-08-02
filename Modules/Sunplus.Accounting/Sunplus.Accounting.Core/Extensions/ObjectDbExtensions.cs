@@ -77,11 +77,14 @@ namespace Sunplus.Accounting.Core.Extensions
             return result;
         }
 
-        public static SiteDB GetSiteDBConfigByCustId(int custId = 0)
+        public static SiteDB GetSiteDBConfigByCustId(int custId)
             => GetSiteDBConfig(new Hashtable { { "custid", custId } }).FirstOrDefault();
 
-        public static IEnumerable<SiteDB> GetSiteDBConfigBySiteGroupId(int siteGroupId = 0)
+        public static IEnumerable<SiteDB> GetSiteDBConfigBySiteGroupId(int siteGroupId)
             => GetSiteDBConfig(new Hashtable { { "sitedbgroupid", siteGroupId } });
+
+        public static IEnumerable<SiteDB> GetAllSiteDBConfig()
+            => GetSiteDBConfig(null);
 
         private static List<SiteDB> GetSiteDBConfig(Hashtable param)
         {
@@ -129,16 +132,6 @@ namespace Sunplus.Accounting.Core.Extensions
             if (param == null)
             {
                 return true;
-            }
-
-            if (param.ContainsKey("custid"))
-            {
-                return Convert.ToInt32(param["custid"]) == 0;
-            }
-
-            if (param.ContainsKey("sitedbgroupid"))
-            {
-                return Convert.ToInt32(param["sitedbgroupid"]) == 0;
             }
 
             return false;
