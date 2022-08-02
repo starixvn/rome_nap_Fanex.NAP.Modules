@@ -117,14 +117,14 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
             }
         }
 
-        public override void ExchangeMultiBaseRatePrepareUpd(Hashtable param, ref int errcode, ref string errmsg)
+        public override void ExchangeMultiBaseRatePrepareUpd(Hashtable param, string dbIP, ref int errcode, ref string errmsg)
         {
             try
             {
                 using (ObjectDb objDB = new ObjectDb("Acc_ChangeRate_Prepare_Upd"))
                 {
                     objDB.AssignParamValues(param);
-                    objDB.ExecuteNonQueryScaleoutDB();
+                    objDB.ExecuteNonQueryScaleoutDB(dbIP);
 
                     errcode = Convert.ToInt32(objDB.GetParameterValue("errcode"));
                     errmsg = Convert.ToString(objDB.GetParameterValue("errmsg"));
@@ -137,12 +137,12 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
             }
         }
 
-        public override void ExchangeMultiBaseRateUpdateForTable(Hashtable param)
+        public override void ExchangeMultiBaseRateUpdateForTable(Hashtable param, string dbIP)
         {
             using (ObjectDb objDB = new ObjectDb("Acc_ChangeRate_Main_Upd"))
             {
                 objDB.AssignParamValues(param);
-                objDB.ExecuteNonQueryScaleoutDB();
+                objDB.ExecuteNonQueryScaleoutDB(dbIP);
             }
         }
     }

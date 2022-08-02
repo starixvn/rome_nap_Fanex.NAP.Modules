@@ -47,12 +47,12 @@ namespace Sunplus.Accounting.DataAccess.Provider.ExchangeRate
             throw new NotImplementedException();
         }
 
-        public virtual void ExchangeMultiBaseRatePrepareUpd(Hashtable param, ref int errcode, ref string errmsg)
+        public virtual void ExchangeMultiBaseRatePrepareUpd(Hashtable param, string dbIP, ref int errcode, ref string errmsg)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void ExchangeMultiBaseRateUpdateForTable(Hashtable param)
+        public virtual void ExchangeMultiBaseRateUpdateForTable(Hashtable param, string dbIP)
         {
             throw new NotImplementedException();
         }
