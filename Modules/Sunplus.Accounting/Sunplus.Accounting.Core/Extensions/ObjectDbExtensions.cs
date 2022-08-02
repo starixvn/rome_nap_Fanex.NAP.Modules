@@ -40,6 +40,15 @@ namespace Sunplus.Accounting.Core.Extensions
             return result;
         }
 
+        public static DataSet ExecuteDataSetScaleoutDB(this ObjectDb objdb, string AGIP)
+        {
+            string oldConnectionString = objdb.DbSetting.ConnectionString;
+            objdb.DbSetting.ConnectionString = BuildConnectionString(AGIP, oldConnectionString);
+            DataSet result = objdb.ExecuteDataSet();
+            objdb.DbSetting.ConnectionString = oldConnectionString;
+            return result;
+        }
+
         public static int ExecuteNonQueryScaleoutDB(this ObjectDb objdb)
             => objdb.ExecuteNonQueryScaleoutDB((int)objdb.GetParameterValue("custid"));
 
