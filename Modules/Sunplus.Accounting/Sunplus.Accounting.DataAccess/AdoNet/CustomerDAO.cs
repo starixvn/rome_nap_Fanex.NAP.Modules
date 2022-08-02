@@ -276,5 +276,31 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 return CastAide.AsDecimal(objdb.GetParameterValue("outstanding"));
             }
         }
+
+        public DataTable GetCustomerCashInfo(int custId)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                var param = new System.Collections.Hashtable();
+                param.Add("custid", custId);
+              
+                using (ObjectDb db = new ObjectDb("Acc_CustomerSelBalanceCashInfo", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSetScaleoutDB(custId);
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dt = ds.Tables[0];
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return dt;
+        }
     }
 }
