@@ -18,6 +18,8 @@ namespace Sunplus.Accounting.Core.Extensions
         public string ClientAccessName { get; set; }
 
         public string AGIP { get; set; }
+
+        public bool IsSiteDB => SiteDBGroupID != 0;
     }
 
     public static class ObjectDbExtensions
@@ -30,7 +32,7 @@ namespace Sunplus.Accounting.Core.Extensions
         {
             string oldConnectionString = objdb.DbSetting.ConnectionString;
             var siteConfigs = GetSiteDBConfigByCustId(custId);
-            if (siteConfigs != null && !IsCreditSite(siteConfigs.SiteDBGroupID))
+            if (siteConfigs != null && siteConfigs.IsSiteDB)
             {
                 objdb.DbSetting.ConnectionString = BuildConnectionString(siteConfigs.AGIP, oldConnectionString);
             }
@@ -56,7 +58,7 @@ namespace Sunplus.Accounting.Core.Extensions
         {
             string oldConnectionString = objdb.DbSetting.ConnectionString;
             var siteConfigs = GetSiteDBConfigByCustId(custId);
-            if (siteConfigs != null && !IsCreditSite(siteConfigs.SiteDBGroupID))
+            if (siteConfigs != null && siteConfigs.IsSiteDB)
             {
                 objdb.DbSetting.ConnectionString = BuildConnectionString(siteConfigs.AGIP, oldConnectionString);
             }
@@ -75,13 +77,11 @@ namespace Sunplus.Accounting.Core.Extensions
             return result;
         }
 
-        public static SiteDB GetSiteDBConfigByCustId(int custId)
+        public static SiteDB GetSiteDBConfigByCustId(int custId = 0)
             => GetSiteDBConfig(new Hashtable { { "custid", custId } }).FirstOrDefault();
 
-        public static IEnumerable<SiteDB> GetSiteDBConfigBySiteGroupId(int siteGroupId)
+        public static IEnumerable<SiteDB> GetSiteDBConfigBySiteGroupId(int siteGroupId = 0)
             => GetSiteDBConfig(new Hashtable { { "sitedbgroupid", siteGroupId } });
-
-        private static bool IsCreditSite(int siteGroupId) => siteGroupId == 0;
 
         private static List<SiteDB> GetSiteDBConfig(Hashtable param)
         {
