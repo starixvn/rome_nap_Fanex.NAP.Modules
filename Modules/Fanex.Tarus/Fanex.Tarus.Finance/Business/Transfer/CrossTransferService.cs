@@ -5,15 +5,17 @@ namespace Fanex.Tarus.Finance.Business.Transfer
     using System.Collections.Generic;
     using System.Data;
     using DNAide.Core;
-    using DNAide.Utils;
+    using Fanex.Tarus.Finance.Criteria;
     using Fanex.Tarus.Finance.DataAccess.Transfer;
     using Fanex.Tarus.Finance.Entities;
     using Fanex.Tarus.Finance.Model.Transfer;
+    using Fanex.Tarus.Infrastructure.Resource;
     using Sunplus.Accounting.Business;
     using Sunplus.Accounting.Business.BootStrappers;
     using Sunplus.Accounting.Business.Security;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
+    using Sunplus.Accounting.Core.Helper;
 
     public class CrossTransferService : ICrossTransferService
     {
@@ -30,43 +32,41 @@ namespace Fanex.Tarus.Finance.Business.Transfer
         }
 
         public Result TransferYesterdayTransaction(
-            int accId,
             string fromCustName,
             string toCustName,
+            decimal amount,
             double exRate,
-            double amount,
             string remark,
-            bool isCollection)
+            bool isCollection,
+            int accId)
         {
+            if (accId <= 0 || !Permissions.GetHostPermission("OtherTrans"))
+            {
+                return new Result { ErrorCode = 1, ErrorMessage = ErrorLanguage.NotAutherizedFunction };
+            }
+
+            var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
+            var fromCustId = userService.GetCustomerIdByUsername(fromCustName);
+
+            var isFiTransfer = false;
+            var msg = string.Empty;
             try
             {
-                if (accId <= 0 || !Permissions.GetHostPermission("OtherTrans"))
-                {
-                    return new Result { ErrorCode = 1, ErrorMessage = Fanex.Tarus.Infrastructure.Resource.ErrorLanguage.NotAutherizedFunction };
-                }
-
-                var msg = string.Empty;
-                var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
-                int fromCustId = userService.GetCustomerIdByUsername(fromCustName);
-                bool IsTransfer = Permissions.IsFiTransfer(fromCustId, toCustName, ref msg);
-                if (IsTransfer)
-                {
-                    return _crossTransferAccess.BettransInsertTransfer(accId, fromCustId, toCustName, exRate, amount, remark, Sunplus.Accounting.Core.Helper.Utils.GetClientIP(), isCollection);
-                }
-                else
-                {
-                    return new Result { ErrorCode = 1, ErrorMessage = msg };
-                }
-            }
-            catch (AccException ex)
-            {
-                return new Result { ErrorCode = 1, ErrorMessage = ex.Message };
+                isFiTransfer = Permissions.IsFiTransfer(fromCustId, toCustName, ref msg);
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+                return new Result { ErrorCode = 1, ErrorMessage = ex.Message };
             }
-            return new Result { ErrorCode = 1, ErrorMessage = "System Error" };
+
+            if (!isFiTransfer)
+            {
+                new Result { ErrorCode = 1, ErrorMessage = msg };
+            }
+
+            return _crossTransferAccess.BettransInsertTransfer(new BetTransInsertTransferCriteria(
+                fromCustId, toCustName, amount, exRate, remark, accId, Utils.GetClientIP(), isCollection));
         }
 
         public Result CrossCurrencyTransferInsert(FinanceCrossCurrencyTransfer param)
@@ -75,7 +75,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
             {
                 if (AppSession.AccId <= 0 || !Permissions.GetHostPermission("FinanceTransfer"))
                 {
-                    return new Result { ErrorCode = 1, ErrorMessage = Fanex.Tarus.Infrastructure.Resource.ErrorLanguage.NotAutherizedFunction };
+                    return new Result { ErrorCode = 1, ErrorMessage = ErrorLanguage.NotAutherizedFunction };
                 }
                 Fanex.Tarus.Infrastructure.Caching.CacheHelper.Set<string>("Transfer_ForexAccount_" + AppSession.AccUserName, param.ForexUsername);
                 return _crossTransferAccess.CustomerCrossTransferInsert(param.FromCustID, param.ToCustID, param.FromAmount, param.ToAmount, param.FromExRate, param.ToExRate, param.ForexUsername, param.Remark, AppSession.AccId, param.IsCollection);

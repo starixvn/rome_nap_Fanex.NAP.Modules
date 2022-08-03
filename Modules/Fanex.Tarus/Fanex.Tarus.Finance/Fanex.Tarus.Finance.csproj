@@ -170,6 +170,8 @@
       <SubType>
       </SubType>
     </Compile>
+    <Compile Include="Criteria\BetTransInsertTransferCriteria.cs" />
+    <Compile Include="Criteria\BetTransInsertTransferSiteDBCriteria.cs" />
     <Compile Include="DataAccess\Customer\FinanceCustomerListAccess.cs" />
     <Compile Include="DataAccess\Customer\IFinanceCustomerListAccess.cs" />
     <Compile Include="DataAccess\Statement\FinanceStatementAccess.cs" />
@@ -182,6 +184,7 @@
     <Compile Include="Entities\ExchangeRate.cs" />
     <Compile Include="Entities\ForexAccount.cs" />
     <Compile Include="Entities\Result.cs" />
+    <Compile Include="Entities\ResultTransfer.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="DataAccess\Helper\HelperAccess.cs" />

@@ -7,7 +7,14 @@ namespace Fanex.Tarus.Finance.Business.Transfer
 
     public interface ICrossTransferService
     {
-        Result TransferYesterdayTransaction(int accId, string fromCustName, string toCustName, double exRate, double amount, string remark, bool isCollection);
+        Result TransferYesterdayTransaction(
+            string fromCustName,
+            string toCustName,
+            decimal amount,
+            double exRate,
+            string remark,
+            bool isCollection,
+            int accId);
 
         Result CrossCurrencyTransferInsert(FinanceCrossCurrencyTransfer param);
 

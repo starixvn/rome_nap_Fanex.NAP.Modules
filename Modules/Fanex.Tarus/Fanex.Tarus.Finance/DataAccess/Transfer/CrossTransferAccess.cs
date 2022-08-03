@@ -4,6 +4,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
     using System;
     using System.Data;
     using Fanex.Data;
+    using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Entities;
 
     public class CrossTransferAccess : ICrossTransferAccess
@@ -41,35 +42,41 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
             }
         }
 
-        public Result BettransInsertTransfer(int _accId, int _fromCustId, string _toUser, double _exRate,
-                                                      double _amount, string _remark, string _ip, bool _isCollection)
+        public Result BettransInsertTransfer(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (ObjectDb objDB = new ObjectDb("Acc_BettransInsTransfer"))
-                {
-                    objDB.AddInParameter("userid", DbType.Int32, _accId);
-                    objDB.AddInParameter("fromcustid", DbType.Int32, _fromCustId);
-                    objDB.AddInParameter("tousername", DbType.String, _toUser);
-                    objDB.AddInParameter("exchangerate", DbType.Double, _exRate);
-                    objDB.AddInParameter("amount", DbType.Double, _amount);
-                    objDB.AddInParameter("remark", DbType.String, _remark);
-                    objDB.AddInParameter("language", DbType.String, "E");
-                    objDB.AddInParameter("ip", DbType.String, Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-                    objDB.AddInParameter("iscollection", DbType.Boolean, _isCollection);
+                db.ExecuteNonQuery(criteria.GetSpParams());
 
-                    objDB.AddOutParameter("errmsg", DbType.String, 500);
-                    objDB.AddOutParameter("errcode", DbType.Int32, sizeof(int));
-                    objDB.ExecuteNonQuery();
-                    var errMsg = DNAide.Core.CastAide.AsString(objDB.GetParameterValue("ErrMsg"));
-                    var errCode = DNAide.Core.CastAide.AsInt32(objDB.GetParameterValue("errcode"));
-                    return new Result { ErrorCode = errCode, ErrorMessage = errMsg };
-                }
+                return ToResult(db);
             }
-            catch (Exception e)
+        }
+
+        public ResultTransfer BettransInsertTransferSiteDB(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                return new Result { ErrorCode = 1, ErrorMessage = e.Message };
+                db.ExecuteNonQuery(criteria.GetSpParams());
+
+                return ToResultTransfer(db);
             }
+        }
+
+        private static Result ToResult(ObjectDb db)
+        {
+            var outputs = db.GetOuputParams();
+            return new Result(Convert.ToInt32(outputs["errcode"]), outputs["errmsg"].ToString());
+        }
+
+        private static ResultTransfer ToResultTransfer(ObjectDb db)
+        {
+            var outputs = db.GetOuputParams();
+            var refNo = outputs["refno"];
+
+            return new ResultTransfer(
+                Convert.ToInt32(outputs["errcode"]),
+                outputs["errmsg"].ToString(),
+                refNo == null || refNo == DBNull.Value ? default(long?) : Convert.ToInt64(refNo));
         }
 
         public CustomerExRate SelectCustomerExRate(string username)
