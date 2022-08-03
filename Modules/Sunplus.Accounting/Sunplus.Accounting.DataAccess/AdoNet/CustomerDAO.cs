@@ -254,8 +254,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             {            
                 var param = new Hashtable();
                 param.Add("custid", custId);
-                objdb.AssignParamValues(param);
-                objdb.ExecuteNonQueryScaleoutDB();
+                objdb.ExecuteNonQueryScaleoutDB(param);
                 return new MemberMBCBalanceModel(
                     CastAide.AsDecimal(objdb.GetParameterValue("balance")),
                     CastAide.AsDecimal(objdb.GetParameterValue("netposition")),
@@ -271,8 +270,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 var param = new Hashtable();
                 param.Add("custid", custId);
 
-                objdb.AssignParamValues(param);
-                objdb.ExecuteNonQueryScaleoutDB();
+                objdb.ExecuteNonQueryScaleoutDB(param);
                 return CastAide.AsDecimal(objdb.GetParameterValue("outstanding"));
             }
         }
@@ -287,9 +285,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
               
                 using (ObjectDb db = new ObjectDb("Acc_CustomerSelBalanceCashInfo", 600))
                 {
-                    db.AssignParamValues(param);
-
-                    var ds = db.ExecuteDataSetScaleoutDB(custId);
+                    var ds = db.ExecuteDataSetScaleoutDB(param, custId);
                     if (ds != null && ds.Tables.Count > 0)
                     {
                         dt = ds.Tables[0];
