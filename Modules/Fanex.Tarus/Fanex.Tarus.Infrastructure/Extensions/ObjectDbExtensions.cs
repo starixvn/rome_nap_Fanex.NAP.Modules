@@ -30,7 +30,7 @@ namespace Fanex.Tarus.Infrastructure.Extensions
 
         private const int cacheSiteDBExpireTimeInHours = 1;
 
-        public static DataSet ExecuteDataSetScaleoutDB(this ObjectDb objdb, int custId)
+        public static DataSet ExecuteDataSetScaleoutDB(this ObjectDb objdb, Hashtable parameters, int custId)
         {
             string oldConnectionString = objdb.DbSetting.ConnectionString;
             var siteConfigs = GetSiteDBConfigByCustId(custId);
@@ -39,24 +39,26 @@ namespace Fanex.Tarus.Infrastructure.Extensions
                 objdb.DbSetting.ConnectionString = BuildConnectionString(siteConfigs.AGIP, oldConnectionString);
             }
 
+            objdb.AssignParamValues(parameters);
             DataSet result = objdb.ExecuteDataSet();
             objdb.DbSetting.ConnectionString = oldConnectionString;
             return result;
         }
 
-        public static DataSet ExecuteDataSetScaleoutDB(this ObjectDb objdb, string AGIP)
+        public static DataSet ExecuteDataSetScaleoutDB(this ObjectDb objdb, Hashtable parameters, string AGIP)
         {
             string oldConnectionString = objdb.DbSetting.ConnectionString;
             objdb.DbSetting.ConnectionString = BuildConnectionString(AGIP, oldConnectionString);
+            objdb.AssignParamValues(parameters);
             DataSet result = objdb.ExecuteDataSet();
             objdb.DbSetting.ConnectionString = oldConnectionString;
             return result;
         }
 
-        public static int ExecuteNonQueryScaleoutDB(this ObjectDb objdb)
-            => objdb.ExecuteNonQueryScaleoutDB((int)objdb.GetParameterValue("custid"));
+        public static int ExecuteNonQueryScaleoutDB(this ObjectDb objdb, Hashtable parameters)
+            => objdb.ExecuteNonQueryScaleoutDB(parameters, (int)objdb.GetParameterValue("custid"));
 
-        public static int ExecuteNonQueryScaleoutDB(this ObjectDb objdb, int custId)
+        public static int ExecuteNonQueryScaleoutDB(this ObjectDb objdb, Hashtable parameters, int custId)
         {
             string oldConnectionString = objdb.DbSetting.ConnectionString;
             var siteConfigs = GetSiteDBConfigByCustId(custId);
@@ -65,15 +67,17 @@ namespace Fanex.Tarus.Infrastructure.Extensions
                 objdb.DbSetting.ConnectionString = BuildConnectionString(siteConfigs.AGIP, oldConnectionString);
             }
 
+            objdb.AssignParamValues(parameters);
             int result = objdb.ExecuteNonQuery();
             objdb.DbSetting.ConnectionString = oldConnectionString;
             return result;
         }
 
-        public static int ExecuteNonQueryScaleoutDB(this ObjectDb objdb, string AGIP)
+        public static int ExecuteNonQueryScaleoutDB(this ObjectDb objdb, Hashtable parameters, string AGIP)
         {
             string oldConnectionString = objdb.DbSetting.ConnectionString;
             objdb.DbSetting.ConnectionString = BuildConnectionString(AGIP, oldConnectionString);
+            objdb.AssignParamValues(parameters);
             int result = objdb.ExecuteNonQuery();
             objdb.DbSetting.ConnectionString = oldConnectionString;
             return result;
