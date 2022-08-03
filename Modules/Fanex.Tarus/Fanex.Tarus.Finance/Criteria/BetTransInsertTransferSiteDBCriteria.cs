@@ -21,5 +21,8 @@
         public byte SiteDbGroupId { get; }
 
         public long? RefNo { get; }
+
+        public override string GetSettingKey()
+            => "SiteDB_Acc_BettransInsTransfer";
     }
 }

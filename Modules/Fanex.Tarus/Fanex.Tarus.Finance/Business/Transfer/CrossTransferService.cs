@@ -16,6 +16,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.Core.Helper;
+    using ObjectDbExtensions = Fanex.Tarus.Infrastructure.Extensions.ObjectDbExtensions;
 
     public class CrossTransferService : ICrossTransferService
     {
@@ -60,13 +61,89 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                 return new Result { ErrorCode = 1, ErrorMessage = ex.Message };
             }
 
-            if (!isFiTransfer)
+            return isFiTransfer
+                ? TransferYesterdayTransaction(
+                    fromCustId,
+                    userService.GetCustomerIdByUsername(toCustName),
+                    toCustName,
+                    amount,
+                    exRate,
+                    remark,
+                    isCollection,
+                    accId,
+                    Utils.GetClientIP())
+                : new Result { ErrorCode = 1, ErrorMessage = msg };
+        }
+
+        private Result TransferYesterdayTransaction(
+            int fromCustId,
+            int toCustId,
+            string toCustName,
+            decimal amount,
+            double exRate,
+            string remark,
+            bool isCollection,
+            int accId,
+            string ip)
+        {
+            var fromSiteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(fromCustId);
+            var toSiteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(toCustId);
+
+            if (fromSiteDB.SiteDBGroupID == toSiteDB.SiteDBGroupID)
             {
-                new Result { ErrorCode = 1, ErrorMessage = msg };
+                return _crossTransferAccess.BettransInsertTransfer(new BetTransInsertTransferCriteria(
+                    fromCustId, toCustName, amount, exRate, remark, accId, ip, isCollection));
             }
 
-            return _crossTransferAccess.BettransInsertTransfer(new BetTransInsertTransferCriteria(
-                fromCustId, toCustName, amount, exRate, remark, accId, Utils.GetClientIP(), isCollection));
+            var fromResult = _crossTransferAccess.BettransInsertTransferSiteDB(
+                new BetTransInsertTransferSiteDBCriteria(
+                    fromCustId,
+                    toCustName,
+                    amount,
+                    exRate,
+                    remark,
+                    accId,
+                    ip,
+                    isCollection,
+                    (byte)fromSiteDB.SiteDBGroupID),
+                fromSiteDB.AGIP);
+
+            if (fromResult.ErrorCode == 0 && fromResult.RefNo.HasValue)
+            {
+                var toResultTransfer = _crossTransferAccess.BettransInsertTransferSiteDB(
+                    new BetTransInsertTransferSiteDBCriteria(
+                        fromCustId,
+                        toCustName,
+                        amount,
+                        exRate,
+                        remark,
+                        accId,
+                        ip,
+                        isCollection,
+                        (byte)toSiteDB.SiteDBGroupID,
+                        fromResult.RefNo),
+                    toSiteDB.AGIP);
+
+                if (toResultTransfer.ErrorCode != 0)
+                {
+                    _crossTransferAccess.BettransRevertTransferSiteDB(
+                        new BetTransRevertTransferSiteDBCriteria(
+                            fromResult.RefNo.Value,
+                            accId,
+                            ip,
+                            (byte)fromSiteDB.SiteDBGroupID),
+                        fromSiteDB.AGIP);
+                }
+
+                return toResultTransfer;
+            }
+
+            if (string.IsNullOrWhiteSpace(fromResult.ErrorMessage) && !fromResult.RefNo.HasValue)
+            {
+                fromResult.ErrorMessage = "RefNo is null.";
+            }
+
+            return fromResult;
         }
 
         public Result CrossCurrencyTransferInsert(FinanceCrossCurrencyTransfer param)

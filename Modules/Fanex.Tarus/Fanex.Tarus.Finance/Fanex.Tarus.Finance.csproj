@@ -69,7 +69,7 @@
       <HintPath>..\..\..\packages\Fanex.Tarus.Business.Implement.1.0.1.1\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.4.3-ScaleoutDB008\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.4.3-ScaleoutDB009\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Security.1.0.1.8\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -172,6 +172,7 @@
     </Compile>
     <Compile Include="Criteria\BetTransInsertTransferCriteria.cs" />
     <Compile Include="Criteria\BetTransInsertTransferSiteDBCriteria.cs" />
+    <Compile Include="Criteria\BetTransRevertTransferSiteDBCriteria.cs" />
     <Compile Include="DataAccess\Customer\FinanceCustomerListAccess.cs" />
     <Compile Include="DataAccess\Customer\IFinanceCustomerListAccess.cs" />
     <Compile Include="DataAccess\Statement\FinanceStatementAccess.cs" />

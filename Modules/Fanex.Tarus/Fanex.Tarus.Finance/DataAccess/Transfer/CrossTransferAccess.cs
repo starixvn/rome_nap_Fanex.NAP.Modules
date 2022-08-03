@@ -6,6 +6,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
     using Fanex.Data;
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Entities;
+    using Fanex.Tarus.Infrastructure.Extensions;
 
     public class CrossTransferAccess : ICrossTransferAccess
     {
@@ -44,21 +45,55 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
 
         public Result BettransInsertTransfer(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            try
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    db.ExecuteNonQuery(criteria.GetSpParams());
 
-                return ToResult(db);
+                    return ToResult(db);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+                return new Result(1, ex.Message);
             }
         }
 
-        public ResultTransfer BettransInsertTransferSiteDB(ICriteria criteria)
+        public ResultTransfer BettransInsertTransferSiteDB(ICriteria criteria, string agIp)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            try
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), agIp);
 
-                return ToResultTransfer(db);
+                    return ToResultTransfer(db);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
+                return new ResultTransfer(1, ex.Message);
+            }
+        }
+
+        public Result BettransRevertTransferSiteDB(ICriteria criteria, string agIp)
+        {
+            try
+            {
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), agIp);
+
+                    return ToResult(db);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
+                return new Result(1, ex.Message);
             }
         }
 
