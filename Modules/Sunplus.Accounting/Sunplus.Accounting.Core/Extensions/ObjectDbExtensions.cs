@@ -29,7 +29,7 @@ namespace Sunplus.Accounting.Core.Extensions
         private const int cacheSiteDBExpireTimeInHours = 1;
 
         public static IDataReader ExecuteReaderScaleoutDB(this ObjectDb objdb, Hashtable parameters)
-            => objdb.ExecuteReaderScaleoutDB(parameters, (int)objdb.GetParameterValue("custid"));
+            => objdb.ExecuteReaderScaleoutDB(parameters, (int)parameters["custid"]);
 
         public static IDataReader ExecuteReaderScaleoutDB(this ObjectDb objdb, Hashtable parameters, int custId)
         {
@@ -57,7 +57,7 @@ namespace Sunplus.Accounting.Core.Extensions
         }
 
         public static DataSet ExecuteDataSetScaleoutDB(this ObjectDb objdb, Hashtable parameters)
-            => objdb.ExecuteDataSetScaleoutDB(parameters, (int)objdb.GetParameterValue("custid"));
+            => objdb.ExecuteDataSetScaleoutDB(parameters, (int)parameters["custid"]);
 
         public static DataSet ExecuteDataSetScaleoutDB(this ObjectDb objdb, Hashtable parameters, int custId)
         {
@@ -85,7 +85,7 @@ namespace Sunplus.Accounting.Core.Extensions
         }
 
         public static int ExecuteNonQueryScaleoutDB(this ObjectDb objdb, Hashtable parameters)
-            => objdb.ExecuteNonQueryScaleoutDB(parameters, (int)objdb.GetParameterValue("custid"));
+            => objdb.ExecuteNonQueryScaleoutDB(parameters, (int)parameters["custid"]);
 
         public static int ExecuteNonQueryScaleoutDB(this ObjectDb objdb, Hashtable parameters, int custId)
         {

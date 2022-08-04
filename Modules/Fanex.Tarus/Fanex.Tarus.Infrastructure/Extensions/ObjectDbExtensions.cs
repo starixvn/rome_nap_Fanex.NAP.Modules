@@ -31,7 +31,7 @@ namespace Fanex.Tarus.Infrastructure.Extensions
         private const int cacheSiteDBExpireTimeInHours = 1;
 
         public static IDataReader ExecuteReaderScaleoutDB(this ObjectDb objdb, Hashtable parameters)
-            => objdb.ExecuteReaderScaleoutDB(parameters, (int)objdb.GetParameterValue("custid"));
+            => objdb.ExecuteReaderScaleoutDB(parameters, (int)parameters["custid"]);
 
         public static IDataReader ExecuteReaderScaleoutDB(this ObjectDb objdb, Hashtable parameters, int custId)
         {
@@ -57,6 +57,9 @@ namespace Fanex.Tarus.Infrastructure.Extensions
             objdb.DbSetting.ConnectionString = oldConnectionString;
             return result;
         }
+
+        public static DataSet ExecuteDataSetScaleoutDB(this ObjectDb objdb, Hashtable parameters)
+            => objdb.ExecuteDataSetScaleoutDB(parameters, (int)parameters["custid"]);
 
         public static DataSet ExecuteDataSetScaleoutDB(this ObjectDb objdb, Hashtable parameters, int custId)
         {
@@ -84,7 +87,7 @@ namespace Fanex.Tarus.Infrastructure.Extensions
         }
 
         public static int ExecuteNonQueryScaleoutDB(this ObjectDb objdb, Hashtable parameters)
-            => objdb.ExecuteNonQueryScaleoutDB(parameters, (int)objdb.GetParameterValue("custid"));
+            => objdb.ExecuteNonQueryScaleoutDB(parameters, (int)parameters["custid"]);
 
         public static int ExecuteNonQueryScaleoutDB(this ObjectDb objdb, Hashtable parameters, int custId)
         {
