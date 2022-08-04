@@ -170,6 +170,8 @@
       <SubType>
       </SubType>
     </Compile>
+    <Compile Include="Criteria\BetTransInsertCrossTransferCriteria.cs" />
+    <Compile Include="Criteria\BetTransInsertCrossTransferSiteDBCriteria.cs" />
     <Compile Include="Criteria\BetTransInsertTransferCriteria.cs" />
     <Compile Include="Criteria\BetTransInsertTransferSiteDBCriteria.cs" />
     <Compile Include="Criteria\BetTransRevertTransferSiteDBCriteria.cs" />
@@ -195,6 +197,7 @@
     <Compile Include="Model\Statement\FinaceStatementModel.cs" />
     <Compile Include="Model\Transfer\CrossTransfer.cs" />
     <Compile Include="Model\Transfer\FinanceCrossCurrencyTransfer.cs" />
+    <Compile Include="Model\Transfer\TransferYesterdayTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource\Error.Designer.cs">
       <AutoGen>True</AutoGen>

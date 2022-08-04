@@ -3,7 +3,7 @@ namespace Fanex.Tarus.Finance.Criteria
 {
     using Fanex.NAP.Framework.Data;
 
-    public class BetTransRevertTransferSiteDBCriteria : CriteriaBase
+    internal class BetTransRevertTransferSiteDBCriteria : CriteriaBase
     {
         public BetTransRevertTransferSiteDBCriteria(
             long refNo,

@@ -2,27 +2,20 @@
 namespace Fanex.Tarus.Finance.Criteria
 {
     using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.Finance.Model.Transfer;
 
     internal class BetTransInsertTransferCriteria : CriteriaBase
     {
-        internal BetTransInsertTransferCriteria(
-            int fromCustId,
-            string toUsername,
-            decimal amount,
-            double exchangeRate,
-            string remark,
-            int userId,
-            string ip,
-            bool isCollection)
+        public BetTransInsertTransferCriteria(TransferYesterdayTransaction param, int fromCustId)
         {
             FromCustId = fromCustId;
-            ToUsername = toUsername;
-            Amount = amount;
-            ExchangeRate = exchangeRate;
-            Remark = remark;
-            UserId = userId;
-            IP = ip;
-            IsCollection = isCollection;
+            ToUsername = param.ToCustName;
+            Amount = param.Amount;
+            ExchangeRate = param.ExRate;
+            Remark = param.Remark;
+            UserId = param.UserId;
+            IP = param.IP;
+            IsCollection = param.IsCollection;
         }
 
         public int FromCustId { get; }

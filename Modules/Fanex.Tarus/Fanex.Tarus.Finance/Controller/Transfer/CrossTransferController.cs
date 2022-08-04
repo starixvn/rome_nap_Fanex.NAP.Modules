@@ -12,18 +12,15 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
 
     public class CrossTransferController : BaseController
     {
-        private readonly ICrossTransferService _crossTransferService;
-
-        public CrossTransferController(ICrossTransferService crossTransferService)
-        {
-            _crossTransferService = crossTransferService ?? new CrossTransferService();
-        }
+        private readonly ICrossTransferService crossTransferService;
 
         public CrossTransferController()
             : this(null)
         {
-            _crossTransferService = new CrossTransferService();
         }
+
+        internal CrossTransferController(ICrossTransferService crossTransferService)
+            => this.crossTransferService = crossTransferService ?? new CrossTransferService();
 
         public ActionResult Index()
         {
@@ -35,6 +32,7 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
                 FromAmount = (string.IsNullOrEmpty(fromAmount) || Convert.ToDouble(fromAmount) == 0.0) ? "0.00" : (Convert.ToDouble(fromAmount) * -1).ToString(),
                 ForexAccount = Fanex.Tarus.Infrastructure.Caching.CacheHelper.Get<string>("Transfer_ForexAccount_" + AppSession.AccUserName)
             };
+
             if (!crossTransferModel.IsHadPermissionOnCrossCurrencyTransfer && !crossTransferModel.IsHadPermissionOnYesterdayTransfer)
             {
                 return View("~/Views/Common/AccessDenied.cshtml");
@@ -43,42 +41,25 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
             return View("~/Views/Finance/Transfer/Index.cshtml", crossTransferModel);
         }
 
-        public JsonResult TransferYesterdayTransactionHandler(
-            string fromCustName,
-            string toCustName,
-            decimal amount,
-            double exRate,
-            string remark,
-            bool isCollection)
+        public JsonResult TransferYesterdayTransactionHandler(TransferYesterdayTransaction request)
         {
-            fromCustName = WebUtility.HtmlDecode(fromCustName);
-            toCustName = WebUtility.HtmlDecode(toCustName);
-            var result = _crossTransferService.TransferYesterdayTransaction(
-                fromCustName,
-                toCustName,
-                amount,
-                exRate,
-                remark,
-                isCollection,
-                AppSession.AccId);
+            request.FromCustName = WebUtility.HtmlDecode(request.FromCustName);
+            request.ToCustName = WebUtility.HtmlDecode(request.ToCustName);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(crossTransferService.TransferYesterdayTransaction(request), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult SelectCustomerExRate(string username)
         {
             username = WebUtility.HtmlDecode(username);
-            return Json(_crossTransferService.SelectCustomerExRate(username), JsonRequestBehavior.AllowGet);
+
+            return Json(crossTransferService.SelectCustomerExRate(username), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult CrossCurrencyTransferInsert(FinanceCrossCurrencyTransfer param)
-        {
-            return Json(_crossTransferService.CrossCurrencyTransferInsert(param), JsonRequestBehavior.AllowGet);
-        }
+        public JsonResult CrossCurrencyTransferInsert(FinanceCrossCurrencyTransfer request)
+            => Json(crossTransferService.CrossCurrencyTransferInsert(request), JsonRequestBehavior.AllowGet);
 
         public JsonResult SelectAllForexAccount()
-        {
-            return Json(_crossTransferService.SelectAllForexAccount(), JsonRequestBehavior.AllowGet);
-        }
+            => Json(crossTransferService.SelectAllForexAccount(), JsonRequestBehavior.AllowGet);
     }
 }

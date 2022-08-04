@@ -5,16 +5,9 @@ namespace Fanex.Tarus.Finance.Business.Transfer
     using Fanex.Tarus.Finance.Entities;
     using Fanex.Tarus.Finance.Model.Transfer;
 
-    public interface ICrossTransferService
+    internal interface ICrossTransferService
     {
-        Result TransferYesterdayTransaction(
-            string fromCustName,
-            string toCustName,
-            decimal amount,
-            double exRate,
-            string remark,
-            bool isCollection,
-            int accId);
+        Result TransferYesterdayTransaction(TransferYesterdayTransaction param);
 
         Result CrossCurrencyTransferInsert(FinanceCrossCurrencyTransfer param);
 

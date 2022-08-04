@@ -8,78 +8,24 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
     using Fanex.Tarus.Finance.Entities;
     using Fanex.Tarus.Infrastructure.Extensions;
 
-    public class CrossTransferAccess : ICrossTransferAccess
+    internal class CrossTransferAccess : ICrossTransferAccess
     {
-        public Result CustomerCrossTransferInsert(int fromCustID, int toCustID, double fromAmount, double toAmount, double fromExRate,
-            double toExRate, string forexUsername, string remark, int custid, bool isCollection)
-        {
-            try
-            {
-                using (ObjectDb objDB = new ObjectDb("Acc_BettransInsCrossTransfer"))
-                {
-                    objDB.AddInParameter("fromcustid", DbType.Int32, fromCustID);
-                    objDB.AddInParameter("tocustid", DbType.Int32, toCustID);
-                    objDB.AddInParameter("fromamount", DbType.Double, fromAmount);
-                    objDB.AddInParameter("toamount", DbType.Double, toAmount);
-                    objDB.AddInParameter("fromexrate", DbType.Double, fromExRate);
-                    objDB.AddInParameter("toexrate", DbType.Double, toExRate);
-                    objDB.AddInParameter("forexusername", DbType.String, forexUsername);
-                    objDB.AddInParameter("remark", DbType.String, remark);
-                    objDB.AddInParameter("userid", DbType.Int32, custid);
-                    objDB.AddInParameter("ip", DbType.String, Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-                    objDB.AddInParameter("iscollection", DbType.Boolean, isCollection);
+        public Result CustomerCrossTransferInsert(ICriteria criteria, string agIp)
+            => ExecuteNonQuery(criteria, agIp);
 
-                    objDB.AddOutParameter("errmsg", DbType.String, 500);
-                    objDB.AddOutParameter("errcode", DbType.Int32, sizeof(int));
-                    objDB.ExecuteNonQuery();
-                    var errMsg = DNAide.Core.CastAide.AsString(objDB.GetParameterValue("ErrMsg"));
-                    var errCode = DNAide.Core.CastAide.AsInt32(objDB.GetParameterValue("errcode"));
-                    return new Result { ErrorCode = errCode, ErrorMessage = errMsg };
-                }
-            }
-            catch (Exception e)
-            {
-                return new Result { ErrorCode = 1, ErrorMessage = e.Message };
-            }
-        }
+        public ResultTransfer CustomerCrossTransferInsertWithRefNo(ICriteria criteria, string agIp)
+            => ExecuteNonQueryWithRefNo(criteria, agIp);
 
-        public Result BettransInsertTransfer(ICriteria criteria)
-        {
-            try
-            {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(criteria.GetSpParams());
-
-                    return ToResult(db);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-                return new Result(1, ex.Message);
-            }
-        }
+        public Result BettransInsertTransfer(ICriteria criteria, string agIp)
+            => ExecuteNonQuery(criteria, agIp);
 
         public ResultTransfer BettransInsertTransferSiteDB(ICriteria criteria, string agIp)
-        {
-            try
-            {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), agIp);
-
-                    return ToResultTransfer(db);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
-                return new ResultTransfer(1, ex.Message);
-            }
-        }
+            => ExecuteNonQueryWithRefNo(criteria, agIp);
 
         public Result BettransRevertTransferSiteDB(ICriteria criteria, string agIp)
+            => ExecuteNonQuery(criteria, agIp);
+
+        private static Result ExecuteNonQuery(ICriteria criteria, string agIp)
         {
             try
             {
@@ -101,6 +47,24 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
         {
             var outputs = db.GetOuputParams();
             return new Result(Convert.ToInt32(outputs["errcode"]), outputs["errmsg"].ToString());
+        }
+
+        private static ResultTransfer ExecuteNonQueryWithRefNo(ICriteria criteria, string agIp)
+        {
+            try
+            {
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), agIp);
+
+                    return ToResultTransfer(db);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
+                return new ResultTransfer(1, ex.Message);
+            }
         }
 
         private static ResultTransfer ToResultTransfer(ObjectDb db)
