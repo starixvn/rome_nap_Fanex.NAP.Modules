@@ -447,7 +447,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                             { "username", newLicenseePostParam.MemberName}
                         };
 
-                        db.ExecuteNonQueryScaleoutDB(outCustId);
+                        db.ExecuteNonQueryScaleoutDB(param, outCustId);
                     }
                 }
 
@@ -616,15 +616,13 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 using (var db = new ObjectDb("Dot_BalanceInsCredit"))
                 {
                     var param = new Hashtable() { { "custid", custId } };
-                    db.AssignParamValues(param);
-                    db.ExecuteNonQueryScaleoutDB(AGIP);
+                    db.ExecuteNonQueryScaleoutDB(param, AGIP);
                 }
 
                 using (var db = new ObjectDb("Dot_BalanceInsDebit"))
                 {
                     var param = new Hashtable() { { "custid", custId } };
-                    db.AssignParamValues(param);
-                    db.ExecuteNonQueryScaleoutDB(AGIP);
+                    db.ExecuteNonQueryScaleoutDB(param, AGIP);
                 }
             }
         }
@@ -641,8 +639,8 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                             { "custid", custInfo.Split(';')[0] },
                             { "username", custInfo.Split(';')[1] }
                         };
-                    db.AssignParamValues(param);
-                    db.ExecuteNonQueryScaleoutDB(AGIP);
+
+                    db.ExecuteNonQueryScaleoutDB(param, AGIP);
                 }
             }
         }

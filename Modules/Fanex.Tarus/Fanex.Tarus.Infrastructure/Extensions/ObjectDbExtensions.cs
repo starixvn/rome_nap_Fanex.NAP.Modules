@@ -30,6 +30,34 @@ namespace Fanex.Tarus.Infrastructure.Extensions
 
         private const int cacheSiteDBExpireTimeInHours = 1;
 
+        public static IDataReader ExecuteReaderScaleoutDB(this ObjectDb objdb, Hashtable parameters)
+            => objdb.ExecuteReaderScaleoutDB(parameters, (int)objdb.GetParameterValue("custid"));
+
+        public static IDataReader ExecuteReaderScaleoutDB(this ObjectDb objdb, Hashtable parameters, int custId)
+        {
+            string oldConnectionString = objdb.DbSetting.ConnectionString;
+            var siteConfigs = GetSiteDBConfigByCustId(custId);
+            if (siteConfigs != null && siteConfigs.IsSiteDB)
+            {
+                objdb.DbSetting.ConnectionString = BuildConnectionString(siteConfigs.AGIP, oldConnectionString);
+            }
+
+            objdb.AssignParamValues(parameters);
+            IDataReader result = objdb.ExecuteReader();
+            objdb.DbSetting.ConnectionString = oldConnectionString;
+            return result;
+        }
+
+        public static IDataReader ExecuteReaderScaleoutDB(this ObjectDb objdb, Hashtable parameters, string AGIP)
+        {
+            string oldConnectionString = objdb.DbSetting.ConnectionString;
+            objdb.DbSetting.ConnectionString = BuildConnectionString(AGIP, oldConnectionString);
+            objdb.AssignParamValues(parameters);
+            IDataReader result = objdb.ExecuteReader();
+            objdb.DbSetting.ConnectionString = oldConnectionString;
+            return result;
+        }
+
         public static DataSet ExecuteDataSetScaleoutDB(this ObjectDb objdb, Hashtable parameters, int custId)
         {
             string oldConnectionString = objdb.DbSetting.ConnectionString;
