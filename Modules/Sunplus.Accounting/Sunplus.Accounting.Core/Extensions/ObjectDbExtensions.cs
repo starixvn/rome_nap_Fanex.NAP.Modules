@@ -115,6 +115,9 @@ namespace Sunplus.Accounting.Core.Extensions
         public static SiteDB GetSiteDBConfigByCustId(int custId)
             => GetSiteDBConfig(new Hashtable { { "custid", custId } }).FirstOrDefault();
 
+        public static SiteDB GetSiteDBConfigByUsername(string userName)
+            => GetSiteDBConfig(new Hashtable { { "username", userName } }).FirstOrDefault();
+
         public static IEnumerable<SiteDB> GetSiteDBConfigBySiteGroupId(int siteGroupId)
             => GetSiteDBConfig(new Hashtable { { "sitedbgroupid", siteGroupId } });
 
