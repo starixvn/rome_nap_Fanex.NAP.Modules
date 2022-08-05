@@ -253,50 +253,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             return error;
         } 
-                
-        /// <summary>
-        /// Nguyen Thi Minh Thu 12/12/2006
-        /// call sp CustomerUpdUserName for change userName
-        /// Using DNAide's library
-        /// Tho.Nguyen updated: 12/1/2008
-        /// </summary>
-        /// <param name="param"></param>
-        /// <returns></returns>
-        public static IbcError CustomerUpdUserNameRpt(string oldUname, string newUname, string accId)
-        {
-            IbcError error = IbcError.SuccessResult;
-            try
-            {
-                using (ObjectDb objdb = new ObjectDb("Acc_CustomerUpdUserName", 600))
-                {
-                    var hash = new Hashtable();
-                    hash.Add("oldname", oldUname);
-                    hash.Add("newname", newUname);
-                    hash.Add("userid", accId);
-                    hash.Add("returnerrcode", 1);
-                    hash.Add("errcode", 0);
-                    hash.Add("errmsg", "");
-
-                    objdb.AssignParamValues(hash);
-                    objdb.ExecuteNonQuery();
-
-                    var errCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
-                    if (errCode != 0)
-                    {
-                        error.ErrorCode = errCode;
-                        error.ErrorMsg = string.Format("{0}", objdb.GetParameterValue("errmsg"));
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                error.ErrorCode = IbcError.INTERNAL_ERROR;
-                error.ErrorMsg = IbcError.INTERNAL_ERROR_MSG;
-
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-            return error;
-        }
 
         public static IbcError CustomerUpdUserNameRpt(string oldUname, string newUname, string accId, out int custid)
         {
@@ -324,6 +280,27 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                     {
                         error.ErrorCode = errCode;
                         error.ErrorMsg = string.Format("{0}", objdb.GetParameterValue("errmsg"));
+                    }
+                }
+
+                if (error.IsSuccess())
+                {
+                    using (var objdb = new ObjectDb("Acc_CustomerUpdUserName_Bettrans"))
+                    {
+                        objdb.AssignParamValues(new Hashtable {
+                            { "custid ", custid },
+                            { "errcode", 0 },
+                            { "errmsg", "" },
+                            { "newusername", newUname }
+                        });
+
+                        objdb.ExecuteNonQuery();
+                        var errCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
+                        if (errCode != 0)
+                        {
+                            error.ErrorCode = errCode;
+                            error.ErrorMsg = objdb.GetParameterValue("errmsg").ToString();
+                        }
                     }
                 }
             }

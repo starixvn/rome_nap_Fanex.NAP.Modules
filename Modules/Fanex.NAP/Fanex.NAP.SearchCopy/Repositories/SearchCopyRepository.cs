@@ -104,6 +104,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Repositories
 
         public Result InsertMember(Hashtable inputParams)
         {
+            var result = new Result();
             using (var db = new ObjectDb("Acc_CustomerInsMember_Ag"))
             {
                 db.ExecuteNonQuery(inputParams);
@@ -111,8 +112,22 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Repositories
 
                 inputParams["custid"] = ouputParams["custid"];
 
-                return GetResult(ouputParams);
+                result = GetResult(ouputParams);
             }
+
+            if (result.IsSuccess)
+            {
+                using (var db = new ObjectDb("Dot_BalanceDebitInitialize"))
+                {
+                    db.ExecuteNonQuery(inputParams["custid"]);
+                }
+                using (var db = new ObjectDb("Dot_BalanceCreditInitialize"))
+                {
+                    db.ExecuteNonQuery(inputParams["custid"]);
+                }
+            }
+
+            return result;
         }
 
         public Result CopyExistingSuper(CopyExistingCustomerCriteria criteria)
