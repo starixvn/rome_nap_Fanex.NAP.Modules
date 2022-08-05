@@ -5,11 +5,11 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Entities;
 
-    internal interface ICrossTransferAccess
+    public interface ICrossTransferAccess
     {
         Result CustomerCrossTransferInsert(ICriteria criteria, string agIp);
 
-        ResultTransfer CustomerCrossTransferInsertWithRefNo(ICriteria criteria, string agIp);
+        ResultTransfer CustomerCrossTransferInsertSiteDB(ICriteria criteria, string agIp);
 
         Result BettransInsertTransfer(ICriteria criteria, string agIp);
 

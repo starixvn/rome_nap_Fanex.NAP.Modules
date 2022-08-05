@@ -21,7 +21,7 @@ namespace Fanex.Tarus.Finance.Entities
 
         public string ErrorMessage { get; set; }
 
-        public bool IsSuccess => ErrorCode == 0;
+        public bool IsFailure => ErrorCode != 0;
 
         public static Result NotAutherized() => new Result(403, ErrorLanguage.NotAutherizedFunction);
 

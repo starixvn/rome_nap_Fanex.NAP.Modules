@@ -2,6 +2,7 @@
 using DNAide.Data;
 using Fanex.Data;
 using IBCUtils;
+using Sunplus.Accounting.Core.Extensions;
 using System;
 using System.Collections;
 using System.Data;
@@ -24,7 +25,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             p.Add("todate", todate);
             try
             {
-                
+
                 using (ObjectDb db = new ObjectDb("Acc_Statement", 600))
                 {
                     db.AssignParamValues(p);
@@ -128,42 +129,42 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// Delete transaction(statement)
         /// </summary>
         /// Phuong.Nguyen updated
-        /// <param name="refno"></param>
-        /// <param name="custid"></param>
-        /// <param name="userid"></param>
-        public static IbcError Acc_BettransDelTransaction(long refno, int custid, int userid, string IP)
+        /// <param name="refNo"></param>
+        /// <param name="custId"></param>
+        /// <param name="userId"></param>
+        public static IbcError Acc_BettransDelTransaction(long refNo, int custId, int userId, string ip)
         {
-            IbcError error = IbcError.SuccessResult;
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            var inputParams = new Hashtable
+            {
+                ["refno"] = refNo,
+                ["custid"] = custId,
+                ["userid"] = userId,
+                ["ip"] = ip,
+                ["sitedbgroupid"] = siteDB.SiteDBGroupID,
+                ["errcode"] = 0,
+                ["errmsg"] = string.Empty
+            };
+
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_BettransDelTransaction", 1200))
+                using (var db = new ObjectDb("Acc_BettransDelTransaction", 1200))
                 {
-                    var p = new Hashtable();
-                    p.Add("refno", refno);
-                    p.Add("custid", custid);
-                    p.Add("userid", userid);
-                    p.Add("ip", IP);
-                    p.Add("errcode", 0);
-                    p.Add("errmsg", "");
+                    db.ExecuteNonQueryScaleoutDB(inputParams, siteDB.AGIP);
 
-                    db.AssignParamValues(p);
-                    db.ExecuteNonQuery();
-
-                    return new IbcError()
-                    {
-                        ErrorCode = DNAide.Core.CastAide.AsInt32(db.GetParameterValue("errcode")),
-                        ErrorMsg = string.Format("{0}", db.GetParameterValue("errmsg"))
-                    };
+                    return new IbcError(
+                        DNAide.Core.CastAide.AsInt32(db.GetParameterValue("errcode")),
+                        string.Format("{0}", db.GetParameterValue("errmsg")));
                 }
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                return new IbcError()
-                {
-                    ErrorCode = 100,
-                    ErrorMsg = ex.Message
-                };
+                Sunplus.Accounting.Core.Extensions.LogExtensions.Error(
+                    siteDB.AGIP,
+                    "Acc_BettransDelTransaction",
+                    inputParams,
+                    ex);
+                return new IbcError(100, ex.Message);
             }
         }
 
@@ -217,7 +218,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("custid", custid);
                 p.Add("fromdate", fromdate);
 
-                using (ObjectDb db = new ObjectDb("BetListByDayAll",600))
+                using (ObjectDb db = new ObjectDb("BetListByDayAll", 600))
                 {
                     db.AssignParamValues(p);
                     result = db.ExecuteDataSet();

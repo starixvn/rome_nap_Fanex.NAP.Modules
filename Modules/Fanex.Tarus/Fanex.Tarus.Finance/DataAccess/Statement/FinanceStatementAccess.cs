@@ -5,7 +5,9 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
     using System.Data;
     using DNAide.Core;
     using Fanex.Data;
+    using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Entities;
+    using Fanex.Tarus.Infrastructure.Extensions;
     using Sunplus.Accounting.Core.Common;
     public class FinanceStatementAccess : IFinanceStatementAccess
     {
@@ -69,29 +71,22 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
             }
         }
 
-        public Result DeleteTransAccess(string RefNo, int CustID, int UserID)
+        public Result DeleteTransAccess(ICriteria criteria, string agIp)
         {
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_BettransDelTransaction", 1200))
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
                 {
-                    db.AddInParameter("custid", DbType.Int32, CustID);
-                    db.AddInParameter("userid", DbType.Int32, UserID);
-                    db.AddInParameter("refno", DbType.String, RefNo);
+                    db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), agIp);
+                    var outputs = db.GetOuputParams();
 
-                    db.AddOutParameter("errmsg", DbType.String, 500);
-                    db.AddOutParameter("errcode", DbType.Int32, sizeof(int));
-
-                    db.ExecuteNonQuery();
-
-                    var errMsg = DNAide.Core.CastAide.AsString(db.GetParameterValue("ErrMsg"));
-                    var errCode = DNAide.Core.CastAide.AsInt32(db.GetParameterValue("errcode"));
-                    return new Result { ErrorCode = errCode, ErrorMessage = errMsg };
+                    return new Result(Convert.ToInt32(outputs["errcode"]), outputs["errmsg"].ToString());
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return new Result { ErrorCode = 1, ErrorMessage = e.Message };
+                LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
+                return Result.ServerError(ex.Message);
             }
         }
     }

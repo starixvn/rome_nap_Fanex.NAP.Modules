@@ -2,6 +2,7 @@
 namespace Fanex.Tarus.Finance.DataAccess.Statement
 {
     using System.Data;
+    using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Entities;
 
     public interface IFinanceStatementAccess
@@ -12,6 +13,6 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
 
         Result UpdateVerifyStatusAccess(string refNo, bool isVerify, string CheckerName, int CheckerID);
 
-        Result DeleteTransAccess(string RefNo, int CustID, int UserID);
+        Result DeleteTransAccess(ICriteria criteria, string agIp);
     }
 }

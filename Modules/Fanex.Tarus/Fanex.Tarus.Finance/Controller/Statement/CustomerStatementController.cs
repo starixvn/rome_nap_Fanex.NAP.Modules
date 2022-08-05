@@ -13,25 +13,25 @@ namespace Fanex.Tarus.Finance.Controller.Statement
 
     public class CustomerStatementController : BaseController
     {
-        private IFinanceStatementBusiness _financeStatemenetService = null;
+        private readonly IFinanceStatementBusiness financeStatemenetService;
 
-        private Helper _helper;
+        private readonly Helper helper;
 
         public CustomerStatementController()
             : this(null)
         {
         }
 
-        public CustomerStatementController(IFinanceStatementBusiness financeStatemenetServices)
+        public CustomerStatementController(IFinanceStatementBusiness financeStatemenetService)
         {
-            _financeStatemenetService = financeStatemenetServices ?? new FinanceStatementBusiness();
-            _helper = new Helper();
+            this.financeStatemenetService = financeStatemenetService ?? new FinanceStatementBusiness();
+            helper = new Helper();
         }
 
         [AuthenticateRead]
         public ActionResult Index(int? CustID, string CustName)
         {
-            ViewBag.Banlance = _helper.BalanceUpDate;
+            ViewBag.Banlance = helper.BalanceUpDate;
             ViewBag.CustID = CustID;
             ViewBag.CustName = System.Web.HttpUtility.UrlDecode(CustName);
             return View("~/Views/Finance/Statement/Index.cshtml");
@@ -40,19 +40,19 @@ namespace Fanex.Tarus.Finance.Controller.Statement
         [HttpPost]
         public JsonResult GetFinanceStatement(string refNo, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int includeAccBall)
         {
-            if (!_helper.CheckIsInternal(custName) && (custName != string.Empty))
+            if (!helper.CheckIsInternal(custName) && (custName != string.Empty))
             {
                 return new JsonResult { Data = new { errorMessage = "This function supports to view statement of Finance Accounts only!" } };
             }
 
-            balanceUpDay = _helper.BalanceUpDate.ToShortDateString();
+            balanceUpDay = helper.BalanceUpDate.ToShortDateString();
 
             List<StatementDetail> result;
             if (CastAide.AsDateTime(fromdate) != CastAide.AsDateTime(balanceUpDay) && refNo == "-1")
             {
                 includeAccBall = 1;
             }
-            result = _financeStatemenetService.GetFinanceStatementBusiness(refNo, custName, filterBy, fromdate, toDay, balanceUpDay, includeAccBall);
+            result = financeStatemenetService.GetFinanceStatementBusiness(refNo, custName, filterBy, fromdate, toDay, balanceUpDay, includeAccBall);
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
@@ -72,7 +72,7 @@ namespace Fanex.Tarus.Finance.Controller.Statement
                 statementDetail.CheckerTime = string.Empty;
             }
 
-            result = _financeStatemenetService.GetFinanceStatementDetail(statementDetail, username);
+            result = financeStatemenetService.GetFinanceStatementDetail(statementDetail, username);
 
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
@@ -83,25 +83,19 @@ namespace Fanex.Tarus.Finance.Controller.Statement
         public JsonResult UpdateVerifyTrans(string refNo, bool isVerify)
         {
             Result result;
-            result = _financeStatemenetService.VerifyTransactionBusiness(refNo, isVerify, AppSession.AccUserName, AppSession.AccId);
+            result = financeStatemenetService.VerifyTransactionBusiness(refNo, isVerify, AppSession.AccUserName, AppSession.AccId);
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
         }
 
         [HttpPost]
-        public JsonResult DeleteTrans(string refNo, bool isVerify)
-        {
-            Result result;
-            result = _financeStatemenetService.DeleteTransBusiness(refNo, AppSession.CustID, AppSession.AccId);
-            var jsonResult = Json(result);
-            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            return jsonResult;
-        }
+        public JsonResult DeleteTrans(long refNo)
+            => Json(financeStatemenetService.DeleteTransBusiness(refNo, AppSession.CustID, AppSession.AccId), JsonRequestBehavior.AllowGet);
 
         public void ExportExcelFinanceStatement(string refNo, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int IncludeAccBall, string reportTitle)
         {
-            _financeStatemenetService.ExportExcelFinanceStatement(refNo, custName, filterBy, fromdate, toDay, balanceUpDay, IncludeAccBall, reportTitle);
+            financeStatemenetService.ExportExcelFinanceStatement(refNo, custName, filterBy, fromdate, toDay, balanceUpDay, IncludeAccBall, reportTitle);
         }
     }
 }

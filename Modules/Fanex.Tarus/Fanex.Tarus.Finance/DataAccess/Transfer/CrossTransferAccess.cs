@@ -8,12 +8,12 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
     using Fanex.Tarus.Finance.Entities;
     using Fanex.Tarus.Infrastructure.Extensions;
 
-    internal class CrossTransferAccess : ICrossTransferAccess
+    public class CrossTransferAccess : ICrossTransferAccess
     {
         public Result CustomerCrossTransferInsert(ICriteria criteria, string agIp)
             => ExecuteNonQuery(criteria, agIp);
 
-        public ResultTransfer CustomerCrossTransferInsertWithRefNo(ICriteria criteria, string agIp)
+        public ResultTransfer CustomerCrossTransferInsertSiteDB(ICriteria criteria, string agIp)
             => ExecuteNonQueryWithRefNo(criteria, agIp);
 
         public Result BettransInsertTransfer(ICriteria criteria, string agIp)
@@ -39,7 +39,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
             catch (Exception ex)
             {
                 LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
-                return new Result(1, ex.Message);
+                return Result.ServerError(ex.Message);
             }
         }
 

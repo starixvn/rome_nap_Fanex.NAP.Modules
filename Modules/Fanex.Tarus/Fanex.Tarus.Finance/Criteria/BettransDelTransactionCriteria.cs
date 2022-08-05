@@ -1,0 +1,30 @@
+﻿namespace Fanex.Tarus.Finance.Criteria
+{
+    using Fanex.NAP.Framework.Data;
+
+    internal class BettransDelTransactionCriteria : CriteriaBase
+    {
+        public BettransDelTransactionCriteria(
+            long refNo,
+            int custId,
+            int userId,
+            byte siteDBGroupID)
+        {
+            RefNo = refNo;
+            CustId = custId;
+            UserId = userId;
+            SiteDBGroupID = siteDBGroupID;
+        }
+
+        public long RefNo { get; }
+
+        public int CustId { get; }
+
+        public int UserId { get; }
+
+        public byte SiteDBGroupID { get; }
+
+        public override string GetSettingKey()
+            => "Acc_BettransDelTransaction";
+    }
+}

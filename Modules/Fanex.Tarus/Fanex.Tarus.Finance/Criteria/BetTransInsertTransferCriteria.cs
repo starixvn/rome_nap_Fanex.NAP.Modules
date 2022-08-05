@@ -12,7 +12,7 @@ namespace Fanex.Tarus.Finance.Criteria
             ToUsername = param.ToCustName;
             Amount = param.Amount;
             ExchangeRate = param.ExRate;
-            Remark = param.Remark;
+            Remark = param.Remark ?? string.Empty;
             UserId = param.UserId;
             IP = param.IP;
             IsCollection = param.IsCollection;
