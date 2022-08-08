@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Fanex.Tarus.Admin.Business.SiteManagement;
 using Fanex.Tarus.Admin.Criteria.SiteManagement;
+using Fanex.Tarus.Infrastructure.Extensions;
 using Fanex.Tarus.Web.Controllers;
 using Fanex.Tarus.Web.Controllers.Filters;
 
@@ -23,7 +24,7 @@ namespace Fanex.Tarus.Admin.Controller
         [AuthenticateRead]
         public ActionResult Index()
         {
-            return View("~/Views/Admin/SiteManagement/Index.cshtml");
+            return View("~/Views/Admin/SiteManagement/Index.cshtml", siteManagementService.GetSiteDBConfig());
         }
 
         [AuthenticateRead]

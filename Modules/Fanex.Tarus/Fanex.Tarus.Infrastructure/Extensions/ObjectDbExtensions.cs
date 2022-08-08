@@ -153,7 +153,7 @@ namespace Fanex.Tarus.Infrastructure.Extensions
                 }
                 if (IsGetAllSiteDBs(param))
                 {
-                    CacheHelper.Set(cacheSiteDBKey, siteDBs, new DateTime().AddHours(cacheSiteDBExpireTimeInHours));
+                    CacheHelper.Set(cacheSiteDBKey, siteDBs, DateTime.Now.AddHours(cacheSiteDBExpireTimeInHours));
                 }
             }
 

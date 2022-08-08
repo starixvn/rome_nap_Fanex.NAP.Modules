@@ -151,7 +151,7 @@ namespace Sunplus.Accounting.Core.Extensions
                 }
                 if (IsGetAllSiteDBs(param))
                 {
-                    CacheExtension.Set(cacheSiteDBKey, siteDBs, new DateTime().AddHours(cacheSiteDBExpireTimeInHours));
+                    CacheExtension.Set(cacheSiteDBKey, siteDBs, DateTime.Now.AddHours(cacheSiteDBExpireTimeInHours));
                 }
             }
 
