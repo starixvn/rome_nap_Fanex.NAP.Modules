@@ -7,6 +7,7 @@ using DNAide.Data;
 using Fanex.Data;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.Report;
+using Sunplus.Accounting.Core.Extensions;
 
 /// <summary>
 /// Summary description for Betlist
@@ -33,6 +34,28 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
+        }
+
+        public static DataSet SiteDB_BetList_SelDetailCombinationMP(int custid, string refno, string transid, string betid, DateTime movebetday, DateTime balanceupday, ref double outStading)
+        {
+            var result = new DataSet();
+            using (ObjectDb db = new ObjectDb("SiteDB_Acc_BetList_SelCombinationParlayDetail", 600))
+            {
+                var p = new Hashtable();
+                p.Add("refno", refno);
+                p.Add("transid", transid);
+                p.Add("betid", betid);
+                p.Add("custid", custid);
+                p.Add("movebetday", movebetday);
+                p.Add("balanceupday", balanceupday);
+                p.Add("outstanding", 0);
+
+                db.AssignParamValues(p);
+                result = db.ExecuteDataSetScaleoutDB(p, custid);
+                outStading = CastAide.AsDouble(db.GetParameterValue("outstanding"));
+            }
+
+            return result;
         }
 
         public static DataSet BetList_SelDetailCombinationMP(int custid, string refno, string transid, string betid, DateTime movebetday, DateTime balanceupday, ref double outStading)
