@@ -13,16 +13,16 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
         public Result CustomerCrossTransferInsert(ICriteria criteria, string agIp)
             => ExecuteNonQuery(criteria, agIp);
 
-        public ResultTransfer CustomerCrossTransferInsertSiteDB(ICriteria criteria, string agIp)
+        public ResultRefNo CustomerCrossTransferInsertSiteDB(ICriteria criteria, string agIp)
             => ExecuteNonQueryWithRefNo(criteria, agIp);
 
         public Result BettransInsertTransfer(ICriteria criteria, string agIp)
             => ExecuteNonQuery(criteria, agIp);
 
-        public ResultTransfer BettransInsertTransferSiteDB(ICriteria criteria, string agIp)
+        public ResultRefNo BettransInsertTransferSiteDB(ICriteria criteria, string agIp)
             => ExecuteNonQueryWithRefNo(criteria, agIp);
 
-        public Result BettransRevertTransferSiteDB(ICriteria criteria, string agIp)
+        public Result TransferRollbackSiteDB(ICriteria criteria, string agIp)
             => ExecuteNonQuery(criteria, agIp);
 
         private static Result ExecuteNonQuery(ICriteria criteria, string agIp)
@@ -49,7 +49,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
             return new Result(Convert.ToInt32(outputs["errcode"]), outputs["errmsg"].ToString());
         }
 
-        private static ResultTransfer ExecuteNonQueryWithRefNo(ICriteria criteria, string agIp)
+        private static ResultRefNo ExecuteNonQueryWithRefNo(ICriteria criteria, string agIp)
         {
             try
             {
@@ -63,16 +63,16 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
             catch (Exception ex)
             {
                 LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
-                return new ResultTransfer(1, ex.Message);
+                return new ResultRefNo(1, ex.Message);
             }
         }
 
-        private static ResultTransfer ToResultTransfer(ObjectDb db)
+        private static ResultRefNo ToResultTransfer(ObjectDb db)
         {
             var outputs = db.GetOuputParams();
             var refNo = outputs["refno"];
 
-            return new ResultTransfer(
+            return new ResultRefNo(
                 Convert.ToInt32(outputs["errcode"]),
                 outputs["errmsg"].ToString(),
                 refNo == null || refNo == DBNull.Value ? default(long?) : Convert.ToInt64(refNo));

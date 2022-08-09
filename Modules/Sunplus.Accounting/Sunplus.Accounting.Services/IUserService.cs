@@ -25,10 +25,6 @@ namespace Sunplus.Accounting.Business
 
         bool DelDataTmpExcel(int UserId);
 
-        DataSet UpdFinanceTransferMul(int userId, string fileName, int fileSize, string IP, ref Hashtable error);
-
-        DataSet UpdFinanceCrossTransferMul(int userId, string fileName, int fileSize, string IP, string forexName, ref Hashtable error);
-
         List<DailyTransaction> GetDailyTransaction(DateTime transDate, int pageIndex, int pageSize,
                                                    int status, string type, string creator, ref int totalPages,
                                                    string verifyBy);

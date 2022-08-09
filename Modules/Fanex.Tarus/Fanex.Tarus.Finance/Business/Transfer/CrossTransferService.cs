@@ -6,6 +6,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
     using System.Data;
     using DNAide.Core;
     using Fanex.Tarus.Finance.Criteria;
+    using Fanex.Tarus.Finance.Criteria.Transfer;
     using Fanex.Tarus.Finance.DataAccess.Transfer;
     using Fanex.Tarus.Finance.Entities;
     using Fanex.Tarus.Finance.Model.Transfer;
@@ -91,8 +92,8 @@ namespace Fanex.Tarus.Finance.Business.Transfer
 
             if (toResult.IsFailure)
             {
-                // Revert step 1
-                BettransRevertTransferSiteDB(refNo.Value, param.UserId, param.IP, fromSiteDB);
+                // Rollback step 1
+                TransferRollbackSiteDB(refNo.Value, param.UserId, param.IP, fromSiteDB);
             }
 
             return toResult;
@@ -133,7 +134,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                 return fromResult;
             }
 
-            ResultTransfer toResult = null;
+            ResultRefNo toResult = null;
             var refNo = fromResult.RefNo;
             // Step 2: transfer at SiteDB TO
             if (fromSiteDB.SiteDBGroupID != toSiteDB.SiteDBGroupID)
@@ -144,8 +145,8 @@ namespace Fanex.Tarus.Finance.Business.Transfer
 
                 if (toResult.IsFailure)
                 {
-                    // Revert step 1
-                    BettransRevertTransferSiteDB(refNo.Value, param.UserId, param.IP, fromSiteDB);
+                    // Rollback step 1
+                    TransferRollbackSiteDB(refNo.Value, param.UserId, param.IP, fromSiteDB);
 
                     return toResult;
                 }
@@ -161,8 +162,8 @@ namespace Fanex.Tarus.Finance.Business.Transfer
 
                 if (forexResult.IsFailure)
                 {
-                    // Revert step 1 & 2
-                    BettransRevertTransferSiteDB(
+                    // Rollback step 1 & 2
+                    TransferRollbackSiteDB(
                         refNo.Value,
                         param.UserId,
                         param.IP,
@@ -176,21 +177,21 @@ namespace Fanex.Tarus.Finance.Business.Transfer
             return fromResult;
         }
 
-        private void BettransRevertTransferSiteDB(
+        private void TransferRollbackSiteDB(
             long refNo,
             int userId,
             string ip,
             SiteDB fromSiteDB,
             SiteDB toSiteDB = null)
         {
-            crossTransferAccess.BettransRevertTransferSiteDB(
-                new BetTransRevertTransferSiteDBCriteria(refNo, userId, ip, (byte)fromSiteDB.SiteDBGroupID),
+            crossTransferAccess.TransferRollbackSiteDB(
+                new TransferRollbackSiteDBCriteria(refNo, userId, ip, (byte)fromSiteDB.SiteDBGroupID),
                 fromSiteDB.AGIP);
 
             if (toSiteDB != null)
             {
-                crossTransferAccess.BettransRevertTransferSiteDB(
-                    new BetTransRevertTransferSiteDBCriteria(refNo, userId, ip, (byte)toSiteDB.SiteDBGroupID),
+                crossTransferAccess.TransferRollbackSiteDB(
+                    new TransferRollbackSiteDBCriteria(refNo, userId, ip, (byte)toSiteDB.SiteDBGroupID),
                     toSiteDB.AGIP);
             }
         }

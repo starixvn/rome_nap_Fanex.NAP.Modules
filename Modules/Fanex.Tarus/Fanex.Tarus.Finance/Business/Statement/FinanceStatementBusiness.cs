@@ -10,7 +10,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
     using DNAide.Core;
     using DNAide.Utils;
     using ExcelUtil.Spreadsheet;
-    using Fanex.Tarus.Finance.Criteria;
+    using Fanex.Tarus.Finance.Criteria.Statement;
     using Fanex.Tarus.Finance.DataAccess.Statement;
     using Fanex.Tarus.Finance.Entities;
     using Fanex.Tarus.Finance.Model.Statement;
