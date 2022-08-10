@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
     using System.Net;
     using System.Web;
     using Common;
@@ -21,6 +22,7 @@
     using Repositories;
     using Resources;
     using Result.Core.Voidbridge;
+    using Sunplus.Accounting.Core.Extensions;
 
     public class RNGCasinoService : IRNGCasinoService
     {
@@ -36,23 +38,40 @@
             _rngCasinoRepository = rngCasinoRepository ?? new RNGCasinoRepository();
         }
 
-        public IEnumerable<TicketDetail> BetDetails(GetRNGCasinoBetDetailsCriteria criteria)
+        public IEnumerable<TicketDetail> BetDetails(GetRNGCasinoBetDetailsCriteria mainCriteria)
         {
-            var rawData = _rngCasinoRepository.BetDetails(criteria);
             var detailsTickets = new List<TicketDetail>();
-            if (rawData != null)
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(mainCriteria.CustId);
+            if (siteDB != null)
             {
-                ITicketHelper ticketHelper = new TicketHelper();
-                BetListHTMLFactory factory = new BetListHTMLFactory();
-                BetListHTMLBuilder builder = factory.CreateBuilder();
-                BetListHelper betListHelper = new BetListHelper();
+                var siteDBTicket = new List<Ticket>();
+                if (siteDB.IsSiteDB)
+                {
+                    var siteDBCriteria = new GetRNGCasinoBetDetailsInSiteDBCriteria
+                    {
+                        CustId = mainCriteria.CustId,
+                        PageIndex = mainCriteria.PageIndex,
+                        PageSize = mainCriteria.PageSize,
+                        TransId = mainCriteria.TransId,
+                        TransType = mainCriteria.TransType
+                    };
+                    siteDBTicket = _rngCasinoRepository.BetDetails(siteDBCriteria, siteDB.AGIP).ToList();
+                }
+                mainCriteria.ExcludeBettrans = siteDB.IsSiteDB;
+                var mainDBTickets = _rngCasinoRepository.BetDetails(mainCriteria);
+                var tickets = siteDBTicket.Concat(mainDBTickets);
+
+                var ticketHelper = new TicketHelper();
+                var factory = new BetListHTMLFactory();
+                var builder = factory.CreateBuilder();
+                var betListHelper = new BetListHelper();
                 GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
 
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
-                foreach (var ticket in rawData)
+                foreach (var ticket in tickets)
                 {
                     var ticketDetail = new TicketDetail();
-                    ticket.CustId = criteria.CustId;
+                    ticket.CustId = mainCriteria.CustId;
                     ticketDetail.Ticket = ticket;
                     ticketHelper.IsShowOddsWithChoice = betListHelper.IsShowOddsWithChoice(ticketDetail.Ticket.BetTypeId);
                     ticketDetail.TransDateHtml = builder.BuildTrans(ticketDetail.Ticket);
@@ -65,42 +84,6 @@
             }
 
             return detailsTickets;
-        }
-        
-        public HandHistoryModel GetVoidbridgeResult(GetVoidbridgeResultCriteria criteria, string language)
-        {
-            var result = new HandHistoryModel();
-            result.ActionInfo = new ResultDetail();
-            try
-            {
-                var voidbridgeApi = new VoidbridgeApiImp();
-                int siteId = 3200;
-                switch (criteria.RoleId)
-                {
-                    case 3:
-                        siteId = 3100;
-                        break;
-
-                    case 2:
-                        siteId = 3000;
-                        break;
-
-                    default:
-                        break;
-                }
-
-                result.Iframe = voidbridgeApi.GetBetHistoryUrl(criteria.CustId.ToString(), criteria.GameplayId, language, siteId.ToString());
-            }
-            catch (Exception ex)
-            {
-                result.ActionInfo = new ResultDetail()
-                {
-                    ResultCode = 1,
-                    ResultMessage = ex.Message
-                };
-            }
-
-            return result;
         }
 
         public HandHistoryModel GetResultCriteria(GetResultCriteria criteria, string language)
@@ -141,22 +124,36 @@
 
             return result;
         }
-        
+
         public IEnumerable<TicketDetail> JackpotDetails(GetJackpotDetailsCriteria criteria)
         {
-            var rawData = _rngCasinoRepository.JackpotDetails(criteria);
             var detailsTickets = new List<TicketDetail>();
-
-            if (rawData != null)
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(criteria.CustId);
+            if (siteDB != null)
             {
-                ITicketHelper ticketHelper = new TicketHelper();
-                BetListHTMLFactory factory = new BetListHTMLFactory();
-                BetListHTMLBuilder builder = factory.CreateBuilder();
-                BetListHelper betListHelper = new BetListHelper();
+                var siteDBTicket = new List<Ticket>();
+                if (siteDB.IsSiteDB)
+                {
+                    var siteDBCriteria = new GetJackpotDetailsInSiteDBCriteria
+                    {
+                        BetType = criteria.BetType,
+                        CustId = criteria.CustId,
+                        Title = criteria.Title,
+                        TransId = criteria.TransId
+                    };
+                    siteDBTicket = _rngCasinoRepository.JackpotDetails(siteDBCriteria, siteDB.AGIP).ToList();
+                }
+                criteria.ExcludeBettrans = siteDB.IsSiteDB;
+                var mainDBTickets = _rngCasinoRepository.JackpotDetails(criteria);
+                var tickets = siteDBTicket.Concat(mainDBTickets);
+                var ticketHelper = new TicketHelper();
+                var factory = new BetListHTMLFactory();
+                var builder = factory.CreateBuilder();
+                var betListHelper = new BetListHelper();
                 GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
 
-                List<ITicketData> outputLiveCasino = new List<ITicketData>();
-                foreach (var ticket in rawData)
+                var outputLiveCasino = new List<ITicketData>();
+                foreach (var ticket in tickets)
                 {
                     var ticketDetail = new TicketDetail();
                     ticket.CustId = criteria.CustId;

@@ -19,6 +19,8 @@
 
         public DateTime BalanceUpDay => ReportUtils.BalanceUp.BalanceUpDay;
 
+        public bool ExcludeBettrans { get; set; }
+
         public override string GetSettingKey() => "Acc_BetList_Jackpot_Detail";
 
         public override bool IsValid() => TransId > 0 && CustId > 0 && BetType > 0;

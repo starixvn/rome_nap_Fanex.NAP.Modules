@@ -160,6 +160,9 @@
       <HintPath>..\..\..\packages\RazorEngine.3.7.0.1\lib\net40\RazorEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.14, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.4.14-ScaleoutDB018\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.4.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.4.2-ScaleoutDB012\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
@@ -222,10 +225,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\RNGCasinoBetListController.cs" />
+    <Compile Include="Criteria\GetJackpotDetailsInSiteDBCriteria.cs" />
     <Compile Include="Criteria\GetJackpotDetailsCriteria.cs" />
     <Compile Include="Criteria\GetResultCriteria.cs" />
+    <Compile Include="Criteria\GetRNGCasinoBetDetailsInSiteDBCriteria.cs" />
     <Compile Include="Criteria\GetRNGCasinoBetDetailsCriteria.cs" />
-    <Compile Include="Criteria\GetVoidbridgeResultCriteria.cs" />
     <Compile Include="Helpers\BetListHelper.cs" />
     <Compile Include="Models\BetDetail.cs" />
     <Compile Include="Models\HandHistory\HandHistoryModel.cs" />

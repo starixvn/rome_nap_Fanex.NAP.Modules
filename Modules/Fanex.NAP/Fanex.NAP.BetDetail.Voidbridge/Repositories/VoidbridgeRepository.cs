@@ -6,6 +6,7 @@
     using Common;
     using Criteria;
     using Data;
+    using Sunplus.Accounting.Core.Extensions;
 
     public class VoidbridgeRepository : IVoidbridgeRepository
     {
@@ -16,6 +17,31 @@
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(ToTicket(reader));
+                    }
+                }
+
+                var ouputParams = db.GetOuputParams();
+
+                if (ouputParams != null && ouputParams.ContainsKey("totalrows"))
+                {
+                    criteria.TotalRows = Converter.ToInt(ouputParams["totalrows"]);
+                }
+            }
+
+            return result;
+        }
+
+        public IEnumerable<Ticket> BetDetails(GetVoidbridgeBetDetailsInSiteDBCriteria criteria, string AGIP)
+        {
+            var result = new List<Ticket>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReaderScaleoutDB(criteria.GetSpParams(), AGIP))
                 {
                     while (reader.Read())
                     {

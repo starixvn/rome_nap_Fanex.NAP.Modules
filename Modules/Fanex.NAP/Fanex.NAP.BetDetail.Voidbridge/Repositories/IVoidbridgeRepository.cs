@@ -7,5 +7,7 @@
     public interface IVoidbridgeRepository
     {
         IEnumerable<Ticket> BetDetails(GetVoidbridgeBetDetailsCriteria criteria);
+
+        IEnumerable<Ticket> BetDetails(GetVoidbridgeBetDetailsInSiteDBCriteria criteria, string AGIP);
     }
 }
