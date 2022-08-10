@@ -2,6 +2,7 @@
 namespace Fanex.Tarus.Finance.DataAccess.Statement
 {
     using System;
+    using System.Collections.Generic;
     using System.Data;
     using DNAide.Core;
     using Fanex.Data;
@@ -9,6 +10,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
     using Fanex.Tarus.Finance.Entities;
     using Fanex.Tarus.Infrastructure.Extensions;
     using Sunplus.Accounting.Core.Common;
+
     public class FinanceStatementAccess : IFinanceStatementAccess
     {
         public DataSet GetFinanceStatementAccess(string refNoParam, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int IncludeAccBall)
@@ -88,6 +90,36 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
                 LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
                 return Result.ServerError(ex.Message);
             }
+        }
+
+        public Tuple<IEnumerable<int>, Result> GetCustIdsByRefNo(ICriteria criteria)
+        {
+            IList<int> custIds = new List<int>();
+            Result result;
+
+            try
+            {
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    {
+                        while (reader.Read())
+                        {
+                            custIds.Add(Convert.ToInt32(reader["custid"]));
+                        }
+                    }
+
+                    var outputParams = db.GetOuputParams();
+                    result = new Result(Convert.ToInt32(outputParams["errcode"]), outputParams["errmsg"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                result = Result.ServerError(ex.Message);
+                LogExtensions.Error(string.Empty, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
+            }
+
+            return Tuple.Create<IEnumerable<int>, Result>(custIds, result);
         }
     }
 }

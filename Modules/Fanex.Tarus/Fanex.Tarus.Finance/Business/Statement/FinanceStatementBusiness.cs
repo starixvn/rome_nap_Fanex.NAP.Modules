@@ -17,6 +17,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
     using Fanex.Tarus.Infrastructure.Utils;
     using Sunplus.Accounting.Core.Extensions;
     using ObjectDbExtensions = Fanex.Tarus.Infrastructure.Extensions.ObjectDbExtensions;
+    using SiteDB = Fanex.Tarus.Infrastructure.Extensions.SiteDB;
 
     public class FinanceStatementBusiness : IFinanceStatementBusiness
     {
@@ -353,11 +354,51 @@ namespace Fanex.Tarus.Finance.Business.Statement
 
         public Result DeleteTransBusiness(long refNo, int custId, int userId)
         {
-            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            var resultTuple = financeStatementAccess.GetCustIdsByRefNo(new CustomerSelByRefnoCriteria(refNo));
+            var result = resultTuple.Item2;
 
-            return financeStatementAccess.DeleteTransAccess(
-                new BettransDelTransactionCriteria(refNo, custId, userId, (byte)siteDB.SiteDBGroupID),
-                siteDB.AGIP);
+            return result.IsFailure
+                ? result
+                : DeleteTransBusiness(refNo, custId, userId, resultTuple.Item1);
+        }
+
+        private Result DeleteTransBusiness(long refNo, int custId, int userId, IEnumerable<int> custIds)
+        {
+            IList<Result> errorResults = new List<Result>();
+            var uniqueSiteDBList = GetUniqueSiteDBFromCustIds(custIds);
+
+            foreach (var siteDB in uniqueSiteDBList)
+            {
+                var result = financeStatementAccess.DeleteTransAccess(
+                    new BettransDelTransactionCriteria(refNo, custId, userId, (byte)siteDB.SiteDBGroupID),
+                    siteDB.AGIP);
+
+                if (result.IsFailure)
+                {
+                    errorResults.Add(result);
+                }
+            }
+
+            return errorResults.Count == 0
+                ? new Result()
+                : Result.ServerError(string.Join("<br/>", errorResults.Select(r => r.ErrorMessage)));
+        }
+
+        private static IEnumerable<SiteDB> GetUniqueSiteDBFromCustIds(IEnumerable<int> custIds)
+        {
+            IDictionary<int, SiteDB> siteDBDict = new Dictionary<int, SiteDB>();
+
+            foreach (var custId in custIds)
+            {
+                var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+
+                if (!siteDBDict.ContainsKey(siteDB.SiteDBGroupID))
+                {
+                    siteDBDict.Add(siteDB.SiteDBGroupID, siteDB);
+                }
+            }
+
+            return siteDBDict.Values;
         }
 
         #region export 2 excel
