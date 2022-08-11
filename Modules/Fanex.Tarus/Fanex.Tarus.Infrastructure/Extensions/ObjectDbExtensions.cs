@@ -30,6 +30,8 @@ namespace Fanex.Tarus.Infrastructure.Extensions
 
         private const int cacheSiteDBExpireTimeInHours = 1;
 
+        private const string DBCUSTPrefix = "DBCUST_";
+
         public static IDataReader ExecuteReaderScaleoutDB(this ObjectDb objdb, Hashtable parameters)
             => objdb.ExecuteReaderScaleoutDB(parameters, (int)parameters["custid"]);
 
@@ -126,7 +128,19 @@ namespace Fanex.Tarus.Infrastructure.Extensions
         public static IEnumerable<SiteDB> GetAllSiteDBConfig()
             => GetSiteDBConfig(null);
 
-        private static List<SiteDB> GetSiteDBConfig(Hashtable param)
+        public static SiteDB GetSiteDBConfigByCustId_DBCUST(int custId)
+            => GetSiteDBConfig(new Hashtable { { "custid", custId } }, DBCUSTPrefix).FirstOrDefault();
+
+        public static SiteDB GetSiteDBConfigByUsername_DBCUST(string userName)
+            => GetSiteDBConfig(new Hashtable { { "username", userName } }, DBCUSTPrefix).FirstOrDefault();
+
+        public static IEnumerable<SiteDB> GetSiteDBConfigBySiteGroupId_DBCUST(int siteGroupId)
+            => GetSiteDBConfig(new Hashtable { { "sitedbgroupid", siteGroupId } }, DBCUSTPrefix);
+
+        public static IEnumerable<SiteDB> GetAllSiteDBConfig_DBCUST()
+            => GetSiteDBConfig(null, DBCUSTPrefix);
+
+        private static List<SiteDB> GetSiteDBConfig(Hashtable param, string SPNamePrefix = "")
         {
             List<SiteDB> siteDBs = null;
             if (IsGetAllSiteDBs(param))
@@ -137,7 +151,7 @@ namespace Fanex.Tarus.Infrastructure.Extensions
             if (siteDBs == null)
             {
                 siteDBs = new List<SiteDB>();
-                using (ObjectDb db = new ObjectDb("Acc_SiteDBConfigSel", 600))
+                using (ObjectDb db = new ObjectDb(SPNamePrefix + "Acc_SiteDBConfigSel", 600))
                 {
                     var reader = db.ExecuteReader(param);
                     while (reader.Read())

@@ -604,13 +604,18 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         public void InsertBalanceWhenCreateNewAgent(int agentId, string insertBalanceCustList, string insertExceptionBalanceCustList)
         {
-            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(agentId);
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId_DBCUST(agentId);
             InsertBalanceOnSiteDB(siteDB.AGIP, insertBalanceCustList);
             InsertExceptionBalanceOnSiteDB(siteDB.AGIP, insertExceptionBalanceCustList);
         }
 
         private void InsertBalanceOnSiteDB(string AGIP, string insertBalanceCustList)
         {
+            if (string.IsNullOrWhiteSpace(insertBalanceCustList))
+            {
+                return;
+            }
+
             foreach (var custId in insertBalanceCustList.Split(','))
             {
                 using (var db = new ObjectDb("Dot_BalanceInsCredit"))
@@ -629,6 +634,11 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         private void InsertExceptionBalanceOnSiteDB(string AGIP, string insertExceptionBalanceCustList)
         {
+            if (string.IsNullOrWhiteSpace(insertExceptionBalanceCustList))
+            {
+                return;
+            }
+
             var custList = insertExceptionBalanceCustList.Split(',');
             foreach (var custInfo in custList)
             {
