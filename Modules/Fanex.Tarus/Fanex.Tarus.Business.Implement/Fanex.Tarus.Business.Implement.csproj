@@ -72,7 +72,7 @@
       <HintPath>..\..\..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.6-ScaleoutDB003\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.4.3-ScaleoutDB012\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.4.3-ScaleoutDB014\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Web.Models.1.0.0.9\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
