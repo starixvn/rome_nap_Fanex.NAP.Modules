@@ -117,11 +117,13 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
             }
         }
 
-        public override void ExchangeMultiBaseRatePrepareUpd(Hashtable param, string dbIP, ref int errcode, ref string errmsg)
+        public override void ExchangeMultiBaseRatePrepareUpd(Hashtable param, int siteDBGroupId, string dbIP, ref int errcode, ref string errmsg)
         {
             try
             {
-                using (ObjectDb objDB = new ObjectDb("Acc_ChangeRate_Prepare_Upd"))
+                var isSiteDB = param.ContainsKey("issitedb") ? (bool)param["issitedb"] : false;
+                var spName = isSiteDB ? $"SiteDB{siteDBGroupId}_Acc_ChangeRate_Prepare_Upd" : "Acc_ChangeRate_Prepare_Upd";
+                using (ObjectDb objDB = new ObjectDb(spName))
                 {   
                     objDB.ExecuteNonQueryScaleoutDB(param, dbIP);
 
@@ -136,9 +138,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
             }
         }
 
-        public override void ExchangeMultiBaseRateUpdateForTable(Hashtable param, string dbIP)
+        public override void ExchangeMultiBaseRateUpdateForTable(Hashtable param, int siteDBGroupId, string dbIP)
         {
-            using (ObjectDb objDB = new ObjectDb("Acc_ChangeRate_Main_Upd"))
+            var isSiteDB = param.ContainsKey("issitedb") ? (bool)param["issitedb"] : false;
+            var spName = isSiteDB ? $"SiteDB{siteDBGroupId}_Acc_ChangeRate_Main_Upd" : "Acc_ChangeRate_Main_Upd";
+            using (ObjectDb objDB = new ObjectDb(spName))
             {   
                 objDB.ExecuteNonQueryScaleoutDB(param, dbIP);
             }
