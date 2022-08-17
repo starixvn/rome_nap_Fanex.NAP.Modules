@@ -4,6 +4,7 @@ using Fanex.Data;
 using IBCUtils;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Entities;
 using System;
@@ -287,14 +288,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 {
                     using (var objdb = new ObjectDb("Acc_CustomerUpdUserName_Bettrans"))
                     {
-                        objdb.AssignParamValues(new Hashtable {
+                        var param = new Hashtable {
                             { "custid ", custid },
                             { "errcode", 0 },
                             { "errmsg", "" },
                             { "newusername", newUname }
-                        });
+                        };
 
-                        objdb.ExecuteNonQuery();
+                        objdb.ExecuteNonQueryScaleoutDB(param, custid);
                         var errCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
                         if (errCode != 0)
                         {
