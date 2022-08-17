@@ -9,7 +9,6 @@ using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Entities;
 using System;
 using System.Collections;
-using System.Data.SqlClient;
 using System.Web;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
@@ -289,7 +288,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                     using (var objdb = new ObjectDb("Acc_CustomerUpdUserName_Bettrans"))
                     {
                         var param = new Hashtable {
-                            { "custid ", custid },
+                            { "custid", custid },
                             { "errcode", 0 },
                             { "errmsg", "" },
                             { "newusername", newUname }
