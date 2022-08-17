@@ -381,6 +381,10 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
         public Result NewLicenseeAddNewAgent(NewLicenseePostParam newLicenseePostParam)
         {
             var hashParam = GetAddNewHashTableParams(newLicenseePostParam);
+            int errCode = 0;
+            string errMsg = string.Empty;
+            string insertBalanceCustList = string.Empty;
+            string insBalExceptCustList = string.Empty;
             hashParam.Add("mrecommend", newLicenseePostParam.MasterId);
             hashParam.Add("username", newLicenseePostParam.AgentName);
             hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
@@ -399,17 +403,24 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 objDb.AssignParamValues(hashParam);
 
                 objDb.ExecuteNonQuery();
-                var errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
-                var errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
+                errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
+                errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
 
                 if (errCode == 0)
                 {
                     newLicenseePostParam.AgentId = CastAide.AsInt32(objDb.GetParameterValue("custid"));
                     errMsg = newLicenseePostParam.AgentId.ToString();
+                    insertBalanceCustList = CastAide.AsString(objDb.GetParameterValue("insbalcustlist"));
+                    insBalExceptCustList = CastAide.AsString(objDb.GetParameterValue("insbalexceptcustlist"));
                 }
-
-                return new Result(errCode, errMsg);
             }
+
+            if (errCode == 0)
+            {
+                InsertBalanceWhenCreateNewAgent(newLicenseePostParam.AgentId, insertBalanceCustList, insBalExceptCustList);
+            }
+
+            return new Result(errCode, errMsg);
         }
 
         public Result NewLicenseeAddNewMember(NewLicenseePostParam newLicenseePostParam, bool isClearBalanceAccount = false)
@@ -440,15 +451,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 {
                     newLicenseePostParam.MemberId = CastAide.AsInt32(objDb.GetParameterValue("custid"));
                     errMsg = newLicenseePostParam.MemberId.ToString();
-                    using (var db = new ObjectDb("Task_Cust_CheckBalance_Exception_Ins"))
-                    {
-                        var param = new Hashtable() {
-                            {"custid" , outCustId },
-                            { "username", newLicenseePostParam.MemberName}
-                        };
-
-                        db.ExecuteNonQueryScaleoutDB(param, outCustId);
-                    }
+                    InsertBalanceWhenCreateNewMember(newLicenseePostParam.MemberId, newLicenseePostParam.MemberName);
                 }
 
                 return new Result(errCode, errMsg);
@@ -592,6 +595,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                     break;
                 case RoleConstants.Member:
                     newLicenseePostParam.DummyMemberId = custid;
+                    InsertBalanceWhenCreateNewMember(newLicenseePostParam.DummyMemberId, newLicenseePostParam.DummyMemberName);
                     break;
                 default:
                     errCode = 0;
@@ -607,6 +611,19 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId_DBCUST(agentId);
             InsertBalanceOnSiteDB(siteDB.AGIP, insertBalanceCustList);
             InsertExceptionBalanceOnSiteDB(siteDB.AGIP, insertExceptionBalanceCustList);
+        }
+        public void InsertBalanceWhenCreateNewMember(int memberId, string memberName)
+        {
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId_DBCUST(memberId);
+            using (var db = new ObjectDb("Task_Cust_CheckBalance_Exception_Ins"))
+            {
+                var param = new Hashtable() {
+                            {"custid" , memberId },
+                            { "username", memberName}
+                        };
+
+                db.ExecuteNonQueryScaleoutDB(param, siteDB.AGIP);
+            }
         }
 
         private void InsertBalanceOnSiteDB(string AGIP, string insertBalanceCustList)
