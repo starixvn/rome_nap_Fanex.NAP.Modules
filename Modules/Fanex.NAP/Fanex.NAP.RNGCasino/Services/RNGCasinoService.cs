@@ -44,7 +44,8 @@
             var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(mainCriteria.CustId);
             if (siteDB != null)
             {
-                var siteDBTicket = new List<Ticket>();
+                var tickets = new List<Ticket>();
+                var siteDBRow = 0;
                 if (siteDB.IsSiteDB)
                 {
                     var siteDBCriteria = new GetRNGCasinoBetDetailsInSiteDBCriteria
@@ -55,11 +56,14 @@
                         TransId = mainCriteria.TransId,
                         TransType = mainCriteria.TransType
                     };
-                    siteDBTicket = _rngCasinoRepository.BetDetails(siteDBCriteria, siteDB.AGIP).ToList();
+                    tickets = _rngCasinoRepository.BetDetails(siteDBCriteria, siteDB.AGIP).ToList();
+                    mainCriteria.TotalRows = siteDBCriteria.TotalRows;
                 }
-                mainCriteria.ExcludeBettrans = siteDB.IsSiteDB;
-                var mainDBTickets = _rngCasinoRepository.BetDetails(mainCriteria);
-                var tickets = siteDBTicket.Concat(mainDBTickets);
+                if (!tickets.Any())
+                {
+                    mainCriteria.ExcludeBettrans = siteDB.IsSiteDB;
+                    tickets = _rngCasinoRepository.BetDetails(mainCriteria).ToList();
+                }
 
                 var ticketHelper = new TicketHelper();
                 var factory = new BetListHTMLFactory();

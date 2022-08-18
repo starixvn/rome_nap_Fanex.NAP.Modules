@@ -50,7 +50,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("balanceupday", balanceupday);
                 p.Add("outstanding", 0);
 
-                db.AssignParamValues(p);
                 result = db.ExecuteDataSetScaleoutDB(p, custid);
                 outStading = CastAide.AsDouble(db.GetParameterValue("outstanding"));
             }
