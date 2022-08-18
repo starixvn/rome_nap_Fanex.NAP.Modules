@@ -63,7 +63,8 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                 return crossTransferAccess.BettransInsertTransfer(
                     new BetTransInsertTransferCriteria(
                         param,
-                        fromCustId),
+                        fromCustId,
+                        fromSiteDB),
                     fromSiteDB.AGIP);
             }
 
@@ -72,7 +73,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                 new BetTransInsertTransferSiteDBCriteria(
                     param,
                     fromCustId,
-                    (byte)fromSiteDB.SiteDBGroupID),
+                    fromSiteDB),
                 fromSiteDB.AGIP);
 
             if (fromResult.IsFailure)
@@ -86,7 +87,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                 new BetTransInsertTransferSiteDBCriteria(
                     param,
                     fromCustId,
-                    (byte)toSiteDB.SiteDBGroupID,
+                    toSiteDB,
                     refNo),
                 toSiteDB.AGIP);
 
@@ -120,13 +121,13 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                 && fromSiteDB.SiteDBGroupID == forexSiteDB.SiteDBGroupID)
             {
                 return crossTransferAccess.CustomerCrossTransferInsert(
-                    new BetTransInsertCrossTransferCriteria(param),
+                    new BetTransInsertCrossTransferCriteria(param, fromSiteDB),
                     fromSiteDB.AGIP);
             }
 
             // Step 1: transfer at SiteDB FROM
             var fromResult = crossTransferAccess.CustomerCrossTransferInsertSiteDB(
-                new BetTransInsertCrossTransferSiteDBCriteria(param, (byte)fromSiteDB.SiteDBGroupID),
+                new BetTransInsertCrossTransferSiteDBCriteria(param, fromSiteDB),
                 fromSiteDB.AGIP);
 
             if (fromResult.IsFailure)
@@ -140,7 +141,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
             if (fromSiteDB.SiteDBGroupID != toSiteDB.SiteDBGroupID)
             {
                 toResult = crossTransferAccess.CustomerCrossTransferInsertSiteDB(
-                    new BetTransInsertCrossTransferSiteDBCriteria(param, (byte)toSiteDB.SiteDBGroupID, refNo),
+                    new BetTransInsertCrossTransferSiteDBCriteria(param, toSiteDB, refNo),
                     toSiteDB.AGIP);
 
                 if (toResult.IsFailure)
@@ -157,7 +158,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                 && forexSiteDB.SiteDBGroupID != toSiteDB.SiteDBGroupID)
             {
                 var forexResult = crossTransferAccess.CustomerCrossTransferInsertSiteDB(
-                    new BetTransInsertCrossTransferSiteDBCriteria(param, (byte)forexSiteDB.SiteDBGroupID, refNo),
+                    new BetTransInsertCrossTransferSiteDBCriteria(param, forexSiteDB, refNo),
                     forexSiteDB.AGIP);
 
                 if (forexResult.IsFailure)
@@ -185,13 +186,13 @@ namespace Fanex.Tarus.Finance.Business.Transfer
             SiteDB toSiteDB = null)
         {
             crossTransferAccess.TransferRollbackSiteDB(
-                new TransferRollbackSiteDBCriteria(refNo, userId, ip, (byte)fromSiteDB.SiteDBGroupID),
+                new TransferRollbackSiteDBCriteria(refNo, userId, ip, fromSiteDB),
                 fromSiteDB.AGIP);
 
             if (toSiteDB != null)
             {
                 crossTransferAccess.TransferRollbackSiteDB(
-                    new TransferRollbackSiteDBCriteria(refNo, userId, ip, (byte)toSiteDB.SiteDBGroupID),
+                    new TransferRollbackSiteDBCriteria(refNo, userId, ip, toSiteDB),
                     toSiteDB.AGIP);
             }
         }

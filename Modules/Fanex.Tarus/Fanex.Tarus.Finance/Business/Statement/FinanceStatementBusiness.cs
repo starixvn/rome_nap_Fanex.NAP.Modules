@@ -370,7 +370,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
             foreach (var siteDB in uniqueSiteDBList)
             {
                 var result = financeStatementAccess.DeleteTransAccess(
-                    new BettransDelTransactionCriteria(refNo, custId, userId, (byte)siteDB.SiteDBGroupID),
+                    new BettransDelTransactionCriteria(refNo, custId, userId, siteDB),
                     siteDB.AGIP);
 
                 if (result.IsFailure)

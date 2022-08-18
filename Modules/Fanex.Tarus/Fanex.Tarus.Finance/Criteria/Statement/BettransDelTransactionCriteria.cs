@@ -2,6 +2,7 @@
 namespace Fanex.Tarus.Finance.Criteria.Statement
 {
     using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.Infrastructure.Extensions;
 
     internal class BettransDelTransactionCriteria : CriteriaBase
     {
@@ -9,12 +10,12 @@ namespace Fanex.Tarus.Finance.Criteria.Statement
             long refNo,
             int custId,
             int userId,
-            byte siteDBGroupID)
+            SiteDB siteDB)
         {
             RefNo = refNo;
             CustId = custId;
             UserId = userId;
-            SiteDBGroupID = siteDBGroupID;
+            SiteDB = siteDB;
         }
 
         public long RefNo { get; }
@@ -23,9 +24,14 @@ namespace Fanex.Tarus.Finance.Criteria.Statement
 
         public int UserId { get; }
 
-        public byte SiteDBGroupID { get; }
+        public byte SiteDBGroupID => (byte)SiteDB.SiteDBGroupID;
+
+        [SpParam(Ignored = true)]
+        public SiteDB SiteDB { get; }
 
         public override string GetSettingKey()
-            => "Acc_BettransDelTransaction";
+            => SiteDB.IsSiteDB
+            ? $"SiteDB{SiteDB.SiteDBGroupID}_Acc_BettransDelTransaction"
+            : "Acc_BettransDelTransaction";
     }
 }

@@ -3,10 +3,11 @@ namespace Fanex.Tarus.Finance.Criteria.Transaction
 {
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Entities;
+    using Fanex.Tarus.Infrastructure.Extensions;
 
     internal class FinanceCrossTransferBettransInsCriteria : CriteriaBase
     {
-        public FinanceCrossTransferBettransInsCriteria(CustomerCrossTransfer param)
+        public FinanceCrossTransferBettransInsCriteria(CustomerCrossTransfer param, SiteDB siteDB)
         {
             FromCustId = param.FromCustId;
             ToCustId = param.ToCustId;
@@ -17,6 +18,7 @@ namespace Fanex.Tarus.Finance.Criteria.Transaction
             UserId = param.UserId;
             IP = param.IP;
             IsCollection = param.IsCollection;
+            SiteDB = siteDB;
         }
 
         public int FromCustId { get; }
@@ -37,7 +39,12 @@ namespace Fanex.Tarus.Finance.Criteria.Transaction
 
         public bool IsCollection { get; }
 
+        [SpParam(Ignored = true)]
+        public SiteDB SiteDB { get; }
+
         public override string GetSettingKey()
-            => "Acc_FinanceCrossTransferBettransIns";
+            => SiteDB.IsSiteDB
+            ? $"SiteDB{SiteDB.SiteDBGroupID}_Acc_FinanceCrossTransferBettransIns"
+            : "Acc_FinanceCrossTransferBettransIns";
     }
 }

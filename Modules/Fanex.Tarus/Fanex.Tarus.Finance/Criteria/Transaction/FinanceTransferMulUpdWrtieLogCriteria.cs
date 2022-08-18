@@ -9,9 +9,7 @@ namespace Fanex.Tarus.Finance.Criteria.Transaction
             int fileSize,
             string ip,
             int totalUsers) : base(userId, fileName, fileSize, ip)
-        {
-            TotalUsers = totalUsers;
-        }
+            => TotalUsers = totalUsers;
 
         public int TotalUsers { get; }
 

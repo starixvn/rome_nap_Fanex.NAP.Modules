@@ -95,12 +95,12 @@ namespace Fanex.Tarus.Finance.Business.Transaction
             if (fromSiteDB.SiteDBGroupID == toSiteDB.SiteDBGroupID)
             {
                 return financeTransferAccess.ExecuteNonQuery(
-                    new FinanceTransferBettransInsCriteria(param), fromSiteDB.AGIP);
+                    new FinanceTransferBettransInsCriteria(param, fromSiteDB), fromSiteDB.AGIP);
             }
 
             // Step 1: transfer at SiteDB FROM
             var fromResult = financeTransferAccess.ExecuteNonQueryWithRefNo(
-                new FinanceTransferBettransInsSiteDBCriteria(param, (byte)fromSiteDB.SiteDBGroupID),
+                new FinanceTransferBettransInsSiteDBCriteria(param, fromSiteDB),
                 fromSiteDB.AGIP);
 
             if (fromResult.IsFailure)
@@ -111,7 +111,7 @@ namespace Fanex.Tarus.Finance.Business.Transaction
             var refNo = fromResult.RefNo;
             // Step 2: transfer at SiteDB TO
             var toResult = financeTransferAccess.ExecuteNonQueryWithRefNo(
-                new FinanceTransferBettransInsSiteDBCriteria(param, (byte)toSiteDB.SiteDBGroupID, refNo),
+                new FinanceTransferBettransInsSiteDBCriteria(param, toSiteDB, refNo),
                 toSiteDB.AGIP);
 
             if (toResult.IsFailure)
@@ -122,7 +122,7 @@ namespace Fanex.Tarus.Finance.Business.Transaction
                         refNo.Value,
                         param.UserId,
                         param.IP,
-                        (byte)fromSiteDB.SiteDBGroupID),
+                        fromSiteDB),
                     fromSiteDB.AGIP);
             }
 

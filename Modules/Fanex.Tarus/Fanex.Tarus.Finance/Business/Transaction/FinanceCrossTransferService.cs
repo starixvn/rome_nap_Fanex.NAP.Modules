@@ -95,13 +95,13 @@ namespace Fanex.Tarus.Finance.Business.Transaction
                 && fromSiteDB.SiteDBGroupID == forexSiteDB.SiteDBGroupID)
             {
                 return financeTransferAccess.ExecuteNonQuery(
-                    new FinanceCrossTransferBettransInsCriteria(param),
+                    new FinanceCrossTransferBettransInsCriteria(param, fromSiteDB),
                     fromSiteDB.AGIP);
             }
 
             // Step 1: transfer at SiteDB FROM
             var fromResult = financeTransferAccess.ExecuteNonQueryWithRefNo(
-                new FinanceCrossTransferBettransInsSiteDBCriteria(param, (byte)fromSiteDB.SiteDBGroupID),
+                new FinanceCrossTransferBettransInsSiteDBCriteria(param, fromSiteDB),
                 fromSiteDB.AGIP);
 
             if (fromResult.IsFailure)
@@ -115,7 +115,7 @@ namespace Fanex.Tarus.Finance.Business.Transaction
             if (fromSiteDB.SiteDBGroupID != toSiteDB.SiteDBGroupID)
             {
                 toResult = financeTransferAccess.ExecuteNonQueryWithRefNo(
-                    new FinanceCrossTransferBettransInsSiteDBCriteria(param, (byte)toSiteDB.SiteDBGroupID, refNo),
+                    new FinanceCrossTransferBettransInsSiteDBCriteria(param, toSiteDB, refNo),
                     toSiteDB.AGIP);
 
                 if (toResult.IsFailure)
@@ -132,7 +132,7 @@ namespace Fanex.Tarus.Finance.Business.Transaction
                 && forexSiteDB.SiteDBGroupID != toSiteDB.SiteDBGroupID)
             {
                 var forexResult = financeTransferAccess.ExecuteNonQueryWithRefNo(
-                    new FinanceCrossTransferBettransInsSiteDBCriteria(param, (byte)forexSiteDB.SiteDBGroupID, refNo),
+                    new FinanceCrossTransferBettransInsSiteDBCriteria(param, forexSiteDB, refNo),
                     forexSiteDB.AGIP);
 
                 if (forexResult.IsFailure)
@@ -160,13 +160,13 @@ namespace Fanex.Tarus.Finance.Business.Transaction
             SiteDB toSiteDB = null)
         {
             financeTransferAccess.ExecuteNonQuery(
-                new TransferRollbackSiteDBCriteria(refNo, userId, ip, (byte)fromSiteDB.SiteDBGroupID),
+                new TransferRollbackSiteDBCriteria(refNo, userId, ip, fromSiteDB),
                 fromSiteDB.AGIP);
 
             if (toSiteDB != null)
             {
                 financeTransferAccess.ExecuteNonQuery(
-                    new TransferRollbackSiteDBCriteria(refNo, userId, ip, (byte)toSiteDB.SiteDBGroupID),
+                    new TransferRollbackSiteDBCriteria(refNo, userId, ip, toSiteDB),
                     toSiteDB.AGIP);
             }
         }

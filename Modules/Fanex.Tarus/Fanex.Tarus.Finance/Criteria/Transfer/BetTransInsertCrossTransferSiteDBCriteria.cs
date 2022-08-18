@@ -2,23 +2,23 @@
 namespace Fanex.Tarus.Finance.Criteria.Transfer
 {
     using Fanex.Tarus.Finance.Model.Transfer;
+    using Fanex.Tarus.Infrastructure.Extensions;
 
     internal class BetTransInsertCrossTransferSiteDBCriteria : BetTransInsertCrossTransferCriteria
     {
         public BetTransInsertCrossTransferSiteDBCriteria(
             FinanceCrossCurrencyTransfer param,
-            byte siteDBGroupID,
-            long? refNo = null) : base(param)
-        {
-            SiteDBGroupID = siteDBGroupID;
-            RefNo = refNo;
-        }
+            SiteDB siteDB,
+            long? refNo = null) : base(param, siteDB)
+            => RefNo = refNo;
 
-        public byte SiteDBGroupID { get; }
+        public byte SiteDBGroupID => (byte)SiteDB.SiteDBGroupID;
 
         public long? RefNo { get; }
 
         public override string GetSettingKey()
-            => "SiteDB_Acc_BettransInsCrossTransfer";
+            => SiteDB.IsSiteDB
+            ? $"SiteDB{SiteDBGroupID}_SiteDB_Acc_BettransInsCrossTransfer"
+            : "SiteDB_Acc_BettransInsCrossTransfer";
     }
 }

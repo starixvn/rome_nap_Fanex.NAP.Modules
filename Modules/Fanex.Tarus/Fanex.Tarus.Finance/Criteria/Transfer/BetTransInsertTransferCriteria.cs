@@ -3,11 +3,12 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
 {
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Model.Transfer;
+    using Fanex.Tarus.Infrastructure.Extensions;
 
     internal class BetTransInsertTransferCriteria : CriteriaBase
     {
-        public BetTransInsertTransferCriteria(TransferYesterdayTransaction param, int fromCustId)
-            : this(fromCustId, param.ToCustName, param.Amount, param.ExRate, param.Remark, param.UserId, param.IP, param.IsCollection)
+        public BetTransInsertTransferCriteria(TransferYesterdayTransaction param, int fromCustId, SiteDB siteDB)
+            : this(fromCustId, param.ToCustName, param.Amount, param.ExRate, param.Remark, param.UserId, param.IP, param.IsCollection, siteDB)
         {
         }
 
@@ -19,7 +20,8 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
             string remark,
             int userId,
             string ip,
-            bool isCollection)
+            bool isCollection,
+            SiteDB siteDB)
         {
             FromCustId = fromCustId;
             ToUsername = toUsername;
@@ -29,6 +31,7 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
             UserId = userId;
             IP = ip;
             IsCollection = isCollection;
+            SiteDB = siteDB;
         }
 
         public int FromCustId { get; }
@@ -47,7 +50,12 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
 
         public bool IsCollection { get; }
 
+        [SpParam(Ignored = true)]
+        public SiteDB SiteDB { get; }
+
         public override string GetSettingKey()
-            => "Acc_BettransInsTransfer";
+            => SiteDB.IsSiteDB
+            ? $"SiteDB{SiteDB.SiteDBGroupID}_Acc_BettransInsTransfer"
+            : "Acc_BettransInsTransfer";
     }
 }

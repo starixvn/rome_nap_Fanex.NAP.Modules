@@ -3,10 +3,11 @@ namespace Fanex.Tarus.Finance.Criteria.Transaction
 {
     using Fanex.Tarus.Finance.Criteria.Transfer;
     using Fanex.Tarus.Finance.Entities;
+    using Fanex.Tarus.Infrastructure.Extensions;
 
     internal class FinanceTransferBettransInsCriteria : BetTransInsertTransferCriteria
     {
-        public FinanceTransferBettransInsCriteria(CustomerTransfer param)
+        public FinanceTransferBettransInsCriteria(CustomerTransfer param, SiteDB siteDB)
             : base(param.FromCustId,
                   param.ToUsername,
                   param.Amount,
@@ -14,11 +15,14 @@ namespace Fanex.Tarus.Finance.Criteria.Transaction
                   param.Description,
                   param.UserId,
                   param.IP,
-                  param.IsCollection)
+                  param.IsCollection,
+                  siteDB)
         {
         }
 
         public override string GetSettingKey()
-            => "Acc_FinanceTransferBettransIns";
+            => SiteDB.IsSiteDB
+            ? $"SiteDB{SiteDB.SiteDBGroupID}_Acc_FinanceTransferBettransIns"
+            : "Acc_FinanceTransferBettransIns";
     }
 }

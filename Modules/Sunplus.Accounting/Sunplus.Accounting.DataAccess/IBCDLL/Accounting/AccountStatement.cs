@@ -219,6 +219,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 
         private static IbcError Acc_BettransDelTransaction(long refNo, int custId, int userId, string ip, SiteDB siteDB)
         {
+            var settingKey = siteDB.IsSiteDB
+                ? $"SiteDB{siteDB.SiteDBGroupID}_Acc_BettransDelTransaction"
+                : "Acc_BettransDelTransaction";
             var inputParams = new Hashtable
             {
                 ["refno"] = refNo,
@@ -232,7 +235,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 
             try
             {
-                using (var db = new ObjectDb("Acc_BettransDelTransaction", 1200))
+                using (var db = new ObjectDb(settingKey, 1200))
                 {
                     db.ExecuteNonQueryScaleoutDB(inputParams, siteDB.AGIP);
 
@@ -245,7 +248,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.Error(
                     siteDB.AGIP,
-                    "Acc_BettransDelTransaction",
+                    settingKey,
                     inputParams,
                     ex);
                 return new IbcError(100, ex.Message);

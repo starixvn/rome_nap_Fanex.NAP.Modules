@@ -2,6 +2,7 @@
 namespace Fanex.Tarus.Finance.Criteria
 {
     using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.Infrastructure.Extensions;
 
     internal class TransferRollbackSiteDBCriteria : CriteriaBase
     {
@@ -9,12 +10,12 @@ namespace Fanex.Tarus.Finance.Criteria
             long refNo,
             int userId,
             string ip,
-            byte siteDBGroupID)
+            SiteDB siteDB)
         {
             RefNo = refNo;
             UserId = userId;
             IP = ip;
-            SiteDBGroupID = siteDBGroupID;
+            SiteDB = siteDB;
         }
 
         public long RefNo { get; }
@@ -23,9 +24,14 @@ namespace Fanex.Tarus.Finance.Criteria
 
         public string IP { get; }
 
-        public byte SiteDBGroupID { get; }
+        public byte SiteDBGroupID => (byte)SiteDB.SiteDBGroupID;
+
+        [SpParam(Ignored = true)]
+        public SiteDB SiteDB { get; }
 
         public override string GetSettingKey()
-            => "SiteDB_Acc_Transfer_Rollback";
+            => SiteDB.IsSiteDB
+            ? $"SiteDB{SiteDBGroupID}_SiteDB_Acc_Transfer_Rollback"
+            : "SiteDB_Acc_Transfer_Rollback";
     }
 }
