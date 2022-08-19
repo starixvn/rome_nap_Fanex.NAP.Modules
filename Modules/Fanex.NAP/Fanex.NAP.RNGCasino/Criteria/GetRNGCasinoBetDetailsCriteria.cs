@@ -26,6 +26,9 @@
 
         public bool ExcludeBettrans { get; set; }
 
+        [SpParam(Ignored = true)]
+        public DateTime WinLossDate { get; set; }
+
         public override string GetSettingKey()
             => "Acc_BetList_RNG_Detail";
 

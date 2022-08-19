@@ -23,6 +23,7 @@
     using Resources;
     using Result.Core.Voidbridge;
     using Sunplus.Accounting.Core.Extensions;
+    using Sunplus.Accounting.DataAccess.Report;
 
     public class RNGCasinoService : IRNGCasinoService
     {
@@ -46,7 +47,7 @@
             {
                 var tickets = new List<Ticket>();
                 var siteDBRow = 0;
-                if (siteDB.IsSiteDB)
+                if (siteDB.IsSiteDB && mainCriteria.WinLossDate > ReportUtils.BalanceUp.MoveBetsDay)
                 {
                     var siteDBCriteria = new GetRNGCasinoBetDetailsInSiteDBCriteria
                     {
@@ -59,7 +60,8 @@
                     tickets = _rngCasinoRepository.BetDetails(siteDBCriteria, siteDB.AGIP).ToList();
                     mainCriteria.TotalRows = siteDBCriteria.TotalRows;
                 }
-                if (!tickets.Any())
+                if (!siteDB.IsSiteDB ||
+                    (siteDB.IsSiteDB && mainCriteria.WinLossDate <= ReportUtils.BalanceUp.MoveBetsDay))
                 {
                     mainCriteria.ExcludeBettrans = siteDB.IsSiteDB;
                     tickets = _rngCasinoRepository.BetDetails(mainCriteria).ToList();
