@@ -137,8 +137,8 @@
             var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(criteria.CustId);
             if (siteDB != null)
             {
-                var siteDBTicket = new List<Ticket>();
-                if (siteDB.IsSiteDB)
+                var tickets = new List<Ticket>();
+                if (siteDB.IsSiteDB && criteria.WinLostDate > ReportUtils.BalanceUp.MoveBetsDay)
                 {
                     var siteDBCriteria = new GetJackpotDetailsInSiteDBCriteria
                     {
@@ -147,11 +147,15 @@
                         Title = criteria.Title,
                         TransId = criteria.TransId
                     };
-                    siteDBTicket = _rngCasinoRepository.JackpotDetails(siteDBCriteria, siteDB.AGIP).ToList();
+                    tickets = _rngCasinoRepository.JackpotDetails(siteDBCriteria, siteDB.AGIP).ToList();
                 }
-                criteria.ExcludeBettrans = siteDB.IsSiteDB;
-                var mainDBTickets = _rngCasinoRepository.JackpotDetails(criteria);
-                var tickets = siteDBTicket.Concat(mainDBTickets);
+
+                if (!siteDB.IsSiteDB ||
+                    (siteDB.IsSiteDB && criteria.WinLostDate <= ReportUtils.BalanceUp.MoveBetsDay))
+                {
+                    criteria.ExcludeBettrans = siteDB.IsSiteDB;
+                    tickets = _rngCasinoRepository.JackpotDetails(criteria).ToList();
+                }
                 var ticketHelper = new TicketHelper();
                 var factory = new BetListHTMLFactory();
                 var builder = factory.CreateBuilder();

@@ -9,6 +9,9 @@
         [SpParam(Ignored = true)]
         public string Title { get; set; }
 
+        [SpParam(Ignored = true)]
+        public DateTime WinLostDate { get; set; }
+
         public long TransId { get; set; }
 
         public int CustId { get; set; }

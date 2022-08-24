@@ -17,6 +17,8 @@
 
         public DateTime MoveBetsDay => ReportUtils.BalanceUp.MoveBetsDay;
 
+        public DateTime BalanceUpDay => ReportUtils.BalanceUp.BalanceUpDay;
+
         public override string GetSettingKey() => "SiteDB_Acc_BetList_Jackpot_Detail";
 
         public override bool IsValid() => TransId > 0 && CustId > 0 && BetType > 0;
