@@ -6,6 +6,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
     using System.Data;
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Entities;
+    using Fanex.Tarus.Infrastructure.Extensions;
 
     public interface IFinanceStatementAccess
     {
@@ -13,7 +14,9 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
 
         DataSet GetFinanceStatementDetailAccess(string refNo, string winLossDate, string username);
 
-        Result UpdateVerifyStatusAccess(string refNo, bool isVerify, string CheckerName, int CheckerID);
+        IEnumerable<SiteDB> GetSiteDBConfigByRefNo(ICriteria criteria);
+
+        Result UpdateVerifyStatusAccess(ICriteria criteria, string agIp);
 
         Result DeleteTransAccess(ICriteria criteria, string agIp);
 

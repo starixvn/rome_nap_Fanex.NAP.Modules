@@ -10,6 +10,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
     using DNAide.Core;
     using DNAide.Utils;
     using ExcelUtil.Spreadsheet;
+    using Fanex.Tarus.Finance.Criteria;
     using Fanex.Tarus.Finance.Criteria.Statement;
     using Fanex.Tarus.Finance.DataAccess.Statement;
     using Fanex.Tarus.Finance.Entities;
@@ -341,13 +342,36 @@ namespace Fanex.Tarus.Finance.Business.Statement
 
         public Result VerifyTransactionBusiness(string refNo, bool isVerify, string checkerName, int checkerId)
         {
+            var errorResults = new List<Result>();
+            var siteDBList = financeStatementAccess.GetSiteDBConfigByRefNo(new GetSiteDBConfigByRefNoCriteria(refNo));
+
             try
             {
-                return financeStatementAccess.UpdateVerifyStatusAccess(refNo, isVerify, checkerName, checkerId);
+                foreach (var siteDB in siteDBList)
+                {
+                    var result = financeStatementAccess.UpdateVerifyStatusAccess(
+                        new DailyTxnUpdCheckerCriteria(
+                            checkerId,
+                            checkerName,
+                            refNo,
+                            isVerify,
+                            Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
+                            siteDB),
+                        siteDB.AGIP);
+
+                    if (result.IsFailure)
+                    {
+                        errorResults.Add(result);
+                    }
+                }
+
+                return errorResults.Count == 0
+                    ? new Result()
+                    : Result.ServerError(string.Join("<br/>", errorResults.Select(r => r.ErrorMessage)));
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(exception);
+                LogExtensions.ExceptionHandler(ex);
                 return new Result { ErrorCode = 1, ErrorMessage = "Update Error" };
             }
         }

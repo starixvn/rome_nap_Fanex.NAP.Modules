@@ -51,8 +51,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             return entityList;
         }
 
-
-
         public DateTime MoveBetDateSel()
         {
             DateTime datetime = DateTime.Today;
@@ -266,21 +264,75 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public bool UpdateVerifyStatus(User user, string refNoList, bool isVerified)
         {
-            using (ObjectDb db = new ObjectDb("Acc_DailyTxn_UpdChecker", 1200))
-            {
-                var parms = new Hashtable();
-                parms.Add("checkerid", user.Id);
-                parms.Add("checkername", user.Username);
-                parms.Add("refnos", refNoList);
-                parms.Add("ip", user.LastLoginIP);
-                parms.Add("isverified", isVerified);
+            var success = true;
+            var siteDBList = GetSiteDBConfigByRefNo(refNoList);
 
-                db.AssignParamValues(parms);
-                db.ExecuteNonQuery();
-                return (CastAide.AsInt32(db.GetParameterValue("errcode")) != 0 ? false : true);
+            foreach (var siteDB in siteDBList)
+            {
+                var result = UpdateVerifyStatus(user, refNoList, isVerified, siteDB);
+                if (!result)
+                {
+                    success = false;
+                }
+            }
+
+            return success;
+        }
+
+        private static bool UpdateVerifyStatus(User user, string refNoList, bool isVerified, SiteDB siteDB)
+        {
+            var settingKey = siteDB.IsSiteDB
+                ? $"SiteDB{siteDB.SiteDBGroupID}_Acc_DailyTxn_UpdChecker"
+                : "Acc_DailyTxn_UpdChecker";
+            var inputParams = new Hashtable
+            {
+                ["checkerid"] = user.Id,
+                ["checkername"] = user.Username,
+                ["refnos"] = refNoList,
+                ["ip"] = user.LastLoginIP,
+                ["isverified"] = isVerified,
+                ["sitedbgroupid"] = siteDB.SiteDBGroupID,
+            };
+
+            try
+            {
+                using (var db = new ObjectDb(settingKey, 1200))
+                {
+                    db.ExecuteNonQueryScaleoutDB(inputParams, siteDB.AGIP);
+                    return (CastAide.AsInt32(db.GetParameterValue("errcode")) != 0 ? false : true);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.Error(siteDB.AGIP, settingKey, inputParams, ex);
+                return false;
             }
         }
 
+        public IEnumerable<SiteDB> GetSiteDBConfigByRefNo(string refNoList)
+        {
+            var inputParams = new Hashtable
+            {
+                ["refnos"] = refNoList
+            };
+
+            using (var db = new ObjectDb("Acc_SiteDBGroupIDSelByRefnos"))
+            {
+                using (var reader = db.ExecuteReader(inputParams))
+                {
+                    while (reader.Read())
+                    {
+                        yield return new SiteDB
+                        {
+                            SiteDBGroupID = Convert.ToInt32(reader["SiteDBGroupID"]),
+                            AGIP = reader["AGIP"].ToString(),
+                            ClientAccessName = reader["ClientAccessName"].ToString(),
+                            LinkedServerName = reader["LinkedServerName"].ToString()
+                        };
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// 
@@ -379,7 +431,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             return custId;
         }
 
-
         public List<MenuBO> GetUserMenu(int custId)
         {
             var listMenu = new List<MenuBO>();
@@ -436,7 +487,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
             return listMenu;
         }
-
 
         public Result InsMenuItem(MenuBO menu)
         {
@@ -624,7 +674,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 }
             }
             return lst;
-        }       
+        }
 
         public List<MenuBO> GetReportMenu(int custId, string system)
         {
@@ -652,7 +702,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             return listMenu;
         }
         #endregion
-
 
         private void RecursionMenu(DataTable dt, ref List<MenuBO> listMenu, int parentId)
         {
@@ -750,7 +799,5 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
             return dailyFinance;
         }
-
-
     }
 }

@@ -184,7 +184,7 @@ namespace Sunplus.Accounting.Business
             Check.Argument.IsNotNullOrEmpty(refNos, "refNos");
 
             bool isSuccessful = false;
-            ;
+
             try
             {
                 refNos = refNos.Trim().TrimEnd(',');
@@ -209,7 +209,7 @@ namespace Sunplus.Accounting.Business
             Check.Argument.IsNotNull(user, "user");
 
             bool isSuccessful = false;
-            ;
+
             try
             {
                 isSuccessful = _userDAO.UpdateVerifyStatus(user, refNo.ToString(), false);

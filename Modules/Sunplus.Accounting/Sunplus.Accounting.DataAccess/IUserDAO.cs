@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using DNAide.Data;
+using Fanex.Tarus.Infrastructure.Extensions;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.ViewModel;
 
@@ -39,6 +40,8 @@ namespace Sunplus.Accounting.DataAccess
         DailyTransactionDTO GetDailyTransaction(DateTime transDate, int status, string type, string creator, string verifyBy);
 
         bool UpdateVerifyStatus(User user, string refNoList, bool isVerified);
+
+        IEnumerable<SiteDB> GetSiteDBConfigByRefNo(string refNoList);
 
         List<Statement> GetCustomerStatement(User customer, DateTime fromDate, DateTime toDate, DateTime balanceUpDay,
                                              bool isInlucdeAccBal);
