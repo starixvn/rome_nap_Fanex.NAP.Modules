@@ -388,27 +388,33 @@ namespace Fanex.Tarus.Finance.Business.Statement
 
         private Result DeleteTransBusiness(long refNo, int custId, int userId, IEnumerable<int> custIds)
         {
-            IList<Result> errorResults = new List<Result>();
-            var uniqueSiteDBList = GetUniqueSiteDBFromCustIds(custIds);
+            Result result = null;
+            IEnumerable<SiteDB> rollbackSiteDBList = Enumerable.Empty<SiteDB>();
+            var uniqueSiteDBArray = GetUniqueSiteDBFromCustIds(custIds);
 
-            foreach (var siteDB in uniqueSiteDBList)
+            for (int i = 0, max = uniqueSiteDBArray.Length; i < max; i++)
             {
-                var result = financeStatementAccess.DeleteTransAccess(
+                var siteDB = uniqueSiteDBArray[i];
+                result = financeStatementAccess.DeleteTransAccess(
                     new BettransDelTransactionCriteria(refNo, custId, userId, siteDB),
                     siteDB.AGIP);
 
-                if (result.IsFailure)
+                if (result.IsFailure && i > 0)
                 {
-                    errorResults.Add(result);
+                    rollbackSiteDBList = uniqueSiteDBArray.Take(i).ToList();
+                    break;
                 }
             }
 
-            return errorResults.Count == 0
-                ? new Result()
-                : Result.ServerError(string.Join("<br/>", errorResults.Select(r => r.ErrorMessage)));
+            if (rollbackSiteDBList.Any())
+            {
+                RollbackDeleteTransAccess(refNo, userId, Sunplus.Accounting.Core.Helper.Utils.GetClientIP(), rollbackSiteDBList);
+            }
+
+            return result ?? new Result();
         }
 
-        private static IEnumerable<SiteDB> GetUniqueSiteDBFromCustIds(IEnumerable<int> custIds)
+        private static SiteDB[] GetUniqueSiteDBFromCustIds(IEnumerable<int> custIds)
         {
             IDictionary<int, SiteDB> siteDBDict = new Dictionary<int, SiteDB>();
 
@@ -422,7 +428,21 @@ namespace Fanex.Tarus.Finance.Business.Statement
                 }
             }
 
-            return siteDBDict.Values;
+            return siteDBDict.Values.ToArray();
+        }
+
+        private void RollbackDeleteTransAccess(long refNo, int userId, string ip, IEnumerable<SiteDB> siteDBList)
+        {
+            foreach (var siteDB in siteDBList)
+            {
+                financeStatementAccess.RollbackDeleteTransAccess(
+                    new ReverseTransferRollbackSiteDBCriteria(
+                        refNo,
+                        userId,
+                        Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
+                        siteDB),
+                    siteDB.AGIP);
+            }
         }
 
         #region export 2 excel

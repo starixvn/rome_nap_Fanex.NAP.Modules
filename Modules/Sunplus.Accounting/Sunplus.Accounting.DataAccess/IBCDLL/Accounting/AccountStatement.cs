@@ -182,25 +182,31 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 
         private static IbcError Acc_BettransDelTransaction(long refNo, int custId, int userId, string ip, IEnumerable<int> custIds)
         {
-            IList<IbcError> errorResults = new List<IbcError>();
-            var uniqueSiteDBList = GetUniqueSiteDBFromCustIds(custIds);
+            IbcError result = null;
+            IEnumerable<SiteDB> rollbackSiteDBList = Enumerable.Empty<SiteDB>();
+            var uniqueSiteDBArray = GetUniqueSiteDBFromCustIds(custIds);
 
-            foreach (var siteDB in uniqueSiteDBList)
+            for (int i = 0, max = uniqueSiteDBArray.Length; i < max; i++)
             {
-                var result = Acc_BettransDelTransaction(refNo, custId, userId, ip, siteDB);
+                var siteDB = uniqueSiteDBArray[i];
+                result = Acc_BettransDelTransaction(refNo, custId, userId, ip, siteDB);
 
-                if (result.ErrorCode != 0)
+                if (result.ErrorCode != 0 && i > 0)
                 {
-                    errorResults.Add(result);
+                    rollbackSiteDBList = uniqueSiteDBArray.Take(i).ToList();
+                    break;
                 }
             }
 
-            return errorResults.Count == 0
-                ? new IbcError()
-                : new IbcError(500, string.Join("<br/>", errorResults.Select(r => r.ErrorMsg)));
+            if (rollbackSiteDBList.Any())
+            {
+                SiteDB_Acc_ReverseTransfer_Rollback(refNo, userId, ip, rollbackSiteDBList);
+            }
+
+            return result ?? new IbcError();
         }
 
-        private static IEnumerable<SiteDB> GetUniqueSiteDBFromCustIds(IEnumerable<int> custIds)
+        private static SiteDB[] GetUniqueSiteDBFromCustIds(IEnumerable<int> custIds)
         {
             IDictionary<int, SiteDB> siteDBDict = new Dictionary<int, SiteDB>();
 
@@ -214,7 +220,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 }
             }
 
-            return siteDBDict.Values;
+            return siteDBDict.Values.ToArray();
         }
 
         private static IbcError Acc_BettransDelTransaction(long refNo, int custId, int userId, string ip, SiteDB siteDB)
@@ -226,6 +232,51 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 ["refno"] = refNo,
                 ["custid"] = custId,
+                ["userid"] = userId,
+                ["ip"] = ip,
+                ["sitedbgroupid"] = siteDB.SiteDBGroupID,
+                ["errcode"] = 0,
+                ["errmsg"] = string.Empty
+            };
+
+            try
+            {
+                using (var db = new ObjectDb(settingKey, 1200))
+                {
+                    db.ExecuteNonQueryScaleoutDB(inputParams, siteDB.AGIP);
+
+                    return new IbcError(
+                        DNAide.Core.CastAide.AsInt32(db.GetParameterValue("errcode")),
+                        string.Format("{0}", db.GetParameterValue("errmsg")));
+                }
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.Error(
+                    siteDB.AGIP,
+                    settingKey,
+                    inputParams,
+                    ex);
+                return new IbcError(100, ex.Message);
+            }
+        }
+
+        private static void SiteDB_Acc_ReverseTransfer_Rollback(long refNo, int userId, string ip, IEnumerable<SiteDB> siteDBList)
+        {
+            foreach (var siteDB in siteDBList)
+            {
+                SiteDB_Acc_ReverseTransfer_Rollback(refNo, userId, ip, siteDB);
+            }
+        }
+
+        private static IbcError SiteDB_Acc_ReverseTransfer_Rollback(long refNo, int userId, string ip, SiteDB siteDB)
+        {
+            var settingKey = siteDB.IsSiteDB
+                ? $"SiteDB{siteDB.SiteDBGroupID}_SiteDB_Acc_ReverseTransfer_Rollback"
+                : "SiteDB_Acc_ReverseTransfer_Rollback";
+            var inputParams = new Hashtable
+            {
+                ["refno"] = refNo,
                 ["userid"] = userId,
                 ["ip"] = ip,
                 ["sitedbgroupid"] = siteDB.SiteDBGroupID,

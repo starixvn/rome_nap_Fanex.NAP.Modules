@@ -134,5 +134,24 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
 
             return Tuple.Create<IEnumerable<int>, Result>(custIds, result);
         }
+
+        public Result RollbackDeleteTransAccess(ICriteria criteria, string agIp)
+        {
+            try
+            {
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), agIp);
+                    var outputs = db.GetOuputParams();
+
+                    return new Result(Convert.ToInt32(outputs["errcode"]), outputs["errmsg"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
+                return Result.ServerError(ex.Message);
+            }
+        }
     }
 }
