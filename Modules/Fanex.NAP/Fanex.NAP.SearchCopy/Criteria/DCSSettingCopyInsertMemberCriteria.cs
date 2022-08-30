@@ -25,6 +25,8 @@
 
         public byte SettingStatus { get; set; }
 
+        public bool IsSearchAndCopy => true;
+
         public int ErrCode { get; } = 0;
 
         public string ErrMsg { get; } = string.Empty;
