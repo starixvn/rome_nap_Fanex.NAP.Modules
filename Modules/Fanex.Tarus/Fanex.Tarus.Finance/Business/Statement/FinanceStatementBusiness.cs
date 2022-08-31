@@ -399,9 +399,13 @@ namespace Fanex.Tarus.Finance.Business.Statement
                     new BettransDelTransactionCriteria(refNo, custId, userId, siteDB),
                     siteDB.AGIP);
 
-                if (result.IsFailure && i > 0)
+                if (result.IsFailure)
                 {
-                    rollbackSiteDBList = uniqueSiteDBArray.Take(i).ToList();
+                    if (i > 0)
+                    {
+                        rollbackSiteDBList = uniqueSiteDBArray.Take(i).ToList();
+                    }
+
                     break;
                 }
             }

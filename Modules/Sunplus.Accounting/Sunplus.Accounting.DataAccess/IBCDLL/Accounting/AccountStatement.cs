@@ -191,9 +191,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var siteDB = uniqueSiteDBArray[i];
                 result = Acc_BettransDelTransaction(refNo, custId, userId, ip, siteDB);
 
-                if (result.ErrorCode != 0 && i > 0)
+                if (result.ErrorCode != 0)
                 {
-                    rollbackSiteDBList = uniqueSiteDBArray.Take(i).ToList();
+                    if (i > 0)
+                    {
+                        rollbackSiteDBList = uniqueSiteDBArray.Take(i).ToList();
+                    }
+
                     break;
                 }
             }
