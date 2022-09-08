@@ -610,10 +610,16 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
         public void InsertBalanceWhenCreateNewAgent(int agentId, string insertBalanceCustList, string insertExceptionBalanceCustList)
         {
             Logger.Log.Info($"[InsertBalanceWhenCreateNewAgent] - agentId: {agentId}; insertBalanceCustList: {insertBalanceCustList}; insertExceptionBalanceCustList: {insertExceptionBalanceCustList}");
+            if (agentId <= 0 || (string.IsNullOrWhiteSpace(insertBalanceCustList) && string.IsNullOrWhiteSpace(insertExceptionBalanceCustList)))
+            {
+                return;
+            }
+
             var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId_DBCUST(agentId);
             InsertBalanceOnSiteDB(siteDB.AGIP, insertBalanceCustList);
             InsertExceptionBalanceOnSiteDB(siteDB.AGIP, insertExceptionBalanceCustList);
         }
+
         public void InsertBalanceWhenCreateNewMember(int memberId, string memberName)
         {
             var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId_DBCUST(memberId);
@@ -935,7 +941,9 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         public Result InitCashOutStatus(int SuperId)
         {
+            var result = new Result();
             var hashParam = new Hashtable { { "custid", SuperId } };
+            string insertBalanceCustList = string.Empty;
             hashParam.Add("productid", 25);
             hashParam.Add("isenable", 1);
             hashParam.Add("applytomember", 1);
@@ -948,9 +956,13 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 objDb.AssignParamValues(hashParam);
                 objDb.ExecuteNonQuery();
                 var errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
-
-                return new Result(string.IsNullOrEmpty(errMsg) ? 0:500 , errMsg);
+                result.ErrorCode = string.IsNullOrEmpty(errMsg) ? 0 : 500;
+                result.ErrorMessage = errMsg;
+                insertBalanceCustList = CastAide.AsString(objDb.GetParameterValue("insbalcustlist"));
             }
+
+            InsertBalanceWhenCreateNewAgent(SuperId, insertBalanceCustList, null);
+            return result;
         }
     }
 }
