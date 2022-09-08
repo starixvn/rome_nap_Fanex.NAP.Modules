@@ -19,6 +19,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
+    using Fanex.Logging;
 
     public class DepositCustomerAccess : BaseAccess, IDepositCustomerAccess
     {
@@ -608,6 +609,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         public void InsertBalanceWhenCreateNewAgent(int agentId, string insertBalanceCustList, string insertExceptionBalanceCustList)
         {
+            Logger.Log.Info($"[InsertBalanceWhenCreateNewAgent] - agentId: {agentId}; insertBalanceCustList: {insertBalanceCustList}; insertExceptionBalanceCustList: {insertExceptionBalanceCustList}");
             var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId_DBCUST(agentId);
             InsertBalanceOnSiteDB(siteDB.AGIP, insertBalanceCustList);
             InsertExceptionBalanceOnSiteDB(siteDB.AGIP, insertExceptionBalanceCustList);
