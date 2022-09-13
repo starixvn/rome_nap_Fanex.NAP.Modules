@@ -26,5 +26,8 @@ namespace Fanex.Tarus.DataAccess.Interface.Customer
         Result UpdateMemberSetting(NewLicenseePostParam newLicenseePostParam);
 
         DataTable SelAllLicensee();
+
+        void InsertBalanceWhenCreateNewAgent(int agentId, string insertBalanceCustList, string insertExceptionBalanceCustList);
+        void InsertBalanceWhenCreateNewMember(int memberId, string memberName);
     }
 }
