@@ -5,99 +5,208 @@ namespace Fanex.Tarus.Finance.Business.Transfer
     using System.Collections.Generic;
     using System.Data;
     using DNAide.Core;
-    using DNAide.Utils;
+    using Fanex.Tarus.Finance.Criteria;
+    using Fanex.Tarus.Finance.Criteria.Transfer;
     using Fanex.Tarus.Finance.DataAccess.Transfer;
     using Fanex.Tarus.Finance.Entities;
     using Fanex.Tarus.Finance.Model.Transfer;
+    using Fanex.Tarus.Infrastructure.Caching;
     using Sunplus.Accounting.Business;
     using Sunplus.Accounting.Business.BootStrappers;
     using Sunplus.Accounting.Business.Security;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
+    using ObjectDbExtensions = Fanex.Tarus.Infrastructure.Extensions.ObjectDbExtensions;
+    using SiteDB = Fanex.Tarus.Infrastructure.Extensions.SiteDB;
 
     public class CrossTransferService : ICrossTransferService
     {
-        private readonly ICrossTransferAccess _crossTransferAccess;
+        private readonly ICrossTransferAccess crossTransferAccess;
 
-        public CrossTransferService()
-            : this(null)
-        {
-        }
+        public CrossTransferService(ICrossTransferAccess crossTransferAccess = null)
+            => this.crossTransferAccess = crossTransferAccess ?? new CrossTransferAccess();
 
-        public CrossTransferService(ICrossTransferAccess crossTransferAccess)
+        public Result TransferYesterdayTransaction(TransferYesterdayTransaction param)
         {
-            _crossTransferAccess = crossTransferAccess ?? new CrossTransferAccess();
-        }
+            if (param.UserId <= 0 || !Permissions.GetHostPermission("OtherTrans"))
+            {
+                return Result.NotAutherized();
+            }
 
-        public Result TransferYesterdayTransaction(
-            int accId,
-            string fromCustName,
-            string toCustName,
-            double exRate,
-            double amount,
-            string remark,
-            bool isCollection)
-        {
+            var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
+            var fromCustId = userService.GetCustomerIdByUsername(param.FromCustName);
+
+            var isFiTransfer = false;
+            var msg = string.Empty;
             try
             {
-                if (accId <= 0 || !Permissions.GetHostPermission("OtherTrans"))
-                {
-                    return new Result { ErrorCode = 1, ErrorMessage = Fanex.Tarus.Infrastructure.Resource.ErrorLanguage.NotAutherizedFunction };
-                }
-
-                var msg = string.Empty;
-                var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
-                int fromCustId = userService.GetCustomerIdByUsername(fromCustName);
-                bool IsTransfer = Permissions.IsFiTransfer(fromCustId, toCustName, ref msg);
-                if (IsTransfer)
-                {
-                    return _crossTransferAccess.BettransInsertTransfer(accId, fromCustId, toCustName, exRate, amount, remark, Sunplus.Accounting.Core.Helper.Utils.GetClientIP(), isCollection);
-                }
-                else
-                {
-                    return new Result { ErrorCode = 1, ErrorMessage = msg };
-                }
-            }
-            catch (AccException ex)
-            {
-                return new Result { ErrorCode = 1, ErrorMessage = ex.Message };
+                isFiTransfer = Permissions.IsFiTransfer(fromCustId, param.ToCustName, ref msg);
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+                return Result.ServerError(ex.Message);
             }
-            return new Result { ErrorCode = 1, ErrorMessage = "System Error" };
+
+            return isFiTransfer
+                ? TransferYesterdayTransactionSiteDB(param, fromCustId)
+                : Result.ServerError(msg);
+        }
+
+        private Result TransferYesterdayTransactionSiteDB(TransferYesterdayTransaction param, int fromCustId)
+        {
+            var fromSiteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(fromCustId);
+            var toSiteDB = ObjectDbExtensions.GetSiteDBConfigByUsername(param.ToCustName);
+
+            if (fromSiteDB.SiteDBGroupID == toSiteDB.SiteDBGroupID)
+            {
+                return crossTransferAccess.BettransInsertTransfer(
+                    new BetTransInsertTransferCriteria(
+                        param,
+                        fromCustId,
+                        fromSiteDB),
+                    fromSiteDB.AGIP);
+            }
+
+            // Step 1: transfer at SiteDB FROM
+            var fromResult = crossTransferAccess.BettransInsertTransferSiteDB(
+                new BetTransInsertTransferSiteDBCriteria(
+                    param,
+                    fromCustId,
+                    fromSiteDB),
+                fromSiteDB.AGIP);
+
+            if (fromResult.IsFailure)
+            {
+                return fromResult;
+            }
+
+            var refNo = fromResult.RefNo;
+            // Step 2: transfer at SiteDB TO
+            var toResult = crossTransferAccess.BettransInsertTransferSiteDB(
+                new BetTransInsertTransferSiteDBCriteria(
+                    param,
+                    fromCustId,
+                    toSiteDB,
+                    refNo),
+                toSiteDB.AGIP);
+
+            if (toResult.IsFailure)
+            {
+                // Rollback step 1
+                TransferRollbackSiteDB(refNo.Value, param.UserId, param.IP, fromSiteDB);
+            }
+
+            return toResult;
         }
 
         public Result CrossCurrencyTransferInsert(FinanceCrossCurrencyTransfer param)
         {
-            try
+            if (param.UserId <= 0 || !Permissions.GetHostPermission("FinanceTransfer"))
             {
-                if (AppSession.AccId <= 0 || !Permissions.GetHostPermission("FinanceTransfer"))
-                {
-                    return new Result { ErrorCode = 1, ErrorMessage = Fanex.Tarus.Infrastructure.Resource.ErrorLanguage.NotAutherizedFunction };
-                }
-                Fanex.Tarus.Infrastructure.Caching.CacheHelper.Set<string>("Transfer_ForexAccount_" + AppSession.AccUserName, param.ForexUsername);
-                return _crossTransferAccess.CustomerCrossTransferInsert(param.FromCustID, param.ToCustID, param.FromAmount, param.ToAmount, param.FromExRate, param.ToExRate, param.ForexUsername, param.Remark, AppSession.AccId, param.IsCollection);
+                return Result.NotAutherized();
             }
-            catch (Exception exception)
+
+            CacheHelper.Set<string>("Transfer_ForexAccount_" + AppSession.AccUserName, param.ForexUsername);
+            return CrossCurrencyTransferInsertSiteDB(param);
+        }
+
+        private Result CrossCurrencyTransferInsertSiteDB(FinanceCrossCurrencyTransfer param)
+        {
+            var fromSiteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(param.FromCustID);
+            var toSiteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(param.ToCustID);
+            var forexSiteDB = ObjectDbExtensions.GetSiteDBConfigByUsername(param.ForexUsername);
+
+            if (fromSiteDB.SiteDBGroupID == toSiteDB.SiteDBGroupID
+                && fromSiteDB.SiteDBGroupID == forexSiteDB.SiteDBGroupID)
             {
-                LogExtensions.ExceptionHandler(exception);
-                return new Result { ErrorCode = 1, ErrorMessage = "System Error" };
+                return crossTransferAccess.CustomerCrossTransferInsert(
+                    new BetTransInsertCrossTransferCriteria(param, fromSiteDB),
+                    fromSiteDB.AGIP);
+            }
+
+            // Step 1: transfer at SiteDB FROM
+            var fromResult = crossTransferAccess.CustomerCrossTransferInsertSiteDB(
+                new BetTransInsertCrossTransferSiteDBCriteria(param, fromSiteDB),
+                fromSiteDB.AGIP);
+
+            if (fromResult.IsFailure)
+            {
+                return fromResult;
+            }
+
+            ResultRefNo toResult = null;
+            var refNo = fromResult.RefNo;
+            // Step 2: transfer at SiteDB TO
+            if (fromSiteDB.SiteDBGroupID != toSiteDB.SiteDBGroupID)
+            {
+                toResult = crossTransferAccess.CustomerCrossTransferInsertSiteDB(
+                    new BetTransInsertCrossTransferSiteDBCriteria(param, toSiteDB, refNo),
+                    toSiteDB.AGIP);
+
+                if (toResult.IsFailure)
+                {
+                    // Rollback step 1
+                    TransferRollbackSiteDB(refNo.Value, param.UserId, param.IP, fromSiteDB);
+
+                    return toResult;
+                }
+            }
+
+            // Step 3: transfer at SiteDB FOREX
+            if (forexSiteDB.SiteDBGroupID != fromSiteDB.SiteDBGroupID
+                && forexSiteDB.SiteDBGroupID != toSiteDB.SiteDBGroupID)
+            {
+                var forexResult = crossTransferAccess.CustomerCrossTransferInsertSiteDB(
+                    new BetTransInsertCrossTransferSiteDBCriteria(param, forexSiteDB, refNo),
+                    forexSiteDB.AGIP);
+
+                if (forexResult.IsFailure)
+                {
+                    // Rollback step 1 & 2
+                    TransferRollbackSiteDB(
+                        refNo.Value,
+                        param.UserId,
+                        param.IP,
+                        fromSiteDB,
+                        toResult == null ? null : toSiteDB);
+                }
+
+                return forexResult;
+            }
+
+            return fromResult;
+        }
+
+        private void TransferRollbackSiteDB(
+            long refNo,
+            int userId,
+            string ip,
+            SiteDB fromSiteDB,
+            SiteDB toSiteDB = null)
+        {
+            crossTransferAccess.TransferRollbackSiteDB(
+                new TransferRollbackSiteDBCriteria(refNo, userId, ip, fromSiteDB),
+                fromSiteDB.AGIP);
+
+            if (toSiteDB != null)
+            {
+                crossTransferAccess.TransferRollbackSiteDB(
+                    new TransferRollbackSiteDBCriteria(refNo, userId, ip, toSiteDB),
+                    toSiteDB.AGIP);
             }
         }
 
         public CustomerExRate SelectCustomerExRate(string username)
-        {
-            return _crossTransferAccess.SelectCustomerExRate(username);
-        }
+            => crossTransferAccess.SelectCustomerExRate(username);
 
         public List<ForexAccount> SelectAllForexAccount()
         {
             try
             {
                 var listForexAccount = new List<ForexAccount>();
-                var dataSet = _crossTransferAccess.SelectAllForexAccount();
+                var dataSet = crossTransferAccess.SelectAllForexAccount();
+
                 if (dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
                     foreach (DataRow row in dataSet.Tables[0].Rows)
@@ -108,6 +217,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                         });
                     }
                 }
+
                 return listForexAccount;
             }
             catch (Exception ex)
@@ -122,7 +232,8 @@ namespace Fanex.Tarus.Finance.Business.Transfer
             try
             {
                 var listEntity = new List<ExchangeRate>();
-                var dataSet = _crossTransferAccess.SelectAllExchangeRate();
+                var dataSet = crossTransferAccess.SelectAllExchangeRate();
+
                 if (dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                 {
                     foreach (DataRow row in dataSet.Tables[0].Rows)
@@ -136,6 +247,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                         });
                     }
                 }
+
                 return listEntity;
             }
             catch (Exception ex)

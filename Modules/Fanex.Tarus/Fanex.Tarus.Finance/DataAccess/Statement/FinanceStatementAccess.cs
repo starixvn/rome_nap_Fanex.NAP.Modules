@@ -2,11 +2,15 @@
 namespace Fanex.Tarus.Finance.DataAccess.Statement
 {
     using System;
+    using System.Collections.Generic;
     using System.Data;
     using DNAide.Core;
     using Fanex.Data;
+    using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Entities;
+    using Fanex.Tarus.Infrastructure.Extensions;
     using Sunplus.Accounting.Core.Common;
+
     public class FinanceStatementAccess : IFinanceStatementAccess
     {
         public DataSet GetFinanceStatementAccess(string refNoParam, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int IncludeAccBall)
@@ -41,57 +45,112 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
             }
         }
 
-        public Result UpdateVerifyStatusAccess(string refNo, bool isVerify, string CheckerName, int CheckerID)
+        public IEnumerable<SiteDB> GetSiteDBConfigByRefNo(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (ObjectDb db = new ObjectDb("Acc_DailyTxn_UpdChecker", 1200))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    db.AddInParameter("checkerid", DbType.Int32, CheckerID);
-                    db.AddInParameter("checkername", DbType.String, CheckerName);
-                    db.AddInParameter("refnos", DbType.String, refNo);
-                    db.AddInParameter("ip", DbType.String, Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-                    db.AddInParameter("isverified", DbType.Boolean, isVerify);
-
-                    db.AddOutParameter("errmsg", DbType.String, 500);
-                    db.AddOutParameter("errcode", DbType.Int32, sizeof(int));
-
-                    db.ExecuteNonQuery();
-
-                    var errMsg = DNAide.Core.CastAide.AsString(db.GetParameterValue("ErrMsg"));
-                    var errCode = DNAide.Core.CastAide.AsInt32(db.GetParameterValue("errcode"));
-                    return new Result { ErrorCode = errCode, ErrorMessage = errMsg };
+                    while (reader.Read())
+                    {
+                        yield return new SiteDB
+                        {
+                            SiteDBGroupID = Convert.ToInt32(reader["SiteDBGroupID"]),
+                            AGIP = reader["AGIP"].ToString(),
+                            ClientAccessName = reader["ClientAccessName"].ToString(),
+                            LinkedServerName = reader["LinkedServerName"].ToString()
+                        };
+                    }
                 }
-            }
-            catch (Exception e)
-            {
-                return new Result { ErrorCode = 1, ErrorMessage = e.Message };
             }
         }
 
-        public Result DeleteTransAccess(string RefNo, int CustID, int UserID)
+        public Result UpdateVerifyStatusAccess(ICriteria criteria, string agIp)
         {
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_BettransDelTransaction", 1200))
+                using (var db = new ObjectDb(criteria.GetSettingKey(), 1200))
                 {
-                    db.AddInParameter("custid", DbType.Int32, CustID);
-                    db.AddInParameter("userid", DbType.Int32, UserID);
-                    db.AddInParameter("refno", DbType.String, RefNo);
+                    //db.AddInParameter("ip", DbType.String, Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
 
-                    db.AddOutParameter("errmsg", DbType.String, 500);
-                    db.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+                    db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), agIp);
+                    var outputs = db.GetOuputParams();
 
-                    db.ExecuteNonQuery();
-
-                    var errMsg = DNAide.Core.CastAide.AsString(db.GetParameterValue("ErrMsg"));
-                    var errCode = DNAide.Core.CastAide.AsInt32(db.GetParameterValue("errcode"));
-                    return new Result { ErrorCode = errCode, ErrorMessage = errMsg };
+                    return new Result(Convert.ToInt32(outputs["errcode"]), outputs["errmsg"].ToString());
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return new Result { ErrorCode = 1, ErrorMessage = e.Message };
+                LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
+                return Result.ServerError(ex.Message);
+            }
+        }
+
+        public Result DeleteTransAccess(ICriteria criteria, string agIp)
+        {
+            try
+            {
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), agIp);
+                    var outputs = db.GetOuputParams();
+
+                    return new Result(Convert.ToInt32(outputs["errcode"]), outputs["errmsg"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
+                return Result.ServerError(ex.Message);
+            }
+        }
+
+        public Tuple<IEnumerable<int>, Result> GetCustIdsByRefNo(ICriteria criteria)
+        {
+            IList<int> custIds = new List<int>();
+            Result result;
+
+            try
+            {
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    {
+                        while (reader.Read())
+                        {
+                            custIds.Add(Convert.ToInt32(reader["custid"]));
+                        }
+                    }
+
+                    var outputParams = db.GetOuputParams();
+                    result = new Result(Convert.ToInt32(outputParams["errcode"]), outputParams["errmsg"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                result = Result.ServerError(ex.Message);
+                LogExtensions.Error(string.Empty, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
+            }
+
+            return Tuple.Create<IEnumerable<int>, Result>(custIds, result);
+        }
+
+        public Result RollbackDeleteTransAccess(ICriteria criteria, string agIp)
+        {
+            try
+            {
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), agIp);
+                    var outputs = db.GetOuputParams();
+
+                    return new Result(Convert.ToInt32(outputs["errcode"]), outputs["errmsg"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
+                return Result.ServerError(ex.Message);
             }
         }
     }

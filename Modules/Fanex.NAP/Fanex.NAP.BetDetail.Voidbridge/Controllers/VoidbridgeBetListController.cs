@@ -30,14 +30,6 @@
             return PartialView("~/Areas/Voidbridge/Views/BetDetails/_Tickets.cshtml", result);
         }
 
-        [HttpGet]
-        public ActionResult GetHandHistory(GetVoidbridgeResultCriteria criteria)
-        {
-            var result = _voidbridgeCasinoService.GetHandHistory(criteria);
-
-            return View("~/Areas/Voidbridge/Views/HandHistory_API/Index.cshtml", result);
-        }
-
         [NonAction]
         private BetDetailReport GetBetDetailReport(GetVoidbridgeBetDetailsCriteria criteria)
         {

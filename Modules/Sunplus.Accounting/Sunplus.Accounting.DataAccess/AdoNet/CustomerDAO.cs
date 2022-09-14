@@ -251,16 +251,15 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         public MemberMBCBalanceModel GetMemberMBCBalanceModel(int custId)
         {
             using (ObjectDb objdb = new ObjectDb("Acc_BalanceMemberSel", 180))
-            {
+            {            
                 var param = new Hashtable();
                 param.Add("custid", custId);
-
-                objdb.AssignParamValues(param);
-                objdb.ExecuteNonQuery();
+                objdb.ExecuteNonQueryScaleoutDB(param);
                 return new MemberMBCBalanceModel(
                     CastAide.AsDecimal(objdb.GetParameterValue("balance")),
                     CastAide.AsDecimal(objdb.GetParameterValue("netposition")),
                     CastAide.AsDecimal(objdb.GetParameterValue("PendingTransfer3rd")));
+               
             }
         }
 
@@ -271,10 +270,33 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 var param = new Hashtable();
                 param.Add("custid", custId);
 
-                objdb.AssignParamValues(param);
-                objdb.ExecuteNonQuery();
+                objdb.ExecuteNonQueryScaleoutDB(param);
                 return CastAide.AsDecimal(objdb.GetParameterValue("outstanding"));
             }
+        }
+
+        public DataTable GetCustomerCashInfo(int custId)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                var param = new System.Collections.Hashtable();
+                param.Add("custid", custId);
+              
+                using (ObjectDb db = new ObjectDb("Acc_CustomerSelBalanceCashInfo", 600))
+                {
+                    var ds = db.ExecuteDataSetScaleoutDB(param, custId);
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dt = ds.Tables[0];
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return dt;
         }
     }
 }

@@ -9,6 +9,9 @@
         [SpParam(Ignored = true)]
         public string Title { get; set; }
 
+        [SpParam(Ignored = true)]
+        public DateTime WinLostDate { get; set; }
+
         public long TransId { get; set; }
 
         public int CustId { get; set; }
@@ -18,6 +21,8 @@
         public DateTime MoveBetsDay => ReportUtils.BalanceUp.MoveBetsDay;
 
         public DateTime BalanceUpDay => ReportUtils.BalanceUp.BalanceUpDay;
+
+        public bool ExcludeBettrans { get; set; }
 
         public override string GetSettingKey() => "Acc_BetList_Jackpot_Detail";
 

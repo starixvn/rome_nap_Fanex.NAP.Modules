@@ -23,6 +23,8 @@
 
         public DateTime BalanceUpDay => ReportUtils.BalanceUp.BalanceUpDay;
 
+        public bool ExcludeBettrans { get; set; }
+
         public override string GetSettingKey()
         {
             return "Acc_BetList_RNG_Detail";

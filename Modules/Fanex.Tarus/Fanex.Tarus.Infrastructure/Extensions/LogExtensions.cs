@@ -8,7 +8,9 @@
 namespace Fanex.Tarus.Infrastructure.Extensions
 {
     using System;
+    using System.Collections;
     using System.Diagnostics;
+    using System.Text;
 
     public class LogExtensions
     {
@@ -20,6 +22,21 @@ namespace Fanex.Tarus.Infrastructure.Extensions
         public static void ExceptionHandler(Exception ex, TraceEventType traceEventType)
         {
             Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex, traceEventType);
+        }
+
+        public static void Error(string agIp, string settingKey, Hashtable spParams, Exception ex)
+        {
+            var errorBuilder = new StringBuilder();
+            errorBuilder
+                .Append("Server: ").AppendLine(agIp)
+                .Append("SettingKey: ").AppendLine(settingKey)
+                .Append("Parameters: ");
+            foreach (var key in spParams.Keys)
+            {
+                errorBuilder.Append($"{key}={spParams[key]}").Append(',');
+            }
+            
+            Fanex.Logging.Logger.Log.Error(errorBuilder.ToString().TrimEnd(','), ex);
         }
     }
 }

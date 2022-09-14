@@ -11,8 +11,6 @@
         [Obsolete]
         IEnumerable<TicketDetail> BetDetails(GetRNGCasinoBetDetailsCriteria criteria);
 
-        HandHistoryModel GetVoidbridgeResult(GetVoidbridgeResultCriteria criteria, string language);
-
         HandHistoryModel GetResultCriteria(GetResultCriteria criteria, string language);
 
         IEnumerable<TicketDetail> JackpotDetails(GetJackpotDetailsCriteria criteria);

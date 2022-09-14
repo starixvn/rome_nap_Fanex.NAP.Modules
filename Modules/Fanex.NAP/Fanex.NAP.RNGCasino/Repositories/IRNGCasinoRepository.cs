@@ -10,6 +10,10 @@
     {
         IEnumerable<Ticket> BetDetails(GetRNGCasinoBetDetailsCriteria criteria);
 
+        IEnumerable<Ticket> BetDetails(GetRNGCasinoBetDetailsInSiteDBCriteria criteria, string AGIP);
+
         IEnumerable<Ticket> JackpotDetails(GetJackpotDetailsCriteria criteria);
+
+        IEnumerable<Ticket> JackpotDetails(GetJackpotDetailsInSiteDBCriteria criteria, string AGIP);
     }
 }

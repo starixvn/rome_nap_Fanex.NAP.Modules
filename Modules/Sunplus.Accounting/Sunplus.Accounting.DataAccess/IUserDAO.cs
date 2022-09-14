@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using DNAide.Data;
+using Fanex.Tarus.Infrastructure.Extensions;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.ViewModel;
 
@@ -28,10 +29,6 @@ namespace Sunplus.Accounting.DataAccess
 
         bool DelDataTmpExcel(int userId);
 
-        DataSet UpdFinanceTransferMul(int userId, string fileName, int fileSize, string IP, ref Hashtable error);
-
-        DataSet UpdFinanceCrossTransferMul(int userId, string fileName, int fileSize, string IP, string forexName, ref Hashtable error);
-
         List<DailyTransaction> GetDailyTransaction(DateTime transDate, int pageIndex, int pageSize,
                                                    int status, string type, string creator, ref int totalPages,
                                                    string verifyBy);
@@ -43,6 +40,8 @@ namespace Sunplus.Accounting.DataAccess
         DailyTransactionDTO GetDailyTransaction(DateTime transDate, int status, string type, string creator, string verifyBy);
 
         bool UpdateVerifyStatus(User user, string refNoList, bool isVerified);
+
+        IEnumerable<SiteDB> GetSiteDBConfigByRefNo(string refNoList);
 
         List<Statement> GetCustomerStatement(User customer, DateTime fromDate, DateTime toDate, DateTime balanceUpDay,
                                              bool isInlucdeAccBal);

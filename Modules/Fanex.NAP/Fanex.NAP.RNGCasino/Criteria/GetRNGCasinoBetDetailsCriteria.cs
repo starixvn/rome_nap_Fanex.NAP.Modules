@@ -24,10 +24,13 @@
 
         public DateTime BalanceUpDay => ReportUtils.BalanceUp.BalanceUpDay;
 
+        public bool ExcludeBettrans { get; set; }
+
+        [SpParam(Ignored = true)]
+        public DateTime WinLossDate { get; set; }
+
         public override string GetSettingKey()
-        {
-            return "Acc_BetList_RNG_Detail";
-        }
+            => "Acc_BetList_RNG_Detail";
 
         public override bool IsValid()
         {

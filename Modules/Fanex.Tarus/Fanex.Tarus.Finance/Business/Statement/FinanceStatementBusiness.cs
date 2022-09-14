@@ -10,15 +10,20 @@ namespace Fanex.Tarus.Finance.Business.Statement
     using DNAide.Core;
     using DNAide.Utils;
     using ExcelUtil.Spreadsheet;
+    using Fanex.Tarus.Finance.Criteria;
+    using Fanex.Tarus.Finance.Criteria.Statement;
     using Fanex.Tarus.Finance.DataAccess.Statement;
     using Fanex.Tarus.Finance.Entities;
     using Fanex.Tarus.Finance.Model.Statement;
     using Fanex.Tarus.Infrastructure.Utils;
     using Sunplus.Accounting.Core.Extensions;
+    using ObjectDbExtensions = Fanex.Tarus.Infrastructure.Extensions.ObjectDbExtensions;
+    using SiteDB = Fanex.Tarus.Infrastructure.Extensions.SiteDB;
 
     public class FinanceStatementBusiness : IFinanceStatementBusiness
     {
-        private IFinanceStatementAccess _FinanceStatementAccess = null;
+        private readonly IFinanceStatementAccess financeStatementAccess;
+        private readonly Helper helper;
         private const string FinanceStatementAccess = "FinanceStatement";
         private const string FianceStatementSession = "fanex.tarus.business.statement.financestatement";
 
@@ -27,19 +32,17 @@ namespace Fanex.Tarus.Finance.Business.Statement
         {
         }
 
-        private Helper _helper;
-
-        public FinanceStatementBusiness(IFinanceStatementAccess FinanceStatementAccess)
+        public FinanceStatementBusiness(IFinanceStatementAccess financeStatementAccess)
         {
-            _FinanceStatementAccess = FinanceStatementAccess ?? new FinanceStatementAccess();
-            _helper = new Helper();
+            this.financeStatementAccess = financeStatementAccess ?? new FinanceStatementAccess();
+            helper = new Helper();
         }
 
         public List<StatementDetail> GetFinanceStatementBusiness(string refNoParam, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int IncludeAccBall)
         {
             try
             {
-                var dtStatement = _FinanceStatementAccess.GetFinanceStatementAccess(refNoParam, custName, filterBy, fromdate, toDay, balanceUpDay, IncludeAccBall);
+                var dtStatement = financeStatementAccess.GetFinanceStatementAccess(refNoParam, custName, filterBy, fromdate, toDay, balanceUpDay, IncludeAccBall);
 
                 var statement = new List<StatementDetail>();
                 if (dtStatement.Tables.Count > 0)
@@ -133,9 +136,9 @@ namespace Fanex.Tarus.Finance.Business.Statement
             try
             {
                 var winlossDatetmp = statementDetail.WinLossDate.Split(' ');
-                var dtTrans = _FinanceStatementAccess.GetFinanceStatementDetailAccess(statementDetail.RefNo, winlossDatetmp[2], username);
+                var dtTrans = financeStatementAccess.GetFinanceStatementDetailAccess(statementDetail.RefNo, winlossDatetmp[2], username);
 
-                var isForex = _helper.GetForexAccounts().Contains(username);
+                var isForex = helper.GetForexAccounts().Contains(username);
 
                 var listTrans = new List<Transaction>();
                 if (dtTrans.Tables.Count > 0)
@@ -339,27 +342,110 @@ namespace Fanex.Tarus.Finance.Business.Statement
 
         public Result VerifyTransactionBusiness(string refNo, bool isVerify, string checkerName, int checkerId)
         {
+            var errorResults = new List<Result>();
+            var siteDBList = financeStatementAccess.GetSiteDBConfigByRefNo(new GetSiteDBConfigByRefNoCriteria(refNo));
+
             try
             {
-                return _FinanceStatementAccess.UpdateVerifyStatusAccess(refNo, isVerify, checkerName, checkerId);
+                foreach (var siteDB in siteDBList)
+                {
+                    var result = financeStatementAccess.UpdateVerifyStatusAccess(
+                        new DailyTxnUpdCheckerCriteria(
+                            checkerId,
+                            checkerName,
+                            refNo,
+                            isVerify,
+                            Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
+                            siteDB),
+                        siteDB.AGIP);
+
+                    if (result.IsFailure)
+                    {
+                        errorResults.Add(result);
+                    }
+                }
+
+                return errorResults.Count == 0
+                    ? new Result()
+                    : Result.ServerError(string.Join("<br/>", errorResults.Select(r => r.ErrorMessage)));
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(exception);
+                LogExtensions.ExceptionHandler(ex);
                 return new Result { ErrorCode = 1, ErrorMessage = "Update Error" };
             }
         }
 
-        public Result DeleteTransBusiness(string refNo, int custId, int userId)
+        public Result DeleteTransBusiness(long refNo, int custId, int userId)
         {
-            try
+            var resultTuple = financeStatementAccess.GetCustIdsByRefNo(new CustomerSelByRefnoCriteria(refNo));
+            var result = resultTuple.Item2;
+
+            return result.IsFailure
+                ? result
+                : DeleteTransBusiness(refNo, custId, userId, resultTuple.Item1);
+        }
+
+        private Result DeleteTransBusiness(long refNo, int custId, int userId, IEnumerable<int> custIds)
+        {
+            Result result = null;
+            IEnumerable<SiteDB> rollbackSiteDBList = Enumerable.Empty<SiteDB>();
+            var uniqueSiteDBArray = GetUniqueSiteDBFromCustIds(custIds);
+
+            for (int i = 0, max = uniqueSiteDBArray.Length; i < max; i++)
             {
-                return _FinanceStatementAccess.DeleteTransAccess(refNo, custId, userId);
+                var siteDB = uniqueSiteDBArray[i];
+                result = financeStatementAccess.DeleteTransAccess(
+                    new BettransDelTransactionCriteria(refNo, custId, userId, siteDB),
+                    siteDB.AGIP);
+
+                if (result.IsFailure)
+                {
+                    if (i > 0)
+                    {
+                        rollbackSiteDBList = uniqueSiteDBArray.Take(i).ToList();
+                    }
+
+                    break;
+                }
             }
-            catch (Exception exception)
+
+            if (rollbackSiteDBList.Any())
             {
-                LogExtensions.ExceptionHandler(exception);
-                return new Result { ErrorCode = 1, ErrorMessage = "Update Error" };
+                RollbackDeleteTransAccess(refNo, userId, Sunplus.Accounting.Core.Helper.Utils.GetClientIP(), rollbackSiteDBList);
+            }
+
+            return result ?? new Result();
+        }
+
+        private static SiteDB[] GetUniqueSiteDBFromCustIds(IEnumerable<int> custIds)
+        {
+            IDictionary<int, SiteDB> siteDBDict = new Dictionary<int, SiteDB>();
+
+            foreach (var custId in custIds)
+            {
+                var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+
+                if (!siteDBDict.ContainsKey(siteDB.SiteDBGroupID))
+                {
+                    siteDBDict.Add(siteDB.SiteDBGroupID, siteDB);
+                }
+            }
+
+            return siteDBDict.Values.ToArray();
+        }
+
+        private void RollbackDeleteTransAccess(long refNo, int userId, string ip, IEnumerable<SiteDB> siteDBList)
+        {
+            foreach (var siteDB in siteDBList)
+            {
+                financeStatementAccess.RollbackDeleteTransAccess(
+                    new ReverseTransferRollbackSiteDBCriteria(
+                        refNo,
+                        userId,
+                        Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
+                        siteDB),
+                    siteDB.AGIP);
             }
         }
 

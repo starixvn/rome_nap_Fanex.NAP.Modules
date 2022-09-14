@@ -9,6 +9,5 @@ namespace Sunplus.Accounting.DataAccess
         DataTable GetSites(Enumerations.AccountingSystem system);
 
         DataTable GetCust(Enumerations.AccountingSystem system);
-       
     }
 }

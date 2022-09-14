@@ -150,21 +150,6 @@
   <data name="error_LockUpdateStatus" xml:space="preserve">
     <value>This {0} function is temporarily unavailable, please update later</value>
   </data>
-  <data name="error_MoveCust_Accounting" xml:space="preserve">
-    <value>Error from Accounting: {0}</value>
-  </data>
-  <data name="error_MoveCust_Casino" xml:space="preserve">
-    <value>Error from Casino: {0}</value>
-  </data>
-  <data name="error_MoveCust_NotSync" xml:space="preserve">
-    <value>Error: {0} was not synchronized to Casino System.</value>
-  </data>
-  <data name="error_MoveCust_Successfully" xml:space="preserve">
-    <value>Move {0} successfully.</value>
-  </data>
-  <data name="error_MoveCust_UnSuccessfully" xml:space="preserve">
-    <value>Move {0} unsuccessfully.</value>
-  </data>
   <data name="DenyLoginAccount" xml:space="preserve">
     <value>You are not allowed to access this site.</value>
   </data>

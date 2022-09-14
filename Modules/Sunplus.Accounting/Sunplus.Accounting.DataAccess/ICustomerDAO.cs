@@ -32,5 +32,7 @@ namespace Sunplus.Accounting.DataAccess
         MemberMBCBalanceModel GetMemberMBCBalanceModel(int custId);
 
         decimal GetMemberOustandingMBC(int custId);
+
+        DataTable GetCustomerCashInfo(int custId);
     }
 }
