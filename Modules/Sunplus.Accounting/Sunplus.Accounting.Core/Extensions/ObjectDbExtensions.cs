@@ -42,9 +42,16 @@ namespace Sunplus.Accounting.Core.Extensions
                 objdb.DbSetting.ConnectionString = BuildConnectionString(siteConfigs.AGIP, oldConnectionString);
             }
 
-            objdb.AssignParamValues(parameters);
-            IDataReader result = objdb.ExecuteReader();
-            objdb.DbSetting.ConnectionString = oldConnectionString;
+            objdb.AssignParamValues(parameters); IDataReader result;
+            try
+            {
+                result = objdb.ExecuteReader();
+            }
+            finally
+            {
+                objdb.DbSetting.ConnectionString = oldConnectionString;
+            }
+
             return result;
         }
 
@@ -53,8 +60,16 @@ namespace Sunplus.Accounting.Core.Extensions
             string oldConnectionString = objdb.DbSetting.ConnectionString;
             objdb.DbSetting.ConnectionString = BuildConnectionString(AGIP, oldConnectionString);
             objdb.AssignParamValues(parameters);
-            IDataReader result = objdb.ExecuteReader();
-            objdb.DbSetting.ConnectionString = oldConnectionString;
+            IDataReader result;
+            try
+            {
+                result = objdb.ExecuteReader();
+            }
+            finally
+            {
+                objdb.DbSetting.ConnectionString = oldConnectionString;
+            }
+
             return result;
         }
 
@@ -71,8 +86,16 @@ namespace Sunplus.Accounting.Core.Extensions
             }
 
             objdb.AssignParamValues(parameters);
-            DataSet result = objdb.ExecuteDataSet();
-            objdb.DbSetting.ConnectionString = oldConnectionString;
+            DataSet result;
+            try
+            {
+                result = objdb.ExecuteDataSet();
+            }
+            finally
+            {
+                objdb.DbSetting.ConnectionString = oldConnectionString;
+            }
+
             return result;
         }
 
@@ -81,8 +104,16 @@ namespace Sunplus.Accounting.Core.Extensions
             string oldConnectionString = objdb.DbSetting.ConnectionString;
             objdb.DbSetting.ConnectionString = BuildConnectionString(AGIP, oldConnectionString);
             objdb.AssignParamValues(parameters);
-            DataSet result = objdb.ExecuteDataSet();
-            objdb.DbSetting.ConnectionString = oldConnectionString;
+            DataSet result;
+            try
+            {
+                result = objdb.ExecuteDataSet();
+            }
+            finally
+            {
+                objdb.DbSetting.ConnectionString = oldConnectionString;
+            }
+
             return result;
         }
 
@@ -99,8 +130,16 @@ namespace Sunplus.Accounting.Core.Extensions
             }
 
             objdb.AssignParamValues(parameters);
-            int result = objdb.ExecuteNonQuery();
-            objdb.DbSetting.ConnectionString = oldConnectionString;
+            int result;
+            try
+            {
+                result = objdb.ExecuteNonQuery();
+            }
+            finally
+            {
+                objdb.DbSetting.ConnectionString = oldConnectionString;
+            }
+
             return result;
         }
 
@@ -109,8 +148,16 @@ namespace Sunplus.Accounting.Core.Extensions
             string oldConnectionString = objdb.DbSetting.ConnectionString;
             objdb.DbSetting.ConnectionString = BuildConnectionString(AGIP, oldConnectionString);
             objdb.AssignParamValues(parameters);
-            int result = objdb.ExecuteNonQuery();
-            objdb.DbSetting.ConnectionString = oldConnectionString;
+            int result;
+            try
+            {
+                result = objdb.ExecuteNonQuery();
+            }
+            finally
+            {
+                objdb.DbSetting.ConnectionString = oldConnectionString;
+            }
+
             return result;
         }
 
