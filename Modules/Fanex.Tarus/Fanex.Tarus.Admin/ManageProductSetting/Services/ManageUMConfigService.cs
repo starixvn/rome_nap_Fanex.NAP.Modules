@@ -26,6 +26,8 @@
         bool CheckIsInUMTime(int configId);
 
         IEnumerable<IdNameEntity> GetAllSites();
+
+        IEnumerable<IdNameEntity> GetMarkets();
     }
 
     public class ManageUMConfigService : IManageUMConfigService
@@ -53,6 +55,9 @@
 
         public IEnumerable<IdNameEntity> GetAllSites()
             => dataAccess.GetAllSites(new GetAllSitesCriteria(AppSession.AccId));
+
+        public IEnumerable<IdNameEntity> GetMarkets()
+            => dataAccess.GetMarkets(new GetMarketsCriteria());
 
         public IEnumerable<UMConfigurationEntity> GetAllUMConfiguration()
             => dataAccess.GetAllUMConfiguration(new GetAllUMConfigurationCriteria());

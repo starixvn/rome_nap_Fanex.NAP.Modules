@@ -29,6 +29,8 @@
         bool CheckIsInUMTime(CheckInUMCriteria criteria);
 
         IEnumerable<IdNameEntity> GetAllSites(ICriteria criteria);
+
+        IEnumerable<IdNameEntity> GetMarkets(ICriteria criteria);
     }
     public class ManageUMConfigDataAccess : BaseDataAccess, IManageUMConfigDataAccess
     {
@@ -62,6 +64,7 @@
                 var reader = objDb.ExecuteReader(criteria.GetSpParams());
                 while (reader.Read())
                 {
+                    var showTime = DataUtils.ToDateTime(reader["ShowTime"]);
                     entities.Add(new UMConfigurationEntity
                     {
                         ConfigId = DataUtils.ToInt32(reader["configId"]),
@@ -80,7 +83,7 @@
                         SportName = DataUtils.ToString(reader["SportName"]),
                         SettingName = DataUtils.ToString(reader["SettingName"]),
                         LockAddingNew = DataUtils.ToBoolean(reader["LockAddingNew"]),
-                        ShowTime = DataUtils.ToDateTime(reader["ShowTime"]).ToString("MM/dd/yyyy HH:mm:ss"),
+                        ShowTime = showTime == DateTime.MinValue ? string.Empty : showTime.ToString("MM/dd/yyyy HH:mm:ss"),
                         BeginTime = DataUtils.ToDateTime(reader["BeginTime"]).ToString("MM/dd/yyyy HH:mm:ss"),
                         EndTime = DataUtils.ToDateTime(reader["EndTime"]).ToString("MM/dd/yyyy HH:mm:ss"),
                         Username = DataUtils.ToString(reader["Username"]),
@@ -209,6 +212,24 @@
                         {
                             Id = Convert.ToInt32(reader["siteid"]),
                             Name = reader["site"].ToString()
+                        };
+                    }
+                }
+            }
+        }
+
+        public IEnumerable<IdNameEntity> GetMarkets(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return new IdNameEntity
+                        {
+                            Id = Convert.ToInt32(reader["marketid"]),
+                            Name = reader["marketname"].ToString()
                         };
                     }
                 }
