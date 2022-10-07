@@ -34,7 +34,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
     public class CustomerDAO : DataAccess, ICustomerDAO
     {
-      
+
         public DataTable GetCustomerInfo(string username)
         {
             DataTable dt = new DataTable();
@@ -247,31 +247,67 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         }
 
         #endregion
-        
+
         public MemberMBCBalanceModel GetMemberMBCBalanceModel(int custId)
         {
-            using (ObjectDb objdb = new ObjectDb("Acc_BalanceMemberSel", 180))
-            {            
-                var param = new Hashtable();
-                param.Add("custid", custId);
-                objdb.ExecuteNonQueryScaleoutDB(param);
-                return new MemberMBCBalanceModel(
-                    CastAide.AsDecimal(objdb.GetParameterValue("balance")),
-                    CastAide.AsDecimal(objdb.GetParameterValue("netposition")),
-                    CastAide.AsDecimal(objdb.GetParameterValue("PendingTransfer3rd")));
-               
+            string settingKey = "Acc_BalanceMemberSel";
+            var siteDBConfig = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            if (siteDBConfig.IsSiteDB)
+            {
+                using (ObjectDb objdb = new ObjectDb($"SiteDB{siteDBConfig.SiteDBGroupID}_{settingKey}", 180))
+                {
+                    var param = new Hashtable();
+                    param.Add("custid", custId);
+                    objdb.ExecuteNonQueryScaleoutDB(param, siteDBConfig.AGIP);
+                    return new MemberMBCBalanceModel(
+                        CastAide.AsDecimal(objdb.GetParameterValue("balance")),
+                        CastAide.AsDecimal(objdb.GetParameterValue("netposition")),
+                        CastAide.AsDecimal(objdb.GetParameterValue("PendingTransfer3rd")));
+
+                }
             }
+            else
+            {
+                using (ObjectDb objdb = new ObjectDb(settingKey, 180))
+                {
+                    var param = new Hashtable();
+                    param.Add("custid", custId);
+                    objdb.ExecuteNonQuery(param);
+                    return new MemberMBCBalanceModel(
+                        CastAide.AsDecimal(objdb.GetParameterValue("balance")),
+                        CastAide.AsDecimal(objdb.GetParameterValue("netposition")),
+                        CastAide.AsDecimal(objdb.GetParameterValue("PendingTransfer3rd")));
+
+                }
+            }
+
         }
 
         public decimal GetMemberOustandingMBC(int custId)
         {
-            using (ObjectDb objdb = new ObjectDb("Acc_OutstandingMemberSel", 180))
+            string settingKey = "Acc_OutstandingMemberSel";
+            var siteDBConfig = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            if (siteDBConfig.IsSiteDB)
             {
-                var param = new Hashtable();
-                param.Add("custid", custId);
+                using (ObjectDb objdb = new ObjectDb($"SiteDB{siteDBConfig.SiteDBGroupID}_{settingKey}", 180))
+                {
+                    var param = new Hashtable();
+                    param.Add("custid", custId);
 
-                objdb.ExecuteNonQueryScaleoutDB(param);
-                return CastAide.AsDecimal(objdb.GetParameterValue("outstanding"));
+                    objdb.ExecuteNonQueryScaleoutDB(param, siteDBConfig.AGIP);
+                    return CastAide.AsDecimal(objdb.GetParameterValue("outstanding"));
+                }
+            }
+            else
+            {
+                using (ObjectDb objdb = new ObjectDb(settingKey, 180))
+                {
+                    var param = new Hashtable();
+                    param.Add("custid", custId);
+
+                    objdb.ExecuteNonQuery(param);
+                    return CastAide.AsDecimal(objdb.GetParameterValue("outstanding"));
+                }
             }
         }
 
@@ -282,15 +318,32 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             {
                 var param = new System.Collections.Hashtable();
                 param.Add("custid", custId);
-              
-                using (ObjectDb db = new ObjectDb("Acc_CustomerSelBalanceCashInfo", 600))
+
+                string settingKey = "Acc_CustomerSelBalanceCashInfo";
+                var siteDBConfig = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+                if (siteDBConfig.IsSiteDB)
                 {
-                    var ds = db.ExecuteDataSetScaleoutDB(param, custId);
-                    if (ds != null && ds.Tables.Count > 0)
+                    using (ObjectDb db = new ObjectDb($"SiteDB{siteDBConfig.SiteDBGroupID}_{settingKey}", 600))
                     {
-                        dt = ds.Tables[0];
+                        var ds = db.ExecuteDataSetScaleoutDB(param, siteDBConfig.AGIP);
+                        if (ds != null && ds.Tables.Count > 0)
+                        {
+                            dt = ds.Tables[0];
+                        }
                     }
                 }
+                else
+                {
+                    using (ObjectDb db = new ObjectDb(settingKey, 600))
+                    {
+                        var ds = db.ExecuteDataSet(param);
+                        if (ds != null && ds.Tables.Count > 0)
+                        {
+                            dt = ds.Tables[0];
+                        }
+                    }
+                }
+
             }
             catch (Exception ex)
             {
