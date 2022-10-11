@@ -108,7 +108,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
         {
             var isMember = viewModel.ParentId > 0;
             viewModel.Customer = _searchCopyService.GetCustomerInfoByUserId(viewModel.CustId, isMember, WebSettings.SettingStatus);
-
             if (viewModel.Customer.RoleId == 4)
             {
                 viewModel.Sites = _searchCopyService
