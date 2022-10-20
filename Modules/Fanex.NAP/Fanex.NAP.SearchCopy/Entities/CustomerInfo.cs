@@ -3,7 +3,9 @@
 namespace Fanex.CustomerSetting.Module.SearchCopy.Entities
 {
     public class CustomerInfo
-    {        
+    {
+        public string UserName { get; set; }
+
         public int RoleId { get; set; }
 
         public string Site { get; set; }
