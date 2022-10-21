@@ -62,10 +62,34 @@ namespace Fanex.NAP.SSO
             }
         }
 
-        private string GetServerTime()
+        [ValidateInput(false)]
+        public ActionResult CTS(string custId)
+        {
+            // check-in user
+            int userId = Converter.ToInt(HttpContext.Session["AccId"], 0);
+            if (userId != 0)
+            {
+                var onlineUserId = UserCheckin(NapSettings.Settings.SiteId, userId);
+                var ctsURL = ConfigurationManager.AppSettings["CtsSSOUrl"];
+                var redirectCtsUrl = ConfigurationManager.AppSettings["CtsRedirectUrl"] + custId;
+                return new RedirectResult(
+                    string.Format(
+                        ctsURL + "?userId={0}&onuserId={1}&time={2}&redirectUrl={3}",
+                        Cryptography.CfsEnCrypt(userId.ToString(CultureInfo.CurrentCulture)),
+                        Cryptography.CfsEnCrypt(onlineUserId.ToString(CultureInfo.CurrentCulture)),
+                        Cryptography.CfsEnCrypt(GetServerTime()),
+                        redirectCtsUrl));
+            }
+            else
+            {
+                return new RedirectResult("Index.aspx");
+            }
+        }
+
+        protected string GetServerTime()
             => _securityService.GetTime();
 
-        private int UserCheckin(int siteId, int userId)
+        protected int UserCheckin(int siteId, int userId)
         {
             int onlineUserId = 0;
 
