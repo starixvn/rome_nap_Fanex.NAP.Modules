@@ -29,10 +29,46 @@
 
         public Result Insert(HttpPostedFileBase uploadFile)
         {
-#pragma warning disable S1854 // Unused assignments should be removed
-            var result = new Result();
-#pragma warning restore S1854 // Unused assignments should be removed
             InsertBettypeCriteria criteria = new InsertBettypeCriteria();
+            try
+            {
+                criteria.Entities = ParseBetTypeXML(uploadFile);
+            }
+            catch (Exception ex)
+            {
+                return new Result(1, ex.Message);
+            }
+
+            return _manageBettypeDataAccess.Insert(criteria);
+        }
+
+        public Result Update(HttpPostedFileBase uploadFile)
+        {
+            var criteria = new UpdateBettypeCriteria
+            {
+                IsMultiple = true
+            };
+            try
+            {
+                criteria.Entities = ParseBetTypeXML(uploadFile);
+            }
+            catch (Exception ex)
+            {
+                return new Result(1, ex.Message);
+            }
+
+            return _manageBettypeDataAccess.Update(criteria);
+        }
+
+        public Result Update(BettypeEntity request) => _manageBettypeDataAccess.Update(new UpdateBettypeCriteria
+        {
+            IsMultiple = false,
+            Entities = new List<BettypeEntity> { request }
+        });
+
+        private List<BettypeEntity> ParseBetTypeXML(HttpPostedFileBase uploadFile)
+        {
+            var result = new List<BettypeEntity>();
             int rowCount = 1;
             try
             {
@@ -44,8 +80,7 @@
                 {
                     rowCount++;
                     IRow row = (IRow)rows.Current;
-
-                    criteria.Entities.Add(new BettypeEntity
+                    var betType = new BettypeEntity
                     {
                         TypeId = HttpUtility.HtmlEncode(row.GetCell(0) == null ? string.Empty : row.GetCell(0).ToString()),
                         TypeNamee = HttpUtility.HtmlEncode(row.GetCell(1) == null ? string.Empty : row.GetCell(1).ToString()),
@@ -72,25 +107,18 @@
                         DisplayedTypeID = HttpUtility.HtmlEncode(row.GetCell(22) == null ? string.Empty : row.GetCell(22).ToString()),
                         LicSpreadBetTypeGroupId = HttpUtility.HtmlEncode(row.GetCell(23) == null ? string.Empty : row.GetCell(23).ToString()),
                         Is3rdParty = HttpUtility.HtmlEncode(row.GetCell(24) == null ? string.Empty : row.GetCell(24).ToString())
-                    });
+                    };
+
+                    if (!betType.IsEmptyData) result.Add(betType);
                 }
 
-                result = this._manageBettypeDataAccess.Insert(criteria);
+                return result;
             }
             catch (Exception ex)
             {
-                result.ErrorCode = 1;
-                result.ErrorMessage = "Invalid file uploaded. Error at line: " + rowCount.ToString();
                 LogExtensions.ExceptionHandler(ex);
-                return result;
+                throw new Exception("Invalid file uploaded. Error at line: " + rowCount.ToString());
             }
-
-            return result;
         }
-
-        public Result Update(BettypeEntity request) => _manageBettypeDataAccess.Update(new UpdateBettypeCriteria
-        {
-            Entities = new List<BettypeEntity> { request }
-        });
     }
 }

@@ -106,7 +106,12 @@
 
         [AuthenticateHost]
         [HttpPost]
-        public JsonResult InsertBettype(HttpPostedFileBase uploadFile) => Json(_manageBettypeService.Insert(uploadFile));
+        public JsonResult InsertBettype(HttpPostedFileBase uploadFile, bool isUpdate = false)
+        {
+            var result = isUpdate ? _manageBettypeService.Update(uploadFile) : _manageBettypeService.Insert(uploadFile);
+
+            return Json(result);
+        }
 
         [AuthenticateHost]
         [HttpPost]
