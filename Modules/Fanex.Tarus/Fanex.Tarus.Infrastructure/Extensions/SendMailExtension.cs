@@ -7,19 +7,16 @@
 
 namespace Fanex.Tarus.Infrastructure.Extensions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.IO;
-    using System.Net.Mail;
-    using System.Text;
-    using System.Web.Mail;
-    using Sunplus.Accounting.Core.Configurations;
-    using Sunplus.Accounting.Core.Helper;    
-    using MailMessage = System.Net.Mail.MailMessage;
-    using MailPriority = System.Net.Mail.MailPriority;
+    using Fanex.MailDeliver.MailClient;
     using Fanex.MailDeliver.MailClient.API;
     using Fanex.MailDeliver.Model;
+    using Sunplus.Accounting.Core.Configurations;
+    using Sunplus.Accounting.Core.Helper;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.IO;
+    using System.Net.Mail;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -85,6 +82,8 @@ namespace Fanex.Tarus.Infrastructure.Extensions
         {
             try
             {
+                AppSettings.AppMailId = ConfigurationManager.AppSettings["app_mail_id"];
+                AppSettings.AppMailAddress = ConfigurationManager.AppSettings["app_mail_address"];
                 using (var client = new MailDeliver())
                 {
                     var mailItem = new Fanex.MailDeliver.Model.MailRecord
