@@ -4,7 +4,6 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using System.Web;
     using Fanex.RemotingRef;
     using Fanex.Tarus.Admin.Entities;
@@ -15,11 +14,11 @@
     using Fanex.Tarus.Admin.ManageProductSetting.Models;
     using NPOI.SS.UserModel;
     using Fanex.Tarus.Infrastructure.Extensions;
+    using Sunplus.Accounting.Core.Cache;
 
     public class ManageCanSeeService
     {
         private readonly IManageCanSeeDataAccess _manageCanSeeDataAccess;
-        private readonly IRemotingRefService _remotingRefService;
 
         public ManageCanSeeService() : this(null, null)
         {
@@ -28,7 +27,6 @@
         public ManageCanSeeService(IManageCanSeeDataAccess manageSporttypeDataAccess, IRemotingRefService remotingRefService)
         {
             _manageCanSeeDataAccess = manageSporttypeDataAccess ?? new ManageCanSeeDataAccess();
-            _remotingRefService = remotingRefService ?? new RemotingRefService();
         }
 
         public IEnumerable<CanSeeModel> Select(SelectCanSeeCriteria criteria)
@@ -37,7 +35,7 @@
 
             foreach (var model in canSeeModel)
             {
-                model.SportTypeName = _remotingRefService.GetSportName(model.SportType.ToString(), Thread.CurrentThread.CurrentCulture.Name);
+                model.SportTypeName = CacheRef.GetSportName(model.SportType.ToString());
             }
 
             return canSeeModel;

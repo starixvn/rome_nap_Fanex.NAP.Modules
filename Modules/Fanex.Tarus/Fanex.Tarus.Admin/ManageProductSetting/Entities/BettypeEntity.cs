@@ -27,5 +27,31 @@
         public string DisplayedTypeID { get; set; }
         public string LicSpreadBetTypeGroupId { get; set; }
         public string Is3rdParty { get; set; }
+
+        public bool IsEmptyData
+            => string.IsNullOrWhiteSpace(TypeId) &&
+                string.IsNullOrWhiteSpace(TypeNamee) &&
+                string.IsNullOrWhiteSpace(TypeNamec) &&
+                string.IsNullOrWhiteSpace(TypeDesc) &&
+                string.IsNullOrWhiteSpace(TypeNamec_uni) &&
+                string.IsNullOrWhiteSpace(TypeNamej) &&
+                string.IsNullOrWhiteSpace(TypeNamcn) &&
+                string.IsNullOrWhiteSpace(TypeNameth) &&
+                string.IsNullOrWhiteSpace(TypeNameit) &&
+                string.IsNullOrWhiteSpace(TypeNameko) &&
+                string.IsNullOrWhiteSpace(TypeNameES) &&
+                string.IsNullOrWhiteSpace(TypeNameVN) &&
+                string.IsNullOrWhiteSpace(TypeNameEL) &&
+                string.IsNullOrWhiteSpace(TypeNamee_Eu) &&
+                string.IsNullOrWhiteSpace(TypeNameRU) &&
+                string.IsNullOrWhiteSpace(TypeNameID) &&
+                string.IsNullOrWhiteSpace(TypeNamePT) &&
+                string.IsNullOrWhiteSpace(TypeNameFR) &&
+                string.IsNullOrWhiteSpace(ParentTypeid) &&
+                string.IsNullOrWhiteSpace(TypeNameMMR) &&
+                string.IsNullOrWhiteSpace(TypeNameHI) &&
+                string.IsNullOrWhiteSpace(DisplayedTypeID) &&
+                string.IsNullOrWhiteSpace(LicSpreadBetTypeGroupId) &&
+                string.IsNullOrWhiteSpace(Is3rdParty);
     }
 }
