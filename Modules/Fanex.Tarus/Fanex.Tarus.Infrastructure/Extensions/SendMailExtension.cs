@@ -82,8 +82,6 @@ namespace Fanex.Tarus.Infrastructure.Extensions
         {
             try
             {
-                AppSettings.AppMailId = ConfigurationManager.AppSettings["app_mail_id"];
-                AppSettings.AppMailAddress = ConfigurationManager.AppSettings["app_mail_address"];
                 using (var client = new MailDeliver())
                 {
                     var mailItem = new Fanex.MailDeliver.Model.MailRecord
