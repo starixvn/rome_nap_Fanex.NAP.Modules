@@ -7,19 +7,16 @@
 
 namespace Fanex.Tarus.Infrastructure.Extensions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.IO;
-    using System.Net.Mail;
-    using System.Text;
-    using System.Web.Mail;
-    using Sunplus.Accounting.Core.Configurations;
-    using Sunplus.Accounting.Core.Helper;    
-    using MailMessage = System.Net.Mail.MailMessage;
-    using MailPriority = System.Net.Mail.MailPriority;
+    using Fanex.MailDeliver.MailClient;
     using Fanex.MailDeliver.MailClient.API;
     using Fanex.MailDeliver.Model;
+    using Sunplus.Accounting.Core.Configurations;
+    using Sunplus.Accounting.Core.Helper;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.IO;
+    using System.Net.Mail;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -99,23 +96,24 @@ namespace Fanex.Tarus.Infrastructure.Extensions
                     if (mailSend.Attachment != null && mailSend.Attachment.FileName != null)
                     {
                         mailItem.Attachments = new List<Fanex.MailDeliver.Model.MailAttachment>();
-                        var attItem = new Fanex.MailDeliver.Model.MailAttachment
-                        {
-                            FileName = mailSend.Attachment.FileName,
-                            Content = mailSend.Attachment.Content
-                        };
+                        FileExtentions contentType;
                         if (mailSend.Attachment.ContentType.ToLower().IndexOf("excel") != -1)
                         {
-                            attItem.ContentType = FileExtentions.MS_EXCEL;
+                            contentType = FileExtentions.MS_EXCEL;
                         }
                         else if (mailSend.Attachment.ContentType.ToLower().IndexOf("doc") != -1)
                         {
-                            attItem.ContentType = FileExtentions.MS_DOC;
+                            contentType = FileExtentions.MS_DOC;
                         }
                         else
                         {
-                            attItem.ContentType = FileExtentions.IMG_GIF;
+                            contentType = FileExtentions.IMG_GIF;
                         }
+
+                        var attItem = new Fanex.MailDeliver.Model.MailAttachment(mailSend.Attachment.Content, contentType)
+                        {
+                            FileName = mailSend.Attachment.FileName
+                        };
                         mailItem.Attachments.Add(attItem);
                     }
                     if (mailSend.AltView != null)
@@ -127,13 +125,11 @@ namespace Fanex.Tarus.Infrastructure.Extensions
                             var stream = linked.ContentStream;
                             byte[] buffer = new byte[stream.Length];
                             stream.Read(buffer, 0, buffer.Length);
-                            var resource = new MailLinkedResource
+                            var resource = new MailLinkedResource(new MemoryStream(buffer), FileExtentions.IMG_GIF, linked.ContentId)
                             {
-                                FileName = string.Empty,
-                                ImageType = FileExtentions.IMG_GIF,
-                                ContentCID = linked.ContentId,
-                                StreamContent = new MemoryStream(buffer)
+                                FileName = string.Empty
                             };
+
                             mailItem.AlternateView.Add(resource);
                         }
                     }
