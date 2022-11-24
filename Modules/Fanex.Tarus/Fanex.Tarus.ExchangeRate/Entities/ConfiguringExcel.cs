@@ -1,0 +1,48 @@
+namespace Fanex.Tarus.ExchangeRate.Entities
+{
+    public class ConfiguringExcel
+    {
+        public string BaseFileName { get; set; }
+        public string BaseHeader { get; set; }
+        
+        public string FileName
+        {
+            get => $"{BaseFileName}From{FromDate.Replace("/", "_")}To{ToDate.Replace("/", "_")}";
+            set => FileName = value;
+        }
+        
+        public string SheetName { get; set; }
+
+        public string Header
+        {
+            get => $"{BaseHeader} From: {FromDate} - To: {ToDate}";
+            set => Header = value;
+        }
+
+        public string FromDate { get; set; }
+        
+        public string ToDate { get; set; }
+        
+        public string SessionDataKey { get; set; }
+        
+        public string[] BaseCurrency  { get; set; }
+        
+        public void Deconstruct(
+            out string fdate, 
+            out string tdate, 
+            out string sessionDataKey,
+            out string reportName,
+            out string[]  baseCurrency,
+            out string  titleCellValue
+            )
+        {
+            fdate = FromDate;
+            tdate = ToDate;
+            sessionDataKey = SessionDataKey;
+            reportName = FileName;
+            baseCurrency = BaseCurrency;
+            titleCellValue = Header;
+        }
+        
+    }
+}

@@ -14,19 +14,21 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
     using Sunplus.Accounting.Core.Helper;
     using Sunplus.Accounting.Entities;
     using System;
+    using System.Linq;
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
+    using Fanex.Tarus.ExchangeRate.Models;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class ExchangeRateAccess : IExchangeRateAccess
     {
-        public DataTable GetOandaExchangeDaily(string fromDate, string toDate)
+        public DataTable GetOandaExchangeDaily(string objectDbKey,string fromDate, string toDate)
         {
             var datatable = new DataTable();
-            using (var dbContext = new ObjectDb("OANDAExRateSel"))
+            using (var dbContext = new ObjectDb(objectDbKey))
             {
                 dbContext.AddInParameter("fromdate", DbType.DateTime, CastAide.AsDateTime(fromDate));
                 dbContext.AddInParameter("todate", DbType.DateTime, CastAide.AsDateTime(toDate));
@@ -37,5 +39,37 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
 
             return datatable;
         }
+            }
+        }
+        
+        public ValidateResponse ImportUSDTRateCriteria(Hashtable param)
+        {
+            using (var objDB = new ObjectDb("ExchangeDailyCryptoUpd"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+               
+                var errorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                var errorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                var ds = objDB.ExecuteDataSet();
+                var currencyCode = new List<string>();
+                var datatable = new DataTable();
+
+                if (ds.Tables.Count > 0)
+                {
+                    datatable = ds.Tables[0];
+                    var drExchangeDate2 = from row in datatable.AsEnumerable() group row by row.Field<string>("CurrencyCode");
+                  
+                    foreach (var dt in drExchangeDate2)
+                    {
+                        currencyCode.Add(dt.Key.ToString());
+                    }
+                }
+               
+                return new ValidateResponse
+                {
+                    Result = new Result{ErrorCode = errorCode,ErrorMessage = errorMessage},
+                    DuplicatedCurrencyCode = currencyCode
+                };
     }
 }
