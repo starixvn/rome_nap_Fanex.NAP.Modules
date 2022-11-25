@@ -225,6 +225,7 @@
     <Compile Include="DataAccess\MoveBetSchedule\IMoveBetScheduleDataAccess.cs" />
     <Compile Include="DataAccess\MoveBetSchedule\MoveBetScheduleDataAccess.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageUMConfig\GetMarketsCriteria.cs" />
+    <Compile Include="ManageProductSetting\Request\ManageRefResource\UpdateRefResourceRequest.cs" />
     <Compile Include="ViewModel\FinanceGroupsConfig\FinanceCodeInsertViewModel.cs" />
     <Compile Include="Entities\FinanceGroupsConfig\FinanceCodeSelectModel.cs" />
     <Compile Include="Entities\FinanceGroupsConfig\FinanceCodeValidateModel.cs" />
@@ -337,7 +338,6 @@
     <Compile Include="ManageProductSetting\Request\ManageCSSportBettypeMatrix\UpdateCSSportBettypeMatrixRequest.cs" />
     <Compile Include="ManageProductSetting\Request\ManageRefResource\DeleteRefResourceRequest.cs" />
     <Compile Include="ManageProductSetting\Request\ManageRefResource\SelectRefResourceRequest.cs" />
-    <Compile Include="ManageProductSetting\Request\ManageRefResource\UpdateRefResourceRequest.cs" />
     <Compile Include="ManageProductSetting\Request\ManageResetWinning\DeleteDwLListExtraPTRequest.cs" />
     <Compile Include="ManageProductSetting\Request\ManageResetWinning\DeleteDwLListRequest.cs" />
     <Compile Include="ManageProductSetting\Request\ManageResetWinning\SelectDwLListExtraPTRequest.cs" />
