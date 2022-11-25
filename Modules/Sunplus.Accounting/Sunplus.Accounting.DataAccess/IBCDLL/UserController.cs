@@ -30,9 +30,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
         /// false: user's session time out
         /// </returns>
         /// Phuong.Nguyen modified <2008-12-02>
-        public static bool OnlineUserUpdate(int onlineUserId)
+        public static int OnlineUserUpdate(int onlineUserId)
         {
-            bool online = false;
+            byte online = 0;
             var param = new Hashtable();
             param.Add("on_userid", onlineUserId);
             param.Add("iskickedout", online);
@@ -44,7 +44,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
                     db.ExecuteNonQuery();
 
                     var output = db.GetOuputParams();
-                    online = !Convert.ToBoolean(output["iskickedout"]);
+                    online = Convert.ToByte(output["iskickedout"]);
                 }                
             }
             catch
