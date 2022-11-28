@@ -11,6 +11,8 @@ namespace Fanex.Tarus.ExchangeRate.Entities
             set => FileName = value;
         }
         
+        public string ObjectDbKey { get; set; }
+        
         public string SheetName { get; set; }
 
         public string Header
@@ -33,7 +35,8 @@ namespace Fanex.Tarus.ExchangeRate.Entities
             out string sessionDataKey,
             out string reportName,
             out string[]  baseCurrency,
-            out string  titleCellValue
+            out string  titleCellValue,
+            out string baseFileName
             )
         {
             fdate = FromDate;
@@ -42,7 +45,35 @@ namespace Fanex.Tarus.ExchangeRate.Entities
             reportName = FileName;
             baseCurrency = BaseCurrency;
             titleCellValue = Header;
+            baseFileName = BaseFileName;
         }
         
+        public static ConfiguringExcel OANDAExRateExcel(string fdate, string tdate, string[] baseCurrency)
+        {
+            return new ConfiguringExcel
+            {
+                BaseCurrency = baseCurrency,
+                BaseHeader = "OANDA Exchange Rate",
+                BaseFileName = "OANDAExRate",
+                FromDate = fdate,
+                ToDate = tdate,
+                SessionDataKey = "exchangeRateOanda",
+                ObjectDbKey="OANDAExRateSel"
+            };
+        }
+        
+        public static ConfiguringExcel CryptoExRateExcel(string fdate, string tdate)
+        {
+            return new ConfiguringExcel
+            {
+                BaseCurrency = new [] { "MYR", "CNY", "USDT" },
+                BaseHeader = "CoinMarketCap Exchange Rate",
+                BaseFileName = "CoinMarketCapExRate",
+                FromDate = fdate,
+                ToDate = tdate,
+                SessionDataKey = "exchangeRateCrypto",
+                ObjectDbKey="CryptoExRateSel"
+            };
+        }
     }
 }

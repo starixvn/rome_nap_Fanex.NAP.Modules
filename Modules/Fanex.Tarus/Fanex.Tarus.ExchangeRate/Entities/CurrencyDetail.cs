@@ -2,6 +2,7 @@
 namespace Fanex.Tarus.ExchangeRate.Entities
 {
     using System;
+    using Fanex.Tarus.ExchangeRate.Helpers;
 
     [Serializable]
     public class CurrencyDetail
@@ -17,7 +18,11 @@ namespace Fanex.Tarus.ExchangeRate.Entities
 
         public string Value { get; set; }
 
-        
+        public string FormatedValue
+        {
+            get => ExchangeRateHelper.TruncateBaseRate(Value);
+        }
+
         public int Id { get; set; }
     }
 

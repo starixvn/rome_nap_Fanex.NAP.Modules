@@ -19,12 +19,8 @@ namespace Fanex.Tarus.ExchangeRate.Business
     /// </summary>
     public interface IExchangeRateService
     {
-        List<ExchangeDailyDTO> GetOandaExchangeDaily(string fromDate, string toDate);
-        
-        List<ExchangeDailyDTO> GetExchangeDaily(string typeExchangeDaily,string fromDate, string toDate);
+        List<ExchangeDailyDTO> GetExchangeDaily(ConfiguringExcel configuringExcel);
 
-        ExcelFile ExportExcelExDailyOanda(string fdate, string tdate);
-        
         ExcelFile ExportExcelExDaily(ConfiguringExcel configuringExcel);
 
         

@@ -39,12 +39,7 @@ namespace Fanex.Tarus.ExchangeRate.Business
     {
 
         private readonly IExchangeRateAccess _exchangeRateAccess;
-        private const string ExchangeRateOandaKey = "exchangeRateOanda";
-        private const string ExchangeRateCryptoKey = "exchangeRateCrypto";
         private const string ExchangeUploadUSTDFileXMLKey = "ExchangeUploadUSTDFileXMLKey";
-        private const string OandaExchangeRate= "OandaExchangeDaily";
-        private const string CryptoExchangeRate= "CryptoExchangeDaily";
-        // private static readonly string KeybaseCurr;
 
         public ExchangeRateService()
             : this(null)
@@ -58,44 +53,23 @@ namespace Fanex.Tarus.ExchangeRate.Business
             _exchangeRateAccess = exchangeRateDataAccess ?? new ExchangeRateAccess();
         }
 
-        public List<ExchangeDailyDTO> GetOandaExchangeDaily(string fromDate, string toDate)
+
+        public List<ExchangeDailyDTO> GetExchangeDaily(ConfiguringExcel configuringExcel)
         {
-            throw new NotImplementedException();
+            var dtExchangeRateeDaily = _exchangeRateAccess.GetOandaExchangeDaily(configuringExcel.ObjectDbKey,configuringExcel.FromDate, configuringExcel.ToDate);
+            var listOandaBaseCurrency = configuringExcel.BaseCurrency;
+            return this.GetOandaExchangeDaily(dtExchangeRateeDaily,listOandaBaseCurrency, configuringExcel.SessionDataKey);
         }
 
-        public List<ExchangeDailyDTO> GetExchangeDaily(string typeExchangeRate,string fromDate, string toDate)
-        {
-            switch (typeExchangeRate)
-            {
-                case OandaExchangeRate:
-                    var dtOandaExchangeRateeDaily = _exchangeRateAccess.GetOandaExchangeDaily("OANDAExRateSel",fromDate, toDate);
-                    var listOandaBaseCurr = ConfigurationManager.AppSettings["Fanex.Tarus.ExchangeRate.BaseCurrency"].Split(new Char[] { ',' });
-                    return this.GetOandaExchangeDaily(dtOandaExchangeRateeDaily,listOandaBaseCurr, fromDate, toDate, ExchangeRateOandaKey);
-                case CryptoExchangeRate:
-                    var dtCryptoExchangeRateDaily = _exchangeRateAccess.GetOandaExchangeDaily("CryptoExRateSel",fromDate, toDate);
-                    var listCryptoBaseCurr = ConfigurationManager.AppSettings["Fanex.Tarus.CryptoExchangeRate.BaseCurrency"].Split(new Char[] { ',' });
-                    return this.GetOandaExchangeDaily(dtCryptoExchangeRateDaily,listCryptoBaseCurr,fromDate, toDate,ExchangeRateCryptoKey);
-                default: return new List<ExchangeDailyDTO>();
-            }
-        }
-
-        public ExcelFile ExportExcelExDailyOanda(string fdate, string tdate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<ExchangeDailyDTO> GetOandaExchangeDaily(DataTable dtExchangeDaily,string[] listBaseCurr,string fromDate, string toDate, string sessionKey)
+        public List<ExchangeDailyDTO> GetOandaExchangeDaily(DataTable dtExchangeDaily,string[] listBaseCurr, string sessionKey)
         {
             var result = new List<ExchangeDailyDTO>();
             try
             {
-                //string[] listBaseCurr = KeybaseCurr.Split(new Char[] { ',' });
-
                 if (dtExchangeDaily.Rows.Count > 0)
                 {
                     var drExchangeDate = from row in dtExchangeDaily.AsEnumerable()
                                          group row by row.Field<DateTime>("ExchangeDate");
-
 
                     foreach (var dt in drExchangeDate)
                     {
@@ -103,8 +77,6 @@ namespace Fanex.Tarus.ExchangeRate.Business
                         var drExchangeByDate = from getCurrency in dtExchangeDaily.AsEnumerable()
                                                where getCurrency.Field<DateTime>("ExchangeDate") == datetime
                                                select getCurrency;
-
-
 
                         var listExRate = new List<ExchangeDaily>();
                         foreach (var row in drExchangeByDate)
@@ -131,16 +103,12 @@ namespace Fanex.Tarus.ExchangeRate.Business
                             ExchangeDate = String.Format("{0:MM/dd/yyyy}", datetime),
                             ExchangeDailyList = listExRate
                         });
-
                     }
                 }
-
                 SessionExtension.AddSession(HttpContext.Current.Session, sessionKey, result);
-
             }
             catch (Exception exception)
             {
-
                 LogExtensions.ExceptionHandler(exception);
             }
 
@@ -149,7 +117,7 @@ namespace Fanex.Tarus.ExchangeRate.Business
 
         public ExcelFile ExportExcelExDaily(ConfiguringExcel configuringExcel)
         {
-           var (fdate,tdate,sessionDataKey,reportName,baseCurrency,titleCellValue)= configuringExcel;
+            var (fdate,tdate,sessionDataKey,reportName,baseCurrency,titleCellValue,baseFileName)= configuringExcel;
             var exchangeDailyListFromSession = SessionExtension.GetSession(HttpContext.Current.Session, sessionDataKey);
             List<ExchangeDailyDTO> exchangeDailyList;
             if (exchangeDailyListFromSession != null)
@@ -158,24 +126,21 @@ namespace Fanex.Tarus.ExchangeRate.Business
             }
             else
             {
-                exchangeDailyList = this.GetOandaExchangeDaily(fdate, tdate);
+                exchangeDailyList = this.GetExchangeDaily(configuringExcel);
             }
 
             #region export
-           // var reportName = string.Format("OANDAExRateFrom{0}To{1}", fdate.Replace("/", "_"), tdate.Replace("/", "_"));
             var excelFile = new ExcelFile();
             int startRowIndex = 0;
             int startColumnIndex = 0;
             var wsOandaExRate = excelFile.Worksheets.Add(reportName);
             #region header
             var bgFormat = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
-            //string[] baseCurrency = ConfigurationManager.AppSettings["Fanex.Tarus.ExchangeRate.BaseCurrency"].Split(new Char[] { ',' });
             var maxLength = baseCurrency.Length;
             var titleCell = wsOandaExRate.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex,
                                                  startColumnIndex + maxLength + 1);
             titleCell.Merged = true;
             titleCell.Style = bgFormat;
-            //titleCell.Value = string.Format("OANDA Exchange Rate From: {0} - To: {1}", fdate, tdate);
             titleCell.Value = titleCellValue;
             startRowIndex += 1;
             wsOandaExRate.Cells[startRowIndex, startColumnIndex].Value = "Date";

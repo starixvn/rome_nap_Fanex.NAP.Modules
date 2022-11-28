@@ -109,5 +109,18 @@ namespace Fanex.Tarus.ExchangeRate.Helpers
 
             return null;
         }
+        
+        public static string TruncateBaseRate(string baseRate)
+        {
+            var words = baseRate.Split('.');
+            if (words.Length <= 1) return baseRate;
+            var integerPart = words[0];
+            var decimalPart = words[1];
+            if (decimalPart.Length <= 4) return baseRate;
+            var truncatedDecimalPart = decimalPart.Substring(0, 4) + "...";
+            return integerPart + "." + truncatedDecimalPart;
+        }
+
+       
     }
 }
