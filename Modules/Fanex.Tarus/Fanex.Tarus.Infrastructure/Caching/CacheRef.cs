@@ -80,9 +80,11 @@ namespace Fanex.Tarus.Infrastructure.Caching
             return remotingRefService.GetCombinationTypeCombo(betTeam, betCheck, (int)hdp1, (int)hdp2, Thread.CurrentThread.CurrentCulture.Name);
         }
 
-        public static string GetProductName(int productId)
+        public static string GetProductName(int productId) => GetProductName(productId.ToString());
+
+        public static string GetProductName(string productId)
         {
-            return remotingRefService.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), Thread.CurrentThread.CurrentCulture.Name, string.Empty);
+            return remotingRefService.GetResourceDataByRefIdAndResourceId("Product", productId, Thread.CurrentThread.CurrentCulture.Name, string.Empty);
         }
     }
 }
