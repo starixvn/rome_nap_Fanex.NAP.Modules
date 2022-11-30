@@ -2,24 +2,31 @@
 
 namespace Fanex.CustomerSetting.Module.SearchCopy.Services
 {
+    using Core.Models;
+    using Criteria;
+    using Entities;
+    using Fanex.CustomerSetting.Module.Core.Criteria;
+    using Fanex.CustomerSetting.Module.Core.Services.Impl;
+    using Fanex.CustomerSetting.Module.Core.Services.Interface;
+    using Fanex.Module.NG2.Repository;
+    using Repositories;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
-    using Core.Models;
-    using Criteria;
-    using Entities;
-    using Fanex.Module.NG2.Repository;
-    using Repositories;
+    using static Sunplus.Accounting.Core.Common.Enumerations;
 
     internal class SearchCopyService : ISearchCopyService
     {
         private readonly ISearchCopyRepository _searchCopyRepository;
 
-        public SearchCopyService(ISearchCopyRepository searchCopyRepository = null)
+        private readonly IServiceBase _serviceBase;
+
+        public SearchCopyService(ISearchCopyRepository searchCopyRepository = null, IServiceBase serviceBase = null)
         {
             _searchCopyRepository = searchCopyRepository ?? new SearchCopyRepository();
+            _serviceBase = serviceBase ?? new ServiceBase();
         }
 
         public SearchResult SearchExistingCustomer(string username, bool isMember)
@@ -189,6 +196,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
 
             if (result.IsSuccess)
             {
+                _serviceBase.AddMsgAfterCreateNewSMA(new AddMsgAfterCreateNewSMACriteria(criteria.CustId, 0, (int)Role.Super));
                 Thread.Sleep(3000);
                 var sourceCustInfo = GetCustomerInfoByUserId(criteria.ExistingCustId, false, criteria.SettingStatus);
 
