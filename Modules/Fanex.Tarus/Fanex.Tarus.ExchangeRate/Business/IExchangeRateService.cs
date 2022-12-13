@@ -20,12 +20,6 @@ namespace Fanex.Tarus.ExchangeRate.Business
         List<ExchangeDailyDTO> GetOandaExchangeDaily(string fromDate, string toDate);
 
         ExcelFile ExportExcelExDailyOanda(string fdate, string tdate);
-
-        IEnumerable<PJUnitPrice> GetPJUnitPrices();
-
-        Result UpdatePJUnitPrice(int currencyId, decimal pjUnitPrice);
-
-        ExcelFile ExportExcelPJUnitPrice();
     }
 
 }
