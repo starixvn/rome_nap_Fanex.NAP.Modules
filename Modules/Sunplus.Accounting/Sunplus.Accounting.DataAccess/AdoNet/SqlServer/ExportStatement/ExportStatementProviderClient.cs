@@ -5,6 +5,7 @@ using Sunplus.Accounting.DataAccess.Provider.ExportStatement;
 using System;
 using Fanex.Tarus.Infrastructure.Extensions;
 using Fanex.Data;
+using Sunplus.Accounting.Core.Common;
 
 /// <summary>
 /// Summary description for ExportStatementProviderClient
@@ -21,6 +22,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExportStatement
             {
                 var hash = new Hashtable();
                 hash.Add("userlist", userlist);
+                hash.Add("userid", AppSession.AccId);
 
                 using (ObjectDb db = new ObjectDb("Acc_AllStatement_SelCheckUsersList", 600))
                 {
