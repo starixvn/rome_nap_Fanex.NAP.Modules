@@ -9,6 +9,7 @@ namespace Fanex.Tarus.User.Entities
         public string LastName { get; set; }
         public string Status { get; set; }
         public string Creator { get; set; }
+        public string ExpiredDate { get; set; }
         public string CreateDate { get; set; }
         public string Department { get; set; }
         public string DeptId { get; set; }

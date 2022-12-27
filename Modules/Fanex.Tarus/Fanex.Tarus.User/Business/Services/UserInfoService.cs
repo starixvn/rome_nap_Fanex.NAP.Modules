@@ -61,6 +61,7 @@ namespace Fanex.Tarus.User.Business.Services
                             CreateDate = CastAide.AsString(row["createdate"]),
                             Department = CastAide.AsString(row["groupname"]),
                             Creator = CastAide.AsString(row["creator"]),
+                            ExpiredDate = Convert.IsDBNull(row["expireddate"]) ? "Never Expired": ConvertToDateByTimezone(CastAide.AsString(row["expireddate"]), -4, 7),
                             DeptId = CastAide.AsString(row["groupid"]),
                             FirstName = CastAide.AsString(row["firstname"]),
                             LastName = CastAide.AsString(row["lastname"]),
@@ -306,6 +307,14 @@ namespace Fanex.Tarus.User.Business.Services
             value = value.Replace("&apos;", "'");
             value = value.Replace("&quot;", "\"");
             return value;
+        }
+
+        private string ConvertToDateByTimezone(string dateString, int baseOffset,int targetOffset)
+        {
+            var dateTime = DateTime.Parse(dateString);
+            dateTime = dateTime.AddHours(targetOffset - baseOffset);
+
+            return dateTime.ToString("MM/dd/yyyy");
         }
     }
 }
