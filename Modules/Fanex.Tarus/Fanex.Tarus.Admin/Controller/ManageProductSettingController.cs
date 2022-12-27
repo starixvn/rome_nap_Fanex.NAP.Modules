@@ -26,6 +26,17 @@
     public class ManageProductSettingController : BaseController
     {
         private readonly string indexPath = "~/Views/Admin/ManageProductSetting/Index.cshtml";
+        private readonly string productPath = "~/Views/Admin/ManageProductSetting/Product/_Product.cshtml";
+        private readonly string sportPath = "~/Views/Admin/ManageProductSetting/Sport/_Sport.cshtml";
+        private readonly string bettypePath = "~/Views/Admin/ManageProductSetting/Bettype/_Bettype.cshtml";
+        private readonly string sportBettypeMatrixPath = "~/Views/Admin/ManageProductSetting/SportBettypeMatrix/_SportBettypeMatrix.cshtml";
+        private readonly string csSportBettypeMatrixPath = "~/Views/Admin/ManageProductSetting/CSSportBettypeMatrix/_CSSportBettypeMatrix.cshtml";
+        private readonly string refResourcePath = "~/Views/Admin/ManageProductSetting/RefResource/_RefResource.cshtml";
+        private readonly string canSeePath = "~/Views/Admin/ManageProductSetting/CanSee/_index.cshtml";
+        private readonly string resetWinningPath = "~/Views/Admin/ManageProductSetting/ResetWinning/_ResetWinning.cshtml";
+        private readonly string umConfigPath = "~/Views/Admin/ManageProductSetting/UMConfig/_UmConfig.cshtml";
+        private readonly string vendorPath = "~/Views/Admin/ManageProductSetting/VendorGlobalSetting/_VendorGlobalSetting.cshtml";
+        private readonly string product3rdPath = "~/Views/Admin/ManageProductSetting/Product3rd/_Product3rd.cshtml";
         private readonly ManageProductService _manageProductService;
         private readonly ManageSportTypeService _manageSportTypeService;
         private readonly ManageBettypeService _manageBettypeService;
@@ -57,42 +68,16 @@
         [HttpGet]
         public ActionResult Index()
         {
-            var site = _SMAManagementService.GetSites(1).ToList();
-            site.Insert(0, new IdNameEntity { Id = 0, Name = "All Sites" });
-            var currency = _manageCanSeeService.GetCurrencies();
-            var sports = _manageCanSeeService.GetAllSportType();
-            var viewModel = new ManageProductSettingViewModel
-            {
-                Products = _manageSportBettypeMatrixService.GetListProducts(),
-                Sites = site.Select(s => new SelectListItem
-                {
-                    Text = s.Name,
-                    Value = s.Id.ToString()
-                }),
-                Currencies = currency.Select(c => new SelectListItem
-                {
-                    Text = c.Name,
-                    Value = c.Id.ToString()
-                }),
-                SportTypes = sports.Select(s => new SelectListItem
-                {
-                    Text = $"[{s.Id.ToString()}] {s.Name}",
-                    Value = s.Id.ToString()
-                }),
-                UMCurrencies = currency.Select(c => new SelectListItem
-                {
-                    Text = $"[{c.Id.ToString()}] {c.Name}",
-                    Value = c.Id.ToString()
-                })
-            };
-
-            ViewBag.BetTypeGroups = _manageCSSportBettypeMatrixService.GetBetTypeGroups();
-            ViewBag.SportTypeGroups = _manageCSSportBettypeMatrixService.GetSportTypeGroups();
-
-            return View(indexPath, viewModel);
+            return View(indexPath);
         }
 
         #region Bettype
+        [AuthenticateRead]
+        [HttpGet]
+        public ActionResult BettypeIndex()
+        {
+            return PartialView(bettypePath);
+        }
 
         [AuthenticateRead]
         [HttpGet]
@@ -121,6 +106,12 @@
         #endregion Bettype
 
         #region SportType
+        [AuthenticateRead]
+        [HttpGet]
+        public ActionResult SportIndex()
+        {
+            return PartialView(sportPath);
+        }
 
         [AuthenticateRead]
         [HttpGet]
@@ -146,6 +137,13 @@
 
         [AuthenticateRead]
         [HttpGet]
+        public ActionResult ProductIndex()
+        {
+            return PartialView(productPath);
+        }
+
+        [AuthenticateRead]
+        [HttpGet]
         public JsonResult SelectProduct(SelectProductRequest request) => Json(_manageProductService.Select(new SelectProductCriteria
         {
             ProductID = request.ProductID,
@@ -166,6 +164,18 @@
         #endregion Product
 
         #region SportBettypeMatrix
+
+        [AuthenticateRead]
+        [HttpGet]
+        public ActionResult SBMIndex()
+        {
+            var viewModel = new ManageProductSettingViewModel
+            {
+                Products = _manageSportBettypeMatrixService.GetListProducts()
+            };
+
+            return PartialView(sportBettypeMatrixPath, viewModel);
+        }
 
         [AuthenticateRead]
         [HttpGet]
@@ -197,6 +207,35 @@
         #endregion SportBettypeMatrix
 
         #region CanSee
+        [AuthenticateRead]
+        [HttpGet]
+        public ActionResult CanSeeIndex()
+        {
+            var site = _SMAManagementService.GetSites(1).ToList();
+            site.Insert(0, new IdNameEntity { Id = 0, Name = "All Sites" });
+            var currency = _manageCanSeeService.GetCurrencies();
+            var sports = _manageCanSeeService.GetAllSportType();
+            var viewModel = new ManageProductSettingViewModel
+            {
+                Sites = site.Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                }),
+                Currencies = currency.Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                }),
+                SportTypes = sports.Select(s => new SelectListItem
+                {
+                    Text = $"[{s.Id.ToString()}] {s.Name}",
+                    Value = s.Id.ToString()
+                })
+            };
+
+            return PartialView(canSeePath, viewModel);
+        }
 
         [AuthenticateRead]
         public JsonResult SelectCanSee(SelectCanSeeCriteria request)
@@ -217,6 +256,18 @@
         #endregion CanSee
 
         #region CSSportBettypeMatrix
+        [AuthenticateRead]
+        [HttpGet]
+        public ActionResult CSSBMIndex()
+        {
+            var viewModel = new ManageProductSettingViewModel
+            {
+                Products = _manageSportBettypeMatrixService.GetListProducts()
+            };
+
+            return PartialView(csSportBettypeMatrixPath, viewModel);
+        }
+
         [AuthenticateRead]
         [HttpGet]
         public JsonResult SelectCSSportBettypeMatrix(SelectCSSportBettypeMatrixRequest request) => Json(_manageCSSportBettypeMatrixService.Select(new SelectCSSportBettypeMatrixCriteria
@@ -255,6 +306,14 @@
         #endregion CSSportBettypeMatrix
 
         #region RefResource
+
+        [AuthenticateRead]
+        [HttpGet]
+        public ActionResult RefResourceIndex()
+        {
+            return PartialView(refResourcePath);
+        }
+
         [AuthenticateRead]
         [HttpGet]
         public JsonResult SelectRefResource(SelectRefResourceRequest request) => Json(_manageRefResourceService.Select(request), JsonRequestBehavior.AllowGet);
@@ -274,6 +333,22 @@
         #endregion
 
         #region UMConfig
+        [AuthenticateRead]
+        [HttpGet]
+        public ActionResult UmConfigIndex()
+        {
+            var currency = _manageCanSeeService.GetCurrencies();
+            var viewModel = new ManageProductSettingViewModel
+            {
+                UMCurrencies = currency.Select(c => new SelectListItem
+                {
+                    Text = $"[{c.Id.ToString()}] {c.Name}",
+                    Value = c.Id.ToString()
+                })
+            };
+
+            return PartialView(umConfigPath, viewModel);
+        }
 
         [AuthenticateRead]
         [HttpGet]
@@ -352,6 +427,13 @@
 
         [AuthenticateRead]
         [HttpGet]
+        public ActionResult ResetWinningIndex()
+        {
+            return PartialView(resetWinningPath);
+        }
+
+        [AuthenticateRead]
+        [HttpGet]
         public JsonResult SelectDWLList(SelectDwLListRequest request) => Json(_manageDwLListService.Select(request), JsonRequestBehavior.AllowGet);
 
         [AuthenticateHost]
@@ -389,6 +471,35 @@
         [AuthenticateHost]
         [HttpPost]
         public JsonResult DeleteDWLListExtraPT(DeleteDwLListExtraPTRequest request) => Json(_manageDwLListExtraPTService.Delete(request));
+
+        #endregion
+        #region Vendor Global Setting
+        [AuthenticateRead]
+        [HttpGet]
+        public ActionResult VendorIndex()
+        {
+            var sports = _manageCanSeeService.GetAllSportType();
+            var viewModel = new ManageProductSettingViewModel
+            {
+                SportTypes = sports.Select(s => new SelectListItem
+                {
+                    Text = $"[{s.Id.ToString()}] {s.Name}",
+                    Value = s.Id.ToString()
+                })
+            };
+
+            return PartialView(vendorPath, viewModel);
+        }
+
+        #endregion
+
+        #region Product3rd
+        [AuthenticateRead]
+        [HttpGet]
+        public ActionResult Product3rdIndex()
+        {
+            return PartialView(product3rdPath);
+        }
 
         #endregion
     }

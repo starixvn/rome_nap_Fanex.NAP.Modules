@@ -36,7 +36,7 @@
 
         public IEnumerable<SelectListItem> GetListProducts()
         {
-            var listProducts = _manageProductDataAccess.Select(new SelectProductCriteria() { PageSize = ushort.MaxValue, PageIndex = 1 });
+            var listProducts = _manageProductDataAccess.Select(new SelectProductCriteria() { PageSize = 256, PageIndex = 1 });
             return listProducts.ProductEntities.Select(product => new SelectListItem()
             {
                 Text = $"[{product.ProductID}] {product.ProductName}",
