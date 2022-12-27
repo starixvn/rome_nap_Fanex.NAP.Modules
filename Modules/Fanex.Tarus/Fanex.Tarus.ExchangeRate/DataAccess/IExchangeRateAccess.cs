@@ -10,11 +10,5 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
     public interface IExchangeRateAccess
     {
         DataTable GetOandaExchangeDaily(string fromDate, string toDate);
-
-        IEnumerable<PJUnitPrice> GetPJUnitPrices();
-
-        Result UpdatePJUnitPrice(int currenctyId, decimal pjUnitPrice);
-
-        Result UpdateCSPJUnitPrice(int currenctyId, decimal pjUnitPrice);
     }
 }

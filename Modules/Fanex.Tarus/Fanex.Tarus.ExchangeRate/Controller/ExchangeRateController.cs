@@ -15,7 +15,6 @@ namespace Fanex.Tarus.ExchangeRate.Controller
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
     using Security.Services;
-    using ViewModels;
 
     /// <summary>
     /// TODO: Update summary.
@@ -64,34 +63,6 @@ namespace Fanex.Tarus.ExchangeRate.Controller
             var jsonResult = Json(exportResult);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
-        }
-
-        [AuthenticateRead]
-        public ActionResult PJUnitPrice()
-        {
-            var pjUnitPrices = _exchangeRateService.GetPJUnitPrices();
-
-            return View("~/Views/ExchangeRate/PJUnitPrice.cshtml",
-                new PJUnitPriceViewModel(
-                    pjUnitPrices,
-                    PermissionService.CheckHostPermission("ExchangeRate/EditPJUnitPrice", Sunplus.Accounting.Core.Common.AppSession.AccId)));
-        }
-
-        [HttpPost, AuthenticateHost]
-        public JsonResult EditPJUnitPrice(int currencyId, decimal pjUnitPrice)
-            => Json(_exchangeRateService.UpdatePJUnitPrice(currencyId, pjUnitPrice));
-
-        [AuthenticateRead]
-        public ActionResult ExportExcelPJUnitPrice()
-        {
-            var excel = _exchangeRateService.ExportExcelPJUnitPrice();
-
-            Response.Clear();
-            Response.ContentType = "application/vnd.ms-excel";
-            Response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", "PJUnitPrice"));
-            excel.SaveXls(Response.OutputStream);
-
-            return new EmptyResult();
         }
     }
 }
