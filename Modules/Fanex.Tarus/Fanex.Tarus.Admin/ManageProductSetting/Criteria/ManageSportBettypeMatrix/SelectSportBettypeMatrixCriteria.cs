@@ -12,7 +12,7 @@
 
         public string BetTypeName { get; set; }
 
-        public string ProductId { get; set; }
+        public string ProductIds { get; set; }
 
         public int? EventType { get; set; }
 

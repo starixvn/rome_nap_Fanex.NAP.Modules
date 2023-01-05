@@ -47,5 +47,18 @@
         public string ResourcePT { get; set; }
 
         public string ResourceDE { get; set; }
+
+        public bool IsHaveData =>
+            !string.IsNullOrWhiteSpace(RefId) || !string.IsNullOrWhiteSpace(ResourceId) ||
+            !string.IsNullOrWhiteSpace(Sort1) || !string.IsNullOrWhiteSpace(Sort2) ||
+            !string.IsNullOrWhiteSpace(ResourceEN) || !string.IsNullOrWhiteSpace(ResourceCH) ||
+            !string.IsNullOrWhiteSpace(ResourceCS) || !string.IsNullOrWhiteSpace(ResourceJP) ||
+            !string.IsNullOrWhiteSpace(ResourceIT) || !string.IsNullOrWhiteSpace(ResourceTH) ||
+            !string.IsNullOrWhiteSpace(ResourceKO) || !string.IsNullOrWhiteSpace(ResourceES) ||
+            !string.IsNullOrWhiteSpace(ResourceEL) || !string.IsNullOrWhiteSpace(ResourceVN) ||
+            !string.IsNullOrWhiteSpace(ResourcePL) || !string.IsNullOrWhiteSpace(ResourceID) ||
+            !string.IsNullOrWhiteSpace(ResourceHI) || !string.IsNullOrWhiteSpace(ResourceMM) ||
+            !string.IsNullOrWhiteSpace(ResourceFR) || !string.IsNullOrWhiteSpace(ResourceRU) ||
+            !string.IsNullOrWhiteSpace(ResourcePT) || !string.IsNullOrWhiteSpace(ResourceDE);
     }
 }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Web;
     using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageRefResource;
@@ -18,6 +19,7 @@
     {
         RefResourceModel Select(SelectRefResourceRequest request);
         Result Insert(HttpPostedFileBase uploadFile);
+        Result UpdateMultiple(HttpPostedFileBase uploadFile);
         Result Update(UpdateRefResourceRequest request);
         Result Delete(DeleteRefResourceRequest request);
     }
@@ -35,10 +37,95 @@
 
         public Result Insert(HttpPostedFileBase uploadFile)
         {
-#pragma warning disable S1854 // Unused assignments should be removed
-            var result = new Result();
-#pragma warning restore S1854 // Unused assignments should be removed
             InsertRefResourceCriteria criteria = new InsertRefResourceCriteria();
+            try
+            {
+                criteria.RefResources = ParseBetTypeXML(uploadFile);
+                criteria.UserId = AppSession.AccId;
+                criteria.LoginIP = Utils.GetClientIP();
+            }
+            catch (Exception ex)
+            {
+                return new Result(1, ex.Message);
+            }
+
+            return dataAccess.Insert(criteria);
+        }
+
+        public RefResourceModel Select(SelectRefResourceRequest request)
+            => dataAccess.Select(new SelectRefResourceCriteria
+            {
+                RefId = request.RefId,
+                ResourceId = request.ResourceId,
+                ResourceEN = request.ResourceEN,
+                PageSize = request.PageSize,
+                PageIndex = request.PageIndex
+            });
+
+        public Result Update(UpdateRefResourceRequest request)
+        {
+            var criteria = new UpdateRefResourceCriteria
+            {
+                IsMultiple = false,
+                UserId = AppSession.AccId,
+                LoginIP = Utils.GetClientIP()
+            };
+
+            criteria.RefResources.Add(new RefResourceEntity {
+                RefId = request.RefId,
+                ResourceId = request.Id,
+                ResourceCH = request.ResourceCH,
+                ResourceCS = request.ResourceCS,
+                ResourceDE = request.ResourceDE,
+                ResourceEL = request.ResourceEL,
+                ResourceEN = request.ResourceEN,
+                ResourceES = request.ResourceES,
+                ResourceFR = request.ResourceFR,
+                ResourceHI = request.ResourceHI,
+                ResourceID = request.ResourceID,
+                ResourceIT = request.ResourceIT,
+                ResourceJP = request.ResourceJP,
+                ResourceKO = request.ResourceKO,
+                ResourceMM = request.ResourceMM,
+                ResourcePL = request.ResourcePL,
+                ResourcePT = request.ResourceRU,
+                ResourceRU = request.ResourceRU,
+                ResourceTH = request.ResourceTH,
+                ResourceVN = request.ResourceVN,
+                RowNum = request.RowNum,
+                Sort1 = request.Sort1,
+                Sort2 = request.Sort2
+            });
+
+            return dataAccess.Update(criteria);
+        }
+            
+
+        public Result UpdateMultiple(HttpPostedFileBase uploadFile)
+        {
+            var criteria = new UpdateRefResourceCriteria
+            {
+                IsMultiple = true,
+                UserId = AppSession.AccId,
+                LoginIP = Utils.GetClientIP()
+            };
+            try
+            {
+                criteria.RefResources = ParseBetTypeXML(uploadFile);
+                criteria.UserId = AppSession.AccId;
+                criteria.LoginIP = Utils.GetClientIP();
+            }
+            catch (Exception ex)
+            {
+                return new Result(1, ex.Message);
+            }
+
+            return dataAccess.Update(criteria);
+        }
+
+        private List<RefResourceEntity> ParseBetTypeXML(HttpPostedFileBase uploadFile)
+        {
+            var result = new List<RefResourceEntity>();
             int rowCount = 1;
             try
             {
@@ -50,7 +137,7 @@
                 {
                     rowCount++;
                     IRow row = (IRow)rows.Current;
-                    criteria.RefResources.Add(new RefResourceEntity
+                    var res = new RefResourceEntity
                     {
                         RefId = HttpUtility.HtmlEncode(row.GetCell(0) == null ? string.Empty : row.GetCell(0).ToString()),
                         ResourceId = HttpUtility.HtmlEncode(row.GetCell(1) == null ? string.Empty : row.GetCell(1).ToString()),
@@ -74,35 +161,18 @@
                         ResourceRU = HttpUtility.HtmlEncode(row.GetCell(19) == null ? string.Empty : row.GetCell(19).ToString()),
                         ResourcePT = HttpUtility.HtmlEncode(row.GetCell(20) == null ? string.Empty : row.GetCell(20).ToString()),
                         ResourceDE = HttpUtility.HtmlEncode(row.GetCell(21) == null ? string.Empty : row.GetCell(21).ToString())
-                    });
+                    };
+                    
+                    if(res.IsHaveData) result.Add(res);
                 }
 
-                criteria.UserId = AppSession.AccId;
-                criteria.LoginIP = Utils.GetClientIP();
-                result = dataAccess.Insert(criteria);
+                return result;
             }
             catch (Exception ex)
             {
-                result.ErrorCode = 1;
-                result.ErrorMessage = "Invalid file uploaded. Error at line: " + rowCount.ToString();
                 LogExtensions.ExceptionHandler(ex);
-                return result;
+                throw new Exception("Invalid file uploaded. Error at line: " + rowCount.ToString());
             }
-
-            return result;
         }
-
-        public RefResourceModel Select(SelectRefResourceRequest request)
-            => dataAccess.Select(new SelectRefResourceCriteria
-            {
-                RefId = request.RefId,
-                ResourceId = request.ResourceId,
-                ResourceEN = request.ResourceEN,
-                PageSize = request.PageSize,
-                PageIndex = request.PageIndex
-            });
-
-        public Result Update(UpdateRefResourceRequest request)
-            => dataAccess.Update(new UpdateRefResourceCriteria(request, AppSession.AccId, Utils.GetClientIP()));
     }
 }

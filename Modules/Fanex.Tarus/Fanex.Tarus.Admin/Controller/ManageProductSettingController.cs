@@ -10,6 +10,7 @@
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageProduct;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSportBettypeMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSporttype;
+    using Fanex.Tarus.Admin.ManageProductSetting.Entities;
     using Fanex.Tarus.Admin.ManageProductSetting.Entities.UMConfig;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageBettype;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageCSSportBettypeMatrix;
@@ -185,7 +186,7 @@
             SportName = request.SportName,
             BetType = request.BetType,
             BetTypeName = request.BetTypeName,
-            ProductId = request.ProductId,
+            ProductIds = request.ProductId,
             EventType = request.EventType,
             RefTable = request.RefTable,
             PageIndex = request.PageIndex,
@@ -276,7 +277,7 @@
             SportName = request.SportName,
             BetType = request.BetType,
             BetTypeName = request.BetTypeName,
-            ProductId = request.ProductId == null ? "" : request.ProductId,
+            ProductIds = request.ProductId == null ? "" : request.ProductId,
             EventType = request.EventType,
             RefTable = request.RefTable,
             PageIndex = request.PageIndex,
@@ -320,7 +321,12 @@
 
         [AuthenticateHost]
         [HttpPost]
-        public JsonResult InsertRefResource(HttpPostedFileBase uploadFile) => Json(_manageRefResourceService.Insert(uploadFile));
+        public JsonResult InsertRefResource(HttpPostedFileBase uploadFile, bool isUpdate = false)
+        {
+            var result = isUpdate ? _manageRefResourceService.UpdateMultiple(uploadFile) : _manageRefResourceService.Insert(uploadFile);
+
+            return Json(result);
+        }
 
         [AuthenticateHost]
         [HttpPost]
