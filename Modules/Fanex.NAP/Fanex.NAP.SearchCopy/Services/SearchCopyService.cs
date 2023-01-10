@@ -124,7 +124,27 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
         }
 
         public IEnumerable<Site> GetSitesExistingSuper(int userId)
-            => _searchCopyRepository.GetSitesExistingSuper(new GetSitesCriteria(userId));
+        {
+            var listSiteDTO = new List<Site>();
+            var sites = _searchCopyRepository.GetSitesExistingSuper(new GetSitesCriteria(userId));
+            sites
+            .GroupBy(p => p.SiteLabel)
+           .ToList()
+           .ForEach(grp =>
+           {
+               if (string.IsNullOrEmpty(grp.Key))
+               {
+                   listSiteDTO.AddRange(grp.Select(pt => new Site(pt.SiteId.ToString(), pt.SiteName)));
+               }
+               else
+               {
+                   listSiteDTO.Add(new Site(grp.Key, grp.Key, null, grp.Select(p => new Site(p.SiteId.ToString(), p.SiteName))));
+               }
+           });
+
+            return listSiteDTO;
+        }
+
 
         public string CheckAvailableUsernames(string usernames)
         {

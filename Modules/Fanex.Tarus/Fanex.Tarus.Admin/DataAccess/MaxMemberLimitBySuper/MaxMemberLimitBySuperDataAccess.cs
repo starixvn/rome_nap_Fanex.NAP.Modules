@@ -9,9 +9,9 @@
 
     public class MaxMemberLimitBySuperDataAccess : IMaxMemberLimitBySuperDataAccess
     {
-        public List<Site> GetCreditSites(GetSitesCriteria criteria)
+        public List<SiteEntity> GetCreditSites(GetSitesCriteria criteria)
         {
-            List<Site> result = new List<Site>();
+            List<SiteEntity> result = new List<SiteEntity>();
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AssignParamValues(criteria.GetSpParams());
@@ -20,10 +20,11 @@
                 {
                     if (!Converter.ToBool(reader["isLicensee"]))
                     {
-                        result.Add(new Site()
+                        result.Add(new SiteEntity()
                         {
                             SiteId = Converter.ToInt(reader["siteid"]),
-                            SiteName = Converter.ToString2(reader["site"])
+                            SiteName = Converter.ToString2(reader["site"]),
+                            SiteLabel = Converter.ToString2(reader["sitelabel"])
                         });
                     }
                 }

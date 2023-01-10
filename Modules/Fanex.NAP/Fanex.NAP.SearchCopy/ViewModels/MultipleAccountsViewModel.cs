@@ -12,7 +12,7 @@
 
         public CustomerInfo Customer { get; set; }
 
-        public IEnumerable<SelectListItem> Sites { get; set; }
+        public IEnumerable<Site> Sites { get; set; }
 
         public int DefaultMaxInputUsername { get; } = 50;
     }

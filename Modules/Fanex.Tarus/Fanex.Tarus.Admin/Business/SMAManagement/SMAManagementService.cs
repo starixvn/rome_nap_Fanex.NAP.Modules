@@ -11,6 +11,7 @@ using Fanex.Tarus.Admin.Entities;
 using Fanex.Tarus.Admin.Entities.SMAManagement;
 using Fanex.Tarus.Admin.Enums;
 using Fanex.Tarus.Admin.Resource;
+using Fanex.Tarus.Admin.ViewModel;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
@@ -29,9 +30,25 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
             _smaManagementAccess = smaManagementAccess ?? new SMAManagementAccess();
         }
 
-        public IEnumerable<IdNameEntity> GetSites(int mode = 0)
+        public IEnumerable<SiteViewModel> GetSites(int mode = 0)
         {
-            return _smaManagementAccess.GetSites(mode);
+            var sites = new List<SiteViewModel>();
+            _smaManagementAccess.GetSites(mode)
+               .GroupBy(p => p.SiteLabel)
+               .ToList()
+               .ForEach(grp =>
+               {
+                   if (string.IsNullOrEmpty(grp.Key))
+                   {
+                       sites.AddRange(grp.Select(pt => new SiteViewModel(pt.SiteId.ToString(), pt.SiteName, null)));
+                   }
+                   else
+                   {
+                       sites.Add(new SiteViewModel(grp.Key, grp.Key, grp.Select(p => new SiteViewModel(p.SiteId.ToString(), p.SiteName, null))));
+                   }
+               });
+
+            return sites;
         }
 
         public IEnumerable<IdNameEntity> GetCurrencies(bool excludeTestCurrencies)

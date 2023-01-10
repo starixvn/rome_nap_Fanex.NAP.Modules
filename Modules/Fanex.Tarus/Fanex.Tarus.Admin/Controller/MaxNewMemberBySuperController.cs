@@ -25,7 +25,7 @@
         [HttpGet]
         public ActionResult Index()
         {
-            MaxMemberLimitViewModel model = new MaxMemberLimitViewModel()
+            var model = new MaxMemberLimitViewModel()
             {
                 ListSites = _service.GetCreditSites(new GetSitesCriteria()
                 {

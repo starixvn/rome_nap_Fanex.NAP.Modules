@@ -1,14 +1,15 @@
 ﻿namespace Fanex.Tarus.Admin.ManageProductSetting.Services
 {
-    using System.Collections.Generic;
-    using System.Web;
     using Fanex.Tarus.Admin.Entities;
-    using Fanex.Tarus.Admin.Entities.SMAManagement;
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageUMConfig;
     using Fanex.Tarus.Admin.ManageProductSetting.DataAccess;
     using Fanex.Tarus.Admin.ManageProductSetting.Entities.UMConfig;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageUMConfig;
+    using Fanex.Tarus.Admin.ViewModel;
     using Fanex.Tarus.Infrastructure.Common;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
 
     public interface IManageUMConfigService
     {
@@ -26,9 +27,9 @@
 
         bool CheckIsInUMTime(int configId);
 
-        IEnumerable<IdNameEntity> GetAllSites();
+        IEnumerable<SiteViewModel> GetAllSites();
 
-        IEnumerable<IdNameEntity> GetMarkets();
+        IEnumerable<SiteViewModel> GetMarkets();
     }
 
     public class ManageUMConfigService : IManageUMConfigService
@@ -54,11 +55,30 @@
                 IP = HttpContext.Current.Request.UserHostAddress
             });
 
-        public IEnumerable<IdNameEntity> GetAllSites()
-            => dataAccess.GetAllSites(new GetAllSitesCriteria(AppSession.AccId));
+        public IEnumerable<SiteViewModel> GetAllSites()
+        {
+            var sites = new List<SiteViewModel>();
+            dataAccess.GetAllSites(new GetAllSitesCriteria(AppSession.AccId))
+               .GroupBy(p => p.SiteLabel)
+               .ToList()
+               .ForEach(grp =>
+               {
+                   if (string.IsNullOrEmpty(grp.Key))
+                   {
+                       sites.Add(new SiteViewModel("Deposit", "Deposit", grp.Select(p => new SiteViewModel(p.SiteId.ToString(), $"[{p.SiteId.ToString()}] {p.SiteName}", null))));
+                   }
+                   else
+                   {
+                       sites.Add(new SiteViewModel(grp.Key, grp.Key, grp.Select(p => new SiteViewModel(p.SiteId.ToString(), $"[{p.SiteId.ToString()}] {p.SiteName}", null))));
+                   }
+               });
 
-        public IEnumerable<IdNameEntity> GetMarkets()
-            => dataAccess.GetMarkets(new GetMarketsCriteria());
+            return sites.OrderBy(x => x.Name == "Deposit");
+        }
+
+        public IEnumerable<SiteViewModel> GetMarkets()
+            => dataAccess.GetMarkets(new GetMarketsCriteria())
+                .Select(i => new SiteViewModel(i.Id.ToString(), i.Name));
 
         public IEnumerable<UMConfigurationEntity> GetAllUMConfiguration(GetUMConfigRequest request)
             => dataAccess.GetAllUMConfiguration(new GetAllUMConfigurationCriteria(request.FunctionType, request.BeginTime, request.EndTime));

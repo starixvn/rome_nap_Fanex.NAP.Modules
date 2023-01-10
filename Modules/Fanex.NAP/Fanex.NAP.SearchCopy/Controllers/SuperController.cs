@@ -111,13 +111,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
             if (viewModel.Customer.RoleId == 4)
             {
                 viewModel.Sites = _searchCopyService
-                    .GetSitesExistingSuper(AppSession.AccId)
-                    .Select(s => new SelectListItem
-                    {
-                        Text = s.SiteName,
-                        Value = s.SiteName,
-                        Selected = s.SiteName == viewModel.Customer.Site
-                    });
+                    .GetSitesExistingSuper(AppSession.AccId);
             }
 
             return View("~/Areas/CustomerSetting/Views/SearchCopy/Super/MultipleAccounts.cshtml", viewModel);

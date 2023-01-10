@@ -9,10 +9,13 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Data;
 using System.Text;
-
+using System.Collections.Generic;
+using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.ViewModel;
 /// <summary>
 /// Summary description for Customer
 /// </summary>
@@ -30,28 +33,46 @@ namespace Sunplus.Accounting.Business.Customer
         public static string GetListSite(bool isAddNewSuper, string system)
         {
             var html = new StringBuilder();
-            try
+
+            DbResult ds = SelectCustomer.SiteSelRpt(system);
+            List<SiteEntity> result = new List<SiteEntity>();
+            if (ds != null)
             {
-                DbResult ds = SelectCustomer.SiteSelRpt(system);
-                if (ds != null)
+                DataTable tbl = ds.ResultSet.Tables[0];
+                if (isAddNewSuper)
+                    html.Append("<option value=\"\">Select</option>");
+                foreach (DataRow dr in tbl.Rows)
                 {
-                    DataTable tbl = ds.ResultSet.Tables[0];
-                    if (isAddNewSuper)
-                        html.Append("<option value=\"\">Select</option>");
-                    bool enableDeposit = WebSettings.IsApplySplitingDepositeCustomer;
-                    foreach (DataRow dr in tbl.Rows)
-                    {                        
-                        if (CastAide.AsBoolean(dr["isLicensee"]) && enableDeposit) continue;
-                        if (!CastAide.AsString(dr["site"]).Equals("76666B"))
+                    if (!Convert.ToBoolean(dr["isLicensee"]))
+                    {
+                        result.Add(new SiteEntity()
                         {
-                            html.Append("<option value=\"" + dr["site"] + "\">" + dr["site"] + "</option>");
-                        }                            
+                            SiteId = Convert.ToInt32(dr["siteid"]),
+                            SiteName = dr["site"].ToString(),
+                            SiteLabel = dr["sitelabel"].ToString()
+                        });
+                    }
+                }
+
+                var sites = GroupSiteBySiteLabel(result);
+                foreach (var site in sites)
+                {
+                    if (site.IsParent)
+                    {
+                        html.Append("<optgroup label=\"" + site.Name + "\">");
+                        foreach (var child in site.ChildSites)
+                        {
+                            html.Append("<option value=\"" + child.Name + "\">" + child.Name + "</option>");
+                        }
+                        html.Append("</optgroup>");
+                    }
+                    else
+                    {
+                        html.Append("<option value=\"" + site.Name + "\">" + site.Name + "</option>");
                     }
                 }
             }
-            catch (Exception ex)
-            {
-            }
+
             return html.ToString();
         }
 
@@ -77,12 +98,12 @@ namespace Sunplus.Accounting.Business.Customer
                         html.Append("<option value=''>All</option>");
                     if (isAddNewSuper)
                         html.Append("<option value=''>Select</option>");
-                   
+
                     foreach (DataRow dr in currencies)
                     {
                         html.Append("<option value=\"" + dr["exchangeid"] + "\">" + dr["currency"] + "</option>");
                     }
-                   
+
                 }
             }
             catch
@@ -387,6 +408,27 @@ namespace Sunplus.Accounting.Business.Customer
             }
 
             return 0;
+        }
+
+        public static List<SiteViewModel> GroupSiteBySiteLabel(List<SiteEntity> siteEntities)
+        {
+            var sites = new List<SiteViewModel>();
+            siteEntities
+                .GroupBy(p => p.SiteLabel)
+               .ToList()
+               .ForEach(grp =>
+               {
+                   if (string.IsNullOrEmpty(grp.Key))
+                   {
+                       sites.AddRange(grp.Select(pt => new SiteViewModel(pt.SiteId.ToString(), pt.SiteName, null)));
+                   }
+                   else
+                   {
+                       sites.Add(new SiteViewModel(grp.Key, grp.Key, grp.Select(p => new SiteViewModel(p.SiteId.ToString(), p.SiteName, null))));
+                   }
+               });
+
+            return sites;
         }
     }
 }
