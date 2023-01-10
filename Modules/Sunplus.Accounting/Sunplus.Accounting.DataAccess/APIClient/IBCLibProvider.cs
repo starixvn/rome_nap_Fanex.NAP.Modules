@@ -2,16 +2,11 @@
 using DNAide.Core;
 using DNAide.Data;
 using Fanex.Data;
-using Fanex.Logging;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.Entities;
 using System;
 using System.Collections;
 using System.Data;
-using System.Web;
 
 /// <summary>
 /// Summary description for IBCLibProvider
@@ -42,10 +37,8 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 _cust.IsSuspended = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["Suspend"], true);
                 _cust.IsAllowAutoMasterPT =
                     !CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableAutoMPT"], true);
-                _cust.IsDisableOutright = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableOutright"],
-                                                             true);
-                _cust.IsDisabledNumberGame = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableNumber"], true);
-                //if(DataUtils.IsExistKey(drCustomer.ResultSet.Tables[0].Rows[0], "IsInternal"))
+                _cust.IsDisableOutright = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableOutright"], true);
+             
                 _cust.IsInternalUser = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["IsInternal"], false);
 
                 _cust.SelectedBetting = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["SelectedBetting"], false);
