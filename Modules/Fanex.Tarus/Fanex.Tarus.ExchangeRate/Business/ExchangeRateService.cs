@@ -270,7 +270,7 @@ namespace Fanex.Tarus.ExchangeRate.Business
                         var newItem = new USDTRate
                         {
                             CurrencyCode = cellOne,
-                            USDTValue = Convert.ToDouble(cellTwo),
+                            USDTValue = cellTwo,
                             RemarkErrors = ExchangeRateHelper.CheckRow(ref templData,row,ref serviceValidateResult),
                         };
                         templData.Add(newItem);
