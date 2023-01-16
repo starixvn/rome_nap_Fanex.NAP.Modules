@@ -25,7 +25,7 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
     /// </summary>
     public class ExchangeRateAccess : IExchangeRateAccess
     {
-        public DataTable GetOandaExchangeDaily(string objectDbKey,string fromDate, string toDate)
+        public DataTable GetOandaExchangeDaily(string objectDbKey, string fromDate, string toDate)
         {
             var datatable = new DataTable();
             using (var dbContext = new ObjectDb(objectDbKey))
@@ -39,16 +39,14 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
 
             return datatable;
         }
-            }
-        }
-        
+
         public ValidateResponse ImportUSDTRateCriteria(Hashtable param)
         {
             using (var objDB = new ObjectDb("ExchangeDailyCryptoUpd"))
             {
                 objDB.AssignParamValues(param);
                 objDB.ExecuteNonQuery();
-               
+
                 var errorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
                 var errorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
                 var ds = objDB.ExecuteDataSet();
@@ -58,18 +56,21 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
                 if (ds.Tables.Count > 0)
                 {
                     datatable = ds.Tables[0];
-                    var drExchangeDate2 = from row in datatable.AsEnumerable() group row by row.Field<string>("CurrencyCode");
-                  
+                    var drExchangeDate2 = from row in datatable.AsEnumerable()
+                        group row by row.Field<string>("CurrencyCode");
+
                     foreach (var dt in drExchangeDate2)
                     {
                         currencyCode.Add(dt.Key.ToString());
                     }
                 }
-               
+
                 return new ValidateResponse
                 {
-                    Result = new Result{ErrorCode = errorCode,ErrorMessage = errorMessage},
+                    Result = new Result { ErrorCode = errorCode, ErrorMessage = errorMessage },
                     DuplicatedCurrencyCode = currencyCode
                 };
+            }
+        }
     }
 }

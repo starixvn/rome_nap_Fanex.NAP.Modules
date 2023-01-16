@@ -20,7 +20,7 @@ namespace Fanex.Tarus.ExchangeRate.Controller
     using Security.Services;
     using Sunplus.Accounting.Entities;
     using Fanex.Tarus.ExchangeRate.Helpers;
-    
+
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -45,13 +45,13 @@ namespace Fanex.Tarus.ExchangeRate.Controller
         {
             return View("~/Views/ExchangeRate/OandaExRate.cshtml");
         }
-        
+
         [AuthenticateRead]
         public ActionResult Index()
         {
             return View("~/Views/ExchangeRate/Index.cshtml");
         }
-        
+
         [AuthenticateRead]
         public ActionResult ImportUSDTRateView()
         {
@@ -62,15 +62,16 @@ namespace Fanex.Tarus.ExchangeRate.Controller
         public JsonResult GetExchangeDailyOanda(string fdate, string tdate)
         {
             var result = new List<ExchangeDailyDTO>();
-            var oanda = ConfiguringExcel.OANDAExRateExcel(fdate, tdate, ConfigurationManager.AppSettings["Fanex.Tarus.ExchangeRate.BaseCurrency"].Split(new Char[] { ',' }));
+            var oanda = ConfiguringExcel.OANDAExRateExcel(fdate, tdate,
+                ConfigurationManager.AppSettings["Fanex.Tarus.ExchangeRate.BaseCurrency"].Split(new Char[] { ',' }));
             result = _exchangeRateService.GetExchangeDaily(oanda);
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
         }
-        
+
         [HttpPost, AuthenticateRead]
-        public JsonResult GetExchangeDailyCrypto(string fdate,  string tdate)
+        public JsonResult GetExchangeDailyCrypto(string fdate, string tdate)
         {
             var result = new List<ExchangeDailyDTO>();
             var crypto = ConfiguringExcel.CryptoExRateExcel(fdate, tdate);
@@ -95,10 +96,11 @@ namespace Fanex.Tarus.ExchangeRate.Controller
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
         }
-        
+
         public ActionResult ExportExcelExDailyCrypto(string fdate, string tdate)
         {
-            ExcelFile result = _exchangeRateService.ExportExcelExDaily(ConfiguringExcel.CryptoExRateExcel(fdate,tdate));
+            ExcelFile result =
+                _exchangeRateService.ExportExcelExDaily(ConfiguringExcel.CryptoExRateExcel(fdate, tdate));
             int exportResult = 0;
             if (result == null)
             {
@@ -109,12 +111,12 @@ namespace Fanex.Tarus.ExchangeRate.Controller
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
         }
-        }
 
-        [HttpPost,AuthenticateHost]
+
+        [HttpPost, AuthenticateHost]
         public JsonResult OpenUSDTRateExcel()
         {
-            var jsonResult = Json(new Result(1,"error") );
+            var jsonResult = Json(new Result(1, "error"));
             if (Request.Files.Count > 0)
             {
                 var result = _exchangeRateService.ValidateFileExcel(Request.Files[0]);
@@ -125,15 +127,18 @@ namespace Fanex.Tarus.ExchangeRate.Controller
             else
             {
                 jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-                return jsonResult; 
+                return jsonResult;
             }
-        } 
-        
-        [HttpPost,AuthenticateHost]
+        }
+
+        [HttpPost, AuthenticateHost]
         public JsonResult UpdateUSDTCurrencyCode(string effectFrom)
         {
             var jsonResult = Json(_exchangeRateService.UpdateUSDTCurrencyCode(effectFrom));
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
+        }
     }
 }
+
+
