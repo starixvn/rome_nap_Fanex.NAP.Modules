@@ -13,45 +13,57 @@ namespace Fanex.Tarus.ExchangeRate.Helpers
             var cellOne = row.GetCell(0);
             var cellTwo = row.GetCell(1);
 
-            CheckRequiredField(cellOne, "The Currency Code is required field.", ref errMss);
-            CheckRequiredField(cellOne, "The USDT/Unit is required field.", ref errMss);
-            CheckDuplicateCurrency(cellOne, ref rawData, ref errMss);
-
-            if (!IsNumricCell(cellTwo))
-            {
-                errMss.Add("Invalid USDT rate");
-            }
+            CheckCurrencyCode(cellOne, ref rawData, ref errMss);
+            CheckUSDTRate(cellTwo, ref errMss);
 
             if (errMss.Count > 0)
             {
                 validateSuccess = false;
             }
+            
             return errMss;
         }
-
-        public static void CheckRequiredField(ICell cell, string message, ref List<string> messageContainer)
+        
+        private static void CheckCurrencyCode(ICell cell,ref List<USDTRate> rawData, ref List<string> messageContainer)
         {
             if (cell == null || string.IsNullOrWhiteSpace(cell.ToString()))
             {
-                messageContainer.Add(message);
+                messageContainer.Add("Invalid currency");
+            }
+            else
+            {
+                CheckDuplicateCurrency(cell, ref rawData, ref messageContainer);
             }
         }
 
-        public static void CheckDuplicateCurrency(ICell cell, ref List<USDTRate> rawData,
+        private static void CheckUSDTRate(ICell cell, ref List<string> messageContainer)
+        {
+            if (cell == null || string.IsNullOrWhiteSpace(cell.ToString()) || !IsNumericCell(cell))
+            {
+                messageContainer.Add("Invalid USDT rate");
+            }
+        }
+        
+        private static void CheckDuplicateCurrency(ICell cell, ref List<USDTRate> rawData,
             ref List<string> messageContainer)
         {
+            if (cell == null || string.IsNullOrWhiteSpace(cell.ToString())) return;
+            const string errorMessage = "Currency is duplicated";
+            
             var duplicateOtherCurrency = rawData.FindAll(e =>
                 e.CurrencyCode == cell.ToString() && !e.RemarkErrors.Exists(mes => mes == "Currency is duplicated"));
-            if (duplicateOtherCurrency.Count <= 0) return;
+            if (duplicateOtherCurrency.Count <= 0)
+            {
+                return;
+            }
             foreach (var duplicateItem in duplicateOtherCurrency)
             {
-                duplicateItem.RemarkErrors.Add("Currency is duplicated");
+                duplicateItem.RemarkErrors.Add(errorMessage);
             }
-
-            messageContainer.Add("Currency is duplicated");
+            messageContainer.Add(errorMessage);
         }
 
-        private static bool IsNumricCell(ICell cell)
+        private static bool IsNumericCell(ICell cell)
         {
             try
             {
@@ -62,37 +74,7 @@ namespace Fanex.Tarus.ExchangeRate.Helpers
                 return false;
             }
         }
-
-        public static bool IsHaveDataRow(IRow row)
-        {
-            for (int i = 0; i <= 9; i++)
-            {
-                if (row.GetCell(i) != null && !string.IsNullOrWhiteSpace(row.GetCell(i).ToString()))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static Result CheckRequiredField(IRow row, int rowCount)
-        {
-            var cellOne = row.GetCell(1).GetType();
-            var cellTwo = row.GetCell(1).GetType();
-            if (string.IsNullOrWhiteSpace(cellOne.ToString()))
-            {
-                return new Result(1, "Row " + rowCount.ToString() + ": The Currency Code is required field.");
-            }
-
-            if (string.IsNullOrWhiteSpace(cellTwo.ToString()))
-            {
-                return new Result(1, "Row " + rowCount.ToString() + ": The USDT/Unit is required field.");
-            }
-
-            return null;
-        }
-
+        
         public static Result CheckHeaderName(IRow row)
         {
             var cellOne = row.GetCell(0);
@@ -120,7 +102,7 @@ namespace Fanex.Tarus.ExchangeRate.Helpers
             var truncatedDecimalPart = decimalPart.Substring(0, 4) + "...";
             return integerPart + "." + truncatedDecimalPart;
         }
-
+        
        
     }
 }

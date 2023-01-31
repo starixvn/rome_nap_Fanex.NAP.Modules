@@ -263,19 +263,20 @@ namespace Fanex.Tarus.ExchangeRate.Business
                 {
                     rowCount++;
                     IRow row = (IRow)rows.Current;
-                    var cellOne = row.GetCell(0).ToString();
-                    var cellTwo = row.GetCell(1).ToString();
-                    if (cellOne != "" && cellTwo != "")
+                    var cellOne = row.GetCell(0)?.ToString();
+                    var cellTwo = row.GetCell(1)?.ToString();
+                    if (cellOne==null && cellTwo==null) continue;
+                    if (cellOne=="" && cellTwo=="") continue;
+                    
+                    var newItem = new USDTRate
                     {
-                        var newItem = new USDTRate
-                        {
-                            CurrencyCode = cellOne,
-                            USDTValue = cellTwo,
-                            RemarkErrors = ExchangeRateHelper.CheckRow(ref templData,row,ref serviceValidateResult),
-                        };
-                        templData.Add(newItem);
-                        fileXML.Add($"<File CurrencyCode = '{newItem.CurrencyCode}' USDT = '{newItem.USDTValue}' />");
-                    }
+                        CurrencyCode = cellOne,
+                        USDTValue = cellTwo,
+                        RemarkErrors = ExchangeRateHelper.CheckRow(ref templData,row,ref serviceValidateResult), 
+                    };
+                    templData.Add(newItem);
+                    
+                    fileXML.Add($"<File CurrencyCode = '{newItem.CurrencyCode}' USDT = '{newItem.USDTValue}' />");
                 }
                 fileXML.Add("</ROOT>");
                 var file = string.Join("", fileXML);
