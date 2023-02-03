@@ -7,11 +7,14 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
     using System.Collections.Generic;
     using Fanex.Tarus.ExchangeRate.Models;
     using System.Collections;
+    
     public interface IExchangeRateAccess
     {
         DataTable GetOandaExchangeDaily(string objectDbKey,string fromDate, string toDate);
 
-        ValidateResponse ImportUSDTRateCriteria(Hashtable param);
+        DBValidateResult ValidateUSDTRateCriteria(string fileXML);
+        
+        Result ImportUSDTRateCriteria(string fileXML,string effectFrom);
 
     }
 }

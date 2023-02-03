@@ -38,20 +38,22 @@ namespace Fanex.Tarus.ExchangeRate.Helpers
 
         private static void CheckUSDTRate(ICell cell, ref List<string> messageContainer)
         {
-            if (cell == null || string.IsNullOrWhiteSpace(cell.ToString()) || !IsNumericCell(cell))
+            if (cell == null || string.IsNullOrWhiteSpace(cell.ToString()) || !IsPositiveCell(cell))
             {
                 messageContainer.Add("Invalid USDT rate");
             }
         }
         
-        private static void CheckDuplicateCurrency(ICell cell, ref List<USDTRate> rawData,
-            ref List<string> messageContainer)
+        private static void CheckDuplicateCurrency(ICell cell, ref List<USDTRate> rawData, ref List<string> messageContainer)
         {
-            if (cell == null || string.IsNullOrWhiteSpace(cell.ToString())) return;
+            if (cell == null || string.IsNullOrWhiteSpace(cell.ToString()))
+            {
+                return;
+            }
             const string errorMessage = "Currency is duplicated";
             
             var duplicateOtherCurrency = rawData.FindAll(e =>
-                e.CurrencyCode == cell.ToString() && !e.RemarkErrors.Exists(mes => mes == "Currency is duplicated"));
+                e.Currency == cell.ToString() && !e.RemarkErrors.Exists(mes => mes == "Currency is duplicated"));
             if (duplicateOtherCurrency.Count <= 0)
             {
                 return;
@@ -63,11 +65,11 @@ namespace Fanex.Tarus.ExchangeRate.Helpers
             messageContainer.Add(errorMessage);
         }
 
-        private static bool IsNumericCell(ICell cell)
+        private static bool IsPositiveCell(ICell cell)
         {
             try
             {
-                return double.TryParse(cell.ToString(), out var b);
+                return double.TryParse(cell.ToString(), out var valueB) && valueB >= 0;
             }
             catch
             {
@@ -79,7 +81,7 @@ namespace Fanex.Tarus.ExchangeRate.Helpers
         {
             var cellOne = row.GetCell(0);
             var cellTwo = row.GetCell(1);
-            if (cellOne.ToString().ToLower() != "currency code")
+            if (cellOne.ToString().ToLower() != "currency")
             {
                 return new Result(1, "Invalid template.");
             }
@@ -103,6 +105,9 @@ namespace Fanex.Tarus.ExchangeRate.Helpers
             return integerPart + "." + truncatedDecimalPart;
         }
         
-       
+        public static string FileXMLTemplate(string currency, string usdtValue)
+        {
+            return $"<File Currency = '{currency}' USDT = '{usdtValue}' />";
+        }
     }
 }

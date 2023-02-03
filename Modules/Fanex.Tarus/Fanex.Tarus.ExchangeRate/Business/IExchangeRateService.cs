@@ -22,7 +22,6 @@ namespace Fanex.Tarus.ExchangeRate.Business
         List<ExchangeDailyDTO> GetExchangeDaily(ConfiguringExcel configuringExcel);
 
         ExcelFile ExportExcelExDaily(ConfiguringExcel configuringExcel);
-
         
         ValidateResponse ValidateFileExcel(HttpPostedFileBase uploadFile);
 

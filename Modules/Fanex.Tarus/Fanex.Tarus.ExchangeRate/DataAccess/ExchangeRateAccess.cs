@@ -39,37 +39,65 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
 
             return datatable;
         }
-
-        public ValidateResponse ImportUSDTRateCriteria(Hashtable param)
+        
+        public DBValidateResult ValidateUSDTRateCriteria(string fileXML)
         {
+            var param = new Hashtable();
+            param.Add("file", fileXML);
+            param.Add("ischeck", 1);
+            param.Add("loginip", Utils.GetClientIP());
+            param.Add("userid",  AppSession.AccId);
+            
             using (var objDB = new ObjectDb("ExchangeDailyCryptoUpd"))
             {
                 objDB.AssignParamValues(param);
                 objDB.ExecuteNonQuery();
-
+                
                 var errorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
                 var errorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
                 var ds = objDB.ExecuteDataSet();
-                var currencyCode = new List<string>();
-                var datatable = new DataTable();
+                var items = new List<USDTRate>();
 
                 if (ds.Tables.Count > 0)
                 {
-                    datatable = ds.Tables[0];
-                    var drExchangeDate2 = from row in datatable.AsEnumerable()
-                        group row by row.Field<string>("CurrencyCode");
-
-                    foreach (var dt in drExchangeDate2)
+                    DataRow[] dr = ds.Tables[0].Select();
+                    foreach (DataRow row in dr)
                     {
-                        currencyCode.Add(dt.Key.ToString());
+                        items.Add(new USDTRate()
+                        {
+                            Currency = row["currency"].ToString(),
+                            USDTValue = row["usdt"].ToString(),
+                            MultipliedBy = row["multipliedby"].ToString(),
+                            USDTAfterMultiply =  row["usdt_after"].ToString(),
+                            ExchangeId=row["exchangeid"].ToString(),
+                           
+                        });
                     }
                 }
-
-                return new ValidateResponse
+                return new DBValidateResult()
                 {
-                    Result = new Result { ErrorCode = errorCode, ErrorMessage = errorMessage },
-                    DuplicatedCurrencyCode = currencyCode
+                    Items = items, 
+                    Result = new Result(){ErrorCode = errorCode,ErrorMessage = errorMessage}
                 };
+            }
+        }
+        
+        public Result ImportUSDTRateCriteria(string fileXML,string effectFrom)
+        {
+            var param = new Hashtable();
+            param.Add("file", fileXML);
+            param.Add("ischeck", 0);
+            param.Add("effectivedate", CastAide.AsDateTime(effectFrom));
+            param.Add("loginip", Utils.GetClientIP());
+            param.Add("userid",  AppSession.AccId);
+            
+            using (var objDB = new ObjectDb("ExchangeDailyCryptoUpd"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+                var errorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                var errorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                return new Result(){ErrorCode = errorCode, ErrorMessage = errorMessage};
             }
         }
     }

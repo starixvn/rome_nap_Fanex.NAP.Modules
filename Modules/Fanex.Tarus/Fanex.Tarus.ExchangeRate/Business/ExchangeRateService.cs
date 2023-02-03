@@ -41,8 +41,7 @@ namespace Fanex.Tarus.ExchangeRate.Business
         private readonly IExchangeRateAccess _exchangeRateAccess;
         private const string ExchangeUploadUSTDFileXMLKey = "ExchangeUploadUSTDFileXMLKey";
 
-        public ExchangeRateService()
-            : this(null)
+        public ExchangeRateService() : this(null)
         {
 
         }
@@ -52,8 +51,7 @@ namespace Fanex.Tarus.ExchangeRate.Business
 
             _exchangeRateAccess = exchangeRateDataAccess ?? new ExchangeRateAccess();
         }
-
-
+        
         public List<ExchangeDailyDTO> GetExchangeDaily(ConfiguringExcel configuringExcel)
         {
             var dtExchangeRateeDaily = _exchangeRateAccess.GetOandaExchangeDaily(configuringExcel.ObjectDbKey,configuringExcel.FromDate, configuringExcel.ToDate);
@@ -236,56 +234,34 @@ namespace Fanex.Tarus.ExchangeRate.Business
 
         public ValidateResponse ValidateFileExcel(HttpPostedFileBase uploadFile)
         {
-            var result = new ValidateResponse(){Result = new Result(1,"")};
+            var result = new ValidateResponse() { Result = new Result(1, "") };
             int rowCount = 1;
-            var  templData = new List<USDTRate>();
-            var  invalidRow = new List<USDTRate>();
-            var  validRow = new List<USDTRate>();
-            
             try
             {
                 IWorkbook workbook = WorkbookFactory.Create(uploadFile.InputStream);
                 ISheet sheet = workbook.GetSheetAt(0);
                 IEnumerator rows = sheet.GetRowEnumerator();
                 rows.MoveNext();
-                IRow headerRow = (IRow)rows.Current; 
-                
-                var checkedHeaderResult= ExchangeRateHelper.CheckHeaderName(headerRow);
+                IRow headerRow = (IRow)rows.Current;
+                var checkedHeaderResult = ExchangeRateHelper.CheckHeaderName(headerRow);
                 if (checkedHeaderResult != null)
                 {
                     result.Result = new Result(checkedHeaderResult.ErrorCode, checkedHeaderResult.ErrorMessage);
                     return result;
                 }
 
-                var serviceValidateResult = true;
-                var fileXML = new List<string>(){"<ROOT>"};
-                while (rows.MoveNext())
+                var webValidateResult = WebValidate(rows, ref rowCount);
+                var finalResult = FinalValidate(webValidateResult.FileXML, webValidateResult);
+                result.Items = finalResult.Items;
+                if (finalResult.Result.ErrorCode == 0 && webValidateResult.Result.ErrorCode == 0)
                 {
-                    rowCount++;
-                    IRow row = (IRow)rows.Current;
-                    var cellOne = row.GetCell(0)?.ToString();
-                    var cellTwo = row.GetCell(1)?.ToString();
-                    if (cellOne==null && cellTwo==null) continue;
-                    if (cellOne=="" && cellTwo=="") continue;
-                    
-                    var newItem = new USDTRate
-                    {
-                        CurrencyCode = cellOne,
-                        USDTValue = cellTwo,
-                        RemarkErrors = ExchangeRateHelper.CheckRow(ref templData,row,ref serviceValidateResult), 
-                    };
-                    templData.Add(newItem);
-                    
-                    fileXML.Add($"<File CurrencyCode = '{newItem.CurrencyCode}' USDT = '{newItem.USDTValue}' />");
+                    SessionExtension.AddSession(HttpContext.Current.Session, ExchangeUploadUSTDFileXMLKey,
+                        webValidateResult.FileXML);
+                    result.Result = new Result(0, "");
                 }
-                fileXML.Add("</ROOT>");
-                var file = string.Join("", fileXML);
-                var dbValidateResult = DBValidateCurrencyCode(file,ref templData);
-                result.FileData = dbValidateResult.FileData;
-                if (dbValidateResult.Result.ErrorCode == 0 && serviceValidateResult)
+                else
                 {
-                    SessionExtension.AddSession(HttpContext.Current.Session, ExchangeUploadUSTDFileXMLKey, file);
-                    result.Result = new Result(0,"");
+                    HttpContext.Current.Session.Remove(ExchangeUploadUSTDFileXMLKey);
                 }
             }
             catch (Exception ex)
@@ -295,45 +271,96 @@ namespace Fanex.Tarus.ExchangeRate.Business
                 LogExtensions.ExceptionHandler(ex);
                 return result;
             }
-            
+
             return result;
         }
-
-        private ValidateResponse DBValidateCurrencyCode(string fileXML,ref List<USDTRate> templData)
+        
+        private WebValidateResult WebValidate(IEnumerator rows, ref int rowCount)
         {
-            var param = new Hashtable();
-            param.Add("file", fileXML);
-            param.Add("ischeck", 1);
-            param.Add("loginip", Utils.GetClientIP());
-            param.Add("userid",  AppSession.AccId);
-                
-            var dbValidateResult = _exchangeRateAccess.ImportUSDTRateCriteria(param);
-            foreach (var currencyCode in dbValidateResult.DuplicatedCurrencyCode)
+            var fileXML = new List<string>() { "<ROOT>" };
+            var webValidateResult = true;
+            var templData = new List<USDTRate>();
+            while (rows.MoveNext())
             {
-                var filtedItem = templData.FindAll(e => e.CurrencyCode == currencyCode);
-                foreach (var item in filtedItem)
+                rowCount++;
+                IRow row = (IRow)rows.Current;
+                var cellOne = row.GetCell(0)?.ToString() ?? "";
+                var cellTwo = row.GetCell(1)?.ToString() ?? "";
+                if (string.IsNullOrWhiteSpace(cellOne) && string.IsNullOrWhiteSpace(cellTwo)) continue;
+                var newItem = new USDTRate
                 {
-                    item.RemarkErrors.Add("Invalid currency");
+                    Currency = cellOne,
+                    USDTValue = cellTwo,
+                    RemarkErrors = ExchangeRateHelper.CheckRow(ref templData, row, ref webValidateResult),
+                };
+                templData.Add(newItem);
+                fileXML.Add(ExchangeRateHelper.FileXMLTemplate(newItem.Currency, newItem.USDTValue));
+            }
+
+            fileXML.Add("</ROOT>");
+            return new WebValidateResult()
+            {
+                Result = new Result() { ErrorCode = webValidateResult ? 0 : 999, ErrorMessage = "" },
+                Items = templData,
+                FileXML = string.Join("", fileXML)
+            };
+        }
+
+        private ValidateResponse FinalValidate(string fileXML, WebValidateResult webValidateResult)
+        {
+            var dbValidateResult = _exchangeRateAccess.ValidateUSDTRateCriteria(fileXML);
+            if (dbValidateResult.Items.Count() != webValidateResult.Items.Count())
+            {
+                return new ValidateResponse()
+                {
+                    Items = webValidateResult.Items,
+                    Result = new Result() { ErrorCode = 404, ErrorMessage = "validate does not match" }
+                };
+            }
+
+            return CombineValidate(dbValidateResult, webValidateResult.Items);
+        }
+
+        private ValidateResponse CombineValidate(DBValidateResult dbValidateResult,IEnumerable<USDTRate>templData)
+        {
+            var combineResult =
+                from a in templData
+                join b in dbValidateResult.Items
+                    on new { a.Currency, a.USDTValue }
+                    equals new { b.Currency, b.USDTValue }
+                select new USDTRate()
+                {
+                    Currency = b.Currency,
+                    USDTValue = b.USDTValue,
+                    USDTAfterMultiply = b.USDTAfterMultiply,
+                    ExchangeId = b.ExchangeId,
+                    RemarkErrors = a.RemarkErrors,
+                    MultipliedBy = b.MultipliedBy
+                };
+
+            foreach (var usdtRate in combineResult)
+            {
+                if (string.IsNullOrWhiteSpace(usdtRate.ExchangeId))
+                {
+                    usdtRate.RemarkErrors.Add("Invalid currency");
+                    usdtRate.ExchangeId = "hidden";
                 }
             }
-            dbValidateResult.FileData = templData;
-            
-            return dbValidateResult;
+
+            return new ValidateResponse()
+            {
+                Items = combineResult,
+                Result = dbValidateResult.Result,
+            };
         }
-        
+
         public Result UpdateUSDTCurrencyCode(string effectFrom)
         {
             var fileXML = (string)SessionExtension.GetSession(HttpContext.Current.Session, ExchangeUploadUSTDFileXMLKey);
-            if (fileXML == "") return new Result(1,"update failed");
-            var param = new Hashtable();
-            param.Add("file", fileXML);
-            param.Add("ischeck", 0);
-            param.Add("effectivedate", CastAide.AsDateTime(effectFrom));
-            param.Add("loginip", Utils.GetClientIP());
-            param.Add("userid",  AppSession.AccId);
-                
-            var dbValidateResult = _exchangeRateAccess.ImportUSDTRateCriteria(param);
-            return dbValidateResult.Result;
+            if (fileXML == null) return new Result(1,"Please try upload again");
+            var dbImportResult = _exchangeRateAccess.ImportUSDTRateCriteria(fileXML, effectFrom);
+            HttpContext.Current.Session.Remove(ExchangeUploadUSTDFileXMLKey);
+            return dbImportResult;
         }
     }
 }
