@@ -12,6 +12,8 @@ namespace Sunplus.Accounting.Entities
         private int _CustID;
         private int _RoleId;  
         private bool _IsInternalUser = false;
+        private bool _IsDisabledNumberGame = false;
+        private bool _IsDisabledNumberGameDL = false;
         private int _LimitPerIP = 0;
       
         private bool _IsClosed = false;
@@ -289,7 +291,31 @@ namespace Sunplus.Accounting.Entities
             get { return _IsEnableDoubleCommLosing; }
             set { _IsEnableDoubleCommLosing = value; }
         }
-      
+
+        public bool IsDisabledNumberGame
+        {
+            get
+            {
+                return _IsDisabledNumberGame;
+            }
+            set
+            {
+                _IsDisabledNumberGame = value;
+            }
+        }
+
+        public bool IsDisabledNumberGameDL
+        {
+            get
+            {
+                return _IsDisabledNumberGameDL;
+            }
+            set
+            {
+                _IsDisabledNumberGameDL = value;
+            }
+        }
+
         public bool IsInternalUser
         {
             get
