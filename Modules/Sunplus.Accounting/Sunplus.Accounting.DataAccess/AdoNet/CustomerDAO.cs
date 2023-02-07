@@ -108,9 +108,29 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
                 result.ErrorCode = CastAide.AsInt32(objDb.GetParameterValue("errcode"));
                 result.ErrorMessage = CastAide.AsString(objDb.GetParameterValue("errmsg"));
-
-                return result;
             }
+
+            if (result.ErrorCode == 0)
+            {
+                using (ObjectDb objectDb = new ObjectDb("Acc_CRM_CustomerSiteUpd"))
+                {
+                    Hashtable parameters = new Hashtable()
+                           {
+                               {"custid", custId},
+                               {"site", newSite},
+                               {"ip", ip},
+                               {"errcode", 0},
+                               {"errmsg", ""}
+                           };
+
+                    objectDb.AssignParamValues(parameters);
+                    objectDb.ExecuteNonQuery();
+                    result.ErrorCode = CastAide.AsInt32(objectDb.GetParameterValue("errcode"));
+                    result.ErrorMessage = CastAide.AsString(objectDb.GetParameterValue("errmsg"));
+                }
+            }
+
+            return result;
         }
 
         public Result UpdateLevelDangerous(int custId, int updateDownline, int dangerType, int dangerLevel, int userId, string ip)
