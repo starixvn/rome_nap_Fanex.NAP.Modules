@@ -81,12 +81,12 @@ namespace Fanex.Tarus.ExchangeRate.Helpers
         {
             var cellOne = row.GetCell(0);
             var cellTwo = row.GetCell(1);
-            if (cellOne.ToString().ToLower() != "currency")
+            if (cellOne.ToString().ToLower().Trim() != "currency")
             {
                 return new Result(1, "Invalid template.");
             }
 
-            if (cellTwo.ToString().ToLower() != "usdt/unit")
+            if (cellTwo.ToString().ToLower().Trim() != "usdt/unit")
             {
                 return new Result(1, "Invalid template.");
             }

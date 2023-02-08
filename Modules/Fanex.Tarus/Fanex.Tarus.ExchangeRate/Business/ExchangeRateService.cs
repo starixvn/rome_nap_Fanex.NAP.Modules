@@ -284,8 +284,8 @@ namespace Fanex.Tarus.ExchangeRate.Business
             {
                 rowCount++;
                 IRow row = (IRow)rows.Current;
-                var cellOne = row.GetCell(0)?.ToString() ?? "";
-                var cellTwo = row.GetCell(1)?.ToString() ?? "";
+                var cellOne = row.GetCell(0)?.ToString().Trim() ?? "";
+                var cellTwo = row.GetCell(1)?.ToString().Trim() ?? "";
                 if (string.IsNullOrWhiteSpace(cellOne) && string.IsNullOrWhiteSpace(cellTwo)) continue;
                 var newItem = new USDTRate
                 {
