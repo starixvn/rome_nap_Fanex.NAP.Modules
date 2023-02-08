@@ -4,9 +4,6 @@
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
-
-
-
 namespace Fanex.Tarus.ExchangeRate.Business
 {
     using System;
@@ -323,20 +320,21 @@ namespace Fanex.Tarus.ExchangeRate.Business
 
         private ValidateResponse CombineValidate(DBValidateResult dbValidateResult,IEnumerable<USDTRate>templData)
         {
-            var combineResult =
-                from a in templData
-                join b in dbValidateResult.Items
-                    on new { a.Currency, a.USDTValue }
-                    equals new { b.Currency, b.USDTValue }
+            var combineResult = (
+                from left in dbValidateResult.Items
+                join right in templData.DistinctBy(item => new { item.Currency, item.USDTValue })
+                    on new { left.Currency, left.USDTValue } equals new { right.Currency, right.USDTValue }
+                    into joined
+                from j in joined.DefaultIfEmpty()
                 select new USDTRate()
                 {
-                    Currency = b.Currency,
-                    USDTValue = b.USDTValue,
-                    USDTAfterMultiply = b.USDTAfterMultiply,
-                    ExchangeId = b.ExchangeId,
-                    RemarkErrors = a.RemarkErrors,
-                    MultipliedBy = b.MultipliedBy
-                };
+                    Currency = left.Currency,
+                    USDTValue = left.USDTValue,
+                    USDTAfterMultiply = left.USDTAfterMultiply,
+                    ExchangeId = left.ExchangeId,
+                    RemarkErrors = j?.RemarkErrors,
+                    MultipliedBy = left.MultipliedBy
+                });
 
             foreach (var usdtRate in combineResult)
             {
@@ -357,7 +355,14 @@ namespace Fanex.Tarus.ExchangeRate.Business
         public Result UpdateUSDTCurrencyCode(string effectFrom)
         {
             var fileXML = (string)SessionExtension.GetSession(HttpContext.Current.Session, ExchangeUploadUSTDFileXMLKey);
-            if (fileXML == null) return new Result(1,"Please try upload again");
+            if (string.IsNullOrWhiteSpace(fileXML))
+            {
+                return new Result(1,"Please try upload again");
+            }
+            if (string.IsNullOrWhiteSpace(effectFrom))
+            {
+                return new Result(1,  "Effective from is required field.");
+            }
             var dbImportResult = _exchangeRateAccess.ImportUSDTRateCriteria(fileXML, effectFrom);
             HttpContext.Current.Session.Remove(ExchangeUploadUSTDFileXMLKey);
             return dbImportResult;

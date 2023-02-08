@@ -4,7 +4,7 @@ namespace Fanex.Tarus.ExchangeRate.Helpers
     using NPOI.SS.UserModel;
     using Sunplus.Accounting.Entities;
     using Models;
-
+    using System;
     public static class ExchangeRateHelper
     {
         public static List<string> CheckRow(ref List<USDTRate> rawData, IRow row, ref bool validateSuccess)
@@ -51,14 +51,15 @@ namespace Fanex.Tarus.ExchangeRate.Helpers
                 return;
             }
             const string errorMessage = "Currency is duplicated";
-            
-            var duplicateOtherCurrency = rawData.FindAll(e =>
-                e.Currency == cell.ToString() && !e.RemarkErrors.Exists(mes => mes == "Currency is duplicated"));
+
+            var duplicateOtherCurrency = rawData.FindAll(e => e.Currency == cell.ToString());
+                
+            var currencyNotContainErrorMessage=duplicateOtherCurrency.FindAll(e =>!e.RemarkErrors.Exists(mes => mes == "Currency is duplicated")) ;
             if (duplicateOtherCurrency.Count <= 0)
             {
                 return;
             }
-            foreach (var duplicateItem in duplicateOtherCurrency)
+            foreach (var duplicateItem in currencyNotContainErrorMessage)
             {
                 duplicateItem.RemarkErrors.Add(errorMessage);
             }
@@ -108,6 +109,19 @@ namespace Fanex.Tarus.ExchangeRate.Helpers
         public static string FileXMLTemplate(string currency, string usdtValue)
         {
             return $"<File Currency = '{currency}' USDT = '{usdtValue}' />";
+        }
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(
+            this IEnumerable<TSource> source, 
+            Func<TSource, TKey> keySelector)
+        {
+            HashSet<TKey> knownKeys = new HashSet<TKey>();
+            foreach (TSource element in source)
+            {
+                if (knownKeys.Add(keySelector(element)))
+                {
+                    yield return element;
+                }
+            }
         }
     }
 }
