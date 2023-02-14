@@ -113,7 +113,7 @@ namespace Fanex.Tarus.ExchangeRate.Controller
         }
 
 
-        [HttpPost, AuthenticateHost]
+        [AuthenticateRead]
         public JsonResult OpenUSDTRateExcel()
         {
             var jsonResult = Json(new Result(1, "error"));
