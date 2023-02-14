@@ -12,13 +12,14 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
 {
     public class ExChangeRateProviderClient : ExChangeRateProvider
     {
-        public override DbResult ExchangeSelAccount()
+        public override DbResult ExchangeSelAccount(Hashtable param)
         {
             DbResult result = null;
             try
             {
                 using (ObjectDb db = new ObjectDb("EchangeSelAcc", 600))
                 {
+                    db.AssignParamValues(param);
                     var ds = db.ExecuteDataSet();
                     var output = db.GetOuputParams();
 
@@ -77,6 +78,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
         public override Result ExchangeUpd(Hashtable param)
         {
             var result = new Result();
+         
             try
             {
                 using (ObjectDb objDB = new ObjectDb("EchangeUpd", 600))

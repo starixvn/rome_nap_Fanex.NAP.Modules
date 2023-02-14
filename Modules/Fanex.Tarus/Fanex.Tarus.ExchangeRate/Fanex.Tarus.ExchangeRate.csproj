@@ -50,9 +50,15 @@
       <HintPath>..\..\..\packages\ExcelUtil.29.3.0.1000\lib\net40\ExcelUtil.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Web.Controller.1.0.1.6\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
@@ -104,6 +110,15 @@
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.16, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.4.16\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\..\..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\..\..\packages\Fanex.NAP.NPOI.1.0.0.0\lib\net40\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\..\..\packages\Fanex.NAP.NPOI.1.0.0.0\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.1.9\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
@@ -152,8 +167,15 @@
     <Compile Include="Controller\ExchangeRateController.cs" />
     <Compile Include="DataAccess\ExchangeRateAccess.cs" />
     <Compile Include="DataAccess\IExchangeRateAccess.cs" />
+    <Compile Include="Entities\ConfiguringExcel.cs" />
     <Compile Include="Entities\CurrencyDetail.cs" />
     <Compile Include="Entities\ExchangeDaily.cs" />
+    <Compile Include="Helpers\ExchangeRateHelper.cs" />
+    <Compile Include="Models\DBValidateResult.cs" />
+    <Compile Include="Models\USDTRate.cs" />
+    <Compile Include="Models\ValidateResult.cs" />
+    <Compile Include="Models\ValidateResponse.cs" />
+    <Compile Include="Models\WebValidateResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

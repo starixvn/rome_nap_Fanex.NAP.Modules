@@ -4,22 +4,28 @@
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
-
 namespace Fanex.Tarus.ExchangeRate.Business
 {
+    
+    using System.Web;
     using System.Collections.Generic;
     using Entities;
     using ExcelUtil.Spreadsheet;
     using Sunplus.Accounting.Entities;
-
+    using Models;
+    
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public interface IExchangeRateService
     {
-        List<ExchangeDailyDTO> GetOandaExchangeDaily(string fromDate, string toDate);
+        List<ExchangeDailyDTO> GetExchangeDaily(ConfiguringExcel configuringExcel);
 
-        ExcelFile ExportExcelExDailyOanda(string fdate, string tdate);
+        ExcelFile ExportExcelExDaily(ConfiguringExcel configuringExcel);
+        
+        ValidateResponse ValidateFileExcel(HttpPostedFileBase uploadFile);
+
+        Result UpdateUSDTCurrencyCode(string effectFrom);
     }
 
 }

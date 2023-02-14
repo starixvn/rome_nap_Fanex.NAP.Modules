@@ -14,19 +14,21 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
     using Sunplus.Accounting.Core.Helper;
     using Sunplus.Accounting.Entities;
     using System;
+    using System.Linq;
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
+    using Fanex.Tarus.ExchangeRate.Models;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class ExchangeRateAccess : IExchangeRateAccess
     {
-        public DataTable GetOandaExchangeDaily(string fromDate, string toDate)
+        public DataTable GetOandaExchangeDaily(string objectDbKey, string fromDate, string toDate)
         {
             var datatable = new DataTable();
-            using (var dbContext = new ObjectDb("OANDAExRateSel"))
+            using (var dbContext = new ObjectDb(objectDbKey))
             {
                 dbContext.AddInParameter("fromdate", DbType.DateTime, CastAide.AsDateTime(fromDate));
                 dbContext.AddInParameter("todate", DbType.DateTime, CastAide.AsDateTime(toDate));
@@ -36,6 +38,67 @@ namespace Fanex.Tarus.ExchangeRate.DataAccess
             }
 
             return datatable;
+        }
+        
+        public DBValidateResult ValidateUSDTRateCriteria(string fileXML)
+        {
+            var param = new Hashtable();
+            param.Add("file", fileXML);
+            param.Add("ischeck", 1);
+            param.Add("loginip", Utils.GetClientIP());
+            param.Add("userid",  AppSession.AccId);
+            
+            using (var objDB = new ObjectDb("ExchangeDailyCryptoUpd"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+                
+                var errorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                var errorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                var ds = objDB.ExecuteDataSet();
+                var items = new List<USDTRate>();
+
+                if (ds.Tables.Count > 0)
+                {
+                    DataRow[] dr = ds.Tables[0].Select();
+                    foreach (DataRow row in dr)
+                    {
+                        items.Add(new USDTRate()
+                        {
+                            Currency = row["currency"].ToString(),
+                            USDTValue = row["usdt"].ToString(),
+                            MultipliedBy = row["multipliedby"].ToString(),
+                            USDTAfterMultiply =  row["usdt_after"].ToString(),
+                            ExchangeId=row["exchangeid"].ToString(),
+                           
+                        });
+                    }
+                }
+                return new DBValidateResult()
+                {
+                    Items = items, 
+                    Result = new Result(){ErrorCode = errorCode,ErrorMessage = errorMessage}
+                };
+            }
+        }
+        
+        public Result ImportUSDTRateCriteria(string fileXML,string effectFrom)
+        {
+            var param = new Hashtable();
+            param.Add("file", fileXML);
+            param.Add("ischeck", 0);
+            param.Add("effectivedate", CastAide.AsDateTime(effectFrom));
+            param.Add("loginip", Utils.GetClientIP());
+            param.Add("userid",  AppSession.AccId);
+            
+            using (var objDB = new ObjectDb("ExchangeDailyCryptoUpd"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+                var errorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                var errorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                return new Result(){ErrorCode = errorCode, ErrorMessage = errorMessage};
+            }
         }
     }
 }
