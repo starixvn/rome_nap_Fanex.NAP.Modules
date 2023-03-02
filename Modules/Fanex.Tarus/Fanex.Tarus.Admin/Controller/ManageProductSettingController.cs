@@ -19,6 +19,7 @@
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageResetWinning;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageSportBettypeMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageSportType;
+    using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageUMConfig;
     using Fanex.Tarus.Admin.ManageProductSetting.Services;
     using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
     using Fanex.Tarus.Web.Controllers;
@@ -357,8 +358,8 @@
         }
 
         [AuthenticateRead]
-        [HttpGet]
-        public JsonResult GetAllUMConfiguration() => Json(_manageUMConfigService.GetAllUMConfiguration(), JsonRequestBehavior.AllowGet);
+        [HttpPost]
+        public JsonResult GetAllUMConfiguration(GetUMConfigRequest request) => Json(_manageUMConfigService.GetAllUMConfiguration(request), JsonRequestBehavior.AllowGet);
 
 
         [AuthenticateHost]
@@ -389,7 +390,6 @@
         [HttpGet]
         public JsonResult GetCreditSites() {
             var sites = _SMAManagementService.GetSites().ToList();
-            sites.Insert(0, new IdNameEntity { Id = 0, Name = "All Sites" });
 
             return Json(sites.Select(s => new SelectListItem
             {
