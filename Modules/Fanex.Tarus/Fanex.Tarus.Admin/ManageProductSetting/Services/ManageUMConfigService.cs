@@ -7,11 +7,12 @@
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageUMConfig;
     using Fanex.Tarus.Admin.ManageProductSetting.DataAccess;
     using Fanex.Tarus.Admin.ManageProductSetting.Entities.UMConfig;
+    using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageUMConfig;
     using Fanex.Tarus.Infrastructure.Common;
 
     public interface IManageUMConfigService
     {
-        IEnumerable<UMConfigurationEntity> GetAllUMConfiguration();
+        IEnumerable<UMConfigurationEntity> GetAllUMConfiguration(GetUMConfigRequest request);
 
         IEnumerable<ProductSettingByFunctionEntity> GetProductSettingByFunction();
 
@@ -59,8 +60,8 @@
         public IEnumerable<IdNameEntity> GetMarkets()
             => dataAccess.GetMarkets(new GetMarketsCriteria());
 
-        public IEnumerable<UMConfigurationEntity> GetAllUMConfiguration()
-            => dataAccess.GetAllUMConfiguration(new GetAllUMConfigurationCriteria());
+        public IEnumerable<UMConfigurationEntity> GetAllUMConfiguration(GetUMConfigRequest request)
+            => dataAccess.GetAllUMConfiguration(new GetAllUMConfigurationCriteria(request.FunctionType, request.BeginTime, request.EndTime));
 
         public IEnumerable<ProductSettingByFunctionEntity> GetProductSettingByFunction()
             => dataAccess.GetProductSettingByFunction(new GetProductSettingByFunctionCriteria());

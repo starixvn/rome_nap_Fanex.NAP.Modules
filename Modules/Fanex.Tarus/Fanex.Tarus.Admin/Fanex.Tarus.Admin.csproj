@@ -226,6 +226,7 @@
     <Compile Include="DataAccess\MoveBetSchedule\MoveBetScheduleDataAccess.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageUMConfig\GetMarketsCriteria.cs" />
     <Compile Include="ManageProductSetting\Request\ManageRefResource\UpdateRefResourceRequest.cs" />
+    <Compile Include="ManageProductSetting\Request\ManageUMConfig\GetUMConfigRequest.cs" />
     <Compile Include="ViewModel\FinanceGroupsConfig\FinanceCodeInsertViewModel.cs" />
     <Compile Include="Entities\FinanceGroupsConfig\FinanceCodeSelectModel.cs" />
     <Compile Include="Entities\FinanceGroupsConfig\FinanceCodeValidateModel.cs" />
