@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Tarus.CopySuperWinlossSetting.Criteria
 {
     using Fanex.NAP.Framework.Data;
+    using Sunplus.Accounting.Core.Configurations;
 
     internal class UpdateWinlossSettingCriteria: CriteriaBase
     {
@@ -17,6 +18,8 @@
         public int? SettingType { get; set; }
 
         public string SourceUsername { get; set; }
+
+        public byte SettingStatus => WebSettings.SettingStatus;
 
         public override bool IsValid()
         {

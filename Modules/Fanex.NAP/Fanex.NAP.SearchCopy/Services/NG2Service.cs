@@ -5,6 +5,7 @@
     using Fanex.Module.NG2.Entities;
     using Fanex.Module.NG2.Services;
     using Repositories;
+    using Sunplus.Accounting.Core.Configurations;
 
     internal class NG2Service
     {
@@ -32,7 +33,8 @@
                 SiteId.NAP,
                 criteria.CurrencyId,
                 criteria.Creator,
-                systemId);
+                systemId,
+                WebSettings.SettingStatus);
         }
 
         public NG2Status GetStatus(int custId, byte settingStatus)

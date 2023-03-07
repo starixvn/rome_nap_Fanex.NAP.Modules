@@ -3,6 +3,7 @@ using DNAide.Core;
 using DNAide.Data;
 using Fanex.Data;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using System;
 using System.Collections;
@@ -405,7 +406,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
-        }            
+        }
 
         /// <summary>
         /// Nguyen Thi Minh Thu
@@ -466,7 +467,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return ds;
-        }   
+        }
 
         /// <summary>
         /// Using DNAide's Library
@@ -514,6 +515,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             try
             {
                 ObjectDb db = new ObjectDb("GetSportType", 600);
+                db.AssignParamValues(new Hashtable
+                {
+                    { "settingstatus", WebSettings.SettingStatus }
+                });
                 reader = db.ExecuteReader();
             }
             catch (Exception ex)
@@ -533,7 +538,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             var p = new Hashtable();
             if (sportID != 0) p.Add("sporttype", sportID);
-
+            p.Add("settingstatus", WebSettings.SettingStatus);
             ObjectDb db = new ObjectDb("GetBetType", 600);
             db.AssignParamValues(p);
             return db.ExecuteReader();
@@ -602,5 +607,5 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             return result;
         }
-    }   
+    }
 }

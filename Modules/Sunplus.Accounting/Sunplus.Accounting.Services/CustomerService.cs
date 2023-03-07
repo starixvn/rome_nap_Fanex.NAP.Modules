@@ -405,7 +405,8 @@ namespace Sunplus.Accounting.Business.Customer
                     Fanex.Module.NG2.Entities.SiteId.NAP,
                     currencyId, 
                     AppSession.AccId, 
-                    AccCommon.SystemId);
+                    AccCommon.SystemId,
+                    WebSettings.SettingStatus);
             }
 
             return result;
