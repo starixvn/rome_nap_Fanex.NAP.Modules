@@ -25,11 +25,13 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
         public ActionResult Index()
         {
             string fromAmount = Request["fromAmount"] as string ?? string.Empty;
+            string fromCustName = Request["fromCustName"] as string ?? string.Empty;
             var crossTransferModel = new CrossTransfer
             {
                 IsHadPermissionOnCrossCurrencyTransfer = Permissions.HasPermission("FinanceTransfer"),
                 IsHadPermissionOnYesterdayTransfer = Permissions.HasPermission("OtherTrans"),
                 FromAmount = (string.IsNullOrEmpty(fromAmount) || Convert.ToDouble(fromAmount) == 0.0) ? "0.00" : (Convert.ToDouble(fromAmount) * -1).ToString(),
+                FromCustName = fromCustName,
                 ForexAccount = Fanex.Tarus.Infrastructure.Caching.CacheHelper.Get<string>("Transfer_ForexAccount_" + AppSession.AccUserName)
             };
 
