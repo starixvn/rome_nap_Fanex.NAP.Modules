@@ -267,48 +267,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         }
 
         /// <summary>
-        /// Update DisabledNumberGame status for customer
-        /// sp: Acc_CustomerUpdDisableNumber
-        /// @huynguyen
-        /// Create date: <2010-04-16>
-        /// </summary>
-        ///<param name="accid"></param>
-        public static void CustomerUpdateDisabledNumberGame(int accid, int custid, bool disabledNumber, string Ip, bool isDisableDownline)
-        {
-            try
-            {
-                using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdDisableNumber", 600))
-                {
-                    var param = new Hashtable();
-                    param.Add("userid", accid);
-                    param.Add("custid", custid);
-                    param.Add("disablenumber", disabledNumber);
-                    param.Add("language", "E");
-                    param.Add("errcode", 0);
-                    param.Add("errmsg", string.Empty);
-                    param.Add("ip", Ip);
-                    param.Add("disabledownline", isDisableDownline);
-
-                    objDb.AssignParamValues(param);
-
-                    objDb.ExecuteNonQuery();
-
-                    if (CastAide.AsInt32(objDb.GetParameterValue("errcode")) > 0)
-                        throw new AccException(CastAide.AsString(objDb.GetParameterValue("errmsg")));
-                }
-            }
-            catch (AccException accException)
-            {
-                throw accException;
-            }
-            catch (Exception ex)
-            {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                throw ex;
-            }
-        }
-
-        /// <summary>
         /// Update Limit Per IP
         /// @huynguyen
         /// Create date: <2010-10-15>

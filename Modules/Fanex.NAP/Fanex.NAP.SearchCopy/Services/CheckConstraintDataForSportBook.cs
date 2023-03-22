@@ -88,7 +88,6 @@
             htbParameters.Add("ugroup", dr["ugroup"]);
             htbParameters.Add("closed", dr["closed"]);
             htbParameters.Add("issearchandcopy", 1);
-            htbParameters.Add("disablenumber", dr["disablenumber"]);
             htbParameters.Add("language", Thread.CurrentThread.CurrentCulture.Name);
             htbParameters.Add("ip", CurrentContext.Instance.Ip4Address);
             htbParameters.Add("userid", userId);
