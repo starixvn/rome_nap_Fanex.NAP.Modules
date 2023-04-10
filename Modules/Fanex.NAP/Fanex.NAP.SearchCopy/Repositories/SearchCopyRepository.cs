@@ -78,8 +78,9 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Repositories
                         if (!Convert.ToBoolean(reader["islicensee"]))
                         {
                             yield return new Site(
-                                Convert.ToInt32(reader["siteid"]),
-                                reader["site"].ToString());
+                                reader["siteid"].ToString(),
+                                reader["site"].ToString(),
+                                reader["sitelabel"].ToString());
                         }
                     }
                 }

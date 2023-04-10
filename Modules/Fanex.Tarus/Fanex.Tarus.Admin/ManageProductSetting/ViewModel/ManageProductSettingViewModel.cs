@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Tarus.Admin.ManageProductSetting.ViewModel
 {
+    using Fanex.Tarus.Admin.ViewModel;
     using System.Collections.Generic;
     using System.Web.Mvc;
 
@@ -11,7 +12,7 @@
 
         public IEnumerable<SelectListItem> Currencies { get; set; }
 
-        public IEnumerable<SelectListItem> Sites { get; set; }
+        public IEnumerable<SiteViewModel> Sites { get; set; }
 
         public IEnumerable<SelectListItem> UMCurrencies { get; set; }
 

@@ -22,6 +22,7 @@
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageUMConfig;
     using Fanex.Tarus.Admin.ManageProductSetting.Services;
     using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
+    using Fanex.Tarus.Admin.ViewModel;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
 
@@ -214,16 +215,12 @@
         public ActionResult CanSeeIndex()
         {
             var site = _SMAManagementService.GetSites(1).ToList();
-            site.Insert(0, new IdNameEntity { Id = 0, Name = "All Sites" });
+            site.Insert(0, new ViewModel.SiteViewModel("0", "All Sites"));
             var currency = _manageCanSeeService.GetCurrencies();
             var sports = _manageCanSeeService.GetAllSportType();
             var viewModel = new ManageProductSettingViewModel
             {
-                Sites = site.Select(s => new SelectListItem
-                {
-                    Text = s.Name,
-                    Value = s.Id.ToString()
-                }),
+                Sites = site,
                 Currencies = currency.Select(c => new SelectListItem
                 {
                     Text = c.Name,
@@ -388,14 +385,11 @@
 
         [AuthenticateRead]
         [HttpGet]
-        public JsonResult GetCreditSites() {
+        public JsonResult GetCreditSites()
+        {
             var sites = _SMAManagementService.GetSites().ToList();
 
-            return Json(sites.Select(s => new SelectListItem
-            {
-                Text = $"[{s.Id.ToString()}] {s.Name}",
-                Value = s.Id.ToString()
-            }), JsonRequestBehavior.AllowGet);
+            return Json(sites, JsonRequestBehavior.AllowGet);
         }
 
         [AuthenticateRead]
@@ -403,13 +397,8 @@
         public JsonResult GetAllSites()
         {
             var sites = _manageUMConfigService.GetAllSites().ToList();
-            sites.Insert(0, new IdNameEntity { Id = 0, Name = "All Sites" });
 
-            return Json(sites.Select(s => new SelectListItem
-            {
-                Text = $"[{s.Id.ToString()}] {s.Name}",
-                Value = s.Id.ToString()
-            }), JsonRequestBehavior.AllowGet);
+            return Json(sites, JsonRequestBehavior.AllowGet);
         }
 
         [AuthenticateRead]
@@ -418,11 +407,7 @@
         {
             var markets = _manageUMConfigService
                 .GetMarkets()
-                .Select(m => new SelectListItem
-                {
-                    Text = $"[{m.Id}] {m.Name}",
-                    Value = m.Id.ToString()
-                });
+                .Select(m => new SiteViewModel(m.Id, $"[{m.Id}] {m.Name}"));
 
             return Json(markets, JsonRequestBehavior.AllowGet);
         }

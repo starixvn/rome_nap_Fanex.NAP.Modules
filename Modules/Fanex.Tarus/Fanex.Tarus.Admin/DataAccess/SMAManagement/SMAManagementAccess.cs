@@ -1,20 +1,20 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
 using Fanex.Data;
 using Fanex.Tarus.Admin.Criteria.SMAManagement;
 using Fanex.Tarus.Admin.Entities;
 using Fanex.Tarus.Admin.Entities.SMAManagement;
 using Sunplus.Accounting.Core.Common;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
 
 namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
 {
     public class SMAManagementAccess : ISMAManagementAccess
     {
-        public IEnumerable<IdNameEntity> GetSites(int mode)
+        public IEnumerable<SiteEntity> GetSites(int mode)
         {
-            IList<IdNameEntity> sites = new List<IdNameEntity>(32);
+            IList<SiteEntity> sites = new List<SiteEntity>(32);
             using (var db = new ObjectDb("Acc_SiteSel_Credit"))
             {
                 var inputParams = new Hashtable
@@ -26,10 +26,11 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
                 {
                     while (reader.Read())
                     {
-                        sites.Add(new IdNameEntity
+                        sites.Add(new SiteEntity
                         {
-                            Id = Convert.ToInt32(reader["siteid"]),
-                            Name = reader["site"].ToString()
+                            SiteId = Convert.ToInt32(reader["siteid"]),
+                            SiteName = reader["site"].ToString(),
+                            SiteLabel = reader["sitelabel"].ToString()
                         });
                     }
                 }

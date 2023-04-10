@@ -180,11 +180,7 @@ namespace Fanex.Tarus.Admin.Controller.SMAManagement
         [NonAction]
         FilterGroup GetFilterInfo()
         {
-            var sites = _smaManagementService.GetSites().Select(s => new SelectListItem
-            {
-                Text = s.Name,
-                Value = s.Id.ToString()
-            });
+            var sites = _smaManagementService.GetSites();
 
             var currencies = _smaManagementService.GetCurrencies(false).Select(c => new SelectListItem
             {

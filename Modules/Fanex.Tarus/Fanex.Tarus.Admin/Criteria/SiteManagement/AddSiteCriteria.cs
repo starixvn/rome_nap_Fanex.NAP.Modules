@@ -11,6 +11,8 @@ namespace Fanex.Tarus.Admin.Criteria.SiteManagement
 
         public int SiteDBGroupID { get; set; }
 
+        public string SiteLabel { get; set; }
+
         public int ErrCode { get; set; }
 
         public string ErrMsg { get; set; }
@@ -26,6 +28,7 @@ namespace Fanex.Tarus.Admin.Criteria.SiteManagement
             {
                 ["isdeposit"] = Type == SiteType.Deposit,
                 ["sitename"] = SiteName,
+                ["sitelabel"] = SiteLabel,
                 ["sitedbgroupid"] = SiteDBGroupID,
                 ["errcode"] = ErrCode,
                 ["errmsg"] = ErrMsg

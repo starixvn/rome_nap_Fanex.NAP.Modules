@@ -3,12 +3,13 @@ using ExcelUtil.Spreadsheet;
 using Fanex.Tarus.Admin.Criteria.SMAManagement;
 using Fanex.Tarus.Admin.Entities;
 using Fanex.Tarus.Admin.Entities.SMAManagement;
+using Fanex.Tarus.Admin.ViewModel;
 
 namespace Fanex.Tarus.Admin.Business.SMAManagement
 {
     public interface ISMAManagementService
     {
-        IEnumerable<IdNameEntity> GetSites(int mode = 0);
+        IEnumerable<SiteViewModel> GetSites(int mode = 0);
 
         IEnumerable<IdNameEntity> GetCurrencies(bool excludeTestCurrencies);
 

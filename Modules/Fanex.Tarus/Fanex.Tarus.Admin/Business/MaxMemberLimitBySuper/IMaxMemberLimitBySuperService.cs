@@ -1,13 +1,13 @@
 ﻿namespace Fanex.Tarus.Admin.Business.MaxMemberLimitBySuper
 {
     using Criteria.MaxMemberLimitBySuper;
-    using Entities;
     using Entities.MaxMemberLimitBySuper;
+    using Fanex.Tarus.Admin.ViewModel;
     using System.Collections.Generic;
 
     public interface IMaxMemberLimitBySuperService
     {
-        List<Site> GetCreditSites(GetSitesCriteria criteria);
+        List<SiteViewModel> GetCreditSites(GetSitesCriteria criteria);
 
         MaxMemberLimitBySuperSearchResult SearchSuper(SearchSuperCriteria criteria);
 

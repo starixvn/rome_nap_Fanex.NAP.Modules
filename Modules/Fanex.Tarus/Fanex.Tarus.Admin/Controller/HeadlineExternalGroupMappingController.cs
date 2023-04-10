@@ -40,11 +40,7 @@
         [NonAction]
         public FilterModel GetFilterModel()
         {
-            var sites = _sMAManagementService.GetSites().Select(s => new SelectListItem
-            {
-                Text = s.Name,
-                Value = s.Id.ToString()
-            }).ToList();
+            var sites = _sMAManagementService.GetSites();
 
             var currencies = _headlineExternalGroupMappingService.GetCurrencies().ToList();
 

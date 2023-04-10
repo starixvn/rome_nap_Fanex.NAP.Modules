@@ -28,7 +28,7 @@
 
         bool CheckIsInUMTime(CheckInUMCriteria criteria);
 
-        IEnumerable<IdNameEntity> GetAllSites(ICriteria criteria);
+        IEnumerable<SiteEntity> GetAllSites(ICriteria criteria);
 
         IEnumerable<IdNameEntity> GetMarkets(ICriteria criteria);
     }
@@ -200,7 +200,7 @@
         public Result UpdUMConfiguration(UpdUMConfigurationCriteria criteria)
          => base.ExecuteNonQuery(criteria);
 
-        public IEnumerable<IdNameEntity> GetAllSites(ICriteria criteria)
+        public IEnumerable<SiteEntity> GetAllSites(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -208,10 +208,11 @@
                 {
                     while (reader.Read())
                     {
-                        yield return new IdNameEntity
+                        yield return new SiteEntity
                         {
-                            Id = Convert.ToInt32(reader["siteid"]),
-                            Name = reader["site"].ToString()
+                            SiteId = Convert.ToInt32(reader["siteid"]),
+                            SiteName = reader["site"].ToString(),
+                            SiteLabel = reader["sitelabel"].ToString()
                         };
                     }
                 }

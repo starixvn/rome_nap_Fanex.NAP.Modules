@@ -147,12 +147,14 @@
     <Compile Include="MenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingControl.cs" />
+    <Compile Include="SiteEntity.cs" />
     <Compile Include="Statement.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserControlBO.cs" />
     <Compile Include="ViewModel\DailyTransaction.cs" />
     <Compile Include="ViewModel\FinanceBettype.cs" />
     <Compile Include="ViewModel\FinanceTransaction.cs" />
+    <Compile Include="ViewModel\SiteViewModel.cs" />
     <Compile Include="ViewModel\SystemBO.cs" />
     <Compile Include="ViewModel\TransactionGroup.cs" />
     <Compile Include="ViewModel\WinningTransaction.cs" />
@@ -181,7 +183,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="False" BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildAction="Both" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_BuildAction="Both" BuildVersion_AssemblyInfoFilename="" BuildVersion_UseGlobalSettings="False" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

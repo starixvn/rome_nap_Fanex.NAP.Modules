@@ -7,7 +7,7 @@
 
     public interface IMaxMemberLimitBySuperDataAccess
     {
-        List<Site> GetCreditSites(GetSitesCriteria criteria);
+        List<SiteEntity> GetCreditSites(GetSitesCriteria criteria);
 
         MaxMemberLimitBySuperSearchResult SearchSuper(SearchSuperCriteria criteria);
 
