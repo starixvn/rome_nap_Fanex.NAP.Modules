@@ -11,8 +11,6 @@
             ListSites = new List<SiteViewModel>();
         }
 
-        public List<SiteViewModel> ListSites { get; set; }
-
-        public string Sites789 => ConfigurationManager.AppSettings["Sites789"];
+        public IEnumerable<SiteViewModel> ListSites { get; set; }
     }
 }
