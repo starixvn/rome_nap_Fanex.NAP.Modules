@@ -22,7 +22,7 @@
             _htbSporttypeBettype.Add("8", new string[] { "1", "3", "20", "10" });
             _htbSporttypeBettype.Add("10", new string[] { "1", "2", "3", "20", "10" });
             _htbSporttypeBettype.Add("11", new string[] { "1", "20", "10" });
-            _htbSporttypeBettype.Add("99", new string[] { "1", "2", "3", "9", "20", "10", "9999" });     
+            _htbSporttypeBettype.Add("99", new string[] { "1", "2", "3", "9", "20", "10", "9999" });
         }
 
         public bool IsChangedData(DataRow dr)
@@ -156,8 +156,7 @@
                             {
                                 htbParameters.Add(formatParam, dr[string.Format("maxpayoutpermatchv{0}", item)]);
                             }
-
-                            if (param != "maxpopermatchv{0}")
+                            else
                             {
                                 htbParameters.Add(formatParam, dr[formatParam]);
                             }
