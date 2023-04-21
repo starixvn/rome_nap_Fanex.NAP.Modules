@@ -15,6 +15,8 @@ namespace Fanex.Tarus.Finance.Entities
         public string username;
 
         public string currency;
+        
+        public string currencycode;
 
         public double actualrate;
     }

@@ -95,6 +95,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
                             custid = DNAide.Core.CastAide.AsInt32(row["custid"]),
                             username = DNAide.Core.CastAide.AsString(row["username"]),
                             currency = DNAide.Core.CastAide.AsString(row["currency"]),
+                            currencycode = DNAide.Core.CastAide.AsString(row["CurrencyCode"]),
                             actualrate = Math.Round(DNAide.Core.CastAide.AsDouble(row["actualrate"]), 4)
                         };
                     }
