@@ -190,9 +190,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             {
                 criteria.CustId = custId;
 
-                // Copy Keno.
-                new KenoService().UpdateMemberData(custId, sourceCustId, actorId);
-
                 // Copy DCS.
                 new DCSSettingCopyInsertMemberService().CorrectMemberPositionTaking(custId, sourceCustId, actorId, criteria.IP, criteria.SettingStatus);
 

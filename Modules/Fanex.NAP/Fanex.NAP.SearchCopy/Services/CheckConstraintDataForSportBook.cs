@@ -22,9 +22,7 @@
             _htbSporttypeBettype.Add("8", new string[] { "1", "3", "20", "10" });
             _htbSporttypeBettype.Add("10", new string[] { "1", "2", "3", "20", "10" });
             _htbSporttypeBettype.Add("11", new string[] { "1", "20", "10" });
-            _htbSporttypeBettype.Add("99", new string[] { "1", "2", "3", "9", "20", "10", "9999" });     
-            _htbSporttypeBettype.Add("161", new string[] { "81", "83", "86", "88" });
-            _htbSporttypeBettype.Add("161_live", new string[] { "85", "86", "87", "89", "90" });
+            _htbSporttypeBettype.Add("99", new string[] { "1", "2", "3", "9", "20", "10", "9999" });
         }
 
         public bool IsChangedData(DataRow dr)
@@ -43,10 +41,6 @@
                     case "1_live":
                         parameter = "alivepositiontaking_{0}";
                         parameter_max = "maxlpos_{0}";
-                        break;
-                    case "161_live":
-                        parameter = "v161alivepositiontaking_{0}";
-                        parameter_max = "maxv161lpos_{0}";
                         break;
                     default:
                         parameter = string.Format("v{0}apositiontaking_", key) + "{0}";
@@ -88,7 +82,6 @@
             htbParameters.Add("ugroup", dr["ugroup"]);
             htbParameters.Add("closed", dr["closed"]);
             htbParameters.Add("issearchandcopy", 1);
-            htbParameters.Add("disablenumber", dr["disablenumber"]);
             htbParameters.Add("language", Thread.CurrentThread.CurrentCulture.Name);
             htbParameters.Add("ip", CurrentContext.Instance.Ip4Address);
             htbParameters.Add("userid", userId);
@@ -115,10 +108,6 @@
                         parameter = "alivepositiontaking_{0}";
                         parameter_max = "maxlpos_{0}";
                         break;
-                    case "161_live":
-                        parameter = "v161alivepositiontaking_{0}";
-                        parameter_max = "maxv161lpos_{0}";
-                        break;
                     default:
                         parameter = string.Format("v{0}apositiontaking_", key) + "{0}";
                         parameter_max = string.Format("maxv{0}pos_", key) + "{0}";
@@ -138,7 +127,7 @@
 
         public void GenerateBettingLimit(DataRow dr, ref Hashtable htbParameters)
         {
-            string[] sportTypes = new string[] { "1", "1mp", "1saba", "2", "2saba", "3", "5", "8", "10", "11", "99", "99mp", "161", "164" };
+            string[] sportTypes = new string[] { "1", "1mp", "1saba", "2", "2saba", "3", "5", "8", "10", "11", "99", "99mp" };
             string[] parameters = new string[]
                                     {
                                         "minbetv{0}",
@@ -158,22 +147,16 @@
                 }
                 else
                 {
-                    if (item == "161")
-                    {
-                        htbParameters.Add("maxperballv161", dr["maxperballv161"]);
-                    }
-
                     foreach (string param in parameters)
                     {
                         string formatParam = string.Format(param, item);
                         if (!htbParameters.ContainsKey(formatParam))
                         {
-                            if (param == "maxpopermatchv{0}" && item != "161" && item != "164")
+                            if (param == "maxpopermatchv{0}")
                             {
                                 htbParameters.Add(formatParam, dr[string.Format("maxpayoutpermatchv{0}", item)]);
                             }
-
-                            if (param != "maxpopermatchv{0}")
+                            else
                             {
                                 htbParameters.Add(formatParam, dr[formatParam]);
                             }
