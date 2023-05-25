@@ -7,6 +7,7 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.Customer;
 using System;
 using System.Collections;
 using System.Web;
@@ -252,7 +253,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 error.ErrorMsg = ex.Message;
             }
             return error;
-        } 
+        }
 
         public static IbcError CustomerUpdUserNameRpt(string oldUname, string newUname, string accId, out int custid)
         {
@@ -282,27 +283,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                         error.ErrorMsg = string.Format("{0}", objdb.GetParameterValue("errmsg"));
                     }
                 }
-
-                if (error.IsSuccess())
-                {
-                    using (var objdb = new ObjectDb("Acc_CustomerUpdUserName_Bettrans"))
-                    {
-                        var param = new Hashtable {
-                            { "custid", custid },
-                            { "errcode", 0 },
-                            { "errmsg", "" },
-                            { "newusername", newUname }
-                        };
-
-                        objdb.ExecuteNonQueryScaleoutDB(param, custid);
-                        var errCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
-                        if (errCode != 0)
-                        {
-                            error.ErrorCode = errCode;
-                            error.ErrorMsg = objdb.GetParameterValue("errmsg").ToString();
-                        }
-                    }
-                }
             }
             catch (Exception ex)
             {
@@ -312,30 +292,41 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             return error;
         }
+       
+        public static IbcError UpdClearMemberCreditRpt(string username, string accId, decimal totalAmt)
+        {
+            var hash = new Hashtable();
+            hash.Add("username", username);
+            hash.Add("userid", accId);
+            hash.Add("returnerrcode", 1);
+            hash.Add("errcode", 0);
+            hash.Add("errmsg", "");
+            hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
+            hash.Add("totalamt", totalAmt);
 
-        /// <summary>
-        /// Nguyen Thi Minh Thu 13/12/2006
-        /// call sp CustomerUpdClearCredit for clear credit
-        /// Using DNAide's library
-        /// Tho.Nguyen updated: 12/1/2008
-        /// </summary>
-        /// <param name="param"></param>
-        /// <returns></returns>
-        public static IbcError CustomerUpdClearCreditRpt(string username, string accId)
+            return CustomerUpdClearCreditRpt(hash);
+        }
+
+        public static IbcError UpdClearSMACreditRpt(string username, string accId)
+        {
+            var hash = new Hashtable();
+            hash.Add("username", username);
+            hash.Add("userid", accId);
+            hash.Add("returnerrcode", 1);
+            hash.Add("errcode", 0);
+            hash.Add("errmsg", "");
+            hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
+
+            return CustomerUpdClearCreditRpt(hash);
+        }
+
+        private static IbcError CustomerUpdClearCreditRpt(Hashtable hash)
         {
             IbcError error = IbcError.SuccessResult;
             try
             {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdClearCredit", 600))
                 {
-                    var hash = new Hashtable();
-                    hash.Add("username", username);
-                    hash.Add("userid", accId);
-                    hash.Add("returnerrcode", 1);
-                    hash.Add("errcode", 0);
-                    hash.Add("errmsg", "");
-                    hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
-
                     objDb.AssignParamValues(hash);
 
                     objDb.ExecuteNonQuery();
@@ -352,8 +343,42 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             return error;
         }
-            
+        
+        public static CustDetail GetCustInfo(string userName)
+        {
+            using (ObjectDb objDb = new ObjectDb("Acc_CustomerSelInfoByUsername", 600))
+            {
+                var hash = new Hashtable();
+                hash.Add("username", userName);
 
+                objDb.AssignParamValues(hash);
+                objDb.ExecuteNonQuery();
+
+                return new CustDetail
+                {
+                    CustId = CastAide.AsInt32(objDb.GetParameterValue("custid")),
+                    RoleId = CastAide.AsInt32(objDb.GetParameterValue("roleid")),
+                    CurrencyId = CastAide.AsInt32(objDb.GetParameterValue("currency"))
+                };
+            }
+        }
+
+        public static decimal GetTotalAmount(int custId)
+        {
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            var prefixSp = siteDB.IsSiteDB ? $"SiteDB{siteDB.SiteDBGroupID}_" : string.Empty;
+            using (ObjectDb objDb = new ObjectDb($"{prefixSp}Acc_CustomerTotalAmountSel", 600))
+            {
+                var hash = new Hashtable
+                {
+                    { "custid", custId }
+                };
+
+                objDb.ExecuteNonQueryScaleoutDB(hash, siteDB.AGIP);
+
+                return CastAide.AsInt32(objDb.GetParameterValue("totalamt"));
+            }
+        }
         /// <summary>
         /// Nguyen Thi Minh Thu 14/12/2006
         /// call sp CustomerUpdUserGroup for update user group

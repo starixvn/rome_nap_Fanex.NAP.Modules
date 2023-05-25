@@ -8,6 +8,8 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
     using Fanex.CustomerSetting.Module.Core.Criteria;
     using Fanex.CustomerSetting.Module.Core.Services.Impl;
     using Fanex.CustomerSetting.Module.Core.Services.Interface;
+    using Fanex.Data;
+    using Fanex.Tarus.Infrastructure.Extensions;
     using Repositories;
     using System;
     using System.Collections;
@@ -184,6 +186,9 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             {
                 criteria.CustId = custId;
 
+                // Init Balance
+                InitBalanceCustomer(custId);
+
                 new DCSSettingCopyInsertMemberService().CorrectMemberPositionTaking(custId, sourceCustId, actorId, criteria.IP, criteria.SettingStatus);          
             }
 
@@ -200,6 +205,41 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             }
 
             return result;
+        }
+
+        private void InitBalanceCustomer(int custId)
+        {
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            var prefixSP = siteDB.IsSiteDB ? $"SiteDB{siteDB.SiteDBGroupID}_" : string.Empty;
+
+            var creditBalance = new InitBalanceCustomerCommand(custId, prefixSP, isCreditBalance: true);
+            using (var db = new ObjectDb(creditBalance.GetSettingKey()))
+            {
+                db.ExecuteNonQueryScaleoutDB(creditBalance.GetSpParams(), siteDB.AGIP);
+                creditBalance.ErrCode = Convert.ToInt32(db.GetOuputParams()["errcode"]);
+            }
+
+            var depositBalance = new InitBalanceCustomerCommand(custId, prefixSP, isCreditBalance: false);
+            using (var db = new ObjectDb(depositBalance.GetSettingKey()))
+            {
+                db.ExecuteNonQueryScaleoutDB(depositBalance.GetSpParams(), siteDB.AGIP);
+                depositBalance.ErrCode = Convert.ToInt32(db.GetOuputParams()["errcode"]);
+            }
+
+            if (creditBalance.ErrCode != 0 || depositBalance.ErrCode != 0)
+            {
+                var removeCreditBalance = new RemoveBalanceCustomerCommand(custId, prefixSP, isCreditBalance: true);
+                using (var db = new ObjectDb(removeCreditBalance.GetSettingKey()))
+                {
+                    db.ExecuteNonQueryScaleoutDB(removeCreditBalance.GetSpParams(), siteDB.AGIP);
+                }
+
+                var removeDepositBalance = new RemoveBalanceCustomerCommand(custId, prefixSP, isCreditBalance: false);
+                using (var db = new ObjectDb(removeDepositBalance.GetSettingKey()))
+                {
+                    db.ExecuteNonQueryScaleoutDB(removeDepositBalance.GetSpParams(), siteDB.AGIP);
+                }
+            }
         }
     }
 }
