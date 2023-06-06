@@ -6,6 +6,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
     using System.Data;
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Entities;
+    using Fanex.Tarus.Finance.Model.Statement;
     using Fanex.Tarus.Infrastructure.Extensions;
 
     public interface IFinanceStatementAccess
@@ -16,7 +17,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
 
         IEnumerable<SiteDB> GetSiteDBConfigByRefNo(ICriteria criteria);
 
-        Result UpdateVerifyStatusAccess(ICriteria criteria, string agIp);
+        IEnumerable<VerifyResult> UpdateVerifyStatusAccess(ICriteria criteria, string agIp);
 
         Result DeleteTransAccess(ICriteria criteria, string agIp);
 

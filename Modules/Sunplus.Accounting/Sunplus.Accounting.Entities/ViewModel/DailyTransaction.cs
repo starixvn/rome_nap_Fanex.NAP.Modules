@@ -48,6 +48,9 @@ namespace Sunplus.Accounting.Entities.ViewModel
         public bool IsVerified { get; set; }
 
         [DataMember]
+        public bool IsAllowVerify { get; set; }
+
+        [DataMember]
         public string CheckerName
         {
             get
