@@ -43,10 +43,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Criteria
         public string Language { get; set; }
 
         public string IP { get; set; }
-
-        public bool DisableNG2 { get; set; }
-
-        public bool IsSyncNG2 { get; set; }
+   
 
         public byte SettingStatus { get; set; }
 

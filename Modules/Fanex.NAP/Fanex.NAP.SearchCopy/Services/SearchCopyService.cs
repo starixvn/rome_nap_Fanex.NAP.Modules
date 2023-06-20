@@ -8,7 +8,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
     using Fanex.CustomerSetting.Module.Core.Criteria;
     using Fanex.CustomerSetting.Module.Core.Services.Impl;
     using Fanex.CustomerSetting.Module.Core.Services.Interface;
-    using Fanex.Module.NG2.Repository;
     using Repositories;
     using System;
     using System.Collections;
@@ -115,11 +114,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
         {
             var customerInfo = _searchCopyRepository.GetCustomerInfoByUserId(
                 new GetCustomerInfoByUserIdCriteria(custId, isMember));
-
-            var ng2Status = new NG2Service().GetStatus(custId, settingStatus);
-            customerInfo.IsSyncNG2 = Convert.ToByte(ng2Status.IsSynced || (bool)BaseRepository.CheckAllowedCurrencyAll(custId, settingStatus).Outputs["allowedng2"]);
-            customerInfo.DisableNG2 = Convert.ToByte(ng2Status.IsDisabled);
-
             return customerInfo;
         }
 
@@ -190,18 +184,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             {
                 criteria.CustId = custId;
 
-                // Copy DCS.
-                new DCSSettingCopyInsertMemberService().CorrectMemberPositionTaking(custId, sourceCustId, actorId, criteria.IP, criteria.SettingStatus);
-
-                Thread.Sleep(3000);
-
-                var sourceCustInfo = GetCustomerInfoByUserId(sourceCustId, true, criteria.SettingStatus);
-
-                // NG2.
-                if (sourceCustInfo.IsSyncNG2 == 1)
-                {
-                    new NG2Service().SyncCustomer(criteria, systemId);
-                }
+                new DCSSettingCopyInsertMemberService().CorrectMemberPositionTaking(custId, sourceCustId, actorId, criteria.IP, criteria.SettingStatus);          
             }
 
             return result;
@@ -213,15 +196,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
 
             if (result.IsSuccess)
             {
-                _serviceBase.AddMsgAfterCreateNewSMA(new AddMsgAfterCreateNewSMACriteria(criteria.CustId, 0, (int)Role.Super));
-                Thread.Sleep(3000);
-                var sourceCustInfo = GetCustomerInfoByUserId(criteria.ExistingCustId, false, criteria.SettingStatus);
-
-                // NG2.
-                if (sourceCustInfo.IsSyncNG2 == 1)
-                {
-                    new NG2Service().SyncCustomer(criteria, systemId);
-                }
+                _serviceBase.AddMsgAfterCreateNewSMA(new AddMsgAfterCreateNewSMACriteria(criteria.CustId, 0, (int)Role.Super));              
             }
 
             return result;

@@ -374,10 +374,6 @@ namespace Sunplus.Accounting.Entities
 
         public bool IsDisableCockFighting { get; set; }
 
-        public bool IsDisableNG2 { get; set; }
-
-        public bool IsSyncNG2 { get; set; }
-
         #endregion Properties
     }
 }
