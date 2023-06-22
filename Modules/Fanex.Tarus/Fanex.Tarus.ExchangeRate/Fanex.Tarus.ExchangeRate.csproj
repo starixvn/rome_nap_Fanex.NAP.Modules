@@ -107,9 +107,6 @@
       <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.16, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.4.16\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
-    </Reference>
     <Reference Include="NPOI">
       <HintPath>..\..\..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
     </Reference>
@@ -119,8 +116,11 @@
     <Reference Include="NPOI.OpenXml4Net">
       <HintPath>..\..\..\packages\Fanex.NAP.NPOI.1.0.0.0\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
     </Reference>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.17, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.4.19-RemoveNG2-01\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.2.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.2.2-RemoveNG-01\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Entities.2.0.2.5-RemoveNG2-01\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Libraries.AOP.1.0.4218.28561\lib\net40\Sunplus.Libraries.AOP.dll</HintPath>
