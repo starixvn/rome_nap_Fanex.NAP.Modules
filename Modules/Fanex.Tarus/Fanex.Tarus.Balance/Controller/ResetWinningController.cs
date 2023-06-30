@@ -52,14 +52,8 @@ namespace Fanex.Tarus.Balance.Controller
         [HttpPost]
         [AuthenticateHost]
         public JsonResult ResetWinningByDay(string resetWinningDate)
-        {
-            GetResetWinningCriteria criteria = new GetResetWinningCriteria
-            {
-                FromDate = resetWinningDate,
-                ToDate = resetWinningDate
-            };
-
-            var result = _resetWinningService.ResetWinningByDay(criteria);
+        {   
+            var result = _resetWinningService.ResetWinningByDay(resetWinningDate);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

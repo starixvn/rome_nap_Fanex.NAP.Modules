@@ -11,9 +11,53 @@ namespace Fanex.Tarus.Balance.DataAccess
     using Fanex.Data;
     using Fanex.Tarus.Balance.Criteria;
     using Fanex.Tarus.Balance.Entities;
+    using Fanex.Tarus.Infrastructure.Extensions;
 
     public class ResetWinningExtraAccess : IResetWinningAccess
     {
+        public ResetStatus InsertResetWinning(AddResetWinningCriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKeys()))
+            {
+                objDb.ExecuteNonQueryScaleoutDB(criteria.GetSpParams());
+                var output = objDb.GetOuputParams();
+
+                return new ResetStatus { ErrorCode = CastAide.AsInt16(output["errcode"]), ErrorMessage = CastAide.AsString(output["errmsg"]) };
+            }
+        }
+
+        public IEnumerable<ResetWinningInsert> GetDataToInsert(GetResetWinningCriteria criteria)
+        {
+            var result = new List<ResetWinningInsert>();
+            var _params = new Hashtable();
+            _params.Add("fromdate", criteria.FromDate);
+            _params.Add("todate", criteria.ToDate);
+            _params.Add("mode", criteria.ViewOrResetStatus);
+            _params.Add("creator", criteria.Creator);
+            _params.Add("ip", criteria.IP);
+            _params.Add("errcode", 0);
+            _params.Add("errmsg", string.Empty);
+
+            using (var objDb = new ObjectDb(criteria.GetSettingKeys()))
+            {
+                var reader = objDb.ExecuteReader(_params);
+                while (reader.Read())
+                {
+                    result.Add(new ResetWinningInsert
+                    {
+                        WinLossDate = reader["winlostdate"].ToString(),
+                        CustId = Converter.ToInt(reader["custid"]),
+                        Amount = Converter.ToDecimal(reader["amount"]),
+                        Creator = Converter.ToInt(reader["creator"]),
+                        Ip = reader["ip"].ToString(),
+                        TransDesc = reader["transdesc"].ToString()
+                    });
+
+                }
+            }
+
+            return result;
+        }
         public Dictionary<string, DateTime> SelBalanceUpMovebetDays()
         {
             var datatable = new DataTable();

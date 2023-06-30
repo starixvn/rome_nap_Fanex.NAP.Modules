@@ -7,13 +7,13 @@ namespace Fanex.Tarus.Balance.Business
 
     public interface IResetWinningService
     {
+        ResetStatus ResetWinningByDay(string date);
+
         bool CheckPermissionToReset();
 
         ResetWinning_New GetResetWinningDataAfterMoveBetDay(GetResetWinningCriteria criteria);
 
         ResetWinningBeforeMoveBetDay GetResetWinningDataBeforeMoveBetDay(GetResetWinningBeforeMoveBetDayCriteria criteria);
-
-        ResetStatus ResetWinningByDay(GetResetWinningCriteria criteria);
 
         ResetWinning_New GetResetWinningByDay(GetResetWinningCriteria criteria);
     }

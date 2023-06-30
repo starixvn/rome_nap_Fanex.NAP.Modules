@@ -51,14 +51,7 @@
         [AuthenticateHost]
         public JsonResult ResetWinningByDay(string resetWinningDate)
         {
-            GetResetWinningCriteria criteria = new GetResetWinningExtraCriteria
-            {
-                FromDate = resetWinningDate,
-                ToDate = resetWinningDate,
-                IsExtraPT = true
-            };
-
-            var result = _resetWinningService.ResetWinningByDay(criteria);
+            var result = _resetWinningService.ResetWinningByDay(resetWinningDate);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
