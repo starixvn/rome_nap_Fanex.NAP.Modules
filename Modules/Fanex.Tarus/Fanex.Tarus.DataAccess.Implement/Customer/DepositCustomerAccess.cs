@@ -615,8 +615,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 return;
             }
 
-            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId_DBCUST(agentId);
-            InsertBalanceOnSiteDB(siteDB.AGIP, insertBalanceCustList);
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId_DBCUST(agentId);        
             InsertExceptionBalanceOnSiteDB(siteDB.AGIP, insertExceptionBalanceCustList);
         }
 
@@ -633,29 +632,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 db.ExecuteNonQueryScaleoutDB(param, siteDB.AGIP);
             }
         }
-
-        private void InsertBalanceOnSiteDB(string AGIP, string insertBalanceCustList)
-        {
-            if (string.IsNullOrWhiteSpace(insertBalanceCustList))
-            {
-                return;
-            }
-
-            foreach (var custId in insertBalanceCustList.Split(','))
-            {
-                using (var db = new ObjectDb("Dot_BalanceInsCredit"))
-                {
-                    var param = new Hashtable() { { "custid", custId } };
-                    db.ExecuteNonQueryScaleoutDB(param, AGIP);
-                }
-
-                using (var db = new ObjectDb("Dot_BalanceInsDebit"))
-                {
-                    var param = new Hashtable() { { "custid", custId } };
-                    db.ExecuteNonQueryScaleoutDB(param, AGIP);
-                }
-            }
-        }
+       
 
         private void InsertExceptionBalanceOnSiteDB(string AGIP, string insertExceptionBalanceCustList)
         {
