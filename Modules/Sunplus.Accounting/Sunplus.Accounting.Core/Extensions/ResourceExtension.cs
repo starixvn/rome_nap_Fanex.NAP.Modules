@@ -16,7 +16,8 @@ namespace Sunplus.Accounting.Core.Extensions
             Racing = 6 ,
             ViewlogV2 = 7,
             CategorizeStatus = 8,
-            VirtualSports = 9
+            VirtualSports = 9,
+            CreateCustomer = 10
         }
 
         public static string GetResourceValue(Resources resource, string key)
