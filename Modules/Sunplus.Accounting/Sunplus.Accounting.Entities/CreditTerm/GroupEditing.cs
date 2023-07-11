@@ -23,6 +23,10 @@ namespace Sunplus.Accounting.Entities.CreditTerm
         [DataMember]
         public string TotalBalance { get; set; }
 
+
+        [DataMember]
+        public string PendingTransfer3rd { get; set; }
+
         [DataMember]
         public string MaxLoss { get; set; }
 
