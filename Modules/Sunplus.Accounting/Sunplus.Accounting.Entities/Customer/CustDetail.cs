@@ -87,7 +87,5 @@ namespace Sunplus.Accounting.Entities.Customer
 
         [DataMember]
         public string ErrorMessage { get; set; }
-
-        public bool IsUplineSyncNG2 { get; set; }
     }
 }

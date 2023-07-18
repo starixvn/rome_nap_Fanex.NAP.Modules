@@ -410,15 +410,7 @@ namespace Sunplus.Accounting.Core.Configurations
             {
                 return (ConfigurationManager.AppSettings["IsVirtualRateTest"].Equals("1"));
             }
-        }
-
-        public static bool IsShowNG2
-        {
-            get
-            {
-                return (ConfigurationManager.AppSettings["IsShowNG2"] == "1");
-            }
-        }
+        }   
 
         public static bool IsShowSabaclub
         {
@@ -441,14 +433,6 @@ namespace Sunplus.Accounting.Core.Configurations
             get
             {
                 return (ConfigurationManager.AppSettings["IsShowBitcoinBetting"] == "1");
-            }
-        }
-
-        public static bool IsUmNG2
-        {
-            get
-            {
-                return (ConfigurationManager.AppSettings["IsUmNG2"] == "1");
             }
         }
 

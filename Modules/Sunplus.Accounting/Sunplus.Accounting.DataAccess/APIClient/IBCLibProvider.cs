@@ -66,12 +66,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 _cust.IsDisableSportsbook2 = WebSettings.IsShowSportsbook2 ?
                      CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableMuayThai"], false) :
                     true;
-                _cust.IsDisableNG2 = WebSettings.IsShowNG2 ? 
-                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableNG2"], false) :
-                    true;
-                _cust.IsSyncNG2 = WebSettings.IsShowNG2 ?
-                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["SyncedNG2"], false) :
-                    true;
 
                 return _cust;
             }
