@@ -55,7 +55,6 @@ namespace Fanex.Tarus.Finance.Business.Statement
                         var statementDetail = new StatementDetail();
                         var refNo = row["RefNo"].ToString();
                         var checkerName = row["CheckerName"].ToString();
-
                         DateTime winlossDatetmp = CastAide.AsDateTime(row["WinlostDate"]);
                         var winlossDate = winlossDatetmp.DayOfWeek + " <br> " + String.Format("{0:MM/dd/yyyy}", winlossDatetmp);
                         statementDetail.RefNo = refNo;
@@ -66,7 +65,8 @@ namespace Fanex.Tarus.Finance.Business.Statement
                         statementDetail.IsVerify = CastAide.AsBoolean(row["IsAllowVerify"]);
                         statementDetail.IsReverse = CastAide.AsBoolean(row["IsReversal"]);
                         statementDetail.IsExpand = CastAide.AsBoolean(row["IsExpand"]);
-                        statementDetail.IsShowReversal = (winlossDatetmp >= CastAide.AsDateTime(balanceUpDay) && (statementDetail.IsReverse == false) && !CastAide.AsBoolean(row["IsMoving"])) ? true : false;
+
+                        statementDetail.IsAllowReversal = CastAide.AsBoolean(row["IsAllowReversal"]);
 
                         var trans = new Transaction();
 
@@ -340,40 +340,39 @@ namespace Fanex.Tarus.Finance.Business.Statement
                 return Math.Round(number);
         }
 
-        public Result VerifyTransactionBusiness(string refNo, bool isVerify, string checkerName, int checkerId)
+        public MultipleVerifyResult VerifyTransactionBusiness(string refNo, bool isVerify, string checkerName, int checkerId)
         {
             var errorResults = new List<Result>();
             var siteDBList = financeStatementAccess.GetSiteDBConfigByRefNo(new GetSiteDBConfigByRefNoCriteria(refNo));
+            var multipleVerifyResult = new MultipleVerifyResult();
+
+            var inputRefs = refNo.Split(',').TakeWhile(id => id != "").Count();
 
             try
             {
                 foreach (var siteDB in siteDBList)
                 {
-                    var result = financeStatementAccess.UpdateVerifyStatusAccess(
-                        new DailyTxnUpdCheckerCriteria(
-                            checkerId,
-                            checkerName,
-                            refNo,
-                            isVerify,
-                            Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
-                            siteDB),
-                        siteDB.AGIP);
-
-                    if (result.IsFailure)
-                    {
-                        errorResults.Add(result);
-                    }
+                    var results = financeStatementAccess.UpdateVerifyStatusAccess(
+                                 new DailyTxnUpdCheckerCriteria(
+                                     checkerId,
+                                     checkerName,
+                                     refNo,
+                                     isVerify,
+                                     Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
+                                     siteDB),
+                                 siteDB.AGIP);
+                    multipleVerifyResult.SuccessRefNos.AddRange(results.Where(result => result.Success).Select(result => result.RefNo));
+                    multipleVerifyResult.ErrorResults.AddRange(results.Where(result => !result.Success));
                 }
 
-                return errorResults.Count == 0
-                    ? new Result()
-                    : Result.ServerError(string.Join("<br/>", errorResults.Select(r => r.ErrorMessage)));
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
-                return new Result { ErrorCode = 1, ErrorMessage = "Update Error" };
+                multipleVerifyResult.ErrorResults.Add(new VerifyResult { Message = "Update Error" });
             }
+            return multipleVerifyResult;
+
         }
 
         public Result DeleteTransBusiness(long refNo, int custId, int userId)
@@ -688,4 +687,5 @@ namespace Fanex.Tarus.Finance.Business.Statement
 
         #endregion export 2 excel
     }
+
 }

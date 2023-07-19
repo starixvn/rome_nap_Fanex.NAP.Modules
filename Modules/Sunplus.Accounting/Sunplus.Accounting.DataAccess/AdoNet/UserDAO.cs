@@ -790,6 +790,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                         entity.CheckerId = reader.IsDBNull(reader.GetOrdinal("checkerId"))
                                                ? 0
                                                : Convert.ToInt32(reader["checkerId"]);
+                        entity.IsAllowVerify = CastAide.AsBoolean(reader["isAllowVerify"]);
                         dailyFinance.items.Add(entity);
                     }
 

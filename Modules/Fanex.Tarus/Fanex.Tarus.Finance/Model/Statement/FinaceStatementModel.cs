@@ -28,8 +28,8 @@ namespace Fanex.Tarus.Finance.Model.Statement
 
         public bool IsExpand { get; set; }
 
-        public bool IsShowReversal { get; set; }
-
+        public bool IsAllowReversal { get; set; }
+        
         public bool HasMultipleCreator
         {
             get
@@ -118,5 +118,18 @@ namespace Fanex.Tarus.Finance.Model.Statement
         public string TransId { get; set; }
 
         public bool IsOwner { get; set; }
+    }
+
+    public class MultipleVerifyResult
+    {
+        public List<string> SuccessRefNos { get; set; } = new List<string>();
+        public List<VerifyResult> ErrorResults { get; set; } = new List<VerifyResult>();
+    }
+
+    public class VerifyResult
+    {
+        public string RefNo { get; set; }
+        public bool Success { get; set; }
+        public string Message { get; set; }
     }
 }

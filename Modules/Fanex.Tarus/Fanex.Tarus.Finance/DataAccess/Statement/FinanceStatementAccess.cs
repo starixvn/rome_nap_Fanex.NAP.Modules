@@ -8,6 +8,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
     using Fanex.Data;
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Entities;
+    using Fanex.Tarus.Finance.Model.Statement;
     using Fanex.Tarus.Infrastructure.Extensions;
     using Sunplus.Accounting.Core.Common;
 
@@ -65,25 +66,46 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
             }
         }
 
-        public Result UpdateVerifyStatusAccess(ICriteria criteria, string agIp)
+        public IEnumerable<VerifyResult> UpdateVerifyStatusAccess(ICriteria criteria, string agIp)
         {
+            List<VerifyResult> results = new List<VerifyResult>();
+
             try
             {
                 using (var db = new ObjectDb(criteria.GetSettingKey(), 1200))
                 {
-                    //db.AddInParameter("ip", DbType.String, Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
 
-                    db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), agIp);
+                    var reader = db.ExecuteReaderScaleoutDB(criteria.GetSpParams(), agIp);
+
+                    while (reader.Read())
+                    {
+                        var refNo = reader["RefNo"].ToString();
+                        var success = Convert.ToBoolean(reader["Success"]);
+                        var errorMessage = reader["ErrMsg"].ToString();
+
+                        results.Add(new VerifyResult()
+                        {
+                            RefNo = refNo,
+                            Success = success,
+                            Message = errorMessage
+                        });
+                    }
+
                     var outputs = db.GetOuputParams();
-
-                    return new Result(Convert.ToInt32(outputs["errcode"]), outputs["errmsg"].ToString());
+                    var errorCode = Convert.ToInt32(outputs["errCode"]);
+                    if (errorCode != 0)
+                    {
+                        results.Add(new VerifyResult() { Message = outputs["errMsg"].ToString(), Success = false });
+                    }
                 }
             }
             catch (Exception ex)
             {
                 LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
-                return Result.ServerError(ex.Message);
+                results.Add(new VerifyResult() { Message = ex.Message, Success = false });
             }
+            return results;
+
         }
 
         public Result DeleteTransAccess(ICriteria criteria, string agIp)

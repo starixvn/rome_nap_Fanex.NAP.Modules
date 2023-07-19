@@ -11,7 +11,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
 
         StatementDetail GetFinanceStatementDetail(StatementDetail statementDetail, string username);
 
-        Result VerifyTransactionBusiness(string refNo, bool isVerify, string CheckerName, int CheckerID);
+        MultipleVerifyResult VerifyTransactionBusiness(string refNo, bool isVerify, string CheckerName, int CheckerID);
 
         Result DeleteTransBusiness(long refNo, int custId, int userId);
 
