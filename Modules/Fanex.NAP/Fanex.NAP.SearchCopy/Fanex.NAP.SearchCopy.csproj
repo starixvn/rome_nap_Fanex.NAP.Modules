@@ -96,6 +96,9 @@
     <Reference Include="Fanex.PTEngine, Version=1.0.7.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.PTEngine.1.0.7.4\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.4.5\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\IBCCrypt.1.1.0.0\lib\IBCCrypt.dll</HintPath>
       <Private>True</Private>
@@ -247,6 +250,8 @@
     <Compile Include="Criteria\GetExistingUsernameCriteria.cs" />
     <Compile Include="Criteria\DCSSettingCopyInsertMemberCriteria.cs" />
     <Compile Include="Criteria\GetSportBookSettingMemberCriteria.cs" />
+    <Compile Include="Criteria\RemoveBalanceCustomerCommand.cs" />
+    <Compile Include="Criteria\InitBalanceCustomerCommand.cs" />
     <Compile Include="Entities\SMACustomerInfo.cs" />
     <Compile Include="Criteria\UpdateSyncBaseForIBCCriteria.cs" />
     <Compile Include="Criteria\CopyExistingCustomerCriteria.cs" />

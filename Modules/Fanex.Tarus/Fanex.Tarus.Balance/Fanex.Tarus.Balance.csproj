@@ -60,6 +60,9 @@
     <Reference Include="Fanex.MailDeliver.Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.MailDeliver.Utility.1.0.3\lib\net461\Fanex.MailDeliver.Utility.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Business.Implement.1.0.1.1\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
     </Reference>
@@ -152,12 +155,14 @@
     <Compile Include="Controller\ResetWinningExtraController.cs" />
     <Compile Include="Controller\ResetWinningController.cs" />
     <Compile Include="Criteria\GetResetWinningBeforeMoveBetDayCriteria.cs" />
+    <Compile Include="Criteria\AddResetWinningCriteria.cs" />
     <Compile Include="Criteria\GetResetWinningExtraCriteria.cs" />
     <Compile Include="Criteria\GetResetWinningCriteria.cs" />
     <Compile Include="DataAccess\IResetWinningAccess.cs" />
     <Compile Include="DataAccess\ResetWinningExtraAccess.cs" />
     <Compile Include="DataAccess\ResetWinningAccess.cs" />
     <Compile Include="Entities\ResetStatus.cs" />
+    <Compile Include="Entities\ResetWinningInsert.cs" />
     <Compile Include="Entities\ResetWinning.cs" />
     <Compile Include="Entities\ResetWinningBeforeMoveBetDay.cs" />
     <Compile Include="Entities\ResetWinningByDay.cs" />
@@ -171,6 +176,16 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.Tarus.Admin\Fanex.Tarus.Admin.csproj">
+      <Project>{B7FD958B-43DB-45EE-895E-2105971893E3}</Project>
+      <Name>Fanex.Tarus.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
+      <Project>{ccc0446a-42e7-4850-b09c-4dac278f23b3}</Project>
+      <Name>Fanex.Tarus.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

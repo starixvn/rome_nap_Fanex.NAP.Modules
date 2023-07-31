@@ -26,6 +26,7 @@ namespace Fanex.Tarus.Balance.Business
         {
         }
 
+
         public bool CheckPermissionToReset()
         {
             var permissionService = new PermissionService();
@@ -79,39 +80,44 @@ namespace Fanex.Tarus.Balance.Business
             return result;
         }
 
-        public ResetStatus ResetWinningByDay(GetResetWinningCriteria criteria)
+        public ResetStatus ResetWinningByDay(string date)
         {
-            ResetWinningByDay resetWinningByDay = new ResetWinningByDay();
-            criteria.ViewOrResetStatus = 1; ////Reset
-            criteria.Creator = AppSession.AccId;
-            criteria.IP = Utils.GetClientIP();
-            try
+            var criteria = new GetResetWinningExtraCriteria
             {
-                resetWinningByDay = this.GetResetWinningByDayAfterReset(criteria);
-
-                if (resetWinningByDay.ResetStatus.ErrorCode == 0)
+                ViewOrResetStatus = 1,
+                Creator = AppSession.AccId,
+                IP = Utils.GetClientIP(),
+                FromDate = date,
+                ToDate = date,
+                IsExtraPT = true
+            };
+            var dataToInsert = _resetWinningAccess.GetDataToInsert(criteria);
+            var result = new ResetStatus();
+            foreach (var item in dataToInsert)
+            {
+                var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(item.CustId);
+                result = _resetWinningAccess.InsertResetWinning(new AddResetWinningCriteria(item, siteDB.SiteDBGroupID));
+                if (result.ErrorCode != 0)
                 {
-                    Thread.Sleep(10000);
-                    resetWinningByDay.ResetWinning.WinLossDate = criteria.FromDate;
-                    resetWinningByDay.ResetWinning.UserReset = AppSession.Username;
-                    bool isSendSuccess = Mailing.ResetWinningSuccess(resetWinningByDay.ResetWinning, criteria.IsExtraPT);
+                    Mailing.ResetWinningEmailNotification(criteria, result, criteria.IsExtraPT);
 
-                    if (!isSendSuccess)
-                    {
-                        throw new Exception("Can't send email");
-                    }
-                }
-                else
-                {
-                    Mailing.ResetWinningEmailNotification(criteria, resetWinningByDay.ResetStatus, criteria.IsExtraPT);
+                    return result;
                 }
             }
-            catch (Exception ex)
+
+            criteria.ViewOrResetStatus = 0;
+            var resetWinningByDay = this.GetResetWinningByDayAfterReset(criteria);
+            Thread.Sleep(10000);
+            resetWinningByDay.ResetWinning.WinLossDate = criteria.FromDate;
+            resetWinningByDay.ResetWinning.UserReset = AppSession.Username;
+            bool isSendSuccess = Mailing.ResetWinningSuccess(resetWinningByDay.ResetWinning, criteria.IsExtraPT);
+
+            if (!isSendSuccess)
             {
-                LogExtensions.ExceptionHandler(ex);
+                throw new Exception("Can't send email");
             }
 
-            return resetWinningByDay.ResetStatus;
+            return result;
         }
 
         /// <summary>
@@ -188,8 +194,8 @@ namespace Fanex.Tarus.Balance.Business
                     Reset_Str = currentResetWinning.Reset == 0 ? "-" : NumberFormat.DecFormat(currentResetWinning.Reset, 2),
                     LatestReset_Str = currentResetWinning.LatestReset == 0 ? "-" : NumberFormat.DecFormat(currentResetWinning.LatestReset, 2)
                 });
-            }                       
-            
+            }
+
             result.UserReset = AppSession.AccUserName;
             result.Variance = Math.Round(varianceTotal, 2);
             result.Reset_Str = NumberFormat.DecFormat(resetTotal, 2);

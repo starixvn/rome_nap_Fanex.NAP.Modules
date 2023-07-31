@@ -21,20 +21,39 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <param name="_custId"></param>
         /// <param name="_newCredit"></param>
         /// <returns></returns>
-        public static void CustomerUpdateCredit(int _accId, int _custId, decimal _newCredit)
+        public static void UpdateMemberCredit(int _accId, int _custId, decimal _newCredit, decimal totalAmt)
+        {
+            var param = new Hashtable();
+            param.Add("userid", _accId);
+            param.Add("custid", _custId);
+            param.Add("newcredit", _newCredit);
+            param.Add("ip", HttpContext.Current.Request.UserHostAddress);
+            param.Add("errcode", 0);
+            param.Add("errmsg", string.Empty);
+            param.Add("totalamt", totalAmt);
+
+            CustomerUpdateCredit(param);
+        }
+
+        public static void UpdateSMACredit(int _accId, int _custId, decimal _newCredit)
+        {
+            var param = new Hashtable();
+            param.Add("userid", _accId);
+            param.Add("custid", _custId);
+            param.Add("newcredit", _newCredit);
+            param.Add("ip", HttpContext.Current.Request.UserHostAddress);
+            param.Add("errcode", 0);
+            param.Add("errmsg", string.Empty);
+
+            CustomerUpdateCredit(param);
+        }
+
+        private static void CustomerUpdateCredit(Hashtable param)
         {
             try
             {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdCredit", 600))
                 {
-                    var param = new Hashtable();
-                    param.Add("userid", _accId);
-                    param.Add("custid", _custId);
-                    param.Add("newcredit", _newCredit);
-                    param.Add("ip", HttpContext.Current.Request.UserHostAddress);
-                    param.Add("errcode", 0);
-                    param.Add("errmsg", string.Empty);
-
                     objDb.AssignParamValues(param);
 
                     objDb.ExecuteNonQuery();

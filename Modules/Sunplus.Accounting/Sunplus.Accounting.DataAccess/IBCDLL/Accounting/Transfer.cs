@@ -4,6 +4,7 @@ using System.Collections;
 using DNAide.Core;
 using DNAide.Data;
 using Fanex.Data;
+using Fanex.Tarus.Infrastructure.Extensions;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Entities;
 
@@ -119,9 +120,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <param name="agentName"></param>
         /// <param name="ip"></param>
         /// <returns></returns>
-        public static Result TransferAllMember(int custID, string agentName, string ip)
+        public static Result TransferAllMember(int custID, string agentName, int agentId, string ip)
         {
-            using (ObjectDb db = new ObjectDb("Acc_BettransInsTransferAllMembers", 600))
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(agentId);
+            var prefixSp = siteDB.IsSiteDB ? $"SiteDB{siteDB.SiteDBGroupID}_" : string.Empty;
+            using (ObjectDb db = new ObjectDb($"{prefixSp}Acc_BettransInsTransferAllMembers", 600))
             {
                 var p = new Hashtable();
                 p.Add("agentname", agentName);
@@ -130,8 +133,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("errmsg", string.Empty);
                 p.Add("ip", ip);
 
-                db.AssignParamValues(p);
-                db.ExecuteNonQuery();
+                db.ExecuteNonQueryScaleoutDB(p, siteDB.AGIP);
 
                 return new Result()
                 {
@@ -141,19 +143,20 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
         }
 
-        public static Result TransferAllDownlines(int custID, string agentName, string ip)
+        public static Result TransferAllDownlines(int userId, string agentName, int agentId, string ip)
         {
-            using (ObjectDb db = new ObjectDb("Acc_ClearBalanceAllDownlines", 600))
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(agentId);
+            var prefixSp = siteDB.IsSiteDB ? $"SiteDB{siteDB.SiteDBGroupID}_" : string.Empty;
+            using (ObjectDb db = new ObjectDb($"{prefixSp}Acc_ClearBalanceAllDownlines", 600))
             {
                 var p = new Hashtable();
                 p.Add("agentname", agentName);
-                p.Add("userid", custID);
+                p.Add("userid", userId);
                 p.Add("errcode", 0);
                 p.Add("errmsg", string.Empty);
                 p.Add("ip", ip);
-
-                db.AssignParamValues(p);
-                db.ExecuteNonQuery();
+                
+                db.ExecuteNonQueryScaleoutDB(p, siteDB.AGIP);
 
                 return new Result()
                 {

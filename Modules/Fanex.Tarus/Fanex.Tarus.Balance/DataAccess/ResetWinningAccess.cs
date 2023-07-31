@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Fanex.Tarus.Infrastructure.Extensions;
 namespace Fanex.Tarus.Balance.DataAccess
 {
     using System.Data;
@@ -17,7 +17,7 @@ namespace Fanex.Tarus.Balance.DataAccess
     using System.Collections;
     using Fanex.Common;
 
-    public class ResetWinningAccess: IResetWinningAccess
+    public class ResetWinningAccess : IResetWinningAccess
     {
         public Dictionary<string, DateTime> SelBalanceUpMovebetDays()
         {
@@ -31,7 +31,52 @@ namespace Fanex.Tarus.Balance.DataAccess
                 balmoveday.Add("MovebetsDay", CastAide.AsDateTime(datatable.Rows[0]["MovebetsDay"]));
             }
             return balmoveday;
-        }        
+        }
+
+        public ResetStatus InsertResetWinning(AddResetWinningCriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKeys()))
+            {
+                objDb.ExecuteNonQueryScaleoutDB(criteria.GetSpParams());
+
+                var output = objDb.GetOuputParams();
+
+                return new ResetStatus { ErrorCode = CastAide.AsInt16(output["errcode"]), ErrorMessage = CastAide.AsString(output["errmsg"]) };
+            }
+        }
+
+        public IEnumerable<ResetWinningInsert> GetDataToInsert(GetResetWinningCriteria criteria)
+        {
+            var result = new List<ResetWinningInsert>();
+            var _params = new Hashtable();
+            _params.Add("fromdate", criteria.FromDate);
+            _params.Add("todate", criteria.ToDate);
+            _params.Add("mode", criteria.ViewOrResetStatus);
+            _params.Add("creator", criteria.Creator);
+            _params.Add("ip", criteria.IP);
+            _params.Add("errcode", 0);
+            _params.Add("errmsg", string.Empty);
+
+            using (var objDb = new ObjectDb(criteria.GetSettingKeys()))
+            {
+                var reader = objDb.ExecuteReader(_params);
+                while (reader.Read())
+                {
+                    result.Add(new ResetWinningInsert
+                    {
+                        WinLossDate = reader["winlostdate"].ToString(),
+                        CustId = Converter.ToInt(reader["custid"]),
+                        Amount = Converter.ToDecimal(reader["amount"]),
+                        Creator = Converter.ToInt(reader["creator"]),
+                        Ip = reader["ip"].ToString(),
+                        TransDesc = reader["transdesc"].ToString()
+                    });
+
+                }
+            }
+
+            return result;
+        }
 
         public ResetWinning_New GetResetWinningDataAfterMoveBetDay(GetResetWinningCriteria criteria)
         {
@@ -40,7 +85,7 @@ namespace Fanex.Tarus.Balance.DataAccess
             DataTable resetWinningTable = new DataTable();
             decimal winlossTotal = 0, winlossExtra = 0, winlossExtraTotal = 0, resetTotal = 0, winLoss = 0, reset = 0, variance = 0, varianceTotal = 0;
 
-            Hashtable  _params = new Hashtable();
+            Hashtable _params = new Hashtable();
             _params.Add("fromdate", criteria.FromDate);
             _params.Add("todate", criteria.ToDate);
             _params.Add("mode", criteria.ViewOrResetStatus);
@@ -89,14 +134,14 @@ namespace Fanex.Tarus.Balance.DataAccess
 
                 result.ReportRows.Add(resetWinning);
             }
-            
+
             result.Reset = resetTotal;
             result.Reset_Str = NumberFormat.DecFormat(resetTotal, 2);
             result.WinLoss = winlossTotal;
             result.WinLossExtra = winlossExtraTotal;
             result.WinLossExtra_Str = NumberFormat.DecFormat(winlossExtraTotal, 2);
-            result.Variance = varianceTotal;            
-            
+            result.Variance = varianceTotal;
+
             return result;
         }
 
@@ -105,7 +150,7 @@ namespace Fanex.Tarus.Balance.DataAccess
             var result = new ResetWinning_New();
 
             var resetWinningByDayGroup = resetWinning.ReportRows.GroupBy(x => x.WinLossDate).ToList();
-            
+
             foreach (var group in resetWinningByDayGroup)
             {
                 var resetWinningByDay = new ResetWinning_New();
@@ -151,14 +196,14 @@ namespace Fanex.Tarus.Balance.DataAccess
 
                 varianceTotal += otherWinLoss;
                 resetWinningByDay.Variance = varianceTotal;
-                resetWinningByDay.WinLossDate =Convert.ToDateTime(group.Key).ToShortDateString();
+                resetWinningByDay.WinLossDate = Convert.ToDateTime(group.Key).ToShortDateString();
                 resetWinningByDay.ReportRows.Add(otherResetWinning);
                 resetWinningByDay.Reset_Str = NumberFormat.DecFormat(resetTotal, 2);
                 resetWinningByDay.WinLoss = winlossTotal + otherWinLoss;
                 resetWinningByDay.WinLossExtra = winlossExtraTotal;
                 resetWinningByDay.WinLossExtra_Str = NumberFormat.DecFormat(winlossExtraTotal, 2);
 
-                result.ReportRows.Add(resetWinningByDay);                
+                result.ReportRows.Add(resetWinningByDay);
             }
 
             return result;
@@ -189,8 +234,8 @@ namespace Fanex.Tarus.Balance.DataAccess
                 {
                     winlossTotal += winloss;
                 }
-                
-                resetTotal += reset = CastAide.AsDecimal(row["reset"]);                
+
+                resetTotal += reset = CastAide.AsDecimal(row["reset"]);
                 winlossExtraTotal += winlossExtra = CastAide.AsDecimal(row["winlostafterextrapt"]);
                 varianceTotal += variance = winlossExtra + reset;
 
@@ -274,7 +319,7 @@ namespace Fanex.Tarus.Balance.DataAccess
                 {
                     winlossTotal += winLoss;
                 }
-            
+
                 resetTotal += reset = CastAide.AsDecimal(row["totalreset"]);
                 resetLatestTotal += latestReset = CastAide.AsDecimal(row["latestreset"]);
                 varianceTotal += variance = winLoss + reset;

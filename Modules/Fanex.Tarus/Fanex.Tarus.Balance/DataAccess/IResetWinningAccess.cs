@@ -4,9 +4,14 @@ namespace Fanex.Tarus.Balance.DataAccess
 {
     using Fanex.Tarus.Balance.Criteria;
     using Fanex.Tarus.Balance.Entities;
+    using System.Collections.Generic;
 
     public interface IResetWinningAccess
     {
+        ResetStatus InsertResetWinning(AddResetWinningCriteria criteria);
+
+        IEnumerable<ResetWinningInsert> GetDataToInsert(GetResetWinningCriteria criteria);
+
         ResetWinning_New GetResetWinningDataAfterMoveBetDay(GetResetWinningCriteria criteria);
 
         ResetWinning_New GetResetWinningByDay(ResetWinning_New resetWinning);
