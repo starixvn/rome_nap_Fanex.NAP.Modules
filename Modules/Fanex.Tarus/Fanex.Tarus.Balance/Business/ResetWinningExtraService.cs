@@ -91,9 +91,15 @@ namespace Fanex.Tarus.Balance.Business
                 ToDate = date,
                 IsExtraPT = true
             };
-            var dataToInsert = _resetWinningAccess.GetDataToInsert(criteria);
+            var viewModel = _resetWinningAccess.GetDataToInsert(criteria);
+            if (viewModel.ResetStatus.ErrorCode != 0)
+            {
+                Mailing.ResetWinningEmailNotification(criteria, viewModel.ResetStatus, criteria.IsExtraPT);
+                return viewModel.ResetStatus;
+            }
+
             var result = new ResetStatus();
-            foreach (var item in dataToInsert)
+            foreach (var item in viewModel.DataToInsert)
             {
                 var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(item.CustId);
                 result = _resetWinningAccess.InsertResetWinning(new AddResetWinningCriteria(item, siteDB.SiteDBGroupID));
@@ -105,12 +111,12 @@ namespace Fanex.Tarus.Balance.Business
                 }
             }
 
-            criteria.ViewOrResetStatus = 0;
-            var resetWinningByDay = this.GetResetWinningByDayAfterReset(criteria);
             Thread.Sleep(10000);
-            resetWinningByDay.ResetWinning.WinLossDate = criteria.FromDate;
-            resetWinningByDay.ResetWinning.UserReset = AppSession.Username;
-            bool isSendSuccess = Mailing.ResetWinningSuccess(resetWinningByDay.ResetWinning, criteria.IsExtraPT);
+            var newResetData = BuidResetWinningData(viewModel.ResetWinning);
+            newResetData.WinLossDate = criteria.FromDate;
+            newResetData.UserReset = AppSession.Username;
+            
+            bool isSendSuccess = Mailing.ResetWinningSuccess(newResetData, criteria.IsExtraPT);
 
             if (!isSendSuccess)
             {
@@ -137,32 +143,6 @@ namespace Fanex.Tarus.Balance.Business
                 return resetWinningData.IsError
                     ? resetWinningData
                     : this.BuidResetWinningData(resetWinningData);
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets the reset winning by day after reset.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Reset winning data to send email.</returns>
-        public ResetWinningByDay GetResetWinningByDayAfterReset(GetResetWinningCriteria criteria)
-        {
-            var result = new ResetWinningByDay();
-
-            try
-            {
-                var resetWinningByDay = _resetWinningAccess.ResetWinningByDay(criteria);
-                result.ResetStatus = resetWinningByDay.ResetStatus;
-                if (resetWinningByDay.ResetStatus.ErrorCode == 0)
-                {
-                    result.ResetWinning = this.BuidResetWinningData(resetWinningByDay.ResetWinning);
-                }
             }
             catch (Exception ex)
             {
@@ -201,7 +181,7 @@ namespace Fanex.Tarus.Balance.Business
             result.Reset_Str = NumberFormat.DecFormat(resetTotal, 2);
             result.WinLoss = winlossTotal;
             result.LatestReset_Str = NumberFormat.DecFormat(resetLatestTotal, 2);
-
+            
             return result;
         }
     }

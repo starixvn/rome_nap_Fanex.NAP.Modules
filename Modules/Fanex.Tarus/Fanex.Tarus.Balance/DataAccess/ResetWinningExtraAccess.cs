@@ -26,24 +26,33 @@ namespace Fanex.Tarus.Balance.DataAccess
             }
         }
 
-        public IEnumerable<ResetWinningInsert> GetDataToInsert(GetResetWinningCriteria criteria)
+        public ResetWinningByDay GetDataToInsert(GetResetWinningCriteria criteria)
         {
-            var result = new List<ResetWinningInsert>();
-            var _params = new Hashtable();
-            _params.Add("fromdate", criteria.FromDate);
-            _params.Add("todate", criteria.ToDate);
-            _params.Add("mode", criteria.ViewOrResetStatus);
-            _params.Add("creator", criteria.Creator);
-            _params.Add("ip", criteria.IP);
-            _params.Add("errcode", 0);
-            _params.Add("errmsg", string.Empty);
+            var resultToInsert = new List<ResetWinningInsert>();
+            var resultEmail = new ResetWinning_New();
+            var resultStatus = new ResetStatus();
+            decimal resetTotal = 0, reset = 0, winlossTotal = 0, latestReset = 0, latestResetTotal = 0, variance = 0, varianceTotal = 0, winLoss = 0;
+            var _params = new Hashtable
+            {
+                { "fromdate", criteria.FromDate },
+                { "todate", criteria.ToDate },
+                { "mode", criteria.ViewOrResetStatus },
+                { "creator", criteria.Creator },
+                { "ip", criteria.IP },
+                { "errcode", 0 },
+                { "errmsg", string.Empty }
+            };
 
             using (var objDb = new ObjectDb(criteria.GetSettingKeys()))
             {
                 var reader = objDb.ExecuteReader(_params);
+                var ouputParams = objDb.GetOuputParams();
+                resultStatus.ErrorCode = Convert.ToInt32(ouputParams["errcode"]);
+                resultStatus.ErrorMessage = ouputParams["errmsg"].ToString();
+
                 while (reader.Read())
                 {
-                    result.Add(new ResetWinningInsert
+                    resultToInsert.Add(new ResetWinningInsert
                     {
                         WinLossDate = reader["winlostdate"].ToString(),
                         CustId = Converter.ToInt(reader["custid"]),
@@ -54,9 +63,37 @@ namespace Fanex.Tarus.Balance.DataAccess
                     });
 
                 }
+
+                if (reader.NextResult())
+                {
+                    while (reader.Read())
+                    {
+                        winlossTotal += winLoss = CastAide.AsDecimal(reader["winlost"]);
+                        resetTotal += reset = CastAide.AsDecimal(reader["totalreset"]);
+                        latestResetTotal += latestReset = CastAide.AsDecimal(reader["latestreset"]);
+                        varianceTotal += variance = winLoss + reset;
+
+                        var resetWinning = new ResetWinning_New
+                        {
+                            WinLossDate = Convert.ToDateTime(reader["winlostdate"]).ToShortDateString(),
+                            Product = CastAide.AsString(reader["groupname"]),
+                            WinLoss = winLoss,
+                            Reset = reset,
+                            LatestReset = latestReset,
+                            Variance = variance
+                        };
+
+                        resultEmail.ReportRows.Add(resetWinning);
+                    }
+                }
+
+                resultEmail.Reset_Str = NumberFormat.DecFormat(resetTotal, 2);
+                resultEmail.LatestReset_Str = NumberFormat.DecFormat(latestResetTotal, 2);
+                resultEmail.Variance = varianceTotal;
+                resultEmail.WinLoss = winlossTotal;
             }
 
-            return result;
+            return new ResetWinningByDay { DataToInsert = resultToInsert, ResetWinning = resultEmail, ResetStatus = resultStatus };
         }
         public Dictionary<string, DateTime> SelBalanceUpMovebetDays()
         {

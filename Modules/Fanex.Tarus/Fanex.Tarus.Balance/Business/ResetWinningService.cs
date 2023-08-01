@@ -89,26 +89,30 @@ namespace Fanex.Tarus.Balance.Business
                 FromDate = date,
                 ToDate = date,
             };
-            var dataToInsert = _resetWinningAccess.GetDataToInsert(criteria);
+            var viewModel = _resetWinningAccess.GetDataToInsert(criteria);
+            if (viewModel.ResetStatus.ErrorCode != 0)
+            {
+                Mailing.ResetWinningEmailNotification(criteria, viewModel.ResetStatus, criteria.IsExtraPT);
+                return viewModel.ResetStatus;
+            }
+
             var result = new ResetStatus();
-            foreach (var item in dataToInsert)
+            foreach (var item in viewModel.DataToInsert)
             {
                 var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(item.CustId);
                 result = _resetWinningAccess.InsertResetWinning(new AddResetWinningCriteria(item, siteDB.SiteDBGroupID));
                 if (result.ErrorCode != 0)
                 {
                     Mailing.ResetWinningEmailNotification(criteria, result, criteria.IsExtraPT);
-
                     return result;
                 }
             }
 
-            criteria.ViewOrResetStatus = 0;
-            var resetWinningByDay = this.GetResetWinningByDayAfterReset(criteria);
             Thread.Sleep(10000);
-            resetWinningByDay.ResetWinning.WinLossDate = criteria.FromDate;
-            resetWinningByDay.ResetWinning.UserReset = AppSession.Username;
-            bool isSendSuccess = Mailing.ResetWinningSuccess(resetWinningByDay.ResetWinning, criteria.IsExtraPT);
+            viewModel.ResetWinning.WinLossDate = criteria.FromDate;
+            viewModel.ResetWinning.UserReset = AppSession.Username;
+            var newResetData = BuidResetWinningData(viewModel.ResetWinning);
+            bool isSendSuccess = Mailing.ResetWinningSuccess(newResetData, criteria.IsExtraPT);
 
             if (!isSendSuccess)
             {
