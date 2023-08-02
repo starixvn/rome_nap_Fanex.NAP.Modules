@@ -111,5 +111,35 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             var cn88SiteName = ConfigurationManager.AppSettings["CN88SiteName"].Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
             return cn88SiteName.Contains(site, StringComparer.OrdinalIgnoreCase);
         }
+
+        public static string IPV4TopCountries
+        {
+            get
+            {
+                return Converter.ToString2(ConfigurationManager.AppSettings["IPInfo:IPV4TopCountries"]);
+            }
+        }
+
+        public static int IPV4TopCountriesCacheInMinutes
+        {
+            get
+            {
+                return Converter.ToInt(ConfigurationManager.AppSettings["IPInfo:IPV4TopCountriesCacheInMinutes"]);
+            }
+        }
+        public static int IPV4CacheInMinutes
+        {
+            get
+            {
+                return Converter.ToInt(ConfigurationManager.AppSettings["IPInfo:IPV4CacheInMinutes"]);
+            }
+        }
+        public static int IPV6CacheInMinutes
+        {
+            get
+            {
+                return Converter.ToInt(ConfigurationManager.AppSettings["IPInfo:IPV6CacheInMinutes"]);
+            }
+        }
     }
 }
