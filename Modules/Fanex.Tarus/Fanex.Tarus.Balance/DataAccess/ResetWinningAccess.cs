@@ -45,9 +45,13 @@ namespace Fanex.Tarus.Balance.DataAccess
             }
         }
 
-        public IEnumerable<ResetWinningInsert> GetDataToInsert(GetResetWinningCriteria criteria)
+        public ResetWinningByDay GetDataToInsert(GetResetWinningCriteria criteria)
         {
-            var result = new List<ResetWinningInsert>();
+            var resultToInsert = new List<ResetWinningInsert>();
+            var resultEmail = new ResetWinning_New();
+            var resultStatus = new ResetStatus();
+            decimal resetTotal = 0, winLoss = 0, latestReset = 0, variance = 0, varianceTotal = 0, winlossTotal = 0, resetLatestTotal = 0,
+                winlossExtra = 0, winlossExtraTotal = 0, reset = 0;
             var _params = new Hashtable();
             _params.Add("fromdate", criteria.FromDate);
             _params.Add("todate", criteria.ToDate);
@@ -60,9 +64,14 @@ namespace Fanex.Tarus.Balance.DataAccess
             using (var objDb = new ObjectDb(criteria.GetSettingKeys()))
             {
                 var reader = objDb.ExecuteReader(_params);
+
+                var ouputParams = objDb.GetOuputParams();
+                resultStatus.ErrorCode = Convert.ToInt32(ouputParams["errcode"]);
+                resultStatus.ErrorMessage = ouputParams["errmsg"].ToString();
+
                 while (reader.Read())
                 {
-                    result.Add(new ResetWinningInsert
+                    resultToInsert.Add(new ResetWinningInsert
                     {
                         WinLossDate = reader["winlostdate"].ToString(),
                         CustId = Converter.ToInt(reader["custid"]),
@@ -71,11 +80,50 @@ namespace Fanex.Tarus.Balance.DataAccess
                         Ip = reader["ip"].ToString(),
                         TransDesc = reader["transdesc"].ToString()
                     });
-
                 }
+
+                if (reader.NextResult())
+                {
+                    while (reader.Read())
+                    {
+                        var product = CastAide.AsString(reader["product"]);
+                        winLoss = CastAide.AsDecimal(reader["winlost"]);
+                        winlossExtraTotal += winlossExtra = CastAide.AsDecimal(reader["winlostafterextrapt"]);
+                        if (!product.Equals("openning balance", StringComparison.OrdinalIgnoreCase))
+                        {
+                            winlossTotal += winLoss;
+                        }
+
+                        resetTotal += reset = CastAide.AsDecimal(reader["totalreset"]);
+                        resetLatestTotal += latestReset = CastAide.AsDecimal(reader["latestreset"]);
+                        varianceTotal += variance = winLoss + reset;
+
+                        var resetWinning = new ResetWinning_New
+                        {
+                            WinLossDate = Convert.ToDateTime(reader["winlostdate"]).ToShortDateString(),
+                            Product = product,
+                            WinLoss = winLoss,
+                            WinLossExtra_Str = NumberFormat.DecFormat(winLoss, 2),
+                            Reset = reset,
+                            Reset_Str = NumberFormat.DecFormat(reset, 2),
+                            LatestReset = latestReset,
+                            LatestReset_Str = NumberFormat.DecFormat(latestReset, 2),
+                            Variance = variance,
+                            WinLossExtra = winlossExtra
+                        };
+
+                        resultEmail.ReportRows.Add(resetWinning);
+                    }
+                }
+
+                resultEmail.Reset_Str = NumberFormat.DecFormat(resetTotal, 2);
+                resultEmail.WinLossExtra_Str = NumberFormat.DecFormat(winlossExtraTotal, 2);
+                resultEmail.WinLoss = winlossTotal;
+                resultEmail.LatestReset_Str = NumberFormat.DecFormat(resetLatestTotal, 2);
+                resultEmail.Variance = varianceTotal;
             }
 
-            return result;
+            return new ResetWinningByDay { DataToInsert = resultToInsert, ResetWinning = resultEmail, ResetStatus = resultStatus };
         }
 
         public ResetWinning_New GetResetWinningDataAfterMoveBetDay(GetResetWinningCriteria criteria)

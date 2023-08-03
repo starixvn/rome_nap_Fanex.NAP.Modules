@@ -2,10 +2,7 @@
 
 namespace Fanex.Tarus.Balance.Entities
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     /// <summary>
     /// TODO: Update summary.
@@ -21,5 +18,7 @@ namespace Fanex.Tarus.Balance.Entities
         public ResetStatus ResetStatus { get; set; }
 
         public ResetWinning_New ResetWinning { get; set; }
+
+        public IEnumerable<ResetWinningInsert> DataToInsert { get; set; }
     }
 }

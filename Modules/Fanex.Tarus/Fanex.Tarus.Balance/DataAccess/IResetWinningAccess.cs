@@ -10,7 +10,7 @@ namespace Fanex.Tarus.Balance.DataAccess
     {
         ResetStatus InsertResetWinning(AddResetWinningCriteria criteria);
 
-        IEnumerable<ResetWinningInsert> GetDataToInsert(GetResetWinningCriteria criteria);
+        ResetWinningByDay GetDataToInsert(GetResetWinningCriteria criteria);
 
         ResetWinning_New GetResetWinningDataAfterMoveBetDay(GetResetWinningCriteria criteria);
 
