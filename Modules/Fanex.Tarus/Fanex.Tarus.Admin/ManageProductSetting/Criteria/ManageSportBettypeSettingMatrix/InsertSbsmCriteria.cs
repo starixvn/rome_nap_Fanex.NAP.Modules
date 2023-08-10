@@ -44,7 +44,8 @@
                     builder.Append("TableBettrans = \"" + entity.TableBettrans + "\" ");
                     builder.Append("SporttypeRefWinlossLimit = \"" + entity.SporttypeRefWinlossLimit + "\" ");
                     builder.Append("BettypeRefWinlossLimit = \"" + entity.BettypeRefWinlossLimit + "\" ");
-                    builder.Append("RealProductId = \"" + entity.ProductId + "\" ");
+                    builder.Append("RealProductId = \"" + entity.RealProductId + "\" ");
+                    builder.Append("DummyProductId = \"" + entity.DummyProductId + "\" ");
                     builder.Append("/>");
                 }
 

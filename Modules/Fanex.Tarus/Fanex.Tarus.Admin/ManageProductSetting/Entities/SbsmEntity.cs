@@ -3,9 +3,13 @@
     public class SbsmEntity
     {
 
-        public string ProductId { get; set; }
+        public string RealProductId { get; set; }
 
-        public string ProductName { get; set; }
+        public string RealProductName { get; set; }
+
+        public string DummyProductId { get; set; }
+
+        public string DummyProductName { get; set; }
 
         public string SportType { get; set; }
 
