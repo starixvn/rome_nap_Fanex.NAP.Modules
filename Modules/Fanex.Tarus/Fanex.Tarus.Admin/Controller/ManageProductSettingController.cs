@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Tarus.Admin.Controller
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
@@ -18,6 +19,7 @@
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageRefResource;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageResetWinning;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageSportBettypeMatrix;
+    using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageSportBettypeSettingMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageSportType;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageUMConfig;
     using Fanex.Tarus.Admin.ManageProductSetting.Services;
@@ -39,7 +41,8 @@
         private readonly string resetWinningPath = "~/Views/Admin/ManageProductSetting/ResetWinning/_ResetWinning.cshtml";
         private readonly string umConfigPath = "~/Views/Admin/ManageProductSetting/UMConfig/_UmConfig.cshtml";
         private readonly string vendorPath = "~/Views/Admin/ManageProductSetting/VendorGlobalSetting/_VendorGlobalSetting.cshtml";
-        private readonly string product3rdPath = "~/Views/Admin/ManageProductSetting/Product3rd/_Product3rd.cshtml";
+        private readonly string product3rdPath = "~/Views/Admin/ManageProductSetting/Product3rd/_Product3rd.cshtml"; 
+        private readonly string sportSBSMPath = "~/Views/Admin/ManageProductSetting/SBSM/_SBSM.cshtml";
         private readonly ManageProductService _manageProductService;
         private readonly ManageSportTypeService _manageSportTypeService;
         private readonly ManageBettypeService _manageBettypeService;
@@ -51,6 +54,7 @@
         private readonly IManageDwLListService _manageDwLListService;
         private readonly IManageUMConfigService _manageUMConfigService;
         private readonly IManageDwLListExtraPTService _manageDwLListExtraPTService;
+        private readonly IManageSbsmService _manageSbsmService;
 
         public ManageProductSettingController()
         {
@@ -65,6 +69,7 @@
             _manageDwLListService = new ManageDwLListService();
             _manageUMConfigService = new ManageUMConfigService();
             _manageDwLListExtraPTService = new ManageDwLListExtraPTService();
+            _manageSbsmService = new ManageSbsmService();
         }
 
         [AuthenticateRead]
@@ -492,6 +497,50 @@
             return PartialView(product3rdPath);
         }
 
+        #endregion
+
+        #region Sport BetType Setting Matrix
+        [AuthenticateRead]
+        [HttpGet]
+        public ActionResult SBSMIndex()
+        {
+            var viewModel = new ManageProductSettingViewModel
+            {
+                Products = _manageSbsmService.GetProducts(),
+                FunctionTables = _manageSbsmService.GetFunctionTables()
+            };
+
+            return PartialView(sportSBSMPath, viewModel);
+        }
+
+        [AuthenticateRead]
+        [HttpPost]
+        public JsonResult GetSportType(GetSportTypeRequest request) => Json(_manageSbsmService.GetSportTypes(request));
+
+        [AuthenticateRead]
+        [HttpPost]
+        public JsonResult GetBetTypes(GetBetTypeRequest request) => Json(_manageSbsmService.GetBetTypes(request));
+
+        [AuthenticateRead]
+        [HttpPost]
+        public JsonResult SelectSBSM(SelectSbsmRequest request) => Json(_manageSbsmService.Select(request), JsonRequestBehavior.AllowGet);
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult InsertSBSM(HttpPostedFileBase uploadFile, bool isUpdate = false)
+        {
+            var result = isUpdate ? _manageSbsmService.UpdateMultiple(uploadFile) : _manageSbsmService.Insert(uploadFile);
+
+            return Json(result);
+        }
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult UpdateSBSM(SbsmEntity request) => Json(_manageSbsmService.Update(request));
+
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult DeleteSBSM(IEnumerable<SbsmEntity> request) => Json(_manageSbsmService.Delete(request));
         #endregion
     }
 }

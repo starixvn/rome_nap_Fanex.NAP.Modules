@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Tarus.Admin.ManageProductSetting.ViewModel
 {
+    using Fanex.Tarus.Admin.ManageProductSetting.Models;
     using Fanex.Tarus.Admin.ViewModel;
     using System.Collections.Generic;
     using System.Web.Mvc;
@@ -17,5 +18,8 @@
         public IEnumerable<SelectListItem> UMCurrencies { get; set; }
 
         public IEnumerable<SelectListItem> UMSites { get; set; }
+
+        public SbsmFunctionTableModel FunctionTables { get; set; }
+        
     }
 }
