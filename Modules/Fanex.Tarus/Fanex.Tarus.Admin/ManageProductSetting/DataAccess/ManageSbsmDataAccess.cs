@@ -143,8 +143,10 @@ namespace Fanex.Tarus.Admin.ManageProductSetting.DataAccess
                 {
                     entities.Add(new SbsmEntity
                     {
-                        ProductId = DataUtils.ToString(reader["ProductID"]),
-                        ProductName = DataUtils.ToString(reader["ProductName"]),
+                        RealProductId = DataUtils.ToString(reader["RealProductID"]),
+                        RealProductName = DataUtils.ToString(reader["RealProductName"]),
+                        DummyProductId = DataUtils.ToString(reader["DummyProductID"]),
+                        DummyProductName = DataUtils.ToString(reader["DummyProductName"]),
                         SportType = DataUtils.ToString(reader["SportType"]),
                         SportTypeName = DataUtils.ToString(reader["SportName"]),
                         BetType = DataUtils.ToString(reader["BetType"]),

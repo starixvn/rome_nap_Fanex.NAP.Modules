@@ -21,11 +21,11 @@
         Result UpdateMultiple(HttpPostedFileBase uploadFile);
         Result Update(SbsmEntity request);
         Result Delete(IEnumerable<SbsmEntity> entities);
-
         SbsmFunctionTableModel GetFunctionTables();
         IEnumerable<SelectListItem> GetProducts();
         IEnumerable<SelectListItem> GetSportTypes(GetSportTypeRequest request);
         IEnumerable<SelectListItem> GetBetTypes(GetBetTypeRequest request);
+        IEnumerable<SelectListItem> GetDummyProducts();
     }
 
     public class ManageSbsmService : IManageSbsmService
@@ -56,6 +56,11 @@
         public IEnumerable<SelectListItem> GetProducts()
         {
             return dataAccess.GetProduct(new RefSettingProductSelCriteria() { ProductIds = "0" });
+        }
+
+        public IEnumerable<SelectListItem> GetDummyProducts()
+        {
+            return dataAccess.GetProduct(new RefSettingDummyProductSelCriteria() { ProductIds = "0" });
         }
 
         public IEnumerable<SelectListItem> GetSportTypes(GetSportTypeRequest request)
@@ -95,7 +100,10 @@
                 ExportData = 0
             };
 
-            return dataAccess.Select(criteria);
+            var result = dataAccess.Select(criteria);
+            result.DummyProducts = GetDummyProducts();
+
+            return result;
         }
 
         public Result Update(SbsmEntity request)
@@ -163,7 +171,8 @@
                         TableBettrans = HttpUtility.HtmlEncode(row.GetCell(15) == null ? string.Empty : row.GetCell(15).ToString()),
                         SporttypeRefWinlossLimit = HttpUtility.HtmlEncode(row.GetCell(16) == null ? string.Empty : row.GetCell(16).ToString()),
                         BettypeRefWinlossLimit = HttpUtility.HtmlEncode(row.GetCell(17) == null ? string.Empty : row.GetCell(17).ToString()),
-                        ProductId = HttpUtility.HtmlEncode(row.GetCell(18) == null ? string.Empty : row.GetCell(18).ToString())
+                        RealProductId = HttpUtility.HtmlEncode(row.GetCell(18) == null ? string.Empty : row.GetCell(18).ToString()),
+                        DummyProductId = HttpUtility.HtmlEncode(row.GetCell(19) == null ? string.Empty : row.GetCell(19).ToString())
                     });
                 }
 

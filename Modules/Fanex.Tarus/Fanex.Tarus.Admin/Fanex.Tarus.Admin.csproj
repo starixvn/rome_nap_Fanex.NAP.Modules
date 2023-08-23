@@ -230,6 +230,7 @@
     <Compile Include="ManageProductSetting\Criteria\ManageSportBettypeSettingMatrix\InsertSbsmCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageSportBettypeSettingMatrix\ReferenceSettingTableSelCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageSportBettypeSettingMatrix\RefSettingBettypeSelCriteria.cs" />
+    <Compile Include="ManageProductSetting\Criteria\ManageSportBettypeSettingMatrix\RefSettingDummyProductSelCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageSportBettypeSettingMatrix\RefSettingProductSelCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageSportBettypeSettingMatrix\RefSettingSportTypeSelCriteria.cs" />
     <Compile Include="ManageProductSetting\Criteria\ManageSportBettypeSettingMatrix\SelectSbsmCriteria.cs" />

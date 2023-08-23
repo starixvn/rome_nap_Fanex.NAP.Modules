@@ -20,6 +20,6 @@
         public IEnumerable<SelectListItem> UMSites { get; set; }
 
         public SbsmFunctionTableModel FunctionTables { get; set; }
-        
+
     }
 }
