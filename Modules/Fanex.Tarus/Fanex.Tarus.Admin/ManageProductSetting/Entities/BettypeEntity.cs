@@ -1,4 +1,6 @@
-﻿namespace Fanex.Tarus.Admin.ManageProductSetting.Entities
+﻿using System.Linq;
+
+namespace Fanex.Tarus.Admin.ManageProductSetting.Entities
 {
     public class BettypeEntity
     {
@@ -27,31 +29,20 @@
         public string DisplayedTypeID { get; set; }
         public string LicSpreadBetTypeGroupId { get; set; }
         public string Is3rdParty { get; set; }
+        public string TypeNamePTBR { get; set; }
+        public string TypeNameDE { get; set; }
+        public string TypeNameBENG { get; set; }
+        public string TypeNameURD { get; set; }
+        public string TypeNameMSA { get; set; }
+        public string TypeNameLAO { get; set; }
+        public string TypeNameKH { get; set; }
+        public string TypeNameAR { get; set; }
+        public string TypeNameTAM { get; set; }
 
         public bool IsEmptyData
-            => string.IsNullOrWhiteSpace(TypeId) &&
-                string.IsNullOrWhiteSpace(TypeNamee) &&
-                string.IsNullOrWhiteSpace(TypeNamec) &&
-                string.IsNullOrWhiteSpace(TypeDesc) &&
-                string.IsNullOrWhiteSpace(TypeNamec_uni) &&
-                string.IsNullOrWhiteSpace(TypeNamej) &&
-                string.IsNullOrWhiteSpace(TypeNamcn) &&
-                string.IsNullOrWhiteSpace(TypeNameth) &&
-                string.IsNullOrWhiteSpace(TypeNameit) &&
-                string.IsNullOrWhiteSpace(TypeNameko) &&
-                string.IsNullOrWhiteSpace(TypeNameES) &&
-                string.IsNullOrWhiteSpace(TypeNameVN) &&
-                string.IsNullOrWhiteSpace(TypeNameEL) &&
-                string.IsNullOrWhiteSpace(TypeNamee_Eu) &&
-                string.IsNullOrWhiteSpace(TypeNameRU) &&
-                string.IsNullOrWhiteSpace(TypeNameID) &&
-                string.IsNullOrWhiteSpace(TypeNamePT) &&
-                string.IsNullOrWhiteSpace(TypeNameFR) &&
-                string.IsNullOrWhiteSpace(ParentTypeid) &&
-                string.IsNullOrWhiteSpace(TypeNameMMR) &&
-                string.IsNullOrWhiteSpace(TypeNameHI) &&
-                string.IsNullOrWhiteSpace(DisplayedTypeID) &&
-                string.IsNullOrWhiteSpace(LicSpreadBetTypeGroupId) &&
-                string.IsNullOrWhiteSpace(Is3rdParty);
+            => !GetType().GetProperties()
+            .Where(pi => pi.PropertyType == typeof(string))
+            .Select(pi => (string)pi.GetValue(this))
+            .Any(value => !string.IsNullOrWhiteSpace(value));
     }
 }
