@@ -41,6 +41,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Alpha.IPInfo">
+      <HintPath>..\..\..\..\accounting-website\Websites\Bin\Alpha.IPInfo.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.3.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.BetList.Core.2.111.1.9\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
     </Reference>
@@ -50,6 +53,9 @@
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.BetList.Core.RemotingRef.1.0.0\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Caching">
+      <HintPath>..\..\..\..\accounting-website\Websites\Bin\Fanex.Caching.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
@@ -225,6 +231,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\RNGCasinoBetListController.cs" />
+    <Compile Include="Criteria\GetIPV4InfoCriteria.cs" />
+    <Compile Include="Criteria\GetIPV6InfoCriteria.cs" />
     <Compile Include="Criteria\GetJackpotDetailsInSiteDBCriteria.cs" />
     <Compile Include="Criteria\GetJackpotDetailsCriteria.cs" />
     <Compile Include="Criteria\GetResultCriteria.cs" />
@@ -232,7 +240,9 @@
     <Compile Include="Criteria\GetRNGCasinoBetDetailsCriteria.cs" />
     <Compile Include="Helpers\BetListHelper.cs" />
     <Compile Include="Models\BetDetail.cs" />
+    <Compile Include="Criteria\GetIPV4InfoByTopCountryCriteria.cs" />
     <Compile Include="Models\HandHistory\HandHistoryModel.cs" />
+    <Compile Include="Models\IPInfoDataAccess.cs" />
     <Compile Include="Models\ResultDetail.cs" />
     <Compile Include="Models\TicketDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -276,6 +286,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="_CreateNewNuGetPackage\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Fanex.Tarus\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
+      <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
+      <Name>Fanex.Tarus.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sunplus.Accounting\Sunplus.Accounting.Services\Sunplus.Accounting.Services.csproj">
+      <Project>{A09D69E5-924E-4EE6-B3CC-1B51762837F6}</Project>
+      <Name>Sunplus.Accounting.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
