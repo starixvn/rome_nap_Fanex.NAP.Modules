@@ -5,15 +5,19 @@
     using System.Globalization;
     using System.Linq;
     using System.Net;
+    using System.Threading.Tasks;
     using System.Web;
+    using Alpha.IPInfo.Services;
     using Common;
     using Criteria;
     using Fanex.BetList.Core.Builder;
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
     using Fanex.BetList.Core.TicketHelper;
+    using Fanex.Caching;
     using Fanex.Result.Core.GlobalGaming;
     using Fanex.Result.Core.GlobalGaming.DTO;
+    using Fanex.Tarus.Infrastructure.Configurations;
     using Helpers;
     using Logging.Extensions.Web;
     using Models;
@@ -22,16 +26,32 @@
     using Repositories;
     using Resources;
     using Result.Core.Voidbridge;
+    using Sunplus.Accounting.Business;
+    using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.DataAccess.Report;
 
     public class RNGCasinoService : IRNGCasinoService
     {
         private readonly IRNGCasinoRepository _rngCasinoRepository;
+        private readonly IIPInfoService _ipInfoService;
+        private readonly ICacheService _cacheService;
+        private readonly Alpha.IPInfo.DataAccess.IIPInfoDataAccess _iPInfoDataAccess;
 
         public RNGCasinoService()
             : this(null)
         {
+            _cacheService = new CacheService();
+            _iPInfoDataAccess = new IPInfoDataAccess();
+
+            _ipInfoService = new IPInfoService(new Alpha.IPInfo.Models.IPInformationConfig
+            {
+                IPV4TopCountries = AppSettings.IPV4TopCountries,
+                IPV4TopCountriesCacheInMinutes = AppSettings.IPV4TopCountriesCacheInMinutes,
+                IPV4CacheInMinutes = AppSettings.IPV4CacheInMinutes,
+                IPV6CacheInMinutes = AppSettings.IPV6CacheInMinutes
+            }, _cacheService, _iPInfoDataAccess);
+
         }
 
         public RNGCasinoService(IRNGCasinoRepository rngCasinoRepository)
@@ -85,9 +105,11 @@
                     ticketDetail.StakeHtml = builder.BuildStake(ticketDetail.Ticket, ticketHelper);
                     ticketDetail.OddHtml = builder.BuildOdds(ticketDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                     ticketDetail.StatusHtml = betListHelper.BuildStatus(builder, ticketHelper, ticketDetail.Ticket, new List<ITicketData>());
+                    ticketDetail.IP = ticketDetail.Ticket.IP;
                     detailsTickets.Add(ticketDetail);
                 }
             }
+            AssignCountry(detailsTickets);
 
             return detailsTickets;
         }
@@ -174,11 +196,47 @@
                     ticketDetail.StakeHtml = builder.BuildStake(ticketDetail.Ticket, ticketHelper);
                     ticketDetail.OddHtml = builder.BuildOdds(ticketDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                     ticketDetail.StatusHtml = betListHelper.BuildStatus(builder, ticketHelper, ticketDetail.Ticket, new List<ITicketData>());
+                    ticketDetail.IP = ticketDetail.Ticket.IP;
+
                     detailsTickets.Add(ticketDetail);
                 }
             }
-
+            AssignCountry(detailsTickets);
             return detailsTickets;
         }
+
+        public void AssignCountry(IEnumerable<TicketDetail> tickets)
+        {
+            var ipList = tickets
+             .Where(t => !string.IsNullOrWhiteSpace(t.IP) && (AppSession.ViewIPVN || !IpManagement.IsVNIP(t.IP.Trim())))
+             .Select(t => t.IP.Trim())
+             .Distinct();
+            var countryDictionary = GetCountries(ipList);
+
+            string country;
+            foreach (var item in tickets)
+            {
+                if (!string.IsNullOrWhiteSpace(item.IP)
+                    && countryDictionary.TryGetValue(item.IP.Trim(), out country))
+                {
+                    ((TicketDetail)item).Country = country;
+                }
+            }
+        }
+
+        private IDictionary<string, string> GetCountries(IEnumerable<string> ipList)
+        {
+            try
+            {
+                return _ipInfoService.GetCountries(ipList).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
+
+            return new Dictionary<string, string>();
+        }
+
     }
 }

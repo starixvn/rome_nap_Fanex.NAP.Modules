@@ -45,5 +45,10 @@
         public string SportName { get; set; }
 
         public string LeagueName { get; set; }
+
+        public string Country { get; set; }
+
+        public string IP { get; set; }
+
     }
 }
