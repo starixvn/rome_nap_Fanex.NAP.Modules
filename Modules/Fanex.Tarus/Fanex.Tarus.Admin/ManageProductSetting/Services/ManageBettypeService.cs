@@ -106,7 +106,16 @@
                         TypeNameHI = HttpUtility.HtmlEncode(row.GetCell(21) == null ? string.Empty : row.GetCell(21).ToString()),
                         DisplayedTypeID = HttpUtility.HtmlEncode(row.GetCell(22) == null ? string.Empty : row.GetCell(22).ToString()),
                         LicSpreadBetTypeGroupId = HttpUtility.HtmlEncode(row.GetCell(23) == null ? string.Empty : row.GetCell(23).ToString()),
-                        Is3rdParty = HttpUtility.HtmlEncode(row.GetCell(24) == null ? string.Empty : row.GetCell(24).ToString())
+                        Is3rdParty = HttpUtility.HtmlEncode(row.GetCell(24) == null ? string.Empty : row.GetCell(24).ToString()),
+                        TypeNamePTBR = HttpUtility.HtmlEncode(row.GetCell(25) == null ? string.Empty : row.GetCell(25).ToString()),
+                        TypeNameDE = HttpUtility.HtmlEncode(row.GetCell(26) == null ? string.Empty : row.GetCell(26).ToString()),
+                        TypeNameBENG = HttpUtility.HtmlEncode(row.GetCell(27) == null ? string.Empty : row.GetCell(27).ToString()),
+                        TypeNameURD = HttpUtility.HtmlEncode(row.GetCell(28) == null ? string.Empty : row.GetCell(28).ToString()),
+                        TypeNameMSA = HttpUtility.HtmlEncode(row.GetCell(29) == null ? string.Empty : row.GetCell(29).ToString()),
+                        TypeNameKH = HttpUtility.HtmlEncode(row.GetCell(30) == null ? string.Empty : row.GetCell(30).ToString()),
+                        TypeNameLAO = HttpUtility.HtmlEncode(row.GetCell(31) == null ? string.Empty : row.GetCell(31).ToString()),
+                        TypeNameAR = HttpUtility.HtmlEncode(row.GetCell(32) == null ? string.Empty : row.GetCell(32).ToString()),
+                        TypeNameTAM = HttpUtility.HtmlEncode(row.GetCell(33) == null ? string.Empty : row.GetCell(33).ToString()),
                     };
 
                     if (!betType.IsEmptyData) result.Add(betType);

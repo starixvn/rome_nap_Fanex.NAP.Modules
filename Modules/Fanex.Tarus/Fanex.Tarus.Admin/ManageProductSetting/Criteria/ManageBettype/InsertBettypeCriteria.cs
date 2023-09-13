@@ -51,6 +51,15 @@
                     builder.Append("DisplayedTypeID = \"" + entity.DisplayedTypeID + "\" ");
                     builder.Append("LicSpreadBetTypeGroupId = \"" + entity.LicSpreadBetTypeGroupId + "\" ");
                     builder.Append("Is3rdParty = \"" + entity.Is3rdParty + "\" ");
+                    builder.Append("typenamePTBR = \"" + entity.TypeNamePTBR + "\" ");
+                    builder.Append("typenameDE = \"" + entity.TypeNameDE + "\" ");
+                    builder.Append("typenameBENG = \"" + entity.TypeNameBENG + "\" ");
+                    builder.Append("typenameURD = \"" + entity.TypeNameURD + "\" ");
+                    builder.Append("typenameMSA = \"" + entity.TypeNameMSA + "\" ");
+                    builder.Append("typenameKH = \"" + entity.TypeNameKH + "\" ");
+                    builder.Append("typenameLAO = \"" + entity.TypeNameLAO + "\" ");
+                    builder.Append("typenameAR = \"" + entity.TypeNameAR + "\" ");
+                    builder.Append("typenameTAM = \"" + entity.TypeNameTAM + "\" ");
                     builder.Append("/>");
                 }
 
