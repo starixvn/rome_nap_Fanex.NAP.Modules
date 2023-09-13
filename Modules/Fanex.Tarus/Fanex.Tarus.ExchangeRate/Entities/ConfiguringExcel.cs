@@ -66,7 +66,7 @@ namespace Fanex.Tarus.ExchangeRate.Entities
         {
             return new ConfiguringExcel
             {
-                BaseCurrency = new [] { "MYR", "CNY", "USDT" },
+                BaseCurrency = new [] { "MYR", "CNY", "EUR", "USDT" },
                 BaseHeader = "CoinMarketCap Exchange Rate",
                 BaseFileName = "CoinMarketCapExRate",
                 FromDate = fdate,
