@@ -341,19 +341,19 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
                 string settingKey = "Acc_CustomerSelBalanceCashInfo";
                 var siteDBConfig = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
-                if (siteDBConfig.IsSiteDB)
-                {
-                    using (ObjectDb db = new ObjectDb($"SiteDB{siteDBConfig.SiteDBGroupID}_{settingKey}", 600))
-                    {
-                        var ds = db.ExecuteDataSetScaleoutDB(param, siteDBConfig.AGIP);
-                        if (ds != null && ds.Tables.Count > 0)
-                        {
-                            dt = ds.Tables[0];
-                        }
-                    }
-                }
-                else
-                {
+                //if (siteDBConfig.IsSiteDB)
+                //{
+                //    using (ObjectDb db = new ObjectDb($"SiteDB{siteDBConfig.SiteDBGroupID}_{settingKey}", 600))
+                //    {
+                //        var ds = db.ExecuteDataSetScaleoutDB(param, siteDBConfig.AGIP);
+                //        if (ds != null && ds.Tables.Count > 0)
+                //        {
+                //            dt = ds.Tables[0];
+                //        }
+                //    }
+                //}
+                //else
+                //{
                     using (ObjectDb db = new ObjectDb(settingKey, 600))
                     {
                         var ds = db.ExecuteDataSet(param);
@@ -362,7 +362,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                             dt = ds.Tables[0];
                         }
                     }
-                }
+                //}
 
             }
             catch (Exception ex)
