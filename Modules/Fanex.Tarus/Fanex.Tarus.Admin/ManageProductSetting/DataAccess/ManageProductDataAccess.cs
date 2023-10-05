@@ -54,12 +54,13 @@
                         });
                     }
                     
-                    return new ProductModel
-                    {
-                        ProductEntities = entities,
-                        TotalRows = DataUtils.ToInt32(objDb.GetOuputParams()["totalrows"])
-                    };
-                } 
+                }
+
+                return new ProductModel
+                {
+                    ProductEntities = entities,
+                    TotalRows = DataUtils.ToInt32(objDb.GetOuputParams()["totalrows"])
+                };
             }
         }
 
