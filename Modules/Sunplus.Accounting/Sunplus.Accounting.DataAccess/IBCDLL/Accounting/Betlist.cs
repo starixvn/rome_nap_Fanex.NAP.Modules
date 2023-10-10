@@ -36,28 +36,28 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
         }
 
-        public static DataSet SiteDB_BetList_SelDetailCombinationMP(int custid, string refno, string transid, string betid, DateTime movebetday, DateTime balanceupday, ref double outStading)
+        public static DataSet SiteDB_BetList_SelDetailCombinationMP(int custid, string refno, DateTime movebetday, DateTime balanceupday, ref double outStading, ref bool isParlayBoost)
         {
             var result = new DataSet();
             using (ObjectDb db = new ObjectDb("SiteDB_Acc_BetList_SelCombinationParlayDetail", 600))
             {
                 var p = new Hashtable();
                 p.Add("refno", refno);
-                p.Add("transid", transid);
-                p.Add("betid", betid);
                 p.Add("custid", custid);
                 p.Add("movebetday", movebetday);
                 p.Add("balanceupday", balanceupday);
                 p.Add("outstanding", 0);
+                p.Add("isparlayboost", false);
 
                 result = db.ExecuteDataSetScaleoutDB(p, custid);
                 outStading = CastAide.AsDouble(db.GetParameterValue("outstanding"));
+                isParlayBoost = CastAide.AsBoolean(db.GetParameterValue("isparlayboost"));
             }
 
             return result;
         }
 
-        public static DataSet BetList_SelDetailCombinationMP(int custid, string refno, string transid, string betid, DateTime movebetday, DateTime balanceupday, ref double outStading)
+        public static DataSet BetList_SelDetailCombinationMP(int custid, string refno, DateTime movebetday, DateTime balanceupday, ref double outStading, ref bool isParlayBoost)
         {
             var result = new DataSet();
             try
@@ -65,17 +65,17 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 using (ObjectDb db = new ObjectDb("Acc_BetlistCombinationParlay_Details", 600))
                 {
                     var p = new Hashtable();
-                    p.Add("refno", refno);
-                    p.Add("transid", transid);
-                    p.Add("betid", betid);
+                    p.Add("refno", refno);                    
                     p.Add("custid", custid);
                     p.Add("movebetday", movebetday);
                     p.Add("balanceupday", balanceupday);
                     p.Add("outstanding", 0);
+                    p.Add("isparlayboost", false);
 
                     db.AssignParamValues(p);
                     result = db.ExecuteDataSet();
                     outStading = CastAide.AsDouble(db.GetParameterValue("outstanding"));
+                    isParlayBoost = CastAide.AsBoolean(db.GetParameterValue("isparlayboost"));
                 }
             }
             catch (Exception ex)
