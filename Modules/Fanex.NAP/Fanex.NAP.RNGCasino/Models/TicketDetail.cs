@@ -1,7 +1,9 @@
 ﻿namespace Fanex.Module.RNGCasino.Models
 {
     using System;
+    using System.Resources;
     using Fanex.BetList.Core.Entities;
+    using Fanex.Module.RNGCasino.Resources;
 
     [Serializable]
     public class TicketDetail
@@ -49,6 +51,19 @@
         public string Country { get; set; }
 
         public string IP { get; set; }
+
+        public int? DeviceType { get; set; }
+        
+        public string Platform
+        {
+            get
+            {
+                ResourceManager rm = new ResourceManager(typeof(BetListResources));
+                var deviceInfo = rm.GetString(string.Format("Platform_{0}", DeviceType ?? 0));
+
+                return deviceInfo ?? BetListResources.Platform_Uncategorized;
+            }
+        }
 
     }
 }

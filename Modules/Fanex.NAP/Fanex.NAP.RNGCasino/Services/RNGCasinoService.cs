@@ -65,7 +65,7 @@
             var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(mainCriteria.CustId);
             if (siteDB != null)
             {
-                var tickets = new List<Ticket>();
+                var tickets = new List<TicketDto>();
                 var siteDBRow = 0;
                 if (siteDB.IsSiteDB && mainCriteria.WinLossDate > ReportUtils.BalanceUp.MoveBetsDay)
                 {
@@ -106,6 +106,7 @@
                     ticketDetail.OddHtml = builder.BuildOdds(ticketDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                     ticketDetail.StatusHtml = betListHelper.BuildStatus(builder, ticketHelper, ticketDetail.Ticket, new List<ITicketData>());
                     ticketDetail.IP = ticketDetail.Ticket.IP;
+                    ticketDetail.DeviceType = ticketDetail.DeviceType;
                     detailsTickets.Add(ticketDetail);
                 }
             }
@@ -159,7 +160,7 @@
             var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(criteria.CustId);
             if (siteDB != null)
             {
-                var tickets = new List<Ticket>();
+                var tickets = new List<TicketDto>();
                 if (siteDB.IsSiteDB && criteria.WinLostDate > ReportUtils.BalanceUp.MoveBetsDay)
                 {
                     var siteDBCriteria = new GetJackpotDetailsInSiteDBCriteria
@@ -197,6 +198,7 @@
                     ticketDetail.OddHtml = builder.BuildOdds(ticketDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                     ticketDetail.StatusHtml = betListHelper.BuildStatus(builder, ticketHelper, ticketDetail.Ticket, new List<ITicketData>());
                     ticketDetail.IP = ticketDetail.Ticket.IP;
+                    ticketDetail.DeviceType = ticketDetail.DeviceType;
 
                     detailsTickets.Add(ticketDetail);
                 }
