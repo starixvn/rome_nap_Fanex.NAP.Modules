@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using BetList.Core.Entities;
     using Common;
     using Criteria;
@@ -64,7 +65,8 @@
                             ExtraInfo = Converter.ToString2(reader["ExtraInfo"]),
                             EventDate = Converter.ToDateTime(reader["eventdate"]),
                             BetTeam = Converter.ToString2(reader["BetTeam"]),
-                            SiteId = Converter.ToString2(reader["SiteId"])
+                            SiteId = Converter.ToString2(reader["SiteId"]),
+                            JackpotInfo = Converter.ToString2(reader["JackpotInfo"])
                         });
                     }
                 }
@@ -128,7 +130,8 @@
                             ExtraInfo = Converter.ToString2(reader["ExtraInfo"]),
                             EventDate = Converter.ToDateTime(reader["eventdate"]),
                             BetTeam = Converter.ToString2(reader["BetTeam"]),
-                            SiteId = Converter.ToString2(reader["SiteId"])
+                            SiteId = Converter.ToString2(reader["SiteId"]),
+                            JackpotInfo = Converter.ToString2(reader["JackpotInfo"])
                         });
                     }
                 }
@@ -186,7 +189,8 @@
                         IP = Converter.ToString2(reader["Ip"]),
                         BetCheck = Converter.ToString2(reader["BetCheck"]),
                         TransDesc = Converter.ToString2(reader["TransDesc"]),
-                        BetdaqId = Converter.To<long>(reader["BetdaqId"])
+                        BetdaqId = Converter.To<long>(reader["BetdaqId"]),
+                        ExtraInfo = HasColumn(reader, "ExtraInfo") ? Converter.ToString2(reader["ExtraInfo"]) : null
                     });
                 }
             }
@@ -241,12 +245,26 @@
                         IP = Converter.ToString2(reader["Ip"]),
                         BetCheck = Converter.ToString2(reader["BetCheck"]),
                         TransDesc = Converter.ToString2(reader["TransDesc"]),
-                        BetdaqId = Converter.To<long>(reader["BetdaqId"])
+                        BetdaqId = Converter.To<long>(reader["BetdaqId"]),
+                        ExtraInfo = HasColumn(reader, "ExtraInfo") ? Converter.ToString2(reader["ExtraInfo"]) : null
                     });
                 }
             }
 
             return result;
+        }
+
+        private bool HasColumn(IDataRecord dataRecord, string columnName)
+        {
+            for (int i = 0; i < dataRecord.FieldCount; i++)
+            {
+                if (dataRecord.GetName(i).Equals(columnName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
