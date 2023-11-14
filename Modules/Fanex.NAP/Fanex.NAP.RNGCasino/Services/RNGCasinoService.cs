@@ -106,7 +106,7 @@
                     ticketDetail.OddHtml = builder.BuildOdds(ticketDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                     ticketDetail.StatusHtml = betListHelper.BuildStatus(builder, ticketHelper, ticketDetail.Ticket, new List<ITicketData>());
                     ticketDetail.IP = ticketDetail.Ticket.IP;
-                    ticketDetail.DeviceType = ticketDetail.DeviceType;
+                    ticketDetail.DeviceType = ticket.DeviceType;
                     detailsTickets.Add(ticketDetail);
                 }
             }
@@ -198,7 +198,7 @@
                     ticketDetail.OddHtml = builder.BuildOdds(ticketDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                     ticketDetail.StatusHtml = betListHelper.BuildStatus(builder, ticketHelper, ticketDetail.Ticket, new List<ITicketData>());
                     ticketDetail.IP = ticketDetail.Ticket.IP;
-                    ticketDetail.DeviceType = ticketDetail.DeviceType;
+                    ticketDetail.DeviceType = ticket.DeviceType;
 
                     detailsTickets.Add(ticketDetail);
                 }
