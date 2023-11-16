@@ -174,9 +174,6 @@
   <data name="FishingWorld" xml:space="preserve">
     <value>Fishing World</value>
   </data>
-  <data name="Platform_0" xml:space="preserve">
-    <value>N/A</value>
-  </data>
   <data name="Platform_1" xml:space="preserve">
     <value>Desktop</value>
   </data>
@@ -191,5 +188,8 @@
   </data>
   <data name="Platform_Uncategorized" xml:space="preserve">
     <value>Uncategorized</value>
+  </data>
+  <data name="Platform_NA" xml:space="preserve">
+    <value>N/A</value>
   </data>
 </root>

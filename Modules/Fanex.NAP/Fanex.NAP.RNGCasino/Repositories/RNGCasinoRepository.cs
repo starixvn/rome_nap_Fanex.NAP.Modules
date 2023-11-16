@@ -68,7 +68,7 @@
                             BetTeam = Converter.ToString2(reader["BetTeam"]),
                             SiteId = Converter.ToString2(reader["SiteId"]),
                             JackpotInfo = HasColumn(reader, "JackpotInfo") ? Converter.ToString2(reader["JackpotInfo"]) : null,
-                            DeviceType = Converter.ToInt(reader["DeviceType"])
+                            DeviceType = HasColumn(reader, "DeviceType") && DBNull.Value != reader["DeviceType"] ? Converter.ToInt(reader["DeviceType"]) : (int?)null
                         });
                     }
                 }
@@ -134,7 +134,7 @@
                             BetTeam = Converter.ToString2(reader["BetTeam"]),
                             SiteId = Converter.ToString2(reader["SiteId"]),
                             JackpotInfo = HasColumn(reader, "JackpotInfo") ? Converter.ToString2(reader["JackpotInfo"]) : null,
-                            DeviceType = Converter.ToInt(reader["DeviceType"])
+                            DeviceType = HasColumn(reader, "DeviceType") && DBNull.Value != reader["DeviceType"] ? Converter.ToInt(reader["DeviceType"]) : (int?)null
                         });
                     }
                 }
@@ -194,7 +194,7 @@
                         TransDesc = Converter.ToString2(reader["TransDesc"]),
                         BetdaqId = Converter.To<long>(reader["BetdaqId"]),
                         ExtraInfo = HasColumn(reader, "ExtraInfo") ? Converter.ToString2(reader["ExtraInfo"]) : null,
-                        DeviceType = Converter.ToInt(reader["DeviceType"])
+                        DeviceType = HasColumn(reader, "DeviceType") && DBNull.Value != reader["DeviceType"] ? Converter.ToInt(reader["DeviceType"]) : (int?)null
                     });
                 }
             }
@@ -251,7 +251,7 @@
                         TransDesc = Converter.ToString2(reader["TransDesc"]),
                         BetdaqId = Converter.To<long>(reader["BetdaqId"]),
                         ExtraInfo = HasColumn(reader, "ExtraInfo") ? Converter.ToString2(reader["ExtraInfo"]) : null,
-                        DeviceType = Converter.ToInt(reader["DeviceType"])
+                        DeviceType = HasColumn(reader, "DeviceType") && DBNull.Value != reader["DeviceType"] ? Converter.ToInt(reader["DeviceType"]) : (int?)null
                     });
                 }
             }
