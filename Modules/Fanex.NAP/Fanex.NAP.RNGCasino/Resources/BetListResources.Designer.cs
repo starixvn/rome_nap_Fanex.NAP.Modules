@@ -19,7 +19,7 @@ namespace Fanex.Module.RNGCasino.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class BetListResources {
@@ -120,6 +120,69 @@ namespace Fanex.Module.RNGCasino.Resources {
         public static string Odds {
             get {
                 return ResourceManager.GetString("Odds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to N/A.
+        /// </summary>
+        public static string Platform_0 {
+            get {
+                return ResourceManager.GetString("Platform_0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desktop.
+        /// </summary>
+        public static string Platform_1 {
+            get {
+                return ResourceManager.GetString("Platform_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile.
+        /// </summary>
+        public static string Platform_2 {
+            get {
+                return ResourceManager.GetString("Platform_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to APP.
+        /// </summary>
+        public static string Platform_3 {
+            get {
+                return ResourceManager.GetString("Platform_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uncategorized.
+        /// </summary>
+        public static string Platform_99 {
+            get {
+                return ResourceManager.GetString("Platform_99", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to N/A.
+        /// </summary>
+        public static string Platform_NA {
+            get {
+                return ResourceManager.GetString("Platform_NA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uncategorized.
+        /// </summary>
+        public static string Platform_Uncategorized {
+            get {
+                return ResourceManager.GetString("Platform_Uncategorized", resourceCulture);
             }
         }
         

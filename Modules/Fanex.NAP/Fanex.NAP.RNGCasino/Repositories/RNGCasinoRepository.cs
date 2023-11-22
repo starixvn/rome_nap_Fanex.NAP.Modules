@@ -7,14 +7,15 @@
     using Common;
     using Criteria;
     using Data;
+    using Fanex.Module.RNGCasino.Models;
     using Sunplus.Accounting.Core.Extensions;
 
     [Obsolete]
     public class RNGCasinoRepository : IRNGCasinoRepository
     {
-        public IEnumerable<Ticket> BetDetails(GetRNGCasinoBetDetailsCriteria criteria)
+        public IEnumerable<TicketDto> BetDetails(GetRNGCasinoBetDetailsCriteria criteria)
         {
-            var result = new List<Ticket>();
+            var result = new List<TicketDto>();
 
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -22,7 +23,7 @@
                 {
                     while (reader.Read())
                     {
-                        result.Add(new Ticket
+                        result.Add(new TicketDto
                         {
                             TransId = Converter.To<long>(reader["transid"]),
                             SportTypeId = Converter.ToInt(reader["SportType"]),
@@ -66,7 +67,8 @@
                             EventDate = Converter.ToDateTime(reader["eventdate"]),
                             BetTeam = Converter.ToString2(reader["BetTeam"]),
                             SiteId = Converter.ToString2(reader["SiteId"]),
-                            JackpotInfo = Converter.ToString2(reader["JackpotInfo"])
+                            JackpotInfo = HasColumn(reader, "JackpotInfo") ? Converter.ToString2(reader["JackpotInfo"]) : null,
+                            DeviceType = HasColumn(reader, "DeviceType") && DBNull.Value != reader["DeviceType"] ? Converter.ToInt(reader["DeviceType"]) : (int?)null
                         });
                     }
                 }
@@ -77,9 +79,9 @@
             return result;
         }
 
-        public IEnumerable<Ticket> BetDetails(GetRNGCasinoBetDetailsInSiteDBCriteria criteria, string AGIP)
+        public IEnumerable<TicketDto> BetDetails(GetRNGCasinoBetDetailsInSiteDBCriteria criteria, string AGIP)
         {
-            var result = new List<Ticket>();
+            var result = new List<TicketDto>();
 
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -87,7 +89,7 @@
                 {
                     while (reader.Read())
                     {
-                        result.Add(new Ticket
+                        result.Add(new TicketDto
                         {
                             TransId = Converter.To<long>(reader["transid"]),
                             SportTypeId = Converter.ToInt(reader["SportType"]),
@@ -131,7 +133,8 @@
                             EventDate = Converter.ToDateTime(reader["eventdate"]),
                             BetTeam = Converter.ToString2(reader["BetTeam"]),
                             SiteId = Converter.ToString2(reader["SiteId"]),
-                            JackpotInfo = Converter.ToString2(reader["JackpotInfo"])
+                            JackpotInfo = HasColumn(reader, "JackpotInfo") ? Converter.ToString2(reader["JackpotInfo"]) : null,
+                            DeviceType = HasColumn(reader, "DeviceType") && DBNull.Value != reader["DeviceType"] ? Converter.ToInt(reader["DeviceType"]) : (int?)null
                         });
                     }
                 }
@@ -142,9 +145,9 @@
             return result;
         }
 
-        public IEnumerable<Ticket> JackpotDetails(GetJackpotDetailsCriteria criteria)
+        public IEnumerable<TicketDto> JackpotDetails(GetJackpotDetailsCriteria criteria)
         {
-            var result = new List<Ticket>();
+            var result = new List<TicketDto>();
 
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -152,7 +155,7 @@
 
                 while (reader.Read())
                 {
-                    result.Add(new Ticket
+                    result.Add(new TicketDto
                     {
                         TransId = Converter.To<long>(reader["TransId"]),
                         RefNo = Converter.ToString2(reader["RefNo"]),
@@ -190,7 +193,8 @@
                         BetCheck = Converter.ToString2(reader["BetCheck"]),
                         TransDesc = Converter.ToString2(reader["TransDesc"]),
                         BetdaqId = Converter.To<long>(reader["BetdaqId"]),
-                        ExtraInfo = HasColumn(reader, "ExtraInfo") ? Converter.ToString2(reader["ExtraInfo"]) : null
+                        ExtraInfo = HasColumn(reader, "ExtraInfo") ? Converter.ToString2(reader["ExtraInfo"]) : null,
+                        DeviceType = HasColumn(reader, "DeviceType") && DBNull.Value != reader["DeviceType"] ? Converter.ToInt(reader["DeviceType"]) : (int?)null
                     });
                 }
             }
@@ -198,9 +202,9 @@
             return result;
         }
 
-        public IEnumerable<Ticket> JackpotDetails(GetJackpotDetailsInSiteDBCriteria criteria, string AGIP)
+        public IEnumerable<TicketDto> JackpotDetails(GetJackpotDetailsInSiteDBCriteria criteria, string AGIP)
         {
-            var result = new List<Ticket>();
+            var result = new List<TicketDto>();
 
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -208,7 +212,7 @@
 
                 while (reader.Read())
                 {
-                    result.Add(new Ticket
+                    result.Add(new TicketDto
                     {
                         TransId = Converter.To<long>(reader["TransId"]),
                         RefNo = Converter.ToString2(reader["RefNo"]),
@@ -246,7 +250,8 @@
                         BetCheck = Converter.ToString2(reader["BetCheck"]),
                         TransDesc = Converter.ToString2(reader["TransDesc"]),
                         BetdaqId = Converter.To<long>(reader["BetdaqId"]),
-                        ExtraInfo = HasColumn(reader, "ExtraInfo") ? Converter.ToString2(reader["ExtraInfo"]) : null
+                        ExtraInfo = HasColumn(reader, "ExtraInfo") ? Converter.ToString2(reader["ExtraInfo"]) : null,
+                        DeviceType = HasColumn(reader, "DeviceType") && DBNull.Value != reader["DeviceType"] ? Converter.ToInt(reader["DeviceType"]) : (int?)null
                     });
                 }
             }

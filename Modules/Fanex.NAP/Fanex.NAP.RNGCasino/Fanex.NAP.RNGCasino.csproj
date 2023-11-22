@@ -323,6 +323,7 @@
     <Compile Include="Models\IPInfoDataAccess.cs" />
     <Compile Include="Models\ResultDetail.cs" />
     <Compile Include="Models\TicketDetail.cs" />
+    <Compile Include="Models\TicketDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IRNGCasinoRepository.cs" />
     <Compile Include="Repositories\RNGCasinoRepository.cs" />

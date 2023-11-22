@@ -3,17 +3,17 @@
     using System;
     using System.Collections.Generic;
     using Criteria;
-    using Fanex.BetList.Core.Entities;
+    using Fanex.Module.RNGCasino.Models;
 
     [Obsolete]
     public interface IRNGCasinoRepository
     {
-        IEnumerable<Ticket> BetDetails(GetRNGCasinoBetDetailsCriteria criteria);
+        IEnumerable<TicketDto> BetDetails(GetRNGCasinoBetDetailsCriteria criteria);
 
-        IEnumerable<Ticket> BetDetails(GetRNGCasinoBetDetailsInSiteDBCriteria criteria, string AGIP);
+        IEnumerable<TicketDto> BetDetails(GetRNGCasinoBetDetailsInSiteDBCriteria criteria, string AGIP);
 
-        IEnumerable<Ticket> JackpotDetails(GetJackpotDetailsCriteria criteria);
+        IEnumerable<TicketDto> JackpotDetails(GetJackpotDetailsCriteria criteria);
 
-        IEnumerable<Ticket> JackpotDetails(GetJackpotDetailsInSiteDBCriteria criteria, string AGIP);
+        IEnumerable<TicketDto> JackpotDetails(GetJackpotDetailsInSiteDBCriteria criteria, string AGIP);
     }
 }
