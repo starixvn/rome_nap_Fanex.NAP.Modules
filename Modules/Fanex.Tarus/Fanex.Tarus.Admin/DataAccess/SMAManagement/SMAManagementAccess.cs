@@ -102,42 +102,6 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
             return groupHeadlinesHash.Values;
         }
 
-        public IEnumerable<CN88SMAGroupHeadline> GetCN88SMAGroupHeadlines(GetCN88SMAGroupHeadlineCriteria criteria)
-        {
-            IDictionary<int, CN88SMAGroupHeadline> groupHeadlinesHash = new Dictionary<int, CN88SMAGroupHeadline>(128);
-
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                using (var reader = db.ExecuteReader(criteria.GetSPParams()))
-                {
-                    CN88SMAEntity entity;
-                    CN88SMAGroupHeadline groupHeadline;
-
-                    while (reader.Read())
-                    {
-                        entity = ParseCN88SMAEntity(reader);
-
-                        if (!groupHeadlinesHash.TryGetValue(entity.GroupId, out groupHeadline))
-                        {
-                            groupHeadline = new CN88SMAGroupHeadline
-                            {
-                                GroupId = entity.GroupId,
-                                GroupName = entity.GroupName,
-                                Owner = entity.Owner,
-                                CN88SMAEntities = new List<CN88SMAEntity>(64)
-                            };
-
-                            groupHeadlinesHash.Add(entity.GroupId, groupHeadline);
-                        }
-
-                        groupHeadline.CN88SMAEntities.Add(entity);
-                    }
-                }
-            }
-
-            return groupHeadlinesHash.Values;
-        }
-
         public Result UpdateHeadlineType(UpdateHeadlineTypeCriteria criteria)
         {
             return ExecuteNonQuery(criteria.GetSettingKey(), criteria.GetSPParams());
@@ -195,35 +159,6 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
             if (entity.IsClosed)
             {
                 entity.ClosedReason = new CustomerClosedReason(reader["closedreason"]);
-            }
-
-            return entity;
-        }
-
-        private CN88SMAEntity ParseCN88SMAEntity(IDataReader reader)
-        {
-            var entity = new CN88SMAEntity
-            {
-                GroupId = Convert.ToInt32(reader["custheadlineid"]),
-                GroupName = reader["groupname"].ToString(),
-                CustId = Convert.ToInt32(reader["custid"]),
-                Username = reader["username"].ToString(),
-                Status = getStatusName(Convert.ToInt32(reader["status"])),
-                Site = reader["site"].ToString(),
-                Currency = reader["currencyname"].ToString(),
-                RoleId = Convert.ToInt32(reader["roleid"]),
-                Owner = reader["ownername"].ToString()
-            };
-
-            object headlineType = reader["headlinetype"];
-
-            if (headlineType == null || headlineType is DBNull)
-            {
-                entity.HeadlineTypeId = null;
-            }
-            else
-            {
-                entity.HeadlineTypeId = Convert.ToInt32(headlineType);
             }
 
             return entity;

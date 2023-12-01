@@ -177,34 +177,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
                     result = new DbResult(output, ds);
                 }
-
-
-                if (result.ResultSet.Tables.Count > 0 && result.ResultSet.Tables[0].Rows.Count > 0)
-                {
-                    string siteName = result.ResultSet.Tables[0].Columns.Contains("membersite") ? result.ResultSet.Tables[0].Rows[0]["membersite"]?.ToString() : string.Empty;
-                    if (AppSettings.IsCN88SiteName(siteName))
-                    {
-                        int custId = Converter.ToInt(result.ResultSet.Tables[0].Rows[0]["custid"]);
-                        int roleId = Converter.ToInt(result.ResultSet.Tables[0].Rows[0]["roleid"]);
-                        using (var db = new ObjectDb("CS_Customer_Credit_Sel"))
-                        {
-                            db.AssignParamValues(new Hashtable { { "custid", custId } });
-                            var ds = db.ExecuteDataSet();
-                            var dt = ds.Tables[0].Copy();
-                            dt.TableName = "Table5";
-                            result.ResultSet.Tables.Add(dt);
-                        }
-
-                        using (var db = new ObjectDb("CS_Member_TotalBetStake_Sel"))
-                        {
-                            db.AssignParamValues(new Hashtable { { "custid", custId } });
-                            var ds = db.ExecuteDataSet();
-                            var dt = ds.Tables[0].Copy();
-                            dt.TableName = "Table6";
-                            result.ResultSet.Tables.Add(dt);
-                        }
-                    }
-                }
             }
             catch (Exception ex)
             {

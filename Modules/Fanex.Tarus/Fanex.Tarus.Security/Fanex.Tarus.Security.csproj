@@ -39,9 +39,6 @@
       <HintPath>..\..\..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CN88.CustomerSetting.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CN88.CustomerSetting.Client.1.0.0\lib\net461\CN88.CustomerSetting.Client.dll</HintPath>
-    </Reference>
     <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Dapper.1.50.2\lib\net40\Dapper.dll</HintPath>
       <Private>True</Private>
@@ -230,7 +227,6 @@
     <Compile Include="Authenticate\ControllerContextExtensions.cs" />
     <Compile Include="Authenticate\AuthorizeFunctionsAttribute.cs" />
     <Compile Include="Authenticate\CustomerSettingAttribute.cs" />
-    <Compile Include="Authenticate\CustomerSettingRenovation\CN88CustomerSettingClientRegistration.cs" />
     <Compile Include="Authenticate\CustomerSettingRenovation\CustomerSettingClientRegistration.cs" />
     <Compile Include="Authenticate\CustomerSettingRenovation\SettingMatrixClientRegistration.cs" />
     <Compile Include="Authenticate\GoldDeluxe\GoldDeluxeAuthorizationService.cs" />

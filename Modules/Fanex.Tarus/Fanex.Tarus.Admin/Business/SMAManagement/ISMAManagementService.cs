@@ -15,11 +15,8 @@ namespace Fanex.Tarus.Admin.Business.SMAManagement
 
         SMAManagerModel GetSMAGroupHeadlines(GetSMAGroupHeadlineCriteria criteria);
 
-        CN88SMAManagerModel GetCN88SMAGroupHeadlines(GetCN88SMAGroupHeadlineCriteria criteria);
-
         ExcelFile ExportSMAGroupHeadlinesToExcel(string sheetName, GetSMAGroupHeadlineCriteria criteria);
 
-        ExcelFile ExportCN88SMAGroupHeadlinesToExcel(string sheetName, GetCN88SMAGroupHeadlineCriteria criteria);
 
         Result UpdateHeadlineType(UpdateHeadlineTypeCriteria criteria);
 

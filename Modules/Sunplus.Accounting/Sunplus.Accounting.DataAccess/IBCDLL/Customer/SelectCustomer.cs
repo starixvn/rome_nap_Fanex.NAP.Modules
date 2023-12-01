@@ -118,7 +118,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         /// <param name="userName"></param>
         /// <param name="accountingSystem"></param>
         /// <returns>DataResult</returns>
-        public static DataSet CustSelByUsername(string userName, string accountingSystem, bool isExcludeCN88 = false)
+        public static DataSet CustSelByUsername(string userName, string accountingSystem)
         {
             try
             {
@@ -127,8 +127,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                     var p = new Hashtable
                             {
                                 {"username", userName},
-                                {"system", accountingSystem.ToString().ToUpper()},
-                                {"isexcludecn88", isExcludeCN88}
+                                {"system", accountingSystem.ToString().ToUpper()}
                             };
                     objDb.AssignParamValues(p);
 

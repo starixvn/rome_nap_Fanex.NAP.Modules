@@ -97,42 +97,6 @@ namespace Fanex.Tarus.Infrastructure.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Active.
-        /// </summary>
-        public static string CN88Active {
-            get {
-                return ResourceManager.GetString("CN88Active", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Inactive.
-        /// </summary>
-        public static string CN88Inactive {
-            get {
-                return ResourceManager.GetString("CN88Inactive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Suspended.
-        /// </summary>
-        public static string CN88Suspended {
-            get {
-                return ResourceManager.GetString("CN88Suspended", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View Only.
-        /// </summary>
-        public static string CN88ViewOnly {
-            get {
-                return ResourceManager.GetString("CN88ViewOnly", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Comm.
         /// </summary>
         public static string Comm {
