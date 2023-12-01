@@ -41,6 +41,9 @@ namespace Sunplus.Accounting.Entities.LogDisplay.SettingPT
     public class TrackingGroup
     {
         [DataMember]
+        public List<TrackingTable> Tables { get; set; }
+
+        [DataMember]
         public string N { get; set; } // name
 
         [DataMember]
@@ -67,5 +70,16 @@ namespace Sunplus.Accounting.Entities.LogDisplay.SettingPT
     {
         [DataMember]
         public string N { get; set; } // name
+    }
+
+    [Serializable]
+    [DataContract]
+    public class TrackingTable
+    {
+        [DataMember]
+        public List<List<string>> HeaderRows { get; set; }
+
+        [DataMember]
+        public List<List<string>> Rows { get; set; }
     }
 }
