@@ -19,6 +19,7 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
             {
                 var inputParams = new Hashtable
                 {
+                    { "userid", AppSession.AccId },
                     {  "mode", mode }
                 };
 
