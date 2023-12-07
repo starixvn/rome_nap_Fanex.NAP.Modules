@@ -1,9 +1,18 @@
 ﻿namespace Fanex.Tarus.Admin.Criteria.MaxMemberLimitBySuper
 {
     using Fanex.NAP.Framework.Data;
+    using Sunplus.Accounting.Core.Common;
 
     public class SearchSuperCriteria : CriteriaBase
     {
+        public int UserId
+        {
+            get
+            {
+                return AppSession.AccId;
+            }
+        }
+
         public string SuperName { get; set; }
 
         public string Site { get; set; }
