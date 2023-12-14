@@ -622,6 +622,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         public void InsertBalanceWhenCreateNewMember(int memberId, string memberName)
         {
+            Logger.Log.Info($"[InsertBalanceWhenCreateNewMember] - memberId: {memberId}; memberName: {memberName}");
             var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId_DBCUST(memberId);
             using (var db = new ObjectDb("Task_Cust_CheckBalance_Exception_Ins"))
             {
