@@ -118,6 +118,15 @@ namespace Sunplus.Accounting.Core.Cache
             return remotingRefService.GetResourceDataByRefIdAndResourceId(G_GT_Sport_Bettype_RefId, refKey, language, refKey);
         }
 
+        public static string GetParlayMaxPayoutBetSettingInfoSportName(string settingId, bool isSaba, string language = "en-US")
+        {
+            return remotingRefService.GetResourceDataByRefIdAndResourceId(
+                    isSaba ? "BetSettingRef_Saba" : "BetSettingRef",
+                    settingId,
+                    language,
+                    settingId);
+        }
+
         private static string CombineRefKey(int productGroupId, int groupTypeId, int sporttypeId, int bettypeId)
             => $"{productGroupId}_{groupTypeId}_{sporttypeId}_{bettypeId}";
     }
