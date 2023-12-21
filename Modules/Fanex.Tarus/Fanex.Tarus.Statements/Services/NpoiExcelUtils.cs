@@ -1,9 +1,9 @@
 ﻿namespace Fanex.Tarus.Statements.Services
 {
-    using System.Drawing;
     using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
+    using System.Drawing;
 
     public static class NpoiExcelUtils
     {

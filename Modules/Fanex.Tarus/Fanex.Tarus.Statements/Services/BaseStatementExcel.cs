@@ -1,19 +1,25 @@
 ﻿namespace Fanex.Tarus.Statements.Services
 {
-    using System.Collections.Generic;
-    using System.Web;
-    using Fanex.Tarus.Statements.Models;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using Fanex.Tarus.Statements.Models;
+    using System.Collections.Generic;
+    using System.Web;
 
     public abstract class BaseStatementExcel<T>
     {
+        private const int SheetNameMaxLength = 31;
         protected readonly HSSFWorkbook HSSFWorkbook;
         protected readonly ISheet Worksheet;
 
         public BaseStatementExcel(IList<T> data, string sheetname = null)
         {
             HSSFWorkbook = new HSSFWorkbook();
+            if (sheetname.Length > SheetNameMaxLength)
+            {
+                sheetname = sheetname.Substring(0, SheetNameMaxLength);
+            }
+
             Worksheet = HSSFWorkbook.CreateSheet(sheetname ?? "Sheet1");
 
             ReportData = data;
