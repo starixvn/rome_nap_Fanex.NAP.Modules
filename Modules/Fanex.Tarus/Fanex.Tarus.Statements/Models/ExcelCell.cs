@@ -1,7 +1,7 @@
 ﻿namespace Fanex.Tarus.Statements.Models
 {
-    using System;
     using NPOI.SS.UserModel;
+    using System;
 
     public class ExcelCell
     {

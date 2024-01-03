@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Tarus.Statements.Services
 {
-    using System.Collections.Generic;
-    using Fanex.Tarus.Statements.Models;
     using NPOI.SS.UserModel;
+    using Fanex.Tarus.Statements.Models;
+    using System.Collections.Generic;
 
     public class OldStatementExcel : BaseStatementExcel<OldStatement>
     {
