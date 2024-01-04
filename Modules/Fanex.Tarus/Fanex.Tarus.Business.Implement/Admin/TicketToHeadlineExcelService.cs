@@ -154,24 +154,24 @@ namespace Fanex.Tarus.Business.Implement.Admin
                 return;
             }
 
-            if (dataRow.MergeRowNumGroupHeadline > 0)
+            if (dataRow.MergeRowNumGroupHeadline > 2)
             {
                 this._sheet.AddMergedRegion(new CellRangeAddress(this._currentRow - 1, this._currentRow - 1 + dataRow.MergeRowNumGroupHeadline - 2, 1, 1));
                 this._sheet.AddMergedRegion(new CellRangeAddress(this._currentRow - 1, this._currentRow - 1 + dataRow.MergeRowNumGroupHeadline - 2, 2, 2));
             }
 
-            if (dataRow.MergeRowNumSuper > 0)
+            if (dataRow.MergeRowNumSuper > 2)
             {
                 this._sheet.AddMergedRegion(new CellRangeAddress(this._currentRow - 1, this._currentRow - 1 + dataRow.MergeRowNumSuper - 2, 3, 3));
                 this._sheet.AddMergedRegion(new CellRangeAddress(this._currentRow - 1, this._currentRow - 1 + dataRow.MergeRowNumSuper - 2, 4, 4));
             }
 
-            if (dataRow.MergeRowNumMaster > 0)
+            if (dataRow.MergeRowNumMaster > 2)
             {
                 this._sheet.AddMergedRegion(new CellRangeAddress(this._currentRow - 1, this._currentRow - 1 + dataRow.MergeRowNumMaster - 2, 5, 5));
             }
 
-            if (dataRow.MergeRowNumAgent > 0)
+            if (dataRow.MergeRowNumAgent > 2)
             {
                 this._sheet.AddMergedRegion(new CellRangeAddress(this._currentRow - 1, this._currentRow - 1 + dataRow.MergeRowNumAgent - 2, 6, 6));
             }
