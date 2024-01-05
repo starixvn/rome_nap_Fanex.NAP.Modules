@@ -50,21 +50,10 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["disablevirtualsports"], false) : false;
                 _cust.IsEnableDoubleCommLosing = WebSettings.OfferDoubleComm ? (CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DoubleCommLosing"], false)) : false;
 
-                _cust.IsDisableEsports = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableEsports"], false);
                 _cust.IsEnableDoubleCommLosing = WebSettings.OfferDoubleComm ? (CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DoubleCommLosing"], false)) : false;
 
                 _cust.IsDisableMetricGaming = WebSettings.EnableMetricGaming ?
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableSuperLive"], false) :
-                    true;
-
-                _cust.IsDisableColossusBets = WebSettings.IsShowColossusBets ?
-                    drCustomer.ResultSet.Tables[0].Columns.Contains("DisableColossusBet") ?
-                        CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableColossusBet"], false) : 
-                        true :
-                    true;
-
-                _cust.IsDisableSportsbook2 = WebSettings.IsShowSportsbook2 ?
-                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableMuayThai"], false) :
                     true;
 
                 return _cust;
