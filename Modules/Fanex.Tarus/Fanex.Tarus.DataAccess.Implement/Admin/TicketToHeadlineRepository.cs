@@ -12,6 +12,8 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using Fanex.CustomerSetting.Module.Core.Web;
+using Sunplus.Accounting.Core.Web.TplCore.App_Templates.CreditTeam.App_Templates.CreditTeam;
 
 namespace Fanex.Tarus.DataAccess.Implement.Admin
 {
@@ -54,6 +56,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
         {
             var viewModel = new TicketToHeadlineViewModel();
             TicketToHeadline trackingDataRow = new TicketToHeadline();
+            criteria.UserId = AppSession.AccId;
             var xmlEvent = string.Empty;
             var xmlTicket = string.Empty;
             bool isCheckMessage = false;
