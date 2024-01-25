@@ -82,7 +82,7 @@
                 {
                     Data = result,
                     ErrorCode = Converter.ToInt(objDb.GetOuputParams()["errcode"]),
-                    ErrorMessage = objDb.GetOuputParams()["errmsg"].ToString(),
+                    ErrorMessage = Converter.ToString2(objDb.GetOuputParams()["errmsg"]),
                 };
             }
         }
