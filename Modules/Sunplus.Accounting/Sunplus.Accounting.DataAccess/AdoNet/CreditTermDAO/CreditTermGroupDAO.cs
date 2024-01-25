@@ -4,16 +4,20 @@ using Fanex.Data;
 using Sunplus.Accounting.DataAccess.ICreditTermDAO;
 using Sunplus.Accounting.Entities;
 using System;
+using System.Collections;
 using System.Data;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.CreditTermDAO
 {
     public class CreditTermGroupDAO : DataAccess, ICreditTermGroupDAO
     {
-        public DataTable GetAllGroup()
+        public DataTable GetAllGroup(int userId)
         {
             using (ObjectDb objDB = new ObjectDb("GetAllGroup",600))
             {
+                var hash = new Hashtable();
+                hash.Add("userid", userId);
+                objDB.AssignParamValues(hash);
                 var ds = objDB.ExecuteDataSet();
                 if (ds.Tables.Count > 0)
                 {

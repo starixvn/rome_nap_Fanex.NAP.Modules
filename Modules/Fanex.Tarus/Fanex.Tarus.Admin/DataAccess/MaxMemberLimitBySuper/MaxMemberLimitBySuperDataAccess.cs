@@ -60,7 +60,7 @@
             return result;
         }
 
-        public List<MaxMemberLimitBySuperUpdateResultEntity> UpdateSuper(UpdateSuperCriteria criteria)
+        public MaxMemberLimitBySuperUpdateResultModel UpdateSuper(UpdateSuperCriteria criteria)
         {
             var result = new List<MaxMemberLimitBySuperUpdateResultEntity>();
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
@@ -77,9 +77,14 @@
                         ErrMsg = Converter.ToString2(reader["ErrMessage"])
                     });
                 }
-            }
 
-            return result;
+                return new MaxMemberLimitBySuperUpdateResultModel
+                {
+                    Data = result,
+                    ErrorCode = Converter.ToInt(objDb.GetOuputParams()["errcode"]),
+                    ErrorMessage = objDb.GetOuputParams()["errmsg"].ToString(),
+                };
+            }
         }
     }
 }

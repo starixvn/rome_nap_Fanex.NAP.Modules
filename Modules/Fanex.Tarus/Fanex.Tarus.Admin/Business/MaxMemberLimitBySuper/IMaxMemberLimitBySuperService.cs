@@ -11,6 +11,6 @@
 
         MaxMemberLimitBySuperSearchResult SearchSuper(SearchSuperCriteria criteria);
 
-        List<MaxMemberLimitBySuperUpdateResultEntity> UpdateSuper(UpdateSuperCriteria criteria);
+        MaxMemberLimitBySuperUpdateResultModel UpdateSuper(UpdateSuperCriteria criteria);
     }
 }
