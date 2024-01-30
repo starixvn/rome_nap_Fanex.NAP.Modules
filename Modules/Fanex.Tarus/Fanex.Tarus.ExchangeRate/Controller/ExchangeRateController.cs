@@ -74,7 +74,8 @@ namespace Fanex.Tarus.ExchangeRate.Controller
         public JsonResult GetExchangeDailyCrypto(string fdate, string tdate)
         {
             var result = new List<ExchangeDailyDTO>();
-            var crypto = ConfiguringExcel.CryptoExRateExcel(fdate, tdate);
+            var crypto = ConfiguringExcel.CryptoExRateExcel(fdate, tdate,
+                ConfigurationManager.AppSettings["Fanex.Tarus.ExchangeRate.BaseCryptoCurrency"].Split(new Char[] { ',' }));
             result = _exchangeRateService.GetExchangeDaily(crypto);
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
@@ -100,7 +101,8 @@ namespace Fanex.Tarus.ExchangeRate.Controller
         public ActionResult ExportExcelExDailyCrypto(string fdate, string tdate)
         {
             ExcelFile result =
-                _exchangeRateService.ExportExcelExDaily(ConfiguringExcel.CryptoExRateExcel(fdate, tdate));
+                _exchangeRateService.ExportExcelExDaily(ConfiguringExcel.CryptoExRateExcel(fdate, tdate,
+                    ConfigurationManager.AppSettings["Fanex.Tarus.ExchangeRate.BaseCryptoCurrency"].Split(new Char[] { ',' })));
             int exportResult = 0;
             if (result == null)
             {

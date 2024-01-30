@@ -62,11 +62,11 @@ namespace Fanex.Tarus.ExchangeRate.Entities
             };
         }
         
-        public static ConfiguringExcel CryptoExRateExcel(string fdate, string tdate)
+        public static ConfiguringExcel CryptoExRateExcel(string fdate, string tdate, string[] baseCurrency)
         {
             return new ConfiguringExcel
             {
-                BaseCurrency = new [] { "MYR", "CNY", "EUR", "USDT" },
+                BaseCurrency = baseCurrency,
                 BaseHeader = "CoinMarketCap Exchange Rate",
                 BaseFileName = "CoinMarketCapExRate",
                 FromDate = fdate,
