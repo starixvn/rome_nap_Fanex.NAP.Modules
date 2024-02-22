@@ -443,5 +443,21 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["IsShowSabaCasino"] == "1");
             }
         }
+        
+        public static string[] BaseCurrency
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["Fanex.Tarus.ExchangeRate.BaseCurrency"].Split(new Char[] { ',' });
+            }
+        }
+        
+        public static string[] BaseCryptoCurrency
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["Fanex.Tarus.ExchangeRate.BaseCryptoCurrency"].Split(new Char[] { ',' });
+            }
+        }
     }
 }
