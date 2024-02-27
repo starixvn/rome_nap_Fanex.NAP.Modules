@@ -20,7 +20,7 @@ namespace Fanex.Tarus.ExchangeRate.Controller
     using Security.Services;
     using Sunplus.Accounting.Entities;
     using Fanex.Tarus.ExchangeRate.Helpers;
-
+    using Sunplus.Accounting.Core.Configurations;
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -62,8 +62,7 @@ namespace Fanex.Tarus.ExchangeRate.Controller
         public JsonResult GetExchangeDailyOanda(string fdate, string tdate)
         {
             var result = new List<ExchangeDailyDTO>();
-            var oanda = ConfiguringExcel.OANDAExRateExcel(fdate, tdate,
-                ConfigurationManager.AppSettings["Fanex.Tarus.ExchangeRate.BaseCurrency"].Split(new Char[] { ',' }));
+            var oanda = ConfiguringExcel.OANDAExRateExcel(fdate, tdate,WebSettings.BaseCurrency);
             result = _exchangeRateService.GetExchangeDaily(oanda);
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
@@ -74,7 +73,7 @@ namespace Fanex.Tarus.ExchangeRate.Controller
         public JsonResult GetExchangeDailyCrypto(string fdate, string tdate)
         {
             var result = new List<ExchangeDailyDTO>();
-            var crypto = ConfiguringExcel.CryptoExRateExcel(fdate, tdate);
+            var crypto = ConfiguringExcel.CryptoExRateExcel(fdate, tdate,WebSettings.BaseCryptoCurrency);
             result = _exchangeRateService.GetExchangeDaily(crypto);
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
@@ -83,8 +82,7 @@ namespace Fanex.Tarus.ExchangeRate.Controller
 
         public ActionResult ExportExcelExDailyOanda(string fdate, string tdate)
         {
-            var OANDAExRateExcelConfig = ConfiguringExcel.OANDAExRateExcel(fdate, tdate,
-                ConfigurationManager.AppSettings["Fanex.Tarus.ExchangeRate.BaseCurrency"].Split(new Char[] { ',' }));
+            var OANDAExRateExcelConfig = ConfiguringExcel.OANDAExRateExcel(fdate, tdate,WebSettings.BaseCurrency);
             ExcelFile result = _exchangeRateService.ExportExcelExDaily(OANDAExRateExcelConfig);
             int exportResult = 0;
             if (result == null)
@@ -100,7 +98,7 @@ namespace Fanex.Tarus.ExchangeRate.Controller
         public ActionResult ExportExcelExDailyCrypto(string fdate, string tdate)
         {
             ExcelFile result =
-                _exchangeRateService.ExportExcelExDaily(ConfiguringExcel.CryptoExRateExcel(fdate, tdate));
+                _exchangeRateService.ExportExcelExDaily(ConfiguringExcel.CryptoExRateExcel(fdate, tdate, WebSettings.BaseCryptoCurrency));
             int exportResult = 0;
             if (result == null)
             {
