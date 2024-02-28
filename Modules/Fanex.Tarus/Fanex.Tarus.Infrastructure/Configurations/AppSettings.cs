@@ -101,17 +101,6 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
-        public static bool IsCN88SiteName(string site)
-        {
-            if (ConfigurationManager.AppSettings["CN88SiteName"] == null)
-            {
-                return false;
-            }
-
-            var cn88SiteName = ConfigurationManager.AppSettings["CN88SiteName"].Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
-            return cn88SiteName.Contains(site, StringComparer.OrdinalIgnoreCase);
-        }
-
         public static string IPV4TopCountries
         {
             get

@@ -24,13 +24,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        public static IbcError Acc_CustomerPwdUpd(int CustId, string UserPwd, int UserId, string language, bool isCN88, bool forceChangePwd)
+        public static IbcError Acc_CustomerPwdUpd(int CustId, string UserPwd, int UserId, string language, bool forceChangePwd)
         {
             IbcError error = IbcError.SuccessResult;
             try
             {
-                string spKey = isCN88 ? "CS_Acc_CustomerUpdPwdReset" : "Acc_CustomerUpdPwdReset";
-                using (ObjectDb objdb = new ObjectDb(spKey, 600))
+                using (ObjectDb objdb = new ObjectDb("Acc_CustomerUpdPwdReset", 600))
                 {
                     var p = new Hashtable();
                     p.Add("custid", CustId);

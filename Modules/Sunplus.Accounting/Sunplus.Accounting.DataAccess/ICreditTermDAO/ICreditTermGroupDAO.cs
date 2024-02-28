@@ -6,7 +6,7 @@ namespace Sunplus.Accounting.DataAccess.ICreditTermDAO
 {
     public interface ICreditTermGroupDAO
     {
-        DataTable GetAllGroup();
+        DataTable GetAllGroup(int userId);
 
         int GetGroupIdByUsername(string username);
 

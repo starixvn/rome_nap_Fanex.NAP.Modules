@@ -1,4 +1,6 @@
-﻿namespace Fanex.Tarus.Admin.Business.HeadlineExternalGroupMapping
+﻿using Fanex.Tarus.Infrastructure.Common;
+
+namespace Fanex.Tarus.Admin.Business.HeadlineExternalGroupMapping
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -37,7 +39,10 @@
                 .Select(group => new SelectListItem { Text = group, Value = group }).ToList();
 
         public IEnumerable<SelectListItem> GetHeadline()
-            => _dataAccess.SelHeadline(new GetHeadlineCriteria())
+            => _dataAccess.SelHeadline(new GetHeadlineCriteria()
+                {
+                    UserId = AppSession.AccId
+                })
                 .Select(headline => new SelectListItem { Text = headline.Name, Value = headline.Id.ToString() }).ToList();
 
         public MappingSuperResult GetMappingSuper(string usernames, int groupId)

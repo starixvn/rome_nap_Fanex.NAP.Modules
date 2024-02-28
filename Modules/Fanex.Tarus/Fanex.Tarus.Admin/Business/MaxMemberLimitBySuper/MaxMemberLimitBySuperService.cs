@@ -43,6 +43,6 @@ namespace Fanex.Tarus.Admin.Business.MaxMemberLimitBySuper
 
         public MaxMemberLimitBySuperSearchResult SearchSuper(SearchSuperCriteria criteria) => _maxMemberLimitBySuperDataAccess.SearchSuper(criteria);
 
-        public List<MaxMemberLimitBySuperUpdateResultEntity> UpdateSuper(UpdateSuperCriteria criteria) => _maxMemberLimitBySuperDataAccess.UpdateSuper(criteria);
+        public MaxMemberLimitBySuperUpdateResultModel UpdateSuper(UpdateSuperCriteria criteria) => _maxMemberLimitBySuperDataAccess.UpdateSuper(criteria);
     }
 }

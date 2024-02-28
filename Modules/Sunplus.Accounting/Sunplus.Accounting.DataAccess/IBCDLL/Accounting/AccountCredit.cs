@@ -21,17 +21,19 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <param name="custId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public static DbResult Acc_CreditTermSelGroupHeadline()
+        public static DbResult Acc_CreditTermSelGroupHeadline(int userId)
         {
             DbResult result = null;
             try
             {
                 var hash = new Hashtable();
+                hash.Add("userid", userId);
                 //var spElement = GetStoreProcedure("CreditTermSelGroupHeadline");
                 //return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
 
                 using (ObjectDb db = new ObjectDb("GetAllGroup", 600))
                 {
+                    db.AssignParamValues(hash);
                     var ds = db.ExecuteDataSet();
                     var output = db.GetOuputParams();
 

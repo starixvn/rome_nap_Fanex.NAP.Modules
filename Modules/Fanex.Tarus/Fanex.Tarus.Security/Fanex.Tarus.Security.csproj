@@ -39,9 +39,6 @@
       <HintPath>..\..\..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CN88.CustomerSetting.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CN88.CustomerSetting.Client.1.0.0\lib\net461\CN88.CustomerSetting.Client.dll</HintPath>
-    </Reference>
     <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Dapper.1.50.2\lib\net40\Dapper.dll</HintPath>
       <Private>True</Private>
@@ -143,11 +140,11 @@
     <Reference Include="RestSharp">
       <HintPath>..\..\..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.20, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.4.20\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.25, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.4.27-Add777Site01\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.6.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.6.6\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.7.1-Add777Site01\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Agent.Utilities.3.0.2\lib\net461\Sunplus.Agent.Utilities.dll</HintPath>
@@ -230,7 +227,6 @@
     <Compile Include="Authenticate\ControllerContextExtensions.cs" />
     <Compile Include="Authenticate\AuthorizeFunctionsAttribute.cs" />
     <Compile Include="Authenticate\CustomerSettingAttribute.cs" />
-    <Compile Include="Authenticate\CustomerSettingRenovation\CN88CustomerSettingClientRegistration.cs" />
     <Compile Include="Authenticate\CustomerSettingRenovation\CustomerSettingClientRegistration.cs" />
     <Compile Include="Authenticate\CustomerSettingRenovation\SettingMatrixClientRegistration.cs" />
     <Compile Include="Authenticate\GoldDeluxe\GoldDeluxeAuthorizationService.cs" />

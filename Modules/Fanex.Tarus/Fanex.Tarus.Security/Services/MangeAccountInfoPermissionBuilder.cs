@@ -11,8 +11,7 @@
         private static readonly string[] ManageAccountInfoPermissions = new[]
         {
             ManageAccountInfoConst.CreditSiteFunctionName,
-            ManageAccountInfoConst.DepositSiteFunctionName,
-            ManageAccountInfoConst.CN88SiteFunctionName
+            ManageAccountInfoConst.DepositSiteFunctionName
         };
 
         public static IEnumerable<int> MapToPermissionParameter(int userId, byte policy)
