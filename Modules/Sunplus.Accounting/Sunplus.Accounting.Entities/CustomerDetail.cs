@@ -362,17 +362,9 @@ namespace Sunplus.Accounting.Entities
 
         public bool IsHideVirtualSports { get; set; }
 
-        public bool IsDisableEsports { get; set; }
-
         public bool IsDisableMetricGaming { get; set; }
 
-        public bool IsDisableColossusBets { get; set; }
-
         public bool IsDisableLiveCasino { get; set; }
-
-        public bool IsDisableSportsbook2 { get; set; }
-
-        public bool IsDisableCockFighting { get; set; }
 
         #endregion Properties
     }

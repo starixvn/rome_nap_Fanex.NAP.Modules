@@ -12,7 +12,7 @@
         {
             var criteria = new ViewCommDCSCriteria();
             var products = new List<DCSProduct>();
-            int[] ListCommSettingIds = new int[] { 3, 5, 14, 19 };
+            int[] ListCommSettingIds = new int[] { 25, 3, 5, 14, 19 };
             foreach (int id in ListCommSettingIds)
             {
                 criteria.SettingType = id;

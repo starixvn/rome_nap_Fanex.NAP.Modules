@@ -112,11 +112,11 @@
       <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.25, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.4.27-Add777Site01\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.29, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.4.29\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.7.1-Add777Site01\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.8-SB2DCS-03\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.2.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Accounting.Services.1.0.2.9\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
@@ -151,15 +151,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business\Customer\FinanceCustomerListService.cs" />
-    <Compile Include="Business\Customer\IFinanceCustomerListService.cs" />
     <Compile Include="Business\Statement\FinanceStatementBusiness.cs" />
     <Compile Include="Business\Statement\IFinanceStatementBusiness.cs" />
     <Compile Include="Business\Transfer\CrossTransferService.cs" />
     <Compile Include="Business\Transaction\FinanceCrossTransferService.cs" />
     <Compile Include="Business\Transaction\FinanceTransferService.cs" />
     <Compile Include="Business\Transfer\ICrossTransferService.cs" />
-    <Compile Include="Controller\Customer\FinanceCustomerListController.cs" />
     <Compile Include="Controller\Statement\CustomerStatementController.cs" />
     <Compile Include="Controller\Transfer\CrossTransferController.cs">
       <SubType>
@@ -183,8 +180,6 @@
     <Compile Include="Criteria\Transaction\FinanceTransferBettransInsCriteria.cs" />
     <Compile Include="Criteria\Transaction\FinanceTransferBettransInsSiteDBCriteria.cs" />
     <Compile Include="Criteria\Transaction\FinanceTransferMulUpdCriteria.cs" />
-    <Compile Include="DataAccess\Customer\FinanceCustomerListAccess.cs" />
-    <Compile Include="DataAccess\Customer\IFinanceCustomerListAccess.cs" />
     <Compile Include="DataAccess\Statement\FinanceStatementAccess.cs" />
     <Compile Include="DataAccess\Statement\IFinanceStatementAccess.cs" />
     <Compile Include="DataAccess\Transaction\FinanceTransferAccess.cs" />
