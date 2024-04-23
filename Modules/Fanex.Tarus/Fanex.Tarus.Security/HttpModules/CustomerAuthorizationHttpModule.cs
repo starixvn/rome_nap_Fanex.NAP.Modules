@@ -76,9 +76,10 @@
         {
             ICustomerAuthorization authorize;
             AuthorizationResult result;
+            var customerTypes = customerAuthorizationService.GetCustomerTypes(paramValue);
             foreach (var filter in urlPermission.Filters)
             {
-                authorize = CustomerAuthorizationFactory.GetInstance(filter, paramValue);
+                authorize = CustomerAuthorizationFactory.GetInstance(filter, paramValue, customerTypes);
 
                 if (authorize != null)
                 {
