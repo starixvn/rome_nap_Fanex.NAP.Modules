@@ -7,6 +7,9 @@
     [Obsolete]
     public class GetRNGCasinoBetDetailsCriteria : CriteriaBase
     {
+        [SpParam(Ignored = true)]
+        public bool HideSabaText { get; set; }
+
         public int CustId { get; set; }
 
         public int TransType { get; set; }

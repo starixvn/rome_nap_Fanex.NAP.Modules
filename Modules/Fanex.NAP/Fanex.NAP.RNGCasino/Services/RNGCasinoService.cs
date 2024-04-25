@@ -5,6 +5,7 @@
     using System.Globalization;
     using System.Linq;
     using System.Net;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using System.Web;
     using Alpha.IPInfo.Services;
@@ -21,7 +22,6 @@
     using Helpers;
     using Logging.Extensions.Web;
     using Models;
-    using Models.HandHistory;
     using Newtonsoft.Json;
     using Repositories;
     using Resources;
@@ -96,9 +96,11 @@
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 foreach (var ticket in tickets)
                 {
-                    var ticketDetail = new TicketDetail();
+                    var ticketDetail = new TicketDetail();                    
                     ticket.CustId = mainCriteria.CustId;
                     ticketDetail.Ticket = ticket;
+                    ticketHelper.HideSabaText = mainCriteria.HideSabaText;
+
                     ticketHelper.IsShowOddsWithChoice = betListHelper.IsShowOddsWithChoice(ticketDetail.Ticket.BetTypeId);
                     ticketDetail.TransDateHtml = builder.BuildTrans(ticketDetail.Ticket);
                     ticketDetail.ChoiceHtml = builder.BuildChoice(ticketDetail.Ticket, ticketHelper, outputLiveCasino, false);
@@ -107,6 +109,7 @@
                     ticketDetail.StatusHtml = betListHelper.BuildStatus(builder, ticketHelper, ticketDetail.Ticket, new List<ITicketData>());
                     ticketDetail.IP = ticketDetail.Ticket.IP;
                     ticketDetail.DeviceType = ticket.DeviceType;
+                    
                     detailsTickets.Add(ticketDetail);
                 }
             }
@@ -114,46 +117,7 @@
 
             return detailsTickets;
         }
-
-        public HandHistoryModel GetResultCriteria(GetResultCriteria criteria, string language)
-        {
-            HandHistoryModel result = new HandHistoryModel();
-            result.ActionInfo = new ResultDetail();
-            try
-            {
-                GlobalGamingResultApi globalGamingResultApi = new GlobalGamingResultApi();
-                int siteId = 3200;
-                switch (criteria.RoleId)
-                {
-                    case 3:
-                        siteId = 3100;
-                        break;
-
-                    case 2:
-                        siteId = 3000;
-                        break;
-                }
-
-                result.Iframe = globalGamingResultApi.GetResultUrl(new GlobalGamingDTO
-                {
-                    CustId = criteria.CustId.ToString(),
-                    GameId = criteria.GameplayId,
-                    SiteId = siteId.ToString(),
-                    Language = language
-                });
-            }
-            catch (Exception ex)
-            {
-                result.ActionInfo = new ResultDetail
-                {
-                    ResultCode = 1,
-                    ResultMessage = ex.Message
-                };
-            }
-
-            return result;
-        }
-
+        
         public IEnumerable<TicketDetail> JackpotDetails(GetJackpotDetailsCriteria criteria)
         {
             var detailsTickets = new List<TicketDetail>();
@@ -238,7 +202,6 @@
             }
 
             return new Dictionary<string, string>();
-        }
-
+        }        
     }
 }

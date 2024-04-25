@@ -335,9 +335,7 @@
     <Compile Include="Helpers\BetListHelper.cs" />
     <Compile Include="Models\BetDetail.cs" />
     <Compile Include="Criteria\GetIPV4InfoByTopCountryCriteria.cs" />
-    <Compile Include="Models\HandHistory\HandHistoryModel.cs" />
     <Compile Include="Models\IPInfoDataAccess.cs" />
-    <Compile Include="Models\ResultDetail.cs" />
     <Compile Include="Models\TicketDetail.cs" />
     <Compile Include="Models\TicketDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
