@@ -4,14 +4,11 @@
     using System.Collections.Generic;
     using Criteria;
     using Models;
-    using Models.HandHistory;
 
     public interface IRNGCasinoService
     {
         [Obsolete]
         IEnumerable<TicketDetail> BetDetails(GetRNGCasinoBetDetailsCriteria criteria);
-
-        HandHistoryModel GetResultCriteria(GetResultCriteria criteria, string language);
 
         IEnumerable<TicketDetail> JackpotDetails(GetJackpotDetailsCriteria criteria);
     }

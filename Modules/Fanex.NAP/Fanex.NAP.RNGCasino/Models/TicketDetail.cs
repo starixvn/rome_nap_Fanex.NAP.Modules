@@ -65,6 +65,5 @@
                 return deviceInfo ?? BetListResources.Platform_Uncategorized;
             }
         }
-
     }
 }
