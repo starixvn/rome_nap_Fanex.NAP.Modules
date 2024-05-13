@@ -31,21 +31,16 @@
                 return AuthorizationResult.Ok();
             }
 
-            IDictionary<string, byte> permissions = MangeAccountInfoPermissionBuilder.GetManageAccountInfoPermissions(userId, PolicyConst.Read);
+            var permissions = MangeAccountInfoPermissionBuilder.GetManageAccountInfoPermissions(userId, PolicyConst.Read);
             if (IsRealCurrency() && !permissions.ContainsKey(ManageAccountInfoConst.AccessRealCurrency))
             {
                 return AuthorizationResult.Forbidden();
             }
 
-            if (PermissionService.HasPermission(ManageAccountInfoConst.ViewFinanceAccount))
-            {
-                if (_financeAuthorizationService.HasPermission(new CheckFinancePermissionCriteria() { UserName = parameterValue, CheckCustId = true, UserID = userId }))
-                {
-                    return AuthorizationResult.Ok();
-                }
-            }
+            if (!PermissionService.HasPermission(ManageAccountInfoConst.ViewFinanceAccount))
+                return AuthorizationResult.Forbidden();
 
-            return AuthorizationResult.Forbidden();
+            return _financeAuthorizationService.HasPermission(new CheckFinancePermissionCriteria() { UserName = parameterValue, CheckCustId = true, UserID = userId }) ? AuthorizationResult.Ok() : AuthorizationResult.Forbidden();
         }
 
         public AuthorizationResult CanHost(string parameterValue, int userId) => CanRead(parameterValue, userId);
