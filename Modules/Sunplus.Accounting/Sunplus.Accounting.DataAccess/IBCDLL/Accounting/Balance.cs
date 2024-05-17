@@ -6,6 +6,7 @@ using DNAide.Core;
 using DNAide.Data;
 using Fanex.Data;
 using Fanex.Tarus.Infrastructure.Extensions;
+using Sunplus.Accounting.Core.Common;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -435,6 +436,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel", 600))
                 {
+                    objDB.AddInParameter("userid", DbType.Int32, AppSession.AccId);
                     var dataset = objDB.ExecuteDataSet();
                     dbResult = new DbResult(objDB.GetOuputParams(), dataset);
                     return dbResult;

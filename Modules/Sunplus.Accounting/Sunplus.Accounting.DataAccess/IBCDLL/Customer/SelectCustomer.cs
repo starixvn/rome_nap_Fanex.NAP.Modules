@@ -62,7 +62,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 {
                     var param = new Hashtable {
                         { "system", accountingSystem.ToString().ToUpper() },
-                        { "mode", mode }
+                        { "mode", mode },
+                        { "userid", AppSession.AccId }
                     };
 
                     objDB.AssignParamValues(param);
