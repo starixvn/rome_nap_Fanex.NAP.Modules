@@ -57,7 +57,7 @@ namespace Sunplus.Accounting.DataAccess.Provider.ExchangeRate
             throw new NotImplementedException();
         }
 
-        public virtual void ExchangeMultiBaseRateUpdateForTable(Hashtable param, int siteDBGroupId, string dbIP)
+        public virtual Result ExchangeMultiBaseRateUpdateForTable(Hashtable param, int siteDBGroupId, string dbIP)
         {
             throw new NotImplementedException();
         }

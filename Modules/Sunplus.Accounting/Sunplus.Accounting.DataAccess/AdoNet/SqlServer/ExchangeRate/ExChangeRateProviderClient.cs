@@ -140,14 +140,23 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
             }
         }
 
-        public override void ExchangeMultiBaseRateUpdateForTable(Hashtable param, int siteDBGroupId, string dbIP)
+        public override Result ExchangeMultiBaseRateUpdateForTable(Hashtable param, int siteDBGroupId, string dbIP)
         {
-            var isSiteDB = param.ContainsKey("issitedb") ? (bool)param["issitedb"] : false;
-            var spName = isSiteDB ? $"SiteDB{siteDBGroupId}_Acc_ChangeRate_Main_Upd" : "Acc_ChangeRate_Main_Upd";
-            using (ObjectDb objDB = new ObjectDb(spName))
-            {   
-                objDB.ExecuteNonQueryScaleoutDB(param, dbIP);
+            try
+            {
+                var isSiteDB = param.ContainsKey("issitedb") ? (bool)param["issitedb"] : false;
+                var spName = isSiteDB ? $"SiteDB{siteDBGroupId}_Acc_ChangeRate_Main_Upd" : "Acc_ChangeRate_Main_Upd";
+                using (ObjectDb objDB = new ObjectDb(spName))
+                {
+                    objDB.ExecuteNonQueryScaleoutDB(param, dbIP);
+                    
+                    return new Result( Convert.ToInt32(objDB.GetParameterValue("errcode")), string.Empty);
+                }
             }
+            catch(Exception ex)
+            {
+                return new Result(100, ex.Message);
+            }            
         }
     }
 }
