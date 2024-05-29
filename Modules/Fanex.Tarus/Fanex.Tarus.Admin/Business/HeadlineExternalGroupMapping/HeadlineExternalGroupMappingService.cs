@@ -31,7 +31,10 @@ namespace Fanex.Tarus.Admin.Business.HeadlineExternalGroupMapping
         }
 
         public IEnumerable<SelectListItem> GetCurrencies()
-            => _dataAccess.SelCreditCurrency(new GetCreditCurrencyCriteria())
+            => _dataAccess.SelCreditCurrency(new GetCreditCurrencyCriteria()
+                {
+                    UserID = AppSession.AccId
+                })
                 .Select(cur => new SelectListItem { Text = cur.Name, Value = cur.Id.ToString() }).ToList();
 
         public IEnumerable<SelectListItem> GetExternalGroups()
