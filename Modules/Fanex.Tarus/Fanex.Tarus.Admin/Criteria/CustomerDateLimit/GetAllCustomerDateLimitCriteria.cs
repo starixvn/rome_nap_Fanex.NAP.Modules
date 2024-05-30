@@ -12,6 +12,8 @@
 
         public int TotalRecords { get; set; }
 
+        public int UserId { get; set; }
+
         public string GetSettingKey() => "Acc_CustomerDateLimitSel";
 
         public Hashtable GetSPParams()
@@ -20,7 +22,8 @@
                 ["username"] = UserName,
                 ["pagesize"] = PageSize,
                 ["pageindex"] = PageIndex,
-                ["totalrecords"] = TotalRecords
+                ["totalrecords"] = TotalRecords,
+                ["userid"] = UserId
             };
     }
 }
