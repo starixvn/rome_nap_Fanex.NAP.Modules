@@ -5,6 +5,7 @@ using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using Fanex.Data;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.CreditTerm;
 
@@ -61,7 +62,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var hash = new Hashtable();
                 hash.Add("groupid", groupid);
-                
+                hash.Add("userid", AppSession.AccId);
+
                 using (ObjectDb db = new ObjectDb("CreditTermSelByGroupID",600))
                 {
                     db.AssignParamValues(hash);

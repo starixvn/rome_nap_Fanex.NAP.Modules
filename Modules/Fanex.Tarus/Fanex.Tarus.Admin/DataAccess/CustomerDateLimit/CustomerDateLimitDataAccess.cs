@@ -1,4 +1,6 @@
-﻿namespace Fanex.Tarus.Admin.DataAccess.CustomerDateLimit
+﻿using Fanex.Tarus.Infrastructure.Common;
+
+namespace Fanex.Tarus.Admin.DataAccess.CustomerDateLimit
 {
     using System;
     using System.Collections.Generic;
@@ -21,6 +23,7 @@
     {
         public IEnumerable<CustomerDateLimitModel> GetCustomers(GetAllCustomerDateLimitCriteria criteria)
         {
+            criteria.UserId = AppSession.AccId;
             var customers = new List<CustomerDateLimitModel>();
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {

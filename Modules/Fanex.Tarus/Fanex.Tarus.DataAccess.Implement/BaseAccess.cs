@@ -5,6 +5,7 @@ namespace Fanex.Tarus.DataAccess.Implement
     using System.Data;
     using Fanex.Data;
     using DNAide.Core;
+    using Sunplus.Accounting.Core.Common;
 
     public class BaseAccess
     {
@@ -33,6 +34,7 @@ namespace Fanex.Tarus.DataAccess.Implement
         {
             using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel"))
             {
+                objDB.AddInParameter("userid", DbType.Int32, AppSession.AccId);
                 var ressult = objDB.ExecuteDataSet();
                 return ressult;
             }

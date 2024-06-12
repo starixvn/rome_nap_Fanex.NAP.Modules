@@ -4,12 +4,14 @@
     using Criteria.CompareBalance;
     using Data;
     using Entities.CompareBalance;
+    using Fanex.Tarus.Infrastructure.Common;
 
     public class CompareBalanceDataAccess
     {
         public CompareBalanceModel GetCompareBalance(GetCompareBalanceCriteria criteria)
         {
             CompareBalanceModel result = new CompareBalanceModel();
+            criteria.UserID = AppSession.AccId;
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AssignParamValues(criteria.GetSpParams());

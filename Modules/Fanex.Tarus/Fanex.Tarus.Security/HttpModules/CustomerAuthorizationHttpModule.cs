@@ -67,29 +67,24 @@
         {
             var paramValue = currentContext.GetParamValueFromParamList(paramNames);
 
-            return paramValue != null
-                ? HttpUtility.UrlDecode(paramValue)
-                : paramValue;
+            return HttpUtility.UrlDecode(paramValue);
         }
 
         private void Authorize(UrlPermission urlPermission, string paramValue)
         {
-            ICustomerAuthorization authorize;
-            AuthorizationResult result;
+            var customerTypes = customerAuthorizationService.GetCustomerTypes(paramValue);
             foreach (var filter in urlPermission.Filters)
             {
-                authorize = CustomerAuthorizationFactory.GetInstance(filter, paramValue);
+              
+                var authorize = CustomerAuthorizationFactory.GetInstance(filter, paramValue, customerTypes);
+                if (authorize == null) continue;
+                var result = urlPermission.Policy == PolicyConst.Read
+                    ? authorize.CanRead(paramValue, currentContext.UserId)
+                    : authorize.CanHost(paramValue, currentContext.UserId);
 
-                if (authorize != null)
+                if (!result.IsOk)
                 {
-                    result = urlPermission.Policy == PolicyConst.Read
-                        ? authorize.CanRead(paramValue, currentContext.UserId)
-                        : authorize.CanHost(paramValue, currentContext.UserId);
-
-                    if (!result.IsOk)
-                    {
-                        currentContext.RedirectToAccessDenyPage(result);
-                    }
+                    currentContext.RedirectToAccessDenyPage(result);
                 }
             }
         }

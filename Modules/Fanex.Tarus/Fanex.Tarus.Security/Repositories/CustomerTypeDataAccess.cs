@@ -28,6 +28,8 @@
                 reader["custinfo"].ToString(),
                 Convert.ToBoolean(reader["isdeposit"]),
                 Convert.ToBoolean(reader["isvalid"]),
-                Convert.ToBoolean(reader["isinternal"]));
+                Convert.ToBoolean(reader["isinternal"]),
+                Convert.ToBoolean(reader["isrealcurrency"])
+                );
     }
 }

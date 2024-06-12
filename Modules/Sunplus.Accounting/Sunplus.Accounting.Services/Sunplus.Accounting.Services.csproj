@@ -68,14 +68,14 @@
       <HintPath>..\..\..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.6\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
+    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.10, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.10\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.4.15\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Security.1.0.2.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <HintPath>..\..\..\packages\Fanex.Tarus.Security.1.0.2.3\lib\net40\Fanex.Tarus.Security.dll</HintPath>
     </Reference>
     <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Fanex.Crypt.1.1.0.0\lib\net40\IBCCrypt.dll</HintPath>

@@ -6,6 +6,8 @@
     {
         public string UserName { get; set; }
 
+        public int UserID { get; set; }
+
         public override string GetSettingKey()
         {
             return "Acc_BalanceMemberSelectAll";

@@ -29,14 +29,11 @@
 
         public AuthorizationResult CanAccess(string parameterValue, int userId, byte urlPolicy)
         {
-            AuthorizationResult result = AuthorizationResult.Ok();
-            if (IsNeedToCheck())
-            {
-                var permissions = MangeAccountInfoPermissionBuilder.GetManageAccountInfoPermissions(userId, urlPolicy);
-                return CheckCreditSiteOrDepositSitePermission(permissions);
-            }
+            var result = AuthorizationResult.Ok();
+            if (!IsNeedToCheck()) return result;
+            var permissions = MangeAccountInfoPermissionBuilder.GetManageAccountInfoPermissions(userId, urlPolicy);
+            return CheckCreditSiteOrDepositSitePermission(permissions);
 
-            return result;
         }
 
         private AuthorizationResult CheckCreditSiteOrDepositSitePermission(

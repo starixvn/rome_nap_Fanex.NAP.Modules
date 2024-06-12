@@ -48,7 +48,8 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
             {
                 var inputParams = new Hashtable
                 {
-                    {  "istest", !excludeTestCurrencies }
+                    { "istest", !excludeTestCurrencies },
+                    { "userid", AppSession.AccId }
                 };
 
                 using (var reader = db.ExecuteReader(inputParams))
