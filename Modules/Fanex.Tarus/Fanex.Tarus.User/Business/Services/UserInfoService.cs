@@ -190,8 +190,39 @@ namespace Fanex.Tarus.User.Business.Services
         {
             try
             {
-                return _userInfoAccess.AddAccount(userName, ReplaceSpecifiedCharacter(firstName), ReplaceSpecifiedCharacter(lastName), groupId,
-                                                                IBCUtils.Encryption.CfsEnCode(password), AppSession.AccId);
+                var result = new Result();
+                int custId = 0;
+                result = _userInfoAccess.RegisterAccount(userName, out custId);
+                if (result.ErrorCode > 0)
+                {
+                    return result;
+                }
+                else
+                {
+                    password = IBCUtils.Encryption.CfsEnCode(password);
+                    result = _userInfoAccess.AddAccount(userName, ReplaceSpecifiedCharacter(firstName),
+                        ReplaceSpecifiedCharacter(lastName), groupId,
+                        password, AppSession.AccId, custId);
+                    if (result.ErrorCode > 0)
+                    {
+                        _userInfoAccess.CustomerIns_Rollback(custId);
+                        return result;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            _userInfoAccess.Add_AdminSiteUser(userName, password, custId);
+                            return result;
+                        }
+                        catch (Exception e)
+                        {
+                            _userInfoAccess.CustomerInsUserInfo_Rollback(custId);
+                            _userInfoAccess.CustomerIns_Rollback(custId);
+                            throw;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {

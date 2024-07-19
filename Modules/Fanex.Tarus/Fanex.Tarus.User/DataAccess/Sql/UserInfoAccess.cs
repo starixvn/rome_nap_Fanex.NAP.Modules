@@ -62,7 +62,26 @@ namespace Fanex.Tarus.User.DataAccess.Sql
             }
         }
 
-        public Result AddAccount(string userName, string firstName, string lastName, int groupId, string password, int userId)
+        public Result RegisterAccount(string userName, out int custId)
+        {
+            var result = new Result();
+            var param = new Hashtable
+            {
+                {"username", userName},
+                {"sitedbgroupid", 3}
+            };
+            using (ObjectDb objDB = new ObjectDb("Acc_CustomerIns_Register"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+                result.ErrorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                result.ErrorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                custId = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                return result;
+            }
+        }
+
+        public Result AddAccount(string userName, string firstName, string lastName, int groupId, string password, int userId, int custId)
         {
             var param = new Hashtable
             {
@@ -70,9 +89,9 @@ namespace Fanex.Tarus.User.DataAccess.Sql
                 {"firstname", firstName},
                 {"lastname", lastName},
                 {"userid", userId},
+                {"custid", custId},
                 {"username", userName},
-                {"userpwd", password},
-                {"custid", 0}
+                {"userpwd", password}
             };
             using (ObjectDb objDB = new ObjectDb("Con_AdminIns"))
             {
@@ -81,6 +100,47 @@ namespace Fanex.Tarus.User.DataAccess.Sql
                 var errorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
                 var errorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
                 return new Result { ErrorCode = errorCode, ErrorMessage = errorMessage };
+            }
+        }
+
+        public void Add_AdminSiteUser(string userName, string password, int custId)
+        {
+            var param = new Hashtable
+            {
+                {"custid", custId},
+                {"username", userName},
+                {"userpwd", password},
+            };
+            using (ObjectDb objDB = new ObjectDb("Dot_Admin_Add_AdminSiteUser"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+            }
+        }
+
+        public void CustomerInsUserInfo_Rollback(int custId)
+        {
+            var param = new Hashtable
+            {
+                {"custid", custId}
+            };
+            using (ObjectDb objDB = new ObjectDb("Acc_CustomerInsUserInfo_Rollback"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+            }
+        }
+
+        public void CustomerIns_Rollback(int custId)
+        {
+            var param = new Hashtable
+            {
+                {"custid", custId}
+            };
+            using (ObjectDb objDB = new ObjectDb("Acc_CustomerIns_Rollback"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
             }
         }
 
