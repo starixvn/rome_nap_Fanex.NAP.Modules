@@ -76,16 +76,17 @@ namespace Fanex.Tarus.User.DataAccess.Sql
                 objDB.ExecuteNonQuery();
                 result.ErrorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
                 result.ErrorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
-                custId = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                custId = CastAide.AsInt32(objDB.GetParameterValue("custid"));
                 return result;
             }
         }
 
-        public Result AddAccount(string userName, string firstName, string lastName, int groupId, string password, int userId, int custId)
+        public Result AddAccount(string userName, string firstName, string lastName, int groupId,string groupName, string password, int userId, int custId)
         {
             var param = new Hashtable
             {
                 {"groupid", groupId},
+                {"groupname", groupName},
                 {"firstname", firstName},
                 {"lastname", lastName},
                 {"userid", userId},
@@ -128,6 +129,38 @@ namespace Fanex.Tarus.User.DataAccess.Sql
             {
                 objDB.AssignParamValues(param);
                 objDB.ExecuteNonQuery();
+            }
+        }
+
+        public void Acc_Con_AdminPolicyIns(int custId, int userId, int groupId)
+        {
+            var param = new Hashtable
+            {
+                {"custid", custId},
+                {"userid", userId},
+                {"groupid", groupId}
+            };
+            using (ObjectDb objDB = new ObjectDb("Acc_Con_AdminPolicyIns"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+            }
+        }
+
+        public Result NAP_Admin_OTPIns(int custId, int userId)
+        {
+            var param = new Hashtable
+            {
+                {"custid", custId},
+                {"userid", userId}
+            };
+            using (ObjectDb objDB = new ObjectDb("NAP_Admin_OTPIns"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+                var errorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                var errorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                return new Result { ErrorCode = errorCode, ErrorMessage = errorMessage };
             }
         }
 

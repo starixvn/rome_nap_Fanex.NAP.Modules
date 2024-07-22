@@ -16,7 +16,7 @@ namespace Fanex.Tarus.User.Business.Interface
         Result DeleteDept(int id);
         Result RemoveAccount(int id);
         Result AddDept(string name, string description);
-        Result AddAccount(string userName, string firstName, string lastName, int groupId, string password);
+        Result AddAccount(string userName, string firstName, string lastName, int groupId,string groupName, string password);
         Result AddExistedAccount(string custName, int groupId);
         Result UpdateAccount(List<PostParam> postParams);
         Result ChangeAccountStatus(int custId, bool closed);

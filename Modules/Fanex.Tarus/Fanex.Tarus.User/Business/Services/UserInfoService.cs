@@ -186,7 +186,7 @@ namespace Fanex.Tarus.User.Business.Services
             }
         }
 
-        public Result AddAccount(string userName, string firstName, string lastName, int groupId, string password)
+        public Result AddAccount(string userName, string firstName, string lastName, int groupId,string groupName, string password)
         {
             try
             {
@@ -201,7 +201,7 @@ namespace Fanex.Tarus.User.Business.Services
                 {
                     password = IBCUtils.Encryption.CfsEnCode(password);
                     result = _userInfoAccess.AddAccount(userName, ReplaceSpecifiedCharacter(firstName),
-                        ReplaceSpecifiedCharacter(lastName), groupId,
+                        ReplaceSpecifiedCharacter(lastName), groupId, groupName,
                         password, AppSession.AccId, custId);
                     if (result.ErrorCode > 0)
                     {
@@ -213,6 +213,8 @@ namespace Fanex.Tarus.User.Business.Services
                         try
                         {
                             _userInfoAccess.Add_AdminSiteUser(userName, password, custId);
+                            _userInfoAccess.Acc_Con_AdminPolicyIns(custId, AppSession.AccId, groupId);
+                            _userInfoAccess.NAP_Admin_OTPIns(custId, AppSession.AccId);
                             return result;
                         }
                         catch (Exception e)
