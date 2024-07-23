@@ -213,9 +213,6 @@ namespace Fanex.Tarus.User.Business.Services
                         try
                         {
                             _userInfoAccess.Add_AdminSiteUser(userName, password, custId);
-                            _userInfoAccess.Acc_Con_AdminPolicyIns(custId, AppSession.AccId, groupId);
-                            _userInfoAccess.NAP_Admin_OTPIns(custId, AppSession.AccId);
-                            return result;
                         }
                         catch (Exception e)
                         {
@@ -223,6 +220,9 @@ namespace Fanex.Tarus.User.Business.Services
                             _userInfoAccess.CustomerIns_Rollback(custId);
                             throw;
                         }
+                        _userInfoAccess.Acc_Con_AdminPolicyIns(custId, AppSession.AccId, groupId);
+                        result = _userInfoAccess.NAP_Admin_OTPIns(custId, AppSession.AccId);
+                        return result;
                     }
                 }
             }

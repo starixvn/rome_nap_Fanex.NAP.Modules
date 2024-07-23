@@ -111,6 +111,7 @@ namespace Fanex.Tarus.User.DataAccess.Sql
                 {"custid", custId},
                 {"username", userName},
                 {"userpwd", password},
+                {"creator", AppSession.AccId},
             };
             using (ObjectDb objDB = new ObjectDb("Dot_Admin_Add_AdminSiteUser"))
             {
