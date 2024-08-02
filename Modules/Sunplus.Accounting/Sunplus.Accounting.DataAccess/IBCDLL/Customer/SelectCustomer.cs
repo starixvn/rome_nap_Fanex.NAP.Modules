@@ -8,6 +8,7 @@ using Sunplus.Accounting.Core.Extensions;
 using System;
 using System.Collections;
 using System.Data;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
 {
@@ -93,7 +94,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             try
             {
-                var param = new Hashtable { { "system", accountingSystem.ToString().ToUpper() }, { "userid", AppSession.AccId } };
+                var param = new Hashtable
+                {
+                    { "system", accountingSystem.ToString().ToUpper() },
+                    { "userid", AppSession.AccId },
+                    { "deniedlist", AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId)}
+                };
 
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerSelSAgList", 600))
                 {

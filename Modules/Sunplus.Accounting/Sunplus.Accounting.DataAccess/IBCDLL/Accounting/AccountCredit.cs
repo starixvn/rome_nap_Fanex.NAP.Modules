@@ -62,7 +62,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var hash = new Hashtable();
                 hash.Add("groupid", groupid);
-                hash.Add("userid", AppSession.AccId);
+                hash.Add("DeniedList", Acc_DeniedSiteCurrency_Sel(groupid));
 
                 using (ObjectDb db = new ObjectDb("CreditTermSelByGroupID",600))
                 {
@@ -337,7 +337,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var hash = new Hashtable();
                 hash.Add("groupid", groupid);
-
+                hash.Add("DeniedList", Acc_DeniedSiteCurrency_Sel(groupid));
                 using (ObjectDb db = new ObjectDb("CreditTermSelGroupHeadlineByGroupID",600))
                 {
                     db.AssignParamValues(hash);
@@ -428,6 +428,32 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+        }
+        public static string Acc_DeniedSiteCurrency_Sel(int userId)
+        {
+            string result = string.Empty;
+            try
+            {
+                var hash = new Hashtable();
+                hash.Add("userid", userId);
+                hash.Add("deniedlist", userId);
+
+                using (ObjectDb db = new ObjectDb("Acc_DeniedSiteCurrency_Sel", 600))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+                    result = output["deniedlist"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+
+            return result;
         }
     }
 }

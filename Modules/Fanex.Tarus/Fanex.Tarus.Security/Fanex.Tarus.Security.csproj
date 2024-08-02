@@ -146,8 +146,8 @@
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.29, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.4.29\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.8\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.9.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.9.3-Beta2\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Agent.Utilities.3.0.2\lib\net461\Sunplus.Agent.Utilities.dll</HintPath>
