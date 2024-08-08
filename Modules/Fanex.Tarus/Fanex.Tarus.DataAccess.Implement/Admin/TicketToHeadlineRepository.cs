@@ -56,7 +56,6 @@ namespace Fanex.Tarus.DataAccess.Implement.Admin
         {
             var viewModel = new TicketToHeadlineViewModel();
             TicketToHeadline trackingDataRow = new TicketToHeadline();
-            criteria.UserId = AppSession.AccId;
             var xmlEvent = string.Empty;
             var xmlTicket = string.Empty;
             bool isCheckMessage = false;

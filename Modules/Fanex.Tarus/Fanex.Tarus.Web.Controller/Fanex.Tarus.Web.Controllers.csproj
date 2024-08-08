@@ -361,6 +361,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Sunplus.Accounting\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj">
+      <Project>{27984FEE-40DC-40DC-B3B9-3A8776C5511D}</Project>
+      <Name>Sunplus.Accounting.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj">
       <Project>{be4a5642-a3b6-4329-bb8f-4973446e7fa9}</Project>
       <Name>Fanex.Tarus.Business.Implement</Name>

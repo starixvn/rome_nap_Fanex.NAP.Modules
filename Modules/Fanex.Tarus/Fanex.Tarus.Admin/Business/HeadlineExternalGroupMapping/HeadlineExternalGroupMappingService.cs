@@ -1,4 +1,5 @@
 ﻿using Fanex.Tarus.Infrastructure.Common;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 namespace Fanex.Tarus.Admin.Business.HeadlineExternalGroupMapping
 {
@@ -33,7 +34,7 @@ namespace Fanex.Tarus.Admin.Business.HeadlineExternalGroupMapping
         public IEnumerable<SelectListItem> GetCurrencies()
             => _dataAccess.SelCreditCurrency(new GetCreditCurrencyCriteria()
                 {
-                    UserID = AppSession.AccId
+                    DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId)
                 })
                 .Select(cur => new SelectListItem { Text = cur.Name, Value = cur.Id.ToString() }).ToList();
 

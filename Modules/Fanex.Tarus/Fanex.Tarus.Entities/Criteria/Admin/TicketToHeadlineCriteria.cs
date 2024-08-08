@@ -11,7 +11,6 @@ namespace Fanex.Tarus.Entities.Criteria
         public TicketToHeadlineCriteria(TicketToHeadlineCached cached)
         {
             ExportExcel = cached.ExportExcel;
-            UserId = cached.UserId;
             File = cached.File;
             HeadlineType = cached.HeadlineType;
             ProductId = cached.ProductId;
@@ -21,9 +20,13 @@ namespace Fanex.Tarus.Entities.Criteria
             WrongResult = cached.WrongResult;
             PageIndex = cached.PageIndex;
             PageSize = cached.PageSize;
+            DeniedList = cached.DeniedList;
+
         }
-        public int UserId { get; set; }
+        
         public bool ExportExcel { get; set; }
+
+        public string DeniedList { get; set; }
 
         public string File { get; set; }
 
