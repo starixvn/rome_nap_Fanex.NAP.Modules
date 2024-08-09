@@ -91,7 +91,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var p = new Hashtable();
                 p.Add("fromdate", FormatHandler.ResetStartDate(fromdate));
                 p.Add("ip", ip);
-                p.Add("UserId", AppSession.AccId);
+                p.Add("DeniedList", AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId));
                 p.Add("movebetsday", ReportUtils.BalanceUp.MoveBetsDay);
                 p.Add("balanceupday", ReportUtils.BalanceUp.BalanceUpDay);
 
