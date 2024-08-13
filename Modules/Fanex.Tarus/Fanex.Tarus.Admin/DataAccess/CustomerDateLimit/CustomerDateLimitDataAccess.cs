@@ -1,4 +1,5 @@
 ﻿using Fanex.Tarus.Infrastructure.Common;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 namespace Fanex.Tarus.Admin.DataAccess.CustomerDateLimit
 {
@@ -23,7 +24,7 @@ namespace Fanex.Tarus.Admin.DataAccess.CustomerDateLimit
     {
         public IEnumerable<CustomerDateLimitModel> GetCustomers(GetAllCustomerDateLimitCriteria criteria)
         {
-            criteria.UserId = AppSession.AccId;
+            criteria.DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId);
             var customers = new List<CustomerDateLimitModel>();
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -40,8 +41,6 @@ namespace Fanex.Tarus.Admin.DataAccess.CustomerDateLimit
                             MinDate = reader["MinDate"] == DBNull.Value ? (DateTime?)null : Converter.ToDateTime(reader["MinDate"]),
                         });
                     }
-
-
                 }
 
                 var outputResult = db.GetOuputParams();

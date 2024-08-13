@@ -12,7 +12,7 @@
 
         public int TotalRecords { get; set; }
 
-        public int UserId { get; set; }
+        public string DeniedList { get; set; }
 
         public string GetSettingKey() => "Acc_CustomerDateLimitSel";
 
@@ -23,7 +23,7 @@
                 ["pagesize"] = PageSize,
                 ["pageindex"] = PageIndex,
                 ["totalrecords"] = TotalRecords,
-                ["userid"] = UserId
+                ["deniedlist"] = DeniedList
             };
     }
 }
