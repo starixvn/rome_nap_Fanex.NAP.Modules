@@ -62,12 +62,13 @@ namespace Fanex.Tarus.User.DataAccess.Sql
             }
         }
 
-        public Result RegisterAccount(string userName, out int custId)
+        public Result RegisterAccount(string userName, out int custId, int roleId)
         {
             var result = new Result();
             var param = new Hashtable
             {
                 {"username", userName},
+                {"roleid", roleId},
                 {"sitedbgroupid", 3}
             };
             using (ObjectDb objDB = new ObjectDb("Acc_CustomerIns_Register"))
@@ -91,7 +92,6 @@ namespace Fanex.Tarus.User.DataAccess.Sql
                 {"lastname", lastName},
                 {"userid", userId},
                 {"custid", custId},
-                {"roleid", 6},
                 {"username", userName},
                 {"userpwd", password}
             };

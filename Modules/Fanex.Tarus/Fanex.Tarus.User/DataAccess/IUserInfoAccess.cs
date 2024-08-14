@@ -14,7 +14,7 @@ namespace Fanex.Tarus.User.DataAccess
         DataTable GetAllDept();
         DataTable GetAllAccount();
         Result UpdateGroupPolicy(string groupPolicies, string oldGroupPolicies, int groupId);
-        Result RegisterAccount(string userName, out int custId);
+        Result RegisterAccount(string userName, out int custId, int roleId);
         Result AddAccount(string userName, string firstName, string lastName, int groupId,string groupName, string password, int userId,int custId);
         void Add_AdminSiteUser(string userName, string password, int custId);
         void Acc_Con_AdminPolicyIns(int custId, int userId, int groupId);

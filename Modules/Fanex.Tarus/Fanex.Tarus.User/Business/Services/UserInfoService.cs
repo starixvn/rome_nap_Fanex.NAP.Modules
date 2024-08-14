@@ -192,7 +192,7 @@ namespace Fanex.Tarus.User.Business.Services
             {
                 var result = new Result();
                 int custId = 0;
-                result = _userInfoAccess.RegisterAccount(userName, out custId);
+                result = _userInfoAccess.RegisterAccount(userName, out custId, 6);
                 if (result.ErrorCode > 0)
                 {
                     return result;
