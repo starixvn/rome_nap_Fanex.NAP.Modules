@@ -6,6 +6,7 @@ using Sunplus.Accounting.Entities;
 using System;
 using System.Collections;
 using System.Data;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.CreditTermDAO
 {
@@ -16,7 +17,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.CreditTermDAO
             using (ObjectDb objDB = new ObjectDb("GetAllGroup",600))
             {
                 var hash = new Hashtable();
-                hash.Add("userid", userId);
+                hash.Add("deniedlist", AccountCredit.Acc_DeniedSiteCurrency_Sel(userId));
                 objDB.AssignParamValues(hash);
                 var ds = objDB.ExecuteDataSet();
                 if (ds.Tables.Count > 0)

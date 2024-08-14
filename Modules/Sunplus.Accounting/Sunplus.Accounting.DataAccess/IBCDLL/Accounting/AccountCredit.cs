@@ -31,9 +31,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             try
             {
                 var hash = new Hashtable();
-                hash.Add("userid", userId);
-                //var spElement = GetStoreProcedure("CreditTermSelGroupHeadline");
-                //return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+                hash.Add("deniedlist", AccountCredit.Acc_DeniedSiteCurrency_Sel(userId));
 
                 using (ObjectDb db = new ObjectDb("GetAllGroup", 600))
                 {
