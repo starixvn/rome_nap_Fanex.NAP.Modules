@@ -1,4 +1,7 @@
-﻿namespace Fanex.Tarus.Admin.DataAccess.MaxMemberLimitBySuper
+﻿using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+
+namespace Fanex.Tarus.Admin.DataAccess.MaxMemberLimitBySuper
 {
     using Common;
     using Criteria.MaxMemberLimitBySuper;
@@ -36,6 +39,7 @@
         public MaxMemberLimitBySuperSearchResult SearchSuper(SearchSuperCriteria criteria)
         {
             MaxMemberLimitBySuperSearchResult result = new MaxMemberLimitBySuperSearchResult();
+            criteria.DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId);
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AssignParamValues(criteria.GetSpParams());
@@ -63,6 +67,7 @@
         public MaxMemberLimitBySuperUpdateResultModel UpdateSuper(UpdateSuperCriteria criteria)
         {
             var result = new List<MaxMemberLimitBySuperUpdateResultEntity>();
+            criteria.DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId);
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AssignParamValues(criteria.GetSpParams());

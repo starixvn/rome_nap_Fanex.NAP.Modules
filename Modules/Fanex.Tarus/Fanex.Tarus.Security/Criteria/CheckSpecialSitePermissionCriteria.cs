@@ -1,4 +1,8 @@
-﻿namespace Fanex.Tarus.Security.Criteria
+﻿using System.Web.ModelBinding;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+
+namespace Fanex.Tarus.Security.Criteria
 {
     using NAP.Framework.Data;
 
@@ -19,15 +23,21 @@
             CustId = custId;
             CustName = custName;
             CheckCustId = checkCustId;
+            UserName = AppSession.AccUserName;
+            DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(userId);
         }
 
         public int UserId { get; }
+
+        public string UserName { get; }
 
         public int? CustId { get; }
 
         public string CustName { get; }
 
         public byte? CheckCustId { get; }
+
+        public string DeniedList { get; }
 
         public override string GetSettingKey()
             => "Acc_CustomerIsAllowedAccess";

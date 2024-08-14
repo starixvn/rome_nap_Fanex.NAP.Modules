@@ -358,7 +358,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var hash = new Hashtable();
                 hash.Add("groupid", groupid);
-                hash.Add("DeniedList", Acc_DeniedSiteCurrency_Sel(groupid));
+                hash.Add("DeniedList", Acc_DeniedSiteCurrency_Sel(AppSession.AccId));
                 using (ObjectDb db = new ObjectDb("CreditTermSelGroupHeadlineByGroupID",600))
                 {
                     db.AssignParamValues(hash);
