@@ -91,6 +91,7 @@ namespace Fanex.Tarus.User.DataAccess.Sql
                 {"lastname", lastName},
                 {"userid", userId},
                 {"custid", custId},
+                {"roleid", 6},
                 {"username", userName},
                 {"userpwd", password}
             };
