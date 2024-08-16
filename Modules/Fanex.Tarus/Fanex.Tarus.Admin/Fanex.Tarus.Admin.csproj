@@ -154,7 +154,7 @@
       <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.4.29\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.9.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.9.3-Beta5\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\..\..\packages\Sunplus.Accounting.DataAccess.2.0.9.4-Beta01\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -272,6 +272,7 @@
     <Compile Include="Criteria\FinanceGroupsConfig\FinanceCodeInsCriteria.cs" />
     <Compile Include="Criteria\FinanceGroupsConfig\FinanceCodeInsValidationCriteria.cs" />
     <Compile Include="Criteria\FinanceGroupsConfig\FinanceGroupDelCriteria.cs" />
+    <Compile Include="Criteria\FinanceGroupsConfig\FinanceGroupGetValidCustIdCriteria.cs" />
     <Compile Include="Criteria\FinanceGroupsConfig\FinanceGroupInsCriteria.cs" />
     <Compile Include="Criteria\FinanceGroupsConfig\FinanceGroupInsValidationCriteria.cs" />
     <Compile Include="Criteria\FinanceGroupsConfig\FinanceGroupIsViewUpdCriteria.cs" />

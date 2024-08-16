@@ -64,7 +64,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                     var param = new Hashtable {
                         { "system", accountingSystem.ToString().ToUpper() },
                         { "mode", mode },
-                        { "userid", AppSession.AccId }
+                        { "userid", AppSession.AccId },
+                        { "deniedlist", AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId, 2)}
                     };
 
                     objDB.AssignParamValues(param);

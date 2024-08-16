@@ -52,14 +52,14 @@
             return groups;
         }
 
-        public FinanceGroupSelectViewModel FinanceGroupSel(FinanceGroupSelCriteria critera)
+        public FinanceGroupSelectViewModel FinanceGroupSel(FinanceGroupSelCriteria criteria)
         {
             var result = new FinanceGroupSelectViewModel();
-            using (var db = new ObjectDb(critera.GetSettingKey()))
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(critera.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    if (critera.FinanceType == 0)
+                    if (criteria.FinanceType == 0)
                     {
                         while (reader.Read())
                         {
@@ -110,12 +110,13 @@
         public Result FinanceGroupDel(FinanceGroupDelCriteria criteria)
             => ExecuteNonQuery(criteria.GetSettingKey(), criteria.GetSpParams());
 
-        public FinanceGroupValidateViewModel FinanceGroupInsValidation(FinanceGroupInsValidationCriteria critera)
+        public FinanceGroupValidateViewModel FinanceGroupInsValidation(FinanceGroupInsValidationCriteria criteria)
         {
+            criteria.ValidCustIds = GetValidFinanceCodes();
             var record = new FinanceGroupValidateViewModel();
-            using (var db = new ObjectDb(critera.GetSettingKey()))
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(critera.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
                     {
@@ -156,12 +157,12 @@
             return record;
         }
 
-        public FinanceGroupInsertViewModel FinanceGroupIns(FinanceGroupInsCriteria critera)
+        public FinanceGroupInsertViewModel FinanceGroupIns(FinanceGroupInsCriteria criteria)
         {
             var result = new FinanceGroupInsertViewModel();
-            using (var db = new ObjectDb(critera.GetSettingKey()))
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(critera.GetSpParams());
+                db.ExecuteNonQuery(criteria.GetSpParams());
                 var outputParams = db.GetOuputParams();
 
                 if (outputParams != null)
@@ -177,12 +178,13 @@
             return result;
         }
 
-        public FinanceUserValidateViewModel FinanceUserInsValidation(FinanceUserInsValidationCriteria critera)
+        public FinanceUserValidateViewModel FinanceUserInsValidation(FinanceUserInsValidationCriteria criteria)
         {
+            criteria.ValidCustIds = GetValidFinanceCodes();
             var record = new FinanceUserValidateViewModel();
-            using (var db = new ObjectDb(critera.GetSettingKey()))
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(critera.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
                     {
@@ -210,12 +212,12 @@
             return record;
         }
 
-        public FinanceUserInsertViewModel FinanceUserIns(FinanceUserInsCriteria critera)
+        public FinanceUserInsertViewModel FinanceUserIns(FinanceUserInsCriteria criteria)
         {
             var result = new FinanceUserInsertViewModel();
-            using (var db = new ObjectDb(critera.GetSettingKey()))
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(critera.GetSpParams());
+                db.ExecuteNonQuery(criteria.GetSpParams());
                 var outputParams = db.GetOuputParams();
 
                 if (outputParams != null)
@@ -229,12 +231,12 @@
             return result;
         }
 
-        public FinanceCodeValidateViewModel FinanceCodeInsValidation(FinanceCodeInsValidationCriteria critera)
+        public FinanceCodeValidateViewModel FinanceCodeInsValidation(FinanceCodeInsValidationCriteria criteria)
         {
             var record = new FinanceCodeValidateViewModel();
-            using (var db = new ObjectDb(critera.GetSettingKey()))
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(critera.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
                     {
@@ -262,12 +264,12 @@
             return record;
         }
 
-        public FinanceCodeInsertViewModel FinanceCodeIns(FinanceCodeInsCriteria critera)
+        public FinanceCodeInsertViewModel FinanceCodeIns(FinanceCodeInsCriteria criteria)
         {
             var result = new FinanceCodeInsertViewModel();
-            using (var db = new ObjectDb(critera.GetSettingKey()))
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(critera.GetSpParams());
+                db.ExecuteNonQuery(criteria.GetSpParams());
                 var outputParams = db.GetOuputParams();
 
                 if (outputParams != null)
@@ -279,6 +281,17 @@
             }
 
             return result;
+        }
+
+        public string GetValidFinanceCodes()
+        {
+            FinanceGroupGetValidCustIdCriteria criteria = new FinanceGroupGetValidCustIdCriteria();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                return CastAide.AsString(db.GetOuputParams()["validcustids"]);
+            }
         }
     }
 }

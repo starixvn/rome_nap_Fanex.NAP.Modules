@@ -9,6 +9,8 @@
     using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.Entities.HeadlineExternalGroupMapping;
     using Fanex.Tarus.Admin.Entities.SMAManagement;
+    using Sunplus.Accounting.Core.Common;
+    using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
     public class HeadlineExternalGroupMappingDataAccess : IHeadlineExternalGroupMappingDataAccess
     {
@@ -152,6 +154,7 @@
 
         public IEnumerable<IdNameEntity> SelHeadline(GetHeadlineCriteria criteria)
         {
+            criteria.DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId);
             var headlines = new List<IdNameEntity>();
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {

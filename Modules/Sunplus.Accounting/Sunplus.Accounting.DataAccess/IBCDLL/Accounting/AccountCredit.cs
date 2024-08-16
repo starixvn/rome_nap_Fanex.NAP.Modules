@@ -449,7 +449,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 throw ex;
             }
         }
-        public static string Acc_DeniedSiteCurrency_Sel(int userId)
+        public static string Acc_DeniedSiteCurrency_Sel(int userId, int? mode = 0)
         {
             string result = string.Empty;
             try
@@ -457,6 +457,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var hash = new Hashtable();
                 hash.Add("userid", userId);
                 hash.Add("deniedlist", userId);
+                hash.Add("mode", mode);
 
                 using (ObjectDb db = new ObjectDb("Acc_DeniedSiteCurrency_Sel", 600))
                 {
