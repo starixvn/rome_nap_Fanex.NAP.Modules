@@ -9,6 +9,7 @@ using Fanex.Tarus.User.Business.Interface;
 using Fanex.Tarus.Entities;
 using Fanex.Tarus.User.Entities;
 using Fanex.Tarus.Web.Controllers;
+using Fanex.Tarus.Web.Controllers.Filters;
 
 namespace Fanex.Tarus.User.Controller
 {
@@ -38,12 +39,12 @@ namespace Fanex.Tarus.User.Controller
         {
             return Json(_userInfoService.GetGroupPolicyList(groupId), JsonRequestBehavior.AllowGet);
         }
-
+        [AuthenticateHost]
         public JsonResult UpdateGroupPolicy(string groupPolicies, string oldGroupPolicies, int groupId)
         {
             return Json(_userInfoService.UpdateGroupPolicy(groupPolicies, oldGroupPolicies, groupId), JsonRequestBehavior.AllowGet);
         }
-
+        [AuthenticateHost]
         public JsonResult UpdateDept(int id, string name, string description)
         {
             return Json(_userInfoService.UpdateDept(id, name, description), JsonRequestBehavior.AllowGet);
@@ -53,38 +54,41 @@ namespace Fanex.Tarus.User.Controller
         {
             return Json(_userInfoService.GetAllDept(), JsonRequestBehavior.AllowGet);
         }
-
+        [AuthenticateHost]
         public JsonResult DeleteDept(int id)
         {
             return Json(_userInfoService.DeleteDept(id), JsonRequestBehavior.AllowGet);
         }
-
+        [AuthenticateHost]
         public JsonResult RemoveAccount(int id)
         {
             return Json(_userInfoService.RemoveAccount(id), JsonRequestBehavior.AllowGet);
         }
-
+        [AuthenticateHost]
         public JsonResult AddDept(string name, string description)
         {
             return Json(_userInfoService.AddDept(name, description), JsonRequestBehavior.AllowGet);
         }
-
+        [AuthenticateHost]
         public JsonResult AddAccount(string userName, string firstName, string lastName, int groupId, string password, string code)
         {
             password = Fanex.Tarus.Security.Services.Encryptor.Decrypt(password, code);
             return Json(_userInfoService.AddAccount(userName, firstName, lastName, groupId, password), JsonRequestBehavior.AllowGet);
         }
 
+        [AuthenticateHost]
         public JsonResult AddExistedAccount(string custName, int groupId)
         {
             return Json(_userInfoService.AddExistedAccount(custName, groupId), JsonRequestBehavior.AllowGet);
         }
 
+        [AuthenticateHost]
         public JsonResult UpdateAccount(List<PostParam> postParams)
         {
             return Json(_userInfoService.UpdateAccount(postParams), JsonRequestBehavior.AllowGet);
         }
 
+        [AuthenticateHost]
         public JsonResult ChangeAccountStatus(int accId, bool closed)
         {
             return Json(_userInfoService.ChangeAccountStatus(accId, closed), JsonRequestBehavior.AllowGet);
@@ -95,6 +99,7 @@ namespace Fanex.Tarus.User.Controller
             return Json(_userInfoService.GetUserPolicyList(userId), JsonRequestBehavior.AllowGet);
         }
 
+        [AuthenticateHost]
         public JsonResult UpdateAdminPolicy(string memberPolicies, string oldMemberPolicies, int custId)
         {
             return Json(_userInfoService.UpdateAdminPolicy(memberPolicies, oldMemberPolicies, custId), JsonRequestBehavior.AllowGet);

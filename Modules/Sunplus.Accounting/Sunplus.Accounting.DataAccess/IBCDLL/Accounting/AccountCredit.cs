@@ -456,7 +456,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var hash = new Hashtable();
                 hash.Add("userid", userId);
-                hash.Add("deniedlist", userId);
+                hash.Add("deniedlist", "");
                 hash.Add("mode", mode);
 
                 using (ObjectDb db = new ObjectDb("Acc_DeniedSiteCurrency_Sel", 600))
