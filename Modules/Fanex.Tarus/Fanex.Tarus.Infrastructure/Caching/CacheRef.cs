@@ -43,6 +43,8 @@ namespace Fanex.Tarus.Infrastructure.Caching
 
         public static string GetLeagueName(object leagueID) => remotingRefService.GetLeagueName(leagueID.ToString(), Thread.CurrentThread.CurrentCulture.Name, string.Empty);
 
+        public static string GetLeagueName3rd(object leagueID) => remotingRefService.GetLeagueName3rd(leagueID.ToString(), Thread.CurrentThread.CurrentCulture.Name, string.Empty);
+
         public static string GetHorseTeamName(object CodeID) => remotingRefService.GetHorseTeamName(CastAide.AsString(CodeID), Thread.CurrentThread.CurrentCulture.Name);
 
         public static string GetOddsTypeName(object OddsType) => remotingRefService.GetOddsTypeName(CastAide.AsString(OddsType), Thread.CurrentThread.CurrentCulture.Name);
