@@ -15,6 +15,7 @@ namespace Fanex.Tarus.User.DataAccess.Sql
 {
     public class UserInfoAccess : IUserInfoAccess
     {
+        private const int AdminSiteDBGroup = 0;
         public DataTable GetAllDept()
         {
             using (var objDb = new ObjectDb("GroupInfoSel"))
@@ -69,7 +70,7 @@ namespace Fanex.Tarus.User.DataAccess.Sql
             {
                 {"username", userName},
                 {"roleid", roleId},
-                {"sitedbgroupid", 3}
+                {"sitedbgroupid", AdminSiteDBGroup}
             };
             using (ObjectDb objDB = new ObjectDb("Acc_CustomerIns_Register"))
             {
