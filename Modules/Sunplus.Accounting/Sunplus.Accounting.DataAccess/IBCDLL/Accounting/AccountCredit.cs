@@ -170,7 +170,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("errmsg", "");
                     hash.Add("affectedsupers", "");
                     hash.Add("language", "E");
-                    hash.Add("groupnames", EAS_GroupInfoSelAllGroup());
+                    hash.Add("groupnames", EAS_GroupInfoSelAllGroup(1));
                     hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
 
                     objdb.AssignParamValues(hash);
@@ -298,12 +298,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             return result;
         }
 
-        private static string EAS_GroupInfoSelAllGroup()
+        private static string EAS_GroupInfoSelAllGroup(int mode = 0)
         {
             try
             {
+                var hash = new Hashtable();
+                hash.Add("mode", mode);
                 using (ObjectDb db = new ObjectDb("EAS_GroupInfoSelAllGroup", 600))
                 {
+                    db.AssignParamValues(hash);
                     return string.Join(",", db.ExecuteDataSet().Tables[0].Rows.Cast<DataRow>().Select(row => row["GroupName"]));
                 }
             }
