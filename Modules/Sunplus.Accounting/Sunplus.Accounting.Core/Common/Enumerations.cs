@@ -116,7 +116,8 @@ namespace Sunplus.Accounting.Core.Common
                 ConfigureDirectAccount,
                 UploadVR,
                 EnableEsports,
-                CustomerBalance
+                CustomerBalance,
+                ContactInfo
             }
 
             public enum Transfer
