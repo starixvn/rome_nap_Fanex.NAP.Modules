@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fanex.Tarus.Infrastructure.Extensions
 {
     public class SiteDB
     {
+        public string Site { get; set; }
+
         public int SiteDBGroupID { get; set; }
 
         public int CustDBGroupID { get; set; }
@@ -31,8 +31,6 @@ namespace Fanex.Tarus.Infrastructure.Extensions
         private static string cacheSiteDBKey = "SiteDBs";
 
         private const int cacheSiteDBExpireTimeInHours = 1;
-
-        private const string DBCUSTPrefix = "DBCUST_";
 
         public static IDataReader ExecuteReaderScaleoutDB(this ObjectDb objdb, Hashtable parameters)
             => objdb.ExecuteReaderScaleoutDB(parameters, (int)parameters["custid"]);
@@ -199,7 +197,8 @@ namespace Fanex.Tarus.Infrastructure.Extensions
                             CustDBGroupID = Convert.ToInt32(reader["CustDBGroupID"]),
                             AGIP = reader["AGIP"].ToString(),
                             ClientAccessName = reader["ClientAccessName"].ToString(),
-                            LinkedServerName = reader["LinkedServerName"].ToString()
+                            LinkedServerName = reader["LinkedServerName"].ToString(),
+                            Site = reader["Site"].ToString()
                         });
                     }
                 }

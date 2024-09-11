@@ -615,7 +615,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 return;
             }
 
-            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId_DBCUST(agentId);
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(agentId);
             InsertBalanceOnSiteDB(siteDB.AGIP, insertBalanceCustList);
             InsertExceptionBalanceOnSiteDB(siteDB.AGIP, insertExceptionBalanceCustList);
         }
@@ -623,7 +623,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
         public void InsertBalanceWhenCreateNewMember(int memberId, string memberName)
         {
             Logger.Log.Info($"[InsertBalanceWhenCreateNewMember] - memberId: {memberId}; memberName: {memberName}");
-            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId_DBCUST(memberId);
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(memberId);
             using (var db = new ObjectDb("Task_Cust_CheckBalance_Exception_Ins"))
             {
                 var param = new Hashtable() {
