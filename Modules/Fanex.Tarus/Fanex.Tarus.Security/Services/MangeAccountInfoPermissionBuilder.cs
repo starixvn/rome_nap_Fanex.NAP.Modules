@@ -16,6 +16,13 @@
             ManageAccountInfoConst.AccessRealCurrency
         };
 
+        private static readonly string[] CustomerPermissions = new[]
+        {
+            ManageAccountInfoConst.CreditSiteFunctionName,
+            ManageAccountInfoConst.DepositSiteFunctionName,
+            ManageAccountInfoConst.SmartPunter
+        };
+
         public static IEnumerable<int> MapToPermissionParameter(int userId, byte policy)
         {
             var permissions = GetManageAccountInfoPermissions(userId, policy);
@@ -33,6 +40,12 @@
             => PermissionDataAccess
                 .GetUserPermissions(new GetUserPermissionCriteria(userId))
                 .Where(f => f.ActualPolicy >= policy && ManageAccountInfoPermissions.Contains(f.FuncName, StringComparer.InvariantCultureIgnoreCase))
+                .ToDictionary(kvp => kvp.FuncName.ToUpperInvariant(), kvp => kvp.ActualPolicy);
+
+        public static IDictionary<string, byte> GetCustomerPermissions(int userId, byte policy)
+            => PermissionDataAccess
+                .GetUserPermissions(new GetUserPermissionCriteria(userId))
+                .Where(f => f.ActualPolicy >= policy && CustomerPermissions.Contains(f.FuncName, StringComparer.InvariantCultureIgnoreCase))
                 .ToDictionary(kvp => kvp.FuncName.ToUpperInvariant(), kvp => kvp.ActualPolicy);
 
         private static IUserPermissionDataAccess PermissionDataAccess
