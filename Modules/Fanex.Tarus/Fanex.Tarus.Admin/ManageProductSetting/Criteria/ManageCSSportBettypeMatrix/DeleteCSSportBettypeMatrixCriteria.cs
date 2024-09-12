@@ -1,9 +1,19 @@
 ﻿namespace Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageCSSportBettypeMatrix
 {
-    using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSportBettypeMatrix;
+    using Fanex.NAP.Framework.Data;
 
-    public class DeleteCSSportBettypeMatrixCriteria : DeleteSportBettypeMatrixCriteria
+    public class DeleteCSSportBettypeMatrixCriteria : CriteriaBase
     {
+        public int SportType { get; set; }
+
+        public int BetType { get; set; }
+
+        public bool IsLive { get; set; }
+
+        public int UserId { get; set; }
+
+        public string LoginIp { get; set; }
+
         public override string GetSettingKey() => "Acc_CS_SportBettypeMatrix_Del";
     }
 }

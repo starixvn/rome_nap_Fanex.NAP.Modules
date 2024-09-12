@@ -48,10 +48,40 @@
 
         public Result Insert(HttpPostedFileBase uploadFile)
         {
-#pragma warning disable S1854 // Unused assignments should be removed
-            var result = new Result();
-#pragma warning restore S1854 // Unused assignments should be removed
             InsertSportBettypeMatrixCriteria criteria = new InsertSportBettypeMatrixCriteria();
+            try
+            {
+                criteria.Entities = ParseXMLFile(uploadFile);
+
+                return _manageSportBettypeMatrixDataAccess.Insert(criteria);
+            }
+            catch (Exception ex)
+            {
+                return new Result(1, ex.Message);
+            }
+        }
+
+        public Result UpdateMul(HttpPostedFileBase uploadFile)
+        {
+            try
+            {
+                UpdateSportBettypeMatrixCriteria criteria = new UpdateSportBettypeMatrixCriteria()
+                {
+                    Entities = ParseXMLFile(uploadFile),
+                    IsMultiple = true
+                };
+
+                return _manageSportBettypeMatrixDataAccess.Update(criteria);
+            }
+            catch (Exception ex)
+            {
+                return new Result(1, ex.Message);
+            }
+        }
+
+        private List<SportBettypeMatrixEntity> ParseXMLFile(HttpPostedFileBase uploadFile)
+        {
+            var result = new List<SportBettypeMatrixEntity>();
             int rowCount = 1;
             try
             {
@@ -63,7 +93,7 @@
                 {
                     rowCount++;
                     IRow row = (IRow)rows.Current;
-                    criteria.Entities.Add(new SportBettypeMatrixEntity
+                    result.Add(new SportBettypeMatrixEntity
                     {
                         SportType = HttpUtility.HtmlEncode(row.GetCell(0) == null ? string.Empty : row.GetCell(0).ToString()),
                         BetType = HttpUtility.HtmlEncode(row.GetCell(1) == null ? string.Empty : row.GetCell(1).ToString()),
@@ -77,29 +107,24 @@
                     });
                 }
 
-                result = this._manageSportBettypeMatrixDataAccess.Insert(criteria);
+                return result;
             }
             catch (Exception ex)
             {
-                result.ErrorCode = 1;
-                result.ErrorMessage = "Invalid file uploaded. Error at line: " + rowCount.ToString();
                 LogExtensions.ExceptionHandler(ex);
-
-                return result;
+#pragma warning disable S112 // General exceptions should never be thrown
+                throw new Exception("Invalid file uploaded. Error at line: " + rowCount.ToString());
+#pragma warning restore S112 // General exceptions should never be thrown
             }
-
-            return result;
         }
 
         public Result Update(SportBettypeMatrixEntity request) => _manageSportBettypeMatrixDataAccess.Update(new UpdateSportBettypeMatrixCriteria
         {
-            Entities = new List<SportBettypeMatrixEntity> { request }
+            Entities = new List<SportBettypeMatrixEntity> { request },
+            IsMultiple = false
         });
 
-        public Result Delete(DeleteSportBettypeMatrixRequest request) => _manageSportBettypeMatrixDataAccess.Delete(new DeleteSportBettypeMatrixCriteria {
-            BetType = request.BetType,
-            IsLive = request.IsLive,
-            SportType = request.SportType,
+        public Result Delete(IEnumerable<SportBettypeMatrixEntity> request) => _manageSportBettypeMatrixDataAccess.Delete(new DeleteSportBettypeMatrixCriteria(request) {
             UserId = AppSession.AccId,
             LoginIp = Utils.GetClientIP()
         });

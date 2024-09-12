@@ -13,6 +13,7 @@
     using Fanex.Tarus.Admin.ManageProductSetting.Criteria.ManageSporttype;
     using Fanex.Tarus.Admin.ManageProductSetting.Entities;
     using Fanex.Tarus.Admin.ManageProductSetting.Entities.UMConfig;
+    using Fanex.Tarus.Admin.ManageProductSetting.Models;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageBettype;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageCSSportBettypeMatrix;
     using Fanex.Tarus.Admin.ManageProductSetting.Request.ManageProduct;
@@ -202,7 +203,12 @@
 
         [AuthenticateHost]
         [HttpPost]
-        public JsonResult InsertSportBettypeMatrix(HttpPostedFileBase uploadFile) => Json(_manageSportBettypeMatrixService.Insert(uploadFile));
+        public JsonResult InsertSportBettypeMatrix(HttpPostedFileBase uploadFile, bool isUpdate = false)
+        {
+            var result = isUpdate ? _manageSportBettypeMatrixService.UpdateMul(uploadFile) : _manageSportBettypeMatrixService.Insert(uploadFile);
+
+            return Json(result);
+        }
 
         [AuthenticateHost]
         [HttpPost]
@@ -210,7 +216,7 @@
 
         [AuthenticateHost]
         [HttpPost]
-        public JsonResult DeleteSportBettypeMatrix(DeleteSportBettypeMatrixRequest request) => Json(_manageSportBettypeMatrixService.Delete(request));
+        public JsonResult DeleteSportBettypeMatrix(IEnumerable<SportBettypeMatrixEntity> request) => Json(_manageSportBettypeMatrixService.Delete(request));
 
         #endregion SportBettypeMatrix
 
