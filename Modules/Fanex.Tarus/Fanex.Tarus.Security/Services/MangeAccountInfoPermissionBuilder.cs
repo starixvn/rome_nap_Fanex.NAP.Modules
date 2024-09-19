@@ -36,6 +36,19 @@
             }
         }
 
+        public static IEnumerable<int> MapToCustomterPermissionParameter(int userId, byte policy)
+        {
+            var permissions = GetCustomerPermissions(userId, policy);
+
+            for (int i = 0, max = CustomerPermissions.Length; i < max; i++)
+            {
+                if (permissions.ContainsKey(CustomerPermissions[i].ToUpperInvariant()))
+                {
+                    yield return (i + 1);
+                }
+            }
+        }
+
         public static IDictionary<string, byte> GetManageAccountInfoPermissions(int userId, byte policy)
             => PermissionDataAccess
                 .GetUserPermissions(new GetUserPermissionCriteria(userId))
