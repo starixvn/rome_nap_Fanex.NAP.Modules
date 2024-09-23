@@ -1,5 +1,6 @@
 ﻿using Fanex.Data;
 using Sunplus.Accounting.Core.Cache.Extension;
+using Sunplus.Accounting.Core.Helper;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace Sunplus.Accounting.Core.Extensions
 {
     public class SiteDB
     {
+        public string Site { get; set; }
+
         public int SiteDBGroupID { get; set; }
 
         public int CustDBGroupID { get; set; }
@@ -197,7 +200,8 @@ namespace Sunplus.Accounting.Core.Extensions
                             CustDBGroupID = Convert.ToInt32(reader["CustDBGroupID"]),
                             AGIP = reader["AGIP"].ToString(),
                             ClientAccessName = reader["ClientAccessName"].ToString(),
-                            LinkedServerName = reader["LinkedServerName"].ToString()
+                            LinkedServerName = reader["LinkedServerName"].ToString(),
+                            Site = DataUtils.HasColumn(reader, "Site") ? reader["Site"].ToString() : null
                         });
                     }
                 }

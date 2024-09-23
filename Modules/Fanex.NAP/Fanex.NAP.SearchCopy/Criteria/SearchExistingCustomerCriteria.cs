@@ -3,18 +3,22 @@
 namespace Fanex.CustomerSetting.Module.SearchCopy.Criteria
 {
     using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.Infrastructure.Helper;
 
     internal class SearchExistingCustomerCriteria : CriteriaBase
     {
-        public SearchExistingCustomerCriteria(string username)
+        public SearchExistingCustomerCriteria(string username, int custDBGroupID)
         {
             Username = username;
+            CustDBGroupID = custDBGroupID;
         }
 
         public string Username { get; }
 
+        public int CustDBGroupID { get; }
+
         public override string GetSettingKey()
-            => "Acc_CustomerUplineUserNameSel";
+            => DataUtils.GetSPNameWithPrefix("Acc_CustomerUplineUserNameSel", CustDBGroupID);
 
         public override bool IsValid()
             => true;

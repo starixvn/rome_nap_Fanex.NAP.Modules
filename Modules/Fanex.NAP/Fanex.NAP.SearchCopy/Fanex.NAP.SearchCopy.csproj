@@ -95,7 +95,7 @@
       <HintPath>..\..\..\packages\Fanex.PTEngine.1.0.7.4\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.17, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.4.17-scaleout003\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\..\..\packages\Fanex.Tarus.Infrastructure.1.0.4.17-scaleout009\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\IBCCrypt.1.1.0.0\lib\IBCCrypt.dll</HintPath>
@@ -179,8 +179,8 @@
       <HintPath>..\..\..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.29, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.4.29\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.32, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sunplus.Accounting.Core.2.0.4.32-scaleout03\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sunplus.Agent.Utilities.3.0.2\lib\net461\Sunplus.Agent.Utilities.dll</HintPath>

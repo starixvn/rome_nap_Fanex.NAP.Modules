@@ -33,7 +33,7 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
         public SearchResult SearchExistingCustomer(string username, bool isMember)
         {
             var smaCustomers = _searchCopyRepository
-                .GetSMACustomerInfo(new SearchExistingCustomerCriteria(username))
+                .GetSMACustomerInfo(new SearchExistingCustomerCriteria(username, ObjectDbExtensions.GetSiteDBConfigByUsername(username).CustDBGroupID))
                 .Where(smap => smap.CustId != 0);
 
             var searchResult = isMember

@@ -1,5 +1,6 @@
 ﻿using Fanex.Data;
 using Fanex.Tarus.Infrastructure.Caching;
+using Fanex.Tarus.Infrastructure.Helper;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -198,7 +199,7 @@ namespace Fanex.Tarus.Infrastructure.Extensions
                             AGIP = reader["AGIP"].ToString(),
                             ClientAccessName = reader["ClientAccessName"].ToString(),
                             LinkedServerName = reader["LinkedServerName"].ToString(),
-                            Site = reader["Site"].ToString()
+                            Site = DataUtils.HasColumn(reader, "Site") ? reader["Site"].ToString() : null
                         });
                     }
                 }
