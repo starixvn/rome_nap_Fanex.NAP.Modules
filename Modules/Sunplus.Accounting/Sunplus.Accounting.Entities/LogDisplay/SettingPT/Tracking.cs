@@ -80,6 +80,6 @@ namespace Sunplus.Accounting.Entities.LogDisplay.SettingPT
         public List<List<string>> HeaderRows { get; set; }
 
         [DataMember]
-        public List<List<string>> Rows { get; set; }
+        public List<List<TrackingValue>> Rows { get; set; }
     }
 }
