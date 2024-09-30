@@ -172,6 +172,7 @@
     <Compile Include="Criteria\Statement\DailyTxnUpdCheckerCriteria.cs" />
     <Compile Include="Criteria\Transfer\BetTransInsertCrossTransferCriteria.cs" />
     <Compile Include="Criteria\Transfer\BetTransInsertCrossTransferSiteDBCriteria.cs" />
+    <Compile Include="Criteria\Transfer\RewardInsertTransferCriteria.cs" />
     <Compile Include="Criteria\Transfer\BetTransInsertTransferCriteria.cs" />
     <Compile Include="Criteria\Transfer\BetTransInsertTransferSiteDBCriteria.cs" />
     <Compile Include="Criteria\Transaction\FinanceCrossTransferBettransInsCriteria.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Model\Statement\FinaceStatementModel.cs" />
     <Compile Include="Model\Transfer\CrossTransfer.cs" />
     <Compile Include="Model\Transfer\FinanceCrossCurrencyTransfer.cs" />
+    <Compile Include="Model\Transfer\TransferRewardTransaction.cs" />
     <Compile Include="Model\Transfer\TransferYesterdayTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource\Error.Designer.cs">

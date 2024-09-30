@@ -24,6 +24,16 @@ namespace Fanex.Tarus.Finance.Model.Transfer
 
         public bool IsCollection { get; set; }
 
+        public bool IsReward { get; set; }
+
+        public int RewardCustId { get; set; }
+
+        public string RewardMaxTransId { get; set; }
+
+        public double Reward { get; set; }
+
+        public double rewardRate { get; set; }
+
         public int UserId => AppSession.AccId;
 
         public string IP => Utils.GetClientIP();
