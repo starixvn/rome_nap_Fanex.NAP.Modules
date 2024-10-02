@@ -12,6 +12,8 @@ namespace Fanex.Tarus.Finance.Model.Transfer
 
         public long MaxTransId { get; set; }
 
+        public long RefNo { get; set; }
+
         public decimal Amount { get; set; }
 
         public double ExchangeRate { get; set; }

@@ -20,6 +20,7 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
             ExchangeRate = param.ExchangeRate;
             MaxTransId = param.MaxTransId;
             SiteDBGroupId = param.SiteDBGroupId;
+            RefNo = param.RefNo;
         }
 
         public int FromCustId { get; }

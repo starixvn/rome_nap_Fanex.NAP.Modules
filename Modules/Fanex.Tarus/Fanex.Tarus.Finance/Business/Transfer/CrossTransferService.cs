@@ -144,7 +144,8 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                             MaxTransId = param.RewardMaxTransId,
                             Amount = param.Amount,
                             ExchangeRate = param.RewardExRate,
-                            SiteDBGroupId = rewardSiteDB.SiteDBGroupID
+                            SiteDBGroupId = rewardSiteDB.SiteDBGroupID,
+                            RefNo = refNo.Value
                         }),
                         rewardSiteDB.AGIP);
 
