@@ -13,9 +13,15 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
 
         Result BettransInsertTransfer(ICriteria criteria, string agIp);
 
+        Result RewardInsertTransfer(ICriteria criteria, string agIp);
+
         ResultRefNo BettransInsertTransferSiteDB(ICriteria criteria, string agIp);
 
+        ResultRefNo RewardInsertTransferSiteDB(ICriteria criteria, string agIp);
+
         Result TransferRollbackSiteDB(ICriteria criteria, string agIp);
+
+        Result RewardRollbackSiteDB(ICriteria criteria, string agIp);
 
         CustomerExRate SelectCustomerExRate(string username);
 

@@ -56,48 +56,108 @@ namespace Fanex.Tarus.Finance.Business.Transfer
         private Result TransferYesterdayTransactionSiteDB(TransferYesterdayTransaction param, int fromCustId)
         {
             var fromSiteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(fromCustId);
-            var toSiteDB = ObjectDbExtensions.GetSiteDBConfigByUsername(param.ToCustName);
-
-            if (fromSiteDB.SiteDBGroupID == toSiteDB.SiteDBGroupID)
+            if (param.IsTransferYesterday)
             {
-                return crossTransferAccess.BettransInsertTransfer(
-                    new BetTransInsertTransferCriteria(
+                var toSiteDB = ObjectDbExtensions.GetSiteDBConfigByUsername(param.ToCustName);
+
+                if (fromSiteDB.SiteDBGroupID == toSiteDB.SiteDBGroupID)
+                {
+                    return crossTransferAccess.BettransInsertTransfer(
+                        new BetTransInsertTransferCriteria(
+                            param,
+                            fromCustId,
+                            fromSiteDB),
+                        fromSiteDB.AGIP);
+                }
+
+                // Step 1: transfer at SiteDB FROM
+                var fromResult = crossTransferAccess.BettransInsertTransferSiteDB(
+                    new BetTransInsertTransferSiteDBCriteria(
                         param,
                         fromCustId,
                         fromSiteDB),
                     fromSiteDB.AGIP);
+
+                if (fromResult.IsFailure)
+                {
+                    return fromResult;
+                }
+
+                var refNo = fromResult.RefNo;
+                // Step 2: transfer at SiteDB TO
+                var toResult = crossTransferAccess.BettransInsertTransferSiteDB(
+                    new BetTransInsertTransferSiteDBCriteria(
+                        param,
+                        fromCustId,
+                        toSiteDB,
+                        refNo),
+                    toSiteDB.AGIP);
+
+                if (toResult.IsFailure)
+                {
+                    // Rollback step 1
+                    TransferRollbackSiteDB(refNo.Value, param.UserId, param.IP, fromSiteDB);
+                }
+                return toResult;
             }
 
-            // Step 1: transfer at SiteDB FROM
-            var fromResult = crossTransferAccess.BettransInsertTransferSiteDB(
-                new BetTransInsertTransferSiteDBCriteria(
-                    param,
-                    fromCustId,
-                    fromSiteDB),
-                fromSiteDB.AGIP);
-
-            if (fromResult.IsFailure)
+            if (param.IsShowReward)
             {
-                return fromResult;
+                var rewardSiteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(param.RewardCustId);
+                if (fromSiteDB.SiteDBGroupID == rewardSiteDB.SiteDBGroupID)
+                {
+                    return crossTransferAccess.RewardInsertTransfer(
+                        new RewardInsertTransferCriteria( new TransferRewardTransaction()
+                        {
+                            FromCustId = fromCustId,
+                            ToCustId = param.RewardCustId,
+                            MaxTransId = param.RewardMaxTransId,
+                            Amount = param.Amount,
+                            ExchangeRate = param.RewardExRate,
+                            SiteDBGroupId = fromSiteDB.SiteDBGroupID
+                        }),
+                        fromSiteDB.AGIP);
+                }
+
+                // Step 1: transfer at SiteDB FROM
+                var fromResultReward = crossTransferAccess.RewardInsertTransferSiteDB(
+                    new RewardInsertTransferCriteria(new TransferRewardTransaction()
+                    {
+                        FromCustId = fromCustId,
+                        ToCustId = param.RewardCustId,
+                        MaxTransId = param.RewardMaxTransId,
+                        Amount = param.Amount,
+                        ExchangeRate = param.RewardExRate,
+                        SiteDBGroupId = fromSiteDB.SiteDBGroupID
+                    }),
+                    fromSiteDB.AGIP);
+
+                if (!fromResultReward.IsFailure)
+                {
+                    var refNo = fromResultReward.RefNo;
+                    // Step 2: transfer at SiteDB TO
+                    var toResultReward = crossTransferAccess.BettransInsertTransferSiteDB(
+                        new RewardInsertTransferCriteria(new TransferRewardTransaction()
+                        {
+                            FromCustId = fromCustId,
+                            ToCustId = param.RewardCustId,
+                            MaxTransId = param.RewardMaxTransId,
+                            Amount = param.Amount,
+                            ExchangeRate = param.RewardExRate,
+                            SiteDBGroupId = rewardSiteDB.SiteDBGroupID
+                        }),
+                        rewardSiteDB.AGIP);
+
+                    if (toResultReward.IsFailure)
+                    {
+                        // Rollback step 1
+                        crossTransferAccess.RewardRollbackSiteDB(
+                            new RewardRollbackSiteDBCriteria(refNo.Value, param.RewardMaxTransId, fromSiteDB), fromSiteDB.AGIP);
+                    }
+                }
             }
 
-            var refNo = fromResult.RefNo;
-            // Step 2: transfer at SiteDB TO
-            var toResult = crossTransferAccess.BettransInsertTransferSiteDB(
-                new BetTransInsertTransferSiteDBCriteria(
-                    param,
-                    fromCustId,
-                    toSiteDB,
-                    refNo),
-                toSiteDB.AGIP);
-
-            if (toResult.IsFailure)
-            {
-                // Rollback step 1
-                TransferRollbackSiteDB(refNo.Value, param.UserId, param.IP, fromSiteDB);
-            }
-
-            return toResult;
+            return null;
         }
 
         public Result CrossCurrencyTransferInsert(FinanceCrossCurrencyTransfer param)

@@ -170,6 +170,7 @@
     <Compile Include="Criteria\Statement\BettransDelTransactionCriteria.cs" />
     <Compile Include="Criteria\Statement\CustomerSelByRefnoCriteria.cs" />
     <Compile Include="Criteria\Statement\DailyTxnUpdCheckerCriteria.cs" />
+    <Compile Include="Criteria\RewardRollbackSiteDBCriteria.cs" />
     <Compile Include="Criteria\Transfer\BetTransInsertCrossTransferCriteria.cs" />
     <Compile Include="Criteria\Transfer\BetTransInsertCrossTransferSiteDBCriteria.cs" />
     <Compile Include="Criteria\Transfer\RewardInsertTransferCriteria.cs" />

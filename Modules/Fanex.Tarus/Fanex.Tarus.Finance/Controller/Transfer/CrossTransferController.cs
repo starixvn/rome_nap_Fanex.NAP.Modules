@@ -17,6 +17,7 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
     {
         private readonly ICrossTransferService crossTransferService;
         private readonly string RewardPromotionCode = ConfigurationManager.AppSettings["RewardPromotionCode"];
+        private readonly string RewardPromotionID = ConfigurationManager.AppSettings["RewardPromotionID"];
         public CrossTransferController()
             : this(null)
         {
@@ -63,6 +64,10 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
         {
             request.FromCustName = WebUtility.HtmlDecode(request.FromCustName);
             request.ToCustName = WebUtility.HtmlDecode(request.ToCustName);
+            if (request.IsShowReward)
+            {
+                request.RewardCustId = Convert.ToInt32(RewardPromotionID);
+            }
 
             return Json(crossTransferService.TransferYesterdayTransaction(request), JsonRequestBehavior.AllowGet);
         }

@@ -19,10 +19,19 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
         public Result BettransInsertTransfer(ICriteria criteria, string agIp)
             => ExecuteNonQuery(criteria, agIp);
 
+        public Result RewardInsertTransfer(ICriteria criteria, string agIp)
+            => ExecuteNonQuery(criteria, agIp);
+
         public ResultRefNo BettransInsertTransferSiteDB(ICriteria criteria, string agIp)
             => ExecuteNonQueryWithRefNo(criteria, agIp);
 
+        public ResultRefNo RewardInsertTransferSiteDB(ICriteria criteria, string agIp)
+            => ExecuteNonQueryWithRefNo(criteria, agIp);
+
         public Result TransferRollbackSiteDB(ICriteria criteria, string agIp)
+            => ExecuteNonQuery(criteria, agIp);
+
+        public Result RewardRollbackSiteDB(ICriteria criteria, string agIp)
             => ExecuteNonQuery(criteria, agIp);
 
         private static Result ExecuteNonQuery(ICriteria criteria, string agIp)

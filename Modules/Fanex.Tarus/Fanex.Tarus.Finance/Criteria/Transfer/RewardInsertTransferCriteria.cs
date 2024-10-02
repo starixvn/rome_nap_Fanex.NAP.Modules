@@ -7,6 +7,8 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Model.Transfer;
     using Fanex.Tarus.Infrastructure.Extensions;
+    using Sunplus.Accounting.Core.Common;
+    using Sunplus.Accounting.Core.Helper;
 
     internal class RewardInsertTransferCriteria : CriteriaBase
     {
@@ -17,8 +19,6 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
             Amount = param.Amount;
             ExchangeRate = param.ExchangeRate;
             MaxTransId = param.MaxTransId;
-            Creator = param.Creator;
-            IP = param.IP;
             SiteDBGroupId = param.SiteDBGroupId;
         }
 
@@ -26,15 +26,15 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
 
         public int ToCustId { get; }
 
-        public decimal Amount { get; }
-
         public long MaxTransId { get; }
+
+        public decimal Amount { get; }
 
         public double ExchangeRate { get; }
 
-        public int Creator { get; }
+        public int Creator => AppSession.AccId;
 
-        public string IP { get; }
+        public string IP => Utils.GetClientIP();
 
         public int SiteDBGroupId { get; }
 
