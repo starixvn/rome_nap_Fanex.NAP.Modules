@@ -36,16 +36,19 @@ namespace Fanex.Tarus.Finance.Business.Transfer
             var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
             var fromCustId = userService.GetCustomerIdByUsername(param.FromCustName);
 
-            var isFiTransfer = false;
+            var isFiTransfer = true;
             var msg = string.Empty;
-            try
+            if (param.IsTransferYesterday)
             {
-                isFiTransfer = Permissions.IsFiTransfer(fromCustId, param.ToCustName, ref msg);
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-                return Result.ServerError(ex.Message);
+                try
+                {
+                    isFiTransfer = Permissions.IsFiTransfer(fromCustId, param.ToCustName, ref msg);
+                }
+                catch (Exception ex)
+                {
+                    LogExtensions.ExceptionHandler(ex);
+                    return Result.ServerError(ex.Message);
+                }
             }
 
             return isFiTransfer
@@ -56,49 +59,62 @@ namespace Fanex.Tarus.Finance.Business.Transfer
         private Result TransferYesterdayTransactionSiteDB(TransferYesterdayTransaction param, int fromCustId)
         {
             var fromSiteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(fromCustId);
+            var result = new Result(0,String.Empty);
             if (param.IsTransferYesterday)
             {
                 var toSiteDB = ObjectDbExtensions.GetSiteDBConfigByUsername(param.ToCustName);
 
                 if (fromSiteDB.SiteDBGroupID == toSiteDB.SiteDBGroupID)
                 {
-                    return crossTransferAccess.BettransInsertTransfer(
+                    result = crossTransferAccess.BettransInsertTransfer(
                         new BetTransInsertTransferCriteria(
                             param,
                             fromCustId,
                             fromSiteDB),
                         fromSiteDB.AGIP);
                 }
-
-                // Step 1: transfer at SiteDB FROM
-                var fromResult = crossTransferAccess.BettransInsertTransferSiteDB(
-                    new BetTransInsertTransferSiteDBCriteria(
-                        param,
-                        fromCustId,
-                        fromSiteDB),
-                    fromSiteDB.AGIP);
-
-                if (fromResult.IsFailure)
+                else
                 {
-                    return fromResult;
-                }
+                    // Step 1: transfer at SiteDB FROM
+                    var fromResult = crossTransferAccess.BettransInsertTransferSiteDB(
+                        new BetTransInsertTransferSiteDBCriteria(
+                            param,
+                            fromCustId,
+                            fromSiteDB),
+                        fromSiteDB.AGIP);
 
-                var refNo = fromResult.RefNo;
-                // Step 2: transfer at SiteDB TO
-                var toResult = crossTransferAccess.BettransInsertTransferSiteDB(
-                    new BetTransInsertTransferSiteDBCriteria(
-                        param,
-                        fromCustId,
-                        toSiteDB,
-                        refNo),
-                    toSiteDB.AGIP);
+                    if (!fromResult.IsFailure)
+                    {
+                        var refNo = fromResult.RefNo;
+                        // Step 2: transfer at SiteDB TO
+                        var toResult = crossTransferAccess.BettransInsertTransferSiteDB(
+                            new BetTransInsertTransferSiteDBCriteria(
+                                param,
+                                fromCustId,
+                                toSiteDB,
+                                refNo),
+                            toSiteDB.AGIP);
 
-                if (toResult.IsFailure)
-                {
-                    // Rollback step 1
-                    TransferRollbackSiteDB(refNo.Value, param.UserId, param.IP, fromSiteDB);
+                        if (toResult.IsFailure)
+                        {
+                            // Rollback step 1
+                            TransferRollbackSiteDB(refNo.Value, param.UserId, param.IP, fromSiteDB);
+                        }
+
+                        result.ErrorCode = toResult.ErrorCode;
+                        result.ErrorMessage = toResult.ErrorMessage;
+                    }
+                    else
+                    {
+                        result.ErrorCode = fromResult.ErrorCode;
+                        result.ErrorMessage = fromResult.ErrorMessage;
+                    }
                 }
-                return toResult;
+            }
+
+            if (result.ErrorCode > 0)
+            {
+                return result;
             }
 
             if (param.IsShowReward)
@@ -155,10 +171,18 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                         crossTransferAccess.RewardRollbackSiteDB(
                             new RewardRollbackSiteDBCriteria(refNo.Value, param.RewardMaxTransId, fromSiteDB), fromSiteDB.AGIP);
                     }
+
+                    result.ErrorCode = toResultReward.ErrorCode;
+                    result.ErrorMessage = toResultReward.ErrorMessage;
+                }
+                else
+                {
+                    result.ErrorCode = fromResultReward.ErrorCode;
+                    result.ErrorMessage = fromResultReward.ErrorMessage;
                 }
             }
 
-            return null;
+            return result;
         }
 
         public Result CrossCurrencyTransferInsert(FinanceCrossCurrencyTransfer param)
