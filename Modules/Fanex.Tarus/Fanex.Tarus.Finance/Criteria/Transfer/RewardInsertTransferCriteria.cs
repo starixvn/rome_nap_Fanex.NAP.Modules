@@ -45,12 +45,8 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
 
         public int ErrorMsg { get; set; }
 
-        [SpParam(Ignored = true)]
-        public SiteDB SiteDB { get; }
 
         public override string GetSettingKey()
-            => SiteDB.IsSiteDB
-            ? $"SiteDB{SiteDB.SiteDBGroupID}_Acc_RewardPayment_Transfer"
-            : "Acc_RewardPayment_Transfer";
+            => $"SiteDB{SiteDBGroupId}_Acc_RewardPayment_Transfer";
     }
 }

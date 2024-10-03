@@ -128,7 +128,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                             FromCustId = fromCustId,
                             ToCustId = param.RewardCustId,
                             MaxTransId = param.RewardMaxTransId,
-                            Amount = param.Amount,
+                            Amount = param.RewardAmount,
                             ExchangeRate = param.RewardExRate,
                             SiteDBGroupId = fromSiteDB.SiteDBGroupID
                         }),

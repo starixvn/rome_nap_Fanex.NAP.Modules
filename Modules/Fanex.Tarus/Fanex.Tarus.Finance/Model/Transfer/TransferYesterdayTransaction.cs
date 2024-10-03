@@ -24,7 +24,7 @@ namespace Fanex.Tarus.Finance.Model.Transfer
 
         public long RewardMaxTransId { get; set; }
 
-        public double RewardAmount { get; set; }
+        public decimal RewardAmount { get; set; }
 
         public double RewardExRate { get; set; }
 

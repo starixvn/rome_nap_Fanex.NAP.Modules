@@ -15,7 +15,7 @@ namespace Fanex.Tarus.Finance.Criteria
         {
             RefNo = refNo;
             MaxTransId = maxTransId;
-            SiteDB = siteDB;
+            SiteDBGroupID = siteDB.SiteDBGroupID;
         }
 
         public long RefNo { get; }
@@ -26,14 +26,9 @@ namespace Fanex.Tarus.Finance.Criteria
 
         public long MaxTransId { get; }
 
-        public byte SiteDBGroupID => (byte)SiteDB.SiteDBGroupID;
-
-        [SpParam(Ignored = true)]
-        public SiteDB SiteDB { get; }
+        public int SiteDBGroupID { get; }
 
         public override string GetSettingKey()
-            => SiteDB.IsSiteDB
-            ? $"SiteDB{SiteDBGroupID}_Acc_RewardPayment_Transfer_Rollback"
-            : "Acc_RewardPayment_Transfer_Rollback";
+            =>  $"SiteDB{SiteDBGroupID}_Acc_RewardPayment_Transfer_Rollback";
     }
 }
