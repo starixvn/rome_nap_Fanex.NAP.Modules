@@ -14,11 +14,13 @@
         Result FinanceGroupUpd(FinanceGroupUpdCriteria criteria);
         Result FinanceGroupIsViewUpd(FinanceGroupIsViewUpdCriteria criteria);
         Result FinanceGroupDel(FinanceGroupDelCriteria criteria);
-        FinanceGroupValidateViewModel FinanceGroupInsValidation(FinanceGroupInsValidationCriteria critera);
-        FinanceGroupInsertViewModel FinanceGroupIns(FinanceGroupInsCriteria critera);
-        FinanceUserValidateViewModel FinanceUserInsValidation(FinanceUserInsValidationCriteria critera);
-        FinanceUserInsertViewModel FinanceUserIns(FinanceUserInsCriteria critera);
-        FinanceCodeValidateViewModel FinanceCodeInsValidation(FinanceCodeInsValidationCriteria critera);
-        FinanceCodeInsertViewModel FinanceCodeIns(FinanceCodeInsCriteria critera);
+        FinanceGroupValidateViewModel FinanceGroupInsValidation(FinanceGroupInsValidationCriteria criteria);
+        FinanceGroupInsertViewModel FinanceGroupIns(FinanceGroupInsCriteria criteria);
+        FinanceUserValidateViewModel FinanceUserInsValidation(FinanceUserInsValidationCriteria criteria);
+        FinanceUserInsertViewModel FinanceUserIns(FinanceUserInsCriteria criteria);
+        FinanceCodeValidateViewModel FinanceCodeInsValidation(FinanceCodeInsValidationCriteria criteria);
+        FinanceCodeInsertViewModel FinanceCodeIns(FinanceCodeInsCriteria criteria);
+        string GetValidFinanceCodes();
+
     }
 }

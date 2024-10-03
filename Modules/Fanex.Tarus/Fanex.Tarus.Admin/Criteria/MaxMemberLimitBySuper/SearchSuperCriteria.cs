@@ -5,17 +5,11 @@
 
     public class SearchSuperCriteria : CriteriaBase
     {
-        public int UserId
-        {
-            get
-            {
-                return AppSession.AccId;
-            }
-        }
-
         public string SuperName { get; set; }
 
         public string Site { get; set; }
+
+        public string DeniedList { get; set; }
 
         public int PageSize { get; set; }
 

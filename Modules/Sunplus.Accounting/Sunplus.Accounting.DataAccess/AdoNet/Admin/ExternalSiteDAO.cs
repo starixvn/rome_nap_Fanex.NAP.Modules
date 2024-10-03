@@ -7,6 +7,7 @@ using Sunplus.Accounting.DataAccess.IAdmin;
 using Sunplus.Accounting.Entities.Admin;
 using Sunplus.Accounting.Entities;
 using Fanex.CustomerSetting.Module.Core;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
 {
@@ -47,7 +48,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
             var param = new Hashtable
             {
                 { "groupname", groupName },
-                { "userid", userId }
+                { "deniedlist",   AccountCredit.Acc_DeniedSiteCurrency_Sel(userId) }
             };
 
             using (ObjectDb db = new ObjectDb("SelectInfoCust"))

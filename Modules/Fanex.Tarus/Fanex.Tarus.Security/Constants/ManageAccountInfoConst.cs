@@ -6,6 +6,7 @@
         public const string DepositSiteFunctionName = "[DEPOSITSITE]";
         public const string AccessRealCurrency = "[ACCESSREALCURRENCY]";
         public const string ViewFinanceAccount = "ViewFinanceAccount";
-        
+        public const string SmartPunter = "[SmartPunter]";
+
     }
 }

@@ -3,6 +3,8 @@ using Fanex.Tarus.Business.Interface;
 using Fanex.Tarus.DataAccess.Implement;
 using Fanex.Tarus.DataAccess.Interface;
 using Fanex.Tarus.Entities;
+using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Entities;
 using System;
@@ -14,6 +16,11 @@ namespace Fanex.Tarus.Business.Implement
     public class AdminService : BaseService, IAdminService
     {
         private IAdminAccess _adminAccess;
+        private Result unAthorizeResult =  new Result()
+                {
+                    ErrorCode = 101,
+                    ErrorMessage = "You don\'t have permission to access."
+                };
 
         public AdminService()
             : this(null)
@@ -36,18 +43,31 @@ namespace Fanex.Tarus.Business.Implement
 
         public Result AddUser(string userName, int creator, string remark)
         {
+            if (HasNoHostPermission())
+            {
+                return unAthorizeResult;
+            }
+
             return _adminAccess.AddUser(userName, creator, remark);
         }
 
 
         public Result Update(int custId, bool isAllowed, string remark)
         {
+            if (HasNoHostPermission())
+            {
+                return unAthorizeResult;
+            }
             return _adminAccess.Update(custId, isAllowed, remark);
         }
 
 
         public Result Delete(int custId)
         {
+            if (HasNoHostPermission())
+            {
+                return unAthorizeResult;
+            }
             return _adminAccess.Delete(custId);
         }
 
@@ -134,6 +154,11 @@ namespace Fanex.Tarus.Business.Implement
                 LogExtensions.ExceptionHandler(ex);
                 return listTemp;
             }
+        }
+
+        private bool HasNoHostPermission()
+        {
+            return !Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust);
         }
     }
 }

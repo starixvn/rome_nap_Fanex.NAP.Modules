@@ -2,6 +2,7 @@
 using Sunplus.Accounting.Core.Common;
 using System;
 using System.Collections;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 namespace Fanex.Tarus.Admin.Criteria.SMAManagement
 {
@@ -61,7 +62,7 @@ namespace Fanex.Tarus.Admin.Criteria.SMAManagement
                 { "headlinetype", HeadlineType },
                 { "owner", Owner },
                 { "istest", !ExcludeTestAccounts },
-                { "userid", AppSession.AccId }
+                { "deniedlist", AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId) }
             };
         }
 

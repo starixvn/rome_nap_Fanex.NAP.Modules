@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
 {
@@ -49,7 +50,8 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
                 var inputParams = new Hashtable
                 {
                     { "istest", !excludeTestCurrencies },
-                    { "userid", AppSession.AccId }
+                    { "userid", AppSession.AccId },
+                    { "deniedlist" , AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId, 2)}
                 };
 
                 using (var reader = db.ExecuteReader(inputParams))

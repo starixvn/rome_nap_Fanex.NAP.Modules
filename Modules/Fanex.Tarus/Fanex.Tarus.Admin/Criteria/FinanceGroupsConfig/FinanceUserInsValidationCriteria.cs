@@ -8,6 +8,8 @@
 
         public byte IsAssignUsers { get; set; }
 
+        public string ValidCustIds { get; set; }
+
         public override string GetSettingKey()
             => "Acc_FinanceGroupsConfig_UsersInsValidation";
     }

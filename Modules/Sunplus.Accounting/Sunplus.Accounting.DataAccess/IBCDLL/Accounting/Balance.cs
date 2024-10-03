@@ -437,6 +437,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel", 600))
                 {
                     objDB.AddInParameter("userid", DbType.Int32, AppSession.AccId);
+                    objDB.AddInParameter("deniedlist", DbType.String, AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId, 2));
                     var dataset = objDB.ExecuteDataSet();
                     dbResult = new DbResult(objDB.GetOuputParams(), dataset);
                     return dbResult;

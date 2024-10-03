@@ -4,7 +4,7 @@
 
     public class GetCreditCurrencyCriteria : CriteriaBase
     {
-        public int UserID { get; set; }
+        public string DeniedList { get; set; }
 
         public override string GetSettingKey()
             => "Acc_CurrencyList_Sel";

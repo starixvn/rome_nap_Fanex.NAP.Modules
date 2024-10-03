@@ -10,6 +10,8 @@
 
         public byte IsCreateGroup { get; set; }
 
+        public string ValidCustIds { get; set; }
+
         public override string GetSettingKey()
             => "Acc_FinanceGroupsConfig_FinanceGroupInsValidation";
     }

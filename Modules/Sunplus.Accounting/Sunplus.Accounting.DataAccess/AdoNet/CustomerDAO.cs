@@ -11,6 +11,7 @@ using Fanex.Data;
 using Fanex.Tarus.Infrastructure.Configurations;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Customer;
 
@@ -96,6 +97,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 var hash = new Hashtable
                            {
                                {"userid", userId},
+                               {"deniedlist", AccountCredit.Acc_DeniedSiteCurrency_Sel(userId)},
                                {"custid", custId},
                                {"site", newSite},
                                {"errcode", 0},

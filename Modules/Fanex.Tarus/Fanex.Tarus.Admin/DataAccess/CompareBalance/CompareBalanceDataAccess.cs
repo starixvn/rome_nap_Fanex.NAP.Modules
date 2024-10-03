@@ -1,4 +1,6 @@
-﻿namespace Fanex.Tarus.Admin.DataAccess.CompareBalance
+﻿using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+
+namespace Fanex.Tarus.Admin.DataAccess.CompareBalance
 {
     using Common;
     using Criteria.CompareBalance;
@@ -11,7 +13,7 @@
         public CompareBalanceModel GetCompareBalance(GetCompareBalanceCriteria criteria)
         {
             CompareBalanceModel result = new CompareBalanceModel();
-            criteria.UserID = AppSession.AccId;
+            criteria.DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId);
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AssignParamValues(criteria.GetSpParams());

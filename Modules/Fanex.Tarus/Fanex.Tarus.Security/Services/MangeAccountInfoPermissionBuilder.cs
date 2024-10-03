@@ -16,6 +16,13 @@
             ManageAccountInfoConst.AccessRealCurrency
         };
 
+        private static readonly string[] CustomerPermissions = new[]
+        {
+            ManageAccountInfoConst.CreditSiteFunctionName,
+            ManageAccountInfoConst.DepositSiteFunctionName,
+            ManageAccountInfoConst.SmartPunter
+        };
+
         public static IEnumerable<int> MapToPermissionParameter(int userId, byte policy)
         {
             var permissions = GetManageAccountInfoPermissions(userId, policy);
@@ -29,10 +36,29 @@
             }
         }
 
+        public static IEnumerable<int> MapToCustomterPermissionParameter(int userId, byte policy)
+        {
+            var permissions = GetCustomerPermissions(userId, policy);
+
+            for (int i = 0, max = CustomerPermissions.Length; i < max; i++)
+            {
+                if (permissions.ContainsKey(CustomerPermissions[i].ToUpperInvariant()))
+                {
+                    yield return (i + 1);
+                }
+            }
+        }
+
         public static IDictionary<string, byte> GetManageAccountInfoPermissions(int userId, byte policy)
             => PermissionDataAccess
                 .GetUserPermissions(new GetUserPermissionCriteria(userId))
                 .Where(f => f.ActualPolicy >= policy && ManageAccountInfoPermissions.Contains(f.FuncName, StringComparer.InvariantCultureIgnoreCase))
+                .ToDictionary(kvp => kvp.FuncName.ToUpperInvariant(), kvp => kvp.ActualPolicy);
+
+        public static IDictionary<string, byte> GetCustomerPermissions(int userId, byte policy)
+            => PermissionDataAccess
+                .GetUserPermissions(new GetUserPermissionCriteria(userId))
+                .Where(f => f.ActualPolicy >= policy && CustomerPermissions.Contains(f.FuncName, StringComparer.InvariantCultureIgnoreCase))
                 .ToDictionary(kvp => kvp.FuncName.ToUpperInvariant(), kvp => kvp.ActualPolicy);
 
         private static IUserPermissionDataAccess PermissionDataAccess

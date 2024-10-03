@@ -79,6 +79,7 @@ namespace Fanex.Tarus.Finance.Controller.Statement
             return jsonResult;
         }
 
+        [AuthenticateHost]
         [HttpPost]
         public JsonResult UpdateVerifyTrans(string refNo, bool isVerify)
         {
@@ -88,6 +89,7 @@ namespace Fanex.Tarus.Finance.Controller.Statement
             return jsonResult;
         }
 
+        [AuthenticateHost]
         [HttpPost]
         public JsonResult DeleteTrans(long refNo)
             => Json(financeStatemenetService.DeleteTransBusiness(refNo, AppSession.CustID, AppSession.AccId), JsonRequestBehavior.AllowGet);

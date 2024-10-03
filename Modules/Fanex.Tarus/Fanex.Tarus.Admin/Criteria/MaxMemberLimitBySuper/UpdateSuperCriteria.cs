@@ -26,6 +26,8 @@
             }
         }
 
+        public string DeniedList { get; set; }
+
         public string Remark { get; set; }
 
         public override string GetSettingKey()

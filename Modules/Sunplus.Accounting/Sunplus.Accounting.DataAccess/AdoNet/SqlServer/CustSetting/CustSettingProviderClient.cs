@@ -9,6 +9,7 @@ using Sunplus.Accounting.DataAccess.Provider.CustSetting;
 using Sunplus.Accounting.Entities;
 using System;
 using Fanex.Tarus.Infrastructure.Extensions;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 /// <summary>
 /// Summary description for CustSetting
@@ -42,6 +43,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.CustSetting
             {
                 var hash = new Hashtable();
                 hash.Add("userid", UserId);
+                hash.Add("deniedlist", AccountCredit.Acc_DeniedSiteCurrency_Sel(UserId));
                 hash.Add("custid", CustId);
                 hash.Add("site", CastAide.AsString(NewSite));
                 hash.Add("errcode", 0);

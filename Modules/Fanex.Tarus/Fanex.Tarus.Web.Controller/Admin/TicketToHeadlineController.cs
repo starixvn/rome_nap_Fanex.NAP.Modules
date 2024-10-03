@@ -4,6 +4,8 @@ using Fanex.Tarus.Entities.Criteria;
 using Fanex.Tarus.Entities.Criteria.Admin;
 using Fanex.Tarus.Infrastructure.Extensions;
 using Fanex.Tarus.Web.Controllers.Filters;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using System;
 using System.Web;
 using System.Web.Mvc;
@@ -28,8 +30,8 @@ namespace Fanex.Tarus.Web.Controllers.Admin
 
         public ActionResult GetData(HttpPostedFileBase uploadFile, TicketToHeadlineCriteria criteria)
         {
+            criteria.DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId);
             return Json(_ticketToHeadlineService.GetData(uploadFile, criteria), "text/html");
-            //return Json(_ticketToHeadlineService.GetFakeData((int?)criteria.PageSize, (int?)criteria.PageIndex, 1001));
         }
 
         public ActionResult GetDataForPaging(TicketToHeadlineCriteria criteria)

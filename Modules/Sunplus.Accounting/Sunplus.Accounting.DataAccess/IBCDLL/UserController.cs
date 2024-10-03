@@ -33,23 +33,30 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
         public static int OnlineUserUpdate(int onlineUserId)
         {
             byte online = 0;
-            var param = new Hashtable();
-            param.Add("on_userid", onlineUserId);
-            param.Add("iskickedout", online);
-            try
+            if (!Acc_GetExpiredDate_Admin())
             {
-                using (ObjectDb db = new ObjectDb("UserUpd"))
+                var param = new Hashtable();
+                param.Add("on_userid", onlineUserId);
+                param.Add("iskickedout", online);
+                try
                 {
-                    db.AssignParamValues(param);
-                    db.ExecuteNonQuery();
+                    using (ObjectDb db = new ObjectDb("UserUpd"))
+                    {
+                        db.AssignParamValues(param);
+                        db.ExecuteNonQuery();
 
-                    var output = db.GetOuputParams();
-                    online = Convert.ToByte(output["iskickedout"]);
-                }                
+                        var output = db.GetOuputParams();
+                        online = Convert.ToByte(output["iskickedout"]);
+                    }
+                }
+                catch
+                {
+                    throw;
+                }
             }
-            catch
+            else
             {
-                throw;
+                online = 2;
             }
             return online;
         }
@@ -365,5 +372,28 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             }
             return null;
         }
+
+        private static bool Acc_GetExpiredDate_Admin()
+        {
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_GetExpiredDate_Admin"))
+                {
+                    var param = new Hashtable();
+                    param.Add("userid", AppSession.AccId);
+                    param.Add("isexpired", 0);
+
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+                    return Convert.ToBoolean(db.GetParameterValue("isexpired"));
+                }
+            }
+            catch (Exception ex)
+            {
+                Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                return false;
+            }
+        }
+
     }
 }
