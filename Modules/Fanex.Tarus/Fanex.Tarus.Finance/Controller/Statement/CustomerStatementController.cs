@@ -91,6 +91,15 @@ namespace Fanex.Tarus.Finance.Controller.Statement
 
         [AuthenticateHost]
         [HttpPost]
+        public JsonResult UpdateVerifyRewardTrans(string refNo, bool isVerify)
+        {
+            var result = financeStatemenetService.VerifyRewardTransactionBusiness(refNo, isVerify, AppSession.AccUserName, AppSession.AccId);
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
         public JsonResult DeleteTrans(long refNo)
             => Json(financeStatemenetService.DeleteTransBusiness(refNo, AppSession.CustID, AppSession.AccId), JsonRequestBehavior.AllowGet);
 
