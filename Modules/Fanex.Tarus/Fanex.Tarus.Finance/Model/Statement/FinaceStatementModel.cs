@@ -30,7 +30,7 @@ namespace Fanex.Tarus.Finance.Model.Statement
 
         public bool IsAllowReversal { get; set; }
 
-        public bool IsReward => this.ListTrans.Any(i => i.TransType.Trim().Equals("TRANS", StringComparison.InvariantCultureIgnoreCase));
+        public bool IsReward => this.ListTrans.Any(i => i.TransType.Trim().Equals("TRANR", StringComparison.InvariantCultureIgnoreCase));
         
         public bool HasMultipleCreator
         {

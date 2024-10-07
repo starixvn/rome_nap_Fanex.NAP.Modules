@@ -81,19 +81,9 @@ namespace Fanex.Tarus.Finance.Controller.Statement
 
         [AuthenticateHost]
         [HttpPost]
-        public JsonResult UpdateVerifyTrans(string refNo, bool isVerify)
+        public JsonResult UpdateVerifyTrans(string refNo, string rewardRefNo, bool isVerify)
         {
-            var result = financeStatemenetService.VerifyTransactionBusiness(refNo, isVerify, AppSession.AccUserName, AppSession.AccId);
-            var jsonResult = Json(result);
-            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            return jsonResult;
-        }
-
-        [AuthenticateHost]
-        [HttpPost]
-        public JsonResult UpdateVerifyRewardTrans(string refNo, bool isVerify)
-        {
-            var result = financeStatemenetService.VerifyRewardTransactionBusiness(refNo, isVerify, AppSession.AccUserName, AppSession.AccId);
+            var result = financeStatemenetService.VerifyTransactionBusiness(refNo, rewardRefNo, isVerify, AppSession.AccUserName, AppSession.AccId);
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;

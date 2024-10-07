@@ -340,29 +340,43 @@ namespace Fanex.Tarus.Finance.Business.Statement
                 return Math.Round(number);
         }
 
-        public MultipleVerifyResult VerifyTransactionBusiness(string refNo, bool isVerify, string checkerName, int checkerId)
+        public MultipleVerifyResult VerifyTransactionBusiness(string refNo, string rewardRefNo, bool isVerify, string checkerName, int checkerId)
         {
-            var errorResults = new List<Result>();
-            var siteDBList = financeStatementAccess.GetSiteDBConfigByRefNo(new GetSiteDBConfigByRefNoCriteria(refNo));
+            var siteDBList = financeStatementAccess.GetSiteDBConfigByRefNo(new GetSiteDBConfigByRefNoCriteria(string.Join(",", refNo, rewardRefNo)));
             var multipleVerifyResult = new MultipleVerifyResult();
-
-            var inputRefs = refNo.Split(',').TakeWhile(id => id != "").Count();
-
             try
             {
                 foreach (var siteDB in siteDBList)
                 {
-                    var results = financeStatementAccess.UpdateVerifyStatusAccess(
-                                 new DailyTxnUpdCheckerCriteria(
-                                     checkerId,
-                                     checkerName,
-                                     refNo,
-                                     isVerify,
-                                     Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
-                                     siteDB),
-                                 siteDB.AGIP);
-                    multipleVerifyResult.SuccessRefNos.AddRange(results.Where(result => result.Success).Select(result => result.RefNo));
-                    multipleVerifyResult.ErrorResults.AddRange(results.Where(result => !result.Success));
+                    if (!string.IsNullOrWhiteSpace(refNo))
+                    {
+                       var results = financeStatementAccess.UpdateVerifyStatusAccess(
+                                     new DailyTxnUpdCheckerCriteria(
+                                         checkerId,
+                                         checkerName,
+                                         refNo,
+                                         isVerify,
+                                         Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
+                                         siteDB),
+                                     siteDB.AGIP);
+                        multipleVerifyResult.SuccessRefNos.AddRange(results.Where(result => result.Success).Select(result => result.RefNo));
+                        multipleVerifyResult.ErrorResults.AddRange(results.Where(result => !result.Success));
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(rewardRefNo))
+                    {
+                        var results = financeStatementAccess.UpdateVerifyStatusAccess(
+                                  new RewardTxnUpdCheckerCriteria(
+                                      checkerId,
+                                      checkerName,
+                                      rewardRefNo,
+                                      isVerify,
+                                      Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
+                                      siteDB),
+                                  siteDB.AGIP);
+                        multipleVerifyResult.SuccessRefNos.AddRange(results.Where(result => result.Success).Select(result => result.RefNo));
+                        multipleVerifyResult.ErrorResults.AddRange(results.Where(result => !result.Success));
+                    }
                 }
 
             }
@@ -372,42 +386,6 @@ namespace Fanex.Tarus.Finance.Business.Statement
                 multipleVerifyResult.ErrorResults.Add(new VerifyResult { Message = "Update Error" });
             }
             return multipleVerifyResult;
-
-        }
-
-        public MultipleVerifyResult VerifyRewardTransactionBusiness(string refNo, bool isVerify, string checkerName, int checkerId)
-        {
-            var errorResults = new List<Result>();
-            var siteDBList = financeStatementAccess.GetSiteDBConfigByRefNo(new GetSiteDBConfigByRefNoCriteria(refNo));
-            var multipleVerifyResult = new MultipleVerifyResult();
-
-            var inputRefs = refNo.Split(',').TakeWhile(id => id != "").Count();
-
-            try
-            {
-                foreach (var siteDB in siteDBList)
-                {
-                    var results = financeStatementAccess.UpdateVerifyStatusAccess(
-                                 new RewardTxnUpdCheckerCriteria(
-                                     checkerId,
-                                     checkerName,
-                                     refNo,
-                                     isVerify,
-                                     Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
-                                     siteDB),
-                                 siteDB.AGIP);
-                    multipleVerifyResult.SuccessRefNos.AddRange(results.Where(result => result.Success).Select(result => result.RefNo));
-                    multipleVerifyResult.ErrorResults.AddRange(results.Where(result => !result.Success));
-                }
-
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-                multipleVerifyResult.ErrorResults.Add(new VerifyResult { Message = "Update Error" });
-            }
-            return multipleVerifyResult;
-
         }
 
         public Result DeleteTransBusiness(long refNo, int custId, int userId)

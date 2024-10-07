@@ -5,6 +5,8 @@
 
     internal class RewardTxnUpdCheckerCriteria : DailyTxnUpdCheckerCriteria
     {
+        public string RefNo { get; set; }
+
         public RewardTxnUpdCheckerCriteria(
             int checkerId,
             string checkerName,
@@ -13,6 +15,7 @@
             string ip,
             SiteDB siteDB) : base(checkerId, checkerName, refNos, isVerified, ip, siteDB)
         {
+            this.RefNo = refNos;
         }
 
         public override string GetSettingKey()
