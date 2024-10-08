@@ -49,7 +49,8 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
                 RewardAmount = (string.IsNullOrEmpty(RewardAmount) || Convert.ToDouble(RewardAmount) == 0.0) ? "0.00" : Convert.ToDouble(RewardAmount).ToString(),
                 ExpensiseAmount = ExpensiseAmount == 0.0 ? "0.00" : ExpensiseAmount.ToString(),
                 Total_YesterdayBalance_RewardPending = total_YesterdayBalance_RewardPending,
-                RewardExrate = rewardRate.ToString()
+                RewardExrate = rewardRate.ToString(),
+                RewardCode = RewardPromotionCode
             };
 
             if (!crossTransferModel.IsHadPermissionOnCrossCurrencyTransfer && !crossTransferModel.IsHadPermissionOnYesterdayTransfer)

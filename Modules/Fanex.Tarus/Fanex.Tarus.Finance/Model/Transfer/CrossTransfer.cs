@@ -16,6 +16,8 @@ namespace Fanex.Tarus.Finance.Model.Transfer
 
         public bool IsShowReward { get; set; }
 
+        public string RewardCode { get; set; }
+
         public string RewardMaxTransId { get; set; }
 
         public string RewardAmount { get; set; }
