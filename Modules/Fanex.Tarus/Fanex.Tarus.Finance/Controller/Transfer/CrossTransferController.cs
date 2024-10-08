@@ -34,7 +34,7 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
             string rewardCurrency = Request["RewardCurrency"] as string ?? string.Empty;
             string RewardAmount = Request["RewardAmount"] as string ?? string.Empty;
             string total_YesterdayBalance_RewardPending = Request["TotalBalReward"] as string ?? string.Empty;
-            double rewardRate =  crossTransferService.SelectCustomerExRate(RewardPromotionCode).actualrate;
+            double rewardRate =  crossTransferService.SelectCustomerExRate(fromCustName).actualrate;
             double ExpensiseAmount = string.IsNullOrEmpty(RewardAmount) ? 0.0 : Convert.ToDouble(RewardAmount) * rewardRate;
             var crossTransferModel = new CrossTransfer
             {
