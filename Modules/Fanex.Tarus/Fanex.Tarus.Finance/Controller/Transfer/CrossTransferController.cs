@@ -33,23 +33,26 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
             string RewardCurrency = Request["RewardCurrency"] as string ?? string.Empty;
             string rewardMaxTransId = Request["RewardMaxTransId"] as string ?? string.Empty;
             string RewardAmount = Request["RewardAmount"] as string ?? string.Empty;
-            string total_YesterdayBalance_RewardPending = Request["TotalBalReward"] as string ?? string.Empty;
+            bool IsShowReward = !string.IsNullOrEmpty(RewardAmount);
+            double RewardAmountValue = string.IsNullOrEmpty(RewardAmount) ? 0.0 : Convert.ToDouble(RewardAmount) * -1;
+            double AmountValue = string.IsNullOrEmpty(fromAmount) ? 0.0 : Convert.ToDouble(fromAmount) * -1;
             double rewardRate =  crossTransferService.SelectCustomerExRate(fromCustName).actualrate;
             double ExpensiseAmount = string.IsNullOrEmpty(RewardAmount) ? 0.0 : Convert.ToDouble(RewardAmount) * rewardRate;
+            double total_YesterdayBalance_RewardPending = !IsShowReward ? 0.0 : RewardAmountValue + AmountValue;
             var crossTransferModel = new CrossTransfer
             {
                 IsHadPermissionOnCrossCurrencyTransfer = Permissions.HasPermission("FinanceTransfer"),
                 IsHadPermissionOnYesterdayTransfer = Permissions.HasPermission("OtherTrans"),
-                FromAmount = (string.IsNullOrEmpty(fromAmount) || Convert.ToDouble(fromAmount) == 0.0) ? "0.00" : (Convert.ToDouble(fromAmount) * -1).ToString(),
+                FromAmount = AmountValue == 0.0 ? "0.00" : IBCUtils.FormatHandler.FormatNumber20(AmountValue),
                 FromCustName = fromCustName,
                 RewardCurrency = RewardCurrency,
                 ForexAccount = Fanex.Tarus.Infrastructure.Caching.CacheHelper.Get<string>("Transfer_ForexAccount_" + AppSession.AccUserName),
-                IsShowReward = !string.IsNullOrEmpty(RewardAmount),
+                IsShowReward = IsShowReward,
                 RewardMaxTransId = rewardMaxTransId,
-                RewardAmount = (string.IsNullOrEmpty(RewardAmount) || Convert.ToDouble(RewardAmount) == 0.0) ? "0.00" : RewardAmount,
-                ExpensiseAmount = ExpensiseAmount == 0.0 ? "0.00" : ExpensiseAmount.ToString(),
-                Total_YesterdayBalance_RewardPending = total_YesterdayBalance_RewardPending,
-                RewardExrate = rewardRate.ToString(),
+                RewardAmount = RewardAmountValue == 0.0 ? "0.00" : IBCUtils.FormatHandler.FormatNumber20(RewardAmountValue),
+                ExpensiseAmount = ExpensiseAmount == 0.0 ? "0.00" : IBCUtils.FormatHandler.FormatNumber20(ExpensiseAmount),
+                Total_YesterdayBalance_RewardPending = IBCUtils.FormatHandler.FormatNumber20(total_YesterdayBalance_RewardPending),
+                RewardExrate = IBCUtils.FormatHandler.FormatNumber20(rewardRate),
                 RewardCode = RewardPromotionCode
             };
 
