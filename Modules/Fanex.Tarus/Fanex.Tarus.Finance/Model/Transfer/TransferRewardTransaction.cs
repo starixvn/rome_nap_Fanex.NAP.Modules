@@ -6,9 +6,13 @@ namespace Fanex.Tarus.Finance.Model.Transfer
 
     public class TransferRewardTransaction
     {
-        public int FromCustId { get; set; }
+        public string FromUserName { get; set; }
 
-        public int ToCustId { get; set; }
+        public string ToUserName { get; set; }
+
+        public string FromCurrName { get; set; }
+
+        public string ToCurrName { get; set; }
 
         public long MaxTransId { get; set; }
 

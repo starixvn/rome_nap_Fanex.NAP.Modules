@@ -8,9 +8,17 @@ namespace Fanex.Tarus.Finance.Model.Transfer
     {
         public bool IsTransferYesterday { get; set; }
 
+        public int FromCustId { get; set; }
+
         public string FromCustName { get; set; }
 
+        public int ToCustId { get; set; }
+
         public string ToCustName { get; set; }
+
+        public string RewardUserName { get; set; }
+
+        public string RewardCurrency { get; set; }
 
         public decimal Amount { get; set; }
 

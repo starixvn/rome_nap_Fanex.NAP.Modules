@@ -14,8 +14,10 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
     {
         public RewardInsertTransferCriteria(TransferRewardTransaction param)
         {
-            FromCustId = param.FromCustId;
-            ToCustId = param.ToCustId;
+            FromUserName = param.FromUserName;
+            ToUserName = param.ToUserName;
+            FromCurrName = param.FromCurrName;
+            ToCurrName = param.ToCurrName;
             Amount = param.Amount;
             ExchangeRate = param.ExchangeRate;
             MaxTransId = param.MaxTransId;
@@ -23,9 +25,13 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
             RefNo = param.RefNo;
         }
 
-        public int FromCustId { get; }
+        public string FromUserName { get; }
 
-        public int ToCustId { get; }
+        public string ToUserName { get; }
+
+        public string FromCurrName { get; }
+
+        public string ToCurrName { get; }
 
         public long MaxTransId { get; }
 

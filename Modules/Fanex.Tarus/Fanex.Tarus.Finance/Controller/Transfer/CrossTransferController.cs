@@ -30,8 +30,8 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
         {
             string fromAmount = Request["fromAmount"] as string ?? string.Empty;
             string fromCustName = Request["fromCustName"] as string ?? string.Empty;
+            string RewardCurrency = Request["RewardCurrency"] as string ?? string.Empty;
             string rewardMaxTransId = Request["RewardMaxTransId"] as string ?? string.Empty;
-            string rewardCurrency = Request["RewardCurrency"] as string ?? string.Empty;
             string RewardAmount = Request["RewardAmount"] as string ?? string.Empty;
             string total_YesterdayBalance_RewardPending = Request["TotalBalReward"] as string ?? string.Empty;
             double rewardRate =  crossTransferService.SelectCustomerExRate(fromCustName).actualrate;
@@ -42,11 +42,11 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
                 IsHadPermissionOnYesterdayTransfer = Permissions.HasPermission("OtherTrans"),
                 FromAmount = (string.IsNullOrEmpty(fromAmount) || Convert.ToDouble(fromAmount) == 0.0) ? "0.00" : (Convert.ToDouble(fromAmount) * -1).ToString(),
                 FromCustName = fromCustName,
+                RewardCurrency = RewardCurrency,
                 ForexAccount = Fanex.Tarus.Infrastructure.Caching.CacheHelper.Get<string>("Transfer_ForexAccount_" + AppSession.AccUserName),
                 IsShowReward = !string.IsNullOrEmpty(RewardAmount),
                 RewardMaxTransId = rewardMaxTransId,
-                RewardCurrency = rewardCurrency,
-                RewardAmount = (string.IsNullOrEmpty(RewardAmount) || Convert.ToDouble(RewardAmount) == 0.0) ? "0.00" : Convert.ToDouble(RewardAmount).ToString(),
+                RewardAmount = (string.IsNullOrEmpty(RewardAmount) || Convert.ToDouble(RewardAmount) == 0.0) ? "0.00" : RewardAmount,
                 ExpensiseAmount = ExpensiseAmount == 0.0 ? "0.00" : ExpensiseAmount.ToString(),
                 Total_YesterdayBalance_RewardPending = total_YesterdayBalance_RewardPending,
                 RewardExrate = rewardRate.ToString(),

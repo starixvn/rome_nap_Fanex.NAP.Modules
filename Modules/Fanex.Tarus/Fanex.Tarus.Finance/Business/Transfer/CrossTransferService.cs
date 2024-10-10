@@ -22,6 +22,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
     public class CrossTransferService : ICrossTransferService
     {
         private readonly ICrossTransferAccess crossTransferAccess;
+        private readonly string RewardCodeCurrency = "RM";
 
         public CrossTransferService(ICrossTransferAccess crossTransferAccess = null)
             => this.crossTransferAccess = crossTransferAccess ?? new CrossTransferAccess();
@@ -125,8 +126,10 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                     return crossTransferAccess.RewardInsertTransfer(
                         new RewardInsertTransferCriteria( new TransferRewardTransaction()
                         {
-                            FromCustId = fromCustId,
-                            ToCustId = param.RewardCustId,
+                            FromUserName = param.FromCustName,
+                            ToUserName = param.RewardUserName,
+                            FromCurrName = param.RewardCurrency,
+                            ToCurrName = RewardCodeCurrency,
                             MaxTransId = param.RewardMaxTransId,
                             Amount = param.RewardAmount,
                             ExchangeRate = param.RewardExRate,
@@ -139,10 +142,12 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                 var fromResultReward = crossTransferAccess.RewardInsertTransferSiteDB(
                     new RewardInsertTransferCriteria(new TransferRewardTransaction()
                     {
-                        FromCustId = fromCustId,
-                        ToCustId = param.RewardCustId,
+                        FromUserName = param.FromCustName,
+                        ToUserName = param.RewardUserName,
+                        FromCurrName = param.RewardCurrency,
+                        ToCurrName = RewardCodeCurrency,
                         MaxTransId = param.RewardMaxTransId,
-                        Amount = param.Amount,
+                        Amount = param.RewardAmount,
                         ExchangeRate = param.RewardExRate,
                         SiteDBGroupId = fromSiteDB.SiteDBGroupID
                     }),
@@ -155,10 +160,12 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                     var toResultReward = crossTransferAccess.BettransInsertTransferSiteDB(
                         new RewardInsertTransferCriteria(new TransferRewardTransaction()
                         {
-                            FromCustId = fromCustId,
-                            ToCustId = param.RewardCustId,
+                            FromUserName = param.FromCustName,
+                            ToUserName = param.RewardUserName,
+                            FromCurrName = param.RewardCurrency,
+                            ToCurrName = RewardCodeCurrency,
                             MaxTransId = param.RewardMaxTransId,
-                            Amount = param.Amount,
+                            Amount = param.RewardAmount,
                             ExchangeRate = param.RewardExRate,
                             SiteDBGroupId = rewardSiteDB.SiteDBGroupID,
                             RefNo = refNo.Value
