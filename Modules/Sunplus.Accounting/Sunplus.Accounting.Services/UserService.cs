@@ -178,7 +178,7 @@ namespace Sunplus.Accounting.Business
         /// <param name="user"></param>
         /// <param name="refNos"></param>
         /// <returns></returns>
-        public bool VerfiyDailyTransactions(User user, string refNos)
+        public bool VerfiyDailyTransactions(User user, string refNos, string rewardRefNo)
         {
             Check.Argument.IsNotNull(user, "user");
             Check.Argument.IsNotNullOrEmpty(refNos, "refNos");
@@ -188,7 +188,7 @@ namespace Sunplus.Accounting.Business
             try
             {
                 refNos = refNos.Trim().TrimEnd(',');
-                isSuccessful = _userDAO.UpdateVerifyStatus(user, refNos, true);
+                isSuccessful = _userDAO.UpdateVerifyStatus(user, refNos, rewardRefNo, true);
             }
             catch (Exception ex)
             {
@@ -204,7 +204,7 @@ namespace Sunplus.Accounting.Business
         /// <param name="user">who perform action unverify</param>
         /// <param name="refNo"></param>
         /// <returns></returns>
-        public bool UnverifyTransaction(User user, string refNo)
+        public bool UnverifyTransaction(User user, string refNo, string rewardRefNo)
         {
             Check.Argument.IsNotNull(user, "user");
 
@@ -212,7 +212,7 @@ namespace Sunplus.Accounting.Business
 
             try
             {
-                isSuccessful = _userDAO.UpdateVerifyStatus(user, refNo.ToString(), false);
+                isSuccessful = _userDAO.UpdateVerifyStatus(user, refNo, rewardRefNo, false);
             }
             catch (Exception ex)
             {
@@ -232,7 +232,7 @@ namespace Sunplus.Accounting.Business
         /// <param name="isInlucdeAccBal"></param>
         /// <returns></returns>
         public List<Entities.Statement> GetCustomerStatement(User customer, DateTime fromDate, DateTime toDate,
-                                                    DateTime balanceUpDay, bool isInlucdeAccBal)
+                                                    DateTime balanceUpDay, bool isInlucdeAccBal, bool isReward)
         {
             Check.Argument.IsNotNull(customer, "customer");
             Check.Argument.IsNotInFuture(balanceUpDay, "balanceUpDay");
@@ -254,7 +254,8 @@ namespace Sunplus.Accounting.Business
                         fromDate,
                         toDate,
                         balanceUpDay,
-                        isInlucdeAccBal);
+                        isInlucdeAccBal,
+                        isReward);
                 }
             }
             catch (Exception ex)

@@ -33,9 +33,9 @@ namespace Sunplus.Accounting.Business
 
         //DailyTransactionDTO GetDailyAllTransaction(DateTime transDate, string type, string creator, int pageIndex, int pageSize, int fromcache);
 
-        bool VerfiyDailyTransactions(User user, string refNos);
+        bool VerfiyDailyTransactions(User user, string refNos, string rewardRefNos);
 
-        bool UnverifyTransaction(User user, string refNo);
+        bool UnverifyTransaction(User user, string refNo, string rewardRefNo);
 
         /// <summary>
         /// Get dictionary group, key contanins refNo, value is the total number transaction
@@ -48,7 +48,7 @@ namespace Sunplus.Accounting.Business
         int GetListTotalTransPerGroup(List<DailyTransaction> transList, string RefNo);
 
         List<Entities.Statement> GetCustomerStatement(User customer, DateTime fromDate, DateTime toDate, DateTime balanceUpDay,
-                                             bool isInlucdeAccBal);
+                                             bool isInlucdeAccBal, bool isReward);
 
         int GetCustomerIdByUsername(string custName);
 

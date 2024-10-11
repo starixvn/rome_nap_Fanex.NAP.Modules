@@ -18,7 +18,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         }
 
         //Henry added: 2009-10-24
-        public static DbResult Acc_DetailStatement(DateTime fromdate, DateTime todate, int custid)
+        public static DbResult Acc_DetailStatement(DateTime fromdate, DateTime todate, int custid, bool isReward)
         {
             DbResult result = null;
             var p = new Hashtable();
@@ -28,7 +28,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             try
             {
 
-                using (ObjectDb db = new ObjectDb("Acc_Statement", 600))
+                using (ObjectDb db = new ObjectDb(isReward? "Acc_StatementReward_Detail" : "Acc_Statement", 600))
                 {
                     db.AssignParamValues(p);
 
@@ -46,14 +46,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         }
 
         //Henry added: 2009-10-24
-        public static DbResult Acc_AuditStatement(int custid)
+        public static DbResult Acc_AuditStatement(int custid, bool isReward)
         {
             DbResult result = null;
             var p = new Hashtable();
             p.Add("custid", custid);
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_AllStatement4Agent", 600))
+                using (ObjectDb db = new ObjectDb(isReward? "Acc_AllStatement4Agent_Reward" : "Acc_AllStatement4Agent", 600))
                 {
                     db.AssignParamValues(p);
 
