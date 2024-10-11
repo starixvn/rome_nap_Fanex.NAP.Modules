@@ -61,6 +61,8 @@ namespace Fanex.Tarus.Finance.Business.Transfer
         {
             var fromSiteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(fromCustId);
             var result = new Result(0,String.Empty);
+            result.IsMainTransferSuccess = false;
+
             if (param.IsTransferYesterday)
             {
                 var toSiteDB = ObjectDbExtensions.GetSiteDBConfigByUsername(param.ToCustName);
@@ -111,19 +113,22 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                         result.ErrorMessage = fromResult.ErrorMessage;
                     }
                 }
-            }
 
-            if (result.ErrorCode > 0)
-            {
-                return result;
+                if (result.ErrorCode > 0)
+                {
+                    return result;
+                }
+
+                result.IsMainTransferSuccess = true;
             }
+          
 
             if (param.IsShowReward)
             {
                 var rewardSiteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(param.RewardCustId);
                 if (fromSiteDB.SiteDBGroupID == rewardSiteDB.SiteDBGroupID)
                 {
-                    return crossTransferAccess.RewardInsertTransfer(
+                    result = crossTransferAccess.RewardInsertTransfer(
                         new RewardInsertTransferCriteria( new TransferRewardTransaction()
                         {
                             FromUserName = param.FromCustName,
@@ -136,6 +141,8 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                             SiteDBGroupId = fromSiteDB.SiteDBGroupID
                         }),
                         fromSiteDB.AGIP);
+                    result.IsMainTransferSuccess = true;
+                    return result;
                 }
 
                 // Step 1: transfer at SiteDB FROM
