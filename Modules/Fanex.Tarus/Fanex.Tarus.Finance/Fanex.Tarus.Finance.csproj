@@ -204,6 +204,7 @@
     <Compile Include="Entities\ForexAccount.cs" />
     <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\ResultDataTable.cs" />
+    <Compile Include="Entities\ResultReward.cs" />
     <Compile Include="Entities\ResultRefNo.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Helper.cs" />

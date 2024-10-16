@@ -126,9 +126,10 @@ namespace Fanex.Tarus.Finance.Business.Transfer
             if (param.IsShowReward)
             {
                 var rewardSiteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(param.RewardCustId);
+            
                 if (fromSiteDB.SiteDBGroupID == rewardSiteDB.SiteDBGroupID)
                 {
-                    result = crossTransferAccess.RewardInsertTransfer(
+                    var resultReward = crossTransferAccess.RewardInsertTransferSiteDB(
                         new RewardInsertTransferCriteria( new TransferRewardTransaction()
                         {
                             FromUserName = param.FromCustName,
@@ -141,7 +142,11 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                             SiteDBGroupId = fromSiteDB.SiteDBGroupID
                         }),
                         fromSiteDB.AGIP);
-                    result.IsMainTransferSuccess = true;
+                    if (!resultReward.IsFailure)
+                    {
+                        result.IsMainTransferSuccess = true;
+                        crossTransferAccess.RewardWriteLog(resultReward.LogData);
+                    }
                     return result;
                 }
 
@@ -188,6 +193,11 @@ namespace Fanex.Tarus.Finance.Business.Transfer
 
                     result.ErrorCode = toResultReward.ErrorCode;
                     result.ErrorMessage = toResultReward.ErrorMessage;
+
+                    if (!result.IsFailure)
+                    {
+                        crossTransferAccess.RewardWriteLog(fromResultReward.LogData);
+                    }
                 }
                 else
                 {
