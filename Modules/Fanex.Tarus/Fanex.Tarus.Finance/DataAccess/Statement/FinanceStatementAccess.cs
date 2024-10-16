@@ -12,7 +12,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
     using Fanex.Tarus.Infrastructure.Extensions;
     using Sunplus.Accounting.Core.Common;
 
-    public class FinanceStatementAccess : IFinanceStatementAccess
+    public class FinanceStatementAccess : BaseDataAccess, IFinanceStatementAccess
     {
         public DataSet GetFinanceStatementAccess(string refNoParam, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int IncludeAccBall)
         {

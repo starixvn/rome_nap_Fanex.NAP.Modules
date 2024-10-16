@@ -167,6 +167,7 @@
     </Compile>
     <Compile Include="Criteria\GetSiteDBConfigByRefNoCriteria.cs" />
     <Compile Include="Criteria\ReverseTransferRollbackSiteDBCriteria.cs" />
+    <Compile Include="Criteria\RewardWriteLogCriteria.cs" />
     <Compile Include="Criteria\Statement\BettransDelTransactionCriteria.cs" />
     <Compile Include="Criteria\Statement\CustomerSelByRefnoCriteria.cs" />
     <Compile Include="Criteria\Statement\RewardTxnUpdCheckerCriteria.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Criteria\Transaction\FinanceTransferBettransInsCriteria.cs" />
     <Compile Include="Criteria\Transaction\FinanceTransferBettransInsSiteDBCriteria.cs" />
     <Compile Include="Criteria\Transaction\FinanceTransferMulUpdCriteria.cs" />
+    <Compile Include="DataAccess\BaseDataAccess.cs" />
     <Compile Include="DataAccess\Customer\FinanceCustomerListAccess.cs" />
     <Compile Include="DataAccess\Customer\IFinanceCustomerListAccess.cs" />
     <Compile Include="DataAccess\Statement\FinanceStatementAccess.cs" />
