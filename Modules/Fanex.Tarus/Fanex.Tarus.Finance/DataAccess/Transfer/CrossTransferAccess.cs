@@ -106,7 +106,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
         {
             var outputs = db.GetOuputParams();
             var refNo = outputs["refno"];
-            var logData = outputs["PaymentLog"];
+            var logData = outputs["paymentlog"];
             return new ResultReward(
                 Convert.ToInt32(outputs["errcode"]),
                 outputs["errmsg"].ToString(),
@@ -157,11 +157,6 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
             {
                 return objDB.ExecuteDataSet();
             }
-        }
-
-        public void RewardWriteLog(string logData)
-        {
-            RewardWriteLog(logData);
         }
     }
 }

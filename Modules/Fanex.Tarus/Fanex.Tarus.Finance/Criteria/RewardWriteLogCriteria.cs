@@ -4,7 +4,13 @@ namespace Fanex.Tarus.Finance.Criteria
 {
     public class RewardWriteLogCriteria : CriteriaBase
     {
-        public string PaymentLog { get; set; }
+
+        public RewardWriteLogCriteria(string paymentLog)
+        {
+            PaymentLog = paymentLog;
+        }
+
+        public string PaymentLog { get; }
 
         public override bool IsValid() => true;
 

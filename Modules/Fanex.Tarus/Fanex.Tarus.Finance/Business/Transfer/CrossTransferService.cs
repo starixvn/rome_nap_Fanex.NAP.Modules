@@ -19,7 +19,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
     using ObjectDbExtensions = Fanex.Tarus.Infrastructure.Extensions.ObjectDbExtensions;
     using SiteDB = Fanex.Tarus.Infrastructure.Extensions.SiteDB;
 
-    public class CrossTransferService : ICrossTransferService
+    public class CrossTransferService : RewardBaseService, ICrossTransferService
     {
         private readonly ICrossTransferAccess crossTransferAccess;
         private readonly string RewardCodeCurrency = "RM";
@@ -145,7 +145,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                     if (!resultReward.IsFailure)
                     {
                         result.IsMainTransferSuccess = true;
-                        crossTransferAccess.RewardWriteLog(resultReward.LogData);
+                        base.RewardWriteLog(resultReward.LogData);
                     }
                     return result;
                 }
@@ -169,7 +169,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                 {
                     var refNo = fromResultReward.RefNo;
                     // Step 2: transfer at SiteDB TO
-                    var toResultReward = crossTransferAccess.BettransInsertTransferSiteDB(
+                    var toResultReward = crossTransferAccess.RewardInsertTransferSiteDB(
                         new RewardInsertTransferCriteria(new TransferRewardTransaction()
                         {
                             FromUserName = param.FromCustName,
@@ -196,7 +196,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
 
                     if (!result.IsFailure)
                     {
-                        crossTransferAccess.RewardWriteLog(fromResultReward.LogData);
+                        base.RewardWriteLog(fromResultReward.LogData);
                     }
                 }
                 else

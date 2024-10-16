@@ -153,6 +153,7 @@
   <ItemGroup>
     <Compile Include="Business\Customer\FinanceCustomerListService.cs" />
     <Compile Include="Business\Customer\IFinanceCustomerListService.cs" />
+    <Compile Include="Business\RewardBaseService.cs" />
     <Compile Include="Business\Statement\FinanceStatementBusiness.cs" />
     <Compile Include="Business\Statement\IFinanceStatementBusiness.cs" />
     <Compile Include="Business\Transfer\CrossTransferService.cs" />

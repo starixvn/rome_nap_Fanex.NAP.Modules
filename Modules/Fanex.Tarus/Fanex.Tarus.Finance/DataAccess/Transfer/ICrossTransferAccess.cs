@@ -29,8 +29,5 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
         DataSet SelectAllForexAccount();
 
         DataSet SelectAllExchangeRate();
-
-        void RewardWriteLog(string logData);
-
     }
 }
