@@ -52,7 +52,7 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
                 RewardAmount = RewardAmountValue == 0.0 ? "0.00" : IBCUtils.FormatHandler.FormatNumber20(RewardAmountValue),
                 ExpensiseAmount = ExpensiseAmount == 0.0 ? "0.00" : IBCUtils.FormatHandler.FormatNumber20(ExpensiseAmount),
                 Total_YesterdayBalance_RewardPending = IBCUtils.FormatHandler.FormatNumber20(total_YesterdayBalance_RewardPending),
-                RewardExrate = IBCUtils.FormatHandler.FormatNumber20(rewardRate),
+                RewardExrate = rewardRate.ToString(),
                 RewardCode = RewardPromotionCode
             };
 
