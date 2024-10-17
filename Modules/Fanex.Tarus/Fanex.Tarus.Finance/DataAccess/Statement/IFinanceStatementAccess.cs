@@ -21,6 +21,8 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
 
         Result DeleteTransAccess(ICriteria criteria, string agIp);
 
+        ResultReward DeleteRewardTransAccess(ICriteria criteria, string agIp);
+
         Tuple<IEnumerable<int>, Result> GetCustIdsByRefNo(ICriteria criteria);
 
         Result RollbackDeleteTransAccess(ICriteria criteria, string agIp);

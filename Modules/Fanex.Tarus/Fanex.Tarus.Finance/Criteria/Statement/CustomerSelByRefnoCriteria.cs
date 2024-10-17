@@ -4,12 +4,17 @@
 
     internal class CustomerSelByRefnoCriteria : CriteriaBase
     {
-        public CustomerSelByRefnoCriteria(long refNo)
-            => RefNo = refNo;
+        public CustomerSelByRefnoCriteria(long refNo, bool isReward)
+        {
+            RefNo = refNo;
+            IsReward = isReward;
+        }
 
         public long RefNo { get; }
 
+        public bool IsReward { get; }
+
         public override string GetSettingKey()
-            => "Acc_CustomerSelByRefno";
+            => IsReward ? "Acc_RewardPayment_CustomerSelByRefNo" : "Acc_CustomerSelByRefno";
     }
 }

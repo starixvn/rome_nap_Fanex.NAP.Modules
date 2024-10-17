@@ -90,8 +90,8 @@ namespace Fanex.Tarus.Finance.Controller.Statement
         }
 
         [HttpPost]
-        public JsonResult DeleteTrans(long refNo)
-            => Json(financeStatemenetService.DeleteTransBusiness(refNo, AppSession.CustID, AppSession.AccId), JsonRequestBehavior.AllowGet);
+        public JsonResult DeleteTrans(long refNo, bool isReward)
+            => Json(financeStatemenetService.DeleteTransBusiness(refNo, AppSession.CustID, AppSession.AccId, isReward), JsonRequestBehavior.AllowGet);
 
         public void ExportExcelFinanceStatement(string refNo, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int IncludeAccBall, string reportTitle)
         {

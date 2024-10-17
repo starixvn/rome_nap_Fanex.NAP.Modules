@@ -127,6 +127,25 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
             }
         }
 
+        public ResultReward DeleteRewardTransAccess(ICriteria criteria, string agIp)
+        {
+            try
+            {
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), agIp);
+                    var outputs = db.GetOuputParams();
+
+                    return new ResultReward(Convert.ToInt32(outputs["errcode"]), outputs["errmsg"].ToString(), 0, outputs["PaymentLog"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
+                return (ResultReward)ResultReward.ServerError(ex.Message);
+            }
+        }
+
         public Tuple<IEnumerable<int>, Result> GetCustIdsByRefNo(ICriteria criteria)
         {
             IList<int> custIds = new List<int>();

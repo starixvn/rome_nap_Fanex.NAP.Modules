@@ -181,7 +181,6 @@ namespace Sunplus.Accounting.Business
         public bool VerfiyDailyTransactions(User user, string refNos, string rewardRefNo)
         {
             Check.Argument.IsNotNull(user, "user");
-            Check.Argument.IsNotNullOrEmpty(refNos, "refNos");
 
             bool isSuccessful = false;
 

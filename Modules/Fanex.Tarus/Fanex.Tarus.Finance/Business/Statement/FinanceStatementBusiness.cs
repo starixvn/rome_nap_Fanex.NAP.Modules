@@ -10,6 +10,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
     using DNAide.Core;
     using DNAide.Utils;
     using ExcelUtil.Spreadsheet;
+    using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Criteria;
     using Fanex.Tarus.Finance.Criteria.Statement;
     using Fanex.Tarus.Finance.DataAccess.Statement;
@@ -20,7 +21,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
     using ObjectDbExtensions = Fanex.Tarus.Infrastructure.Extensions.ObjectDbExtensions;
     using SiteDB = Fanex.Tarus.Infrastructure.Extensions.SiteDB;
 
-    public class FinanceStatementBusiness : IFinanceStatementBusiness
+    public class FinanceStatementBusiness : RewardBaseService, IFinanceStatementBusiness
     {
         private readonly IFinanceStatementAccess financeStatementAccess;
         private readonly Helper helper;
@@ -388,17 +389,17 @@ namespace Fanex.Tarus.Finance.Business.Statement
             return multipleVerifyResult;
         }
 
-        public Result DeleteTransBusiness(long refNo, int custId, int userId)
+        public Result DeleteTransBusiness(long refNo, int custId, int userId, bool isReward)
         {
-            var resultTuple = financeStatementAccess.GetCustIdsByRefNo(new CustomerSelByRefnoCriteria(refNo));
+            var resultTuple = financeStatementAccess.GetCustIdsByRefNo(new CustomerSelByRefnoCriteria(refNo,isReward));
             var result = resultTuple.Item2;
 
             return result.IsFailure
                 ? result
-                : DeleteTransBusiness(refNo, custId, userId, resultTuple.Item1);
+                : DeleteTransBusiness(refNo, custId, userId, resultTuple.Item1, isReward);
         }
 
-        private Result DeleteTransBusiness(long refNo, int custId, int userId, IEnumerable<int> custIds)
+        private Result DeleteTransBusiness(long refNo, int custId, int userId, IEnumerable<int> custIds, bool isReward)
         {
             Result result = null;
             IEnumerable<SiteDB> rollbackSiteDBList = Enumerable.Empty<SiteDB>();
@@ -407,9 +408,25 @@ namespace Fanex.Tarus.Finance.Business.Statement
             for (int i = 0, max = uniqueSiteDBArray.Length; i < max; i++)
             {
                 var siteDB = uniqueSiteDBArray[i];
-                result = financeStatementAccess.DeleteTransAccess(
-                    new BettransDelTransactionCriteria(refNo, custId, userId, siteDB),
-                    siteDB.AGIP);
+                if (isReward)
+                {
+                    var rewardResult = financeStatementAccess.DeleteRewardTransAccess(
+                           new RewardReverseTransactionCriteria(refNo, custId, userId, siteDB),
+                           siteDB.AGIP);
+
+                    if (!rewardResult.IsFailure)
+                    {
+                        base.RewardWriteLog(rewardResult.LogData);
+                    }
+
+                    result = (Result)rewardResult;
+                }
+                else
+                {
+                    result = financeStatementAccess.DeleteTransAccess(
+                        new BettransDelTransactionCriteria(refNo, custId, userId, siteDB),
+                        siteDB.AGIP);
+                }
 
                 if (result.IsFailure)
                 {
@@ -424,7 +441,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
 
             if (rollbackSiteDBList.Any())
             {
-                RollbackDeleteTransAccess(refNo, userId, Sunplus.Accounting.Core.Helper.Utils.GetClientIP(), rollbackSiteDBList);
+                RollbackDeleteTransAccess(refNo, userId, Sunplus.Accounting.Core.Helper.Utils.GetClientIP(), rollbackSiteDBList, isReward);
             }
 
             return result ?? new Result();
@@ -447,7 +464,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
             return siteDBDict.Values.ToArray();
         }
 
-        private void RollbackDeleteTransAccess(long refNo, int userId, string ip, IEnumerable<SiteDB> siteDBList)
+        private void RollbackDeleteTransAccess(long refNo, int userId, string ip, IEnumerable<SiteDB> siteDBList, bool isReward)
         {
             foreach (var siteDB in siteDBList)
             {

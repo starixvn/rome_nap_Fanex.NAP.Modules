@@ -282,6 +282,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         private static bool UpdateVerifyStatus(User user, string refNoList, bool isVerified, SiteDB siteDB, bool isReward)
         {
+            if (string.IsNullOrEmpty(refNoList))
+            {
+                return true;
+            }
+
             string settingKey = string.Empty;
             if (isReward)
             {

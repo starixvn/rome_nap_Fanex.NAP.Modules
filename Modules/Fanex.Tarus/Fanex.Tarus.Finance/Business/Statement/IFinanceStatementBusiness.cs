@@ -13,7 +13,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
 
         MultipleVerifyResult VerifyTransactionBusiness(string refNo, string rewardRefNo, bool isVerify, string CheckerName, int CheckerID);
 
-        Result DeleteTransBusiness(long refNo, int custId, int userId);
+        Result DeleteTransBusiness(long refNo, int custId, int userId, bool isReward);
 
         void ExportExcelFinanceStatement(string refNoParam, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int IncludeAccBall, string reportTitle);
     }
