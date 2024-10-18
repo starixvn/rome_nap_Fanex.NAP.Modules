@@ -38,10 +38,12 @@
                         parameter = "apositiontaking_{0}";
                         parameter_max = "maxpos_{0}";
                         break;
+
                     case "1_live":
                         parameter = "alivepositiontaking_{0}";
                         parameter_max = "maxlpos_{0}";
                         break;
+
                     default:
                         parameter = string.Format("v{0}apositiontaking_", key) + "{0}";
                         parameter_max = string.Format("maxv{0}pos_", key) + "{0}";
@@ -76,7 +78,6 @@
             htbParameters.Add("playerdiscount", dr["playerdiscount"]);
             htbParameters.Add("playerdiscountcs", dr["playerdiscountcs"]);
             htbParameters.Add("playerdiscount1x2", dr["playerdiscount1x2"]);
-            htbParameters.Add("playerdiscountmyanmarodds", dr["playerdiscountmyanmarodds"]);
             htbParameters.Add("suspended", dr["suspended"]);
             htbParameters.Add("recommend", uplineId);
             htbParameters.Add("ugroup", dr["ugroup"]);
@@ -104,10 +105,12 @@
                         parameter = "apositiontaking_{0}";
                         parameter_max = "maxpos_{0}";
                         break;
+
                     case "1_live":
                         parameter = "alivepositiontaking_{0}";
                         parameter_max = "maxlpos_{0}";
                         break;
+
                     default:
                         parameter = string.Format("v{0}apositiontaking_", key) + "{0}";
                         parameter_max = string.Format("maxv{0}pos_", key) + "{0}";
