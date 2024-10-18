@@ -142,12 +142,13 @@ namespace Fanex.Tarus.Finance.Business.Statement
                 var isForex = helper.GetForexAccounts().Contains(username);
 
                 var listTrans = new List<Transaction>();
+                var listSubTrans = new List<SubTransaction>();
                 if (dtTrans.Tables.Count > 0)
                 {
                     var transTable = dtTrans.Tables[0];
                     foreach (DataRow row in transTable.Rows)
                     {
-                        var subTrans = new SubTransaction();
+                        var subTran = new SubTransaction();
                         var trans = new Transaction();
 
                         var transDate = row["TransDate"].ToString();
@@ -163,25 +164,21 @@ namespace Fanex.Tarus.Finance.Business.Statement
                         trans.IsOwner = isOwner;
                         trans.Total = totalAmount;
 
-                        subTrans.TransDate = transDate;
-                        subTrans.Amount = totalAmount;
-                        subTrans.Remark = row["transtype"].ToString().ToUpper() + " <br> -" + row["TransDescription"].ToString();
-                        subTrans.IsOwner = isOwner;
-                        subTrans.TransId = transId;
-
-                        InsertToTrans(ref listTrans, trans, subTrans, isForex);
+                        subTran.TransDate = transDate;
+                        subTran.Amount = totalAmount;
+                        subTran.Remark = row["transtype"].ToString().ToUpper() + " <br> -" + row["TransDescription"].ToString();
+                        subTran.IsOwner = isOwner;
+                        subTran.TransId = transId;
+                        listSubTrans.Add(subTran);
+                        //InsertToTrans(ref listTrans, trans, subTran, isForex);
                     }
                 }
                 var transCount = statementDetail.ListTrans.Count;
 
-                for (var i = 0; i < transCount; i++)
-                {
-                    var trans = listTrans.Where(t => t.TransId == statementDetail.ListTrans[i].TransId).FirstOrDefault();
-                    if (trans != null)
-                    {
-                        statementDetail.ListTrans[i].ListSubTrans = trans.ListSubTrans;
-                    }
-                }
+                //for (var i = 0; i < transCount; i++)
+                //{
+                    statementDetail.ListTrans[0].ListSubTrans = listSubTrans;
+                //}
 
                 return statementDetail;
             }
@@ -351,15 +348,15 @@ namespace Fanex.Tarus.Finance.Business.Statement
                 {
                     if (!string.IsNullOrWhiteSpace(refNo))
                     {
-                       var results = financeStatementAccess.UpdateVerifyStatusAccess(
-                                     new DailyTxnUpdCheckerCriteria(
-                                         checkerId,
-                                         checkerName,
-                                         refNo,
-                                         isVerify,
-                                         Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
-                                         siteDB),
-                                     siteDB.AGIP);
+                        var results = financeStatementAccess.UpdateVerifyStatusAccess(
+                                      new DailyTxnUpdCheckerCriteria(
+                                          checkerId,
+                                          checkerName,
+                                          refNo,
+                                          isVerify,
+                                          Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
+                                          siteDB),
+                                      siteDB.AGIP);
                         multipleVerifyResult.SuccessRefNos.AddRange(results.Where(result => result.Success).Select(result => result.RefNo));
                         multipleVerifyResult.ErrorResults.AddRange(results.Where(result => !result.Success));
                     }
@@ -391,7 +388,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
 
         public Result DeleteTransBusiness(long refNo, int custId, int userId, bool isReward)
         {
-            var resultTuple = financeStatementAccess.GetCustIdsByRefNo(new CustomerSelByRefnoCriteria(refNo,isReward));
+            var resultTuple = financeStatementAccess.GetCustIdsByRefNo(new CustomerSelByRefnoCriteria(refNo, isReward));
             var result = resultTuple.Item2;
 
             return result.IsFailure

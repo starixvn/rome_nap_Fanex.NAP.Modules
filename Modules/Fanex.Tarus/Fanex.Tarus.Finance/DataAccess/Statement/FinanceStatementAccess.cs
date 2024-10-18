@@ -92,10 +92,10 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
                     }
 
                     var outputs = db.GetOuputParams();
-                    var errorCode = Convert.ToInt32(outputs["errCode"]);
+                    var errorCode = Convert.ToInt32(outputs["errcode"]);
                     if (errorCode != 0)
                     {
-                        results.Add(new VerifyResult() { Message = outputs["errMsg"].ToString(), Success = false });
+                        results.Add(new VerifyResult() { Message = outputs["errmsg"].ToString(), Success = false });
                     }
                 }
             }
