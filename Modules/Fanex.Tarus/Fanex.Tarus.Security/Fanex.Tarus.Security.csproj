@@ -58,10 +58,6 @@
       <HintPath>..\..\..\packages\Fanex.Cryptography.Aes.1.0.0.0\lib\net461\Fanex.Cryptography.Aes.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Client40, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.CustomerSetting.1.1.1\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.MatrixClient, Version=1.0.1.4, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\Fanex.CustomerSetting.Matrix.1.0.1.5\lib\net40\Fanex.CustomerSetting.MatrixClient.dll</HintPath>
@@ -230,7 +226,6 @@
     <Compile Include="Authenticate\ControllerContextExtensions.cs" />
     <Compile Include="Authenticate\AuthorizeFunctionsAttribute.cs" />
     <Compile Include="Authenticate\CustomerSettingAttribute.cs" />
-    <Compile Include="Authenticate\CustomerSettingRenovation\CustomerSettingClientRegistration.cs" />
     <Compile Include="Authenticate\CustomerSettingRenovation\SettingMatrixClientRegistration.cs" />
     <Compile Include="Authenticate\GoldDeluxe\GoldDeluxeAuthorizationService.cs" />
     <Compile Include="Authenticate\ProductStatus\ProductStatusAuthorizeService.cs" />
