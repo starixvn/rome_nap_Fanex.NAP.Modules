@@ -141,44 +141,22 @@ namespace Fanex.Tarus.Finance.Business.Statement
 
                 var isForex = helper.GetForexAccounts().Contains(username);
 
-                var listTrans = new List<Transaction>();
-                var listSubTrans = new List<SubTransaction>();
+                statementDetail.ListTrans[0].ListSubTrans = new List<SubTransaction>();
                 if (dtTrans.Tables.Count > 0)
                 {
                     var transTable = dtTrans.Tables[0];
                     foreach (DataRow row in transTable.Rows)
                     {
-                        var subTran = new SubTransaction();
-                        var trans = new Transaction();
-
-                        var transDate = row["TransDate"].ToString();
-                        var transId = row["TransID"].ToString();
-
-                        trans.TransDate = transDate;
-                        trans.Remark = row["TransDescription"].ToString();
-                        trans.TransId = transId;
-
-                        var isOwner = CastAide.AsBoolean(row["IsOwner"]);
-                        var totalAmount = row["TotalAmount"].ToString();
-
-                        trans.IsOwner = isOwner;
-                        trans.Total = totalAmount;
-
-                        subTran.TransDate = transDate;
-                        subTran.Amount = totalAmount;
-                        subTran.Remark = row["transtype"].ToString().ToUpper() + " <br> -" + row["TransDescription"].ToString();
-                        subTran.IsOwner = isOwner;
-                        subTran.TransId = transId;
-                        listSubTrans.Add(subTran);
-                        //InsertToTrans(ref listTrans, trans, subTran, isForex);
+                        statementDetail.ListTrans[0].ListSubTrans.Add(new SubTransaction
+                        {
+                            TransDate = row["TransDate"].ToString(),
+                            Amount = row["TotalAmount"].ToString(),
+                            Remark = row["transtype"].ToString().ToUpper() + " <br> -" + row["TransDescription"].ToString(),
+                            IsOwner = CastAide.AsBoolean(row["IsOwner"]),
+                            TransId = row["TransID"].ToString()
+                        });
                     }
                 }
-                var transCount = statementDetail.ListTrans.Count;
-
-                //for (var i = 0; i < transCount; i++)
-                //{
-                    statementDetail.ListTrans[0].ListSubTrans = listSubTrans;
-                //}
 
                 return statementDetail;
             }
@@ -186,6 +164,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
             {
                 LogExtensions.ExceptionHandler(ex);
             }
+
             return new StatementDetail();
         }
 
@@ -212,69 +191,6 @@ namespace Fanex.Tarus.Finance.Business.Statement
                         }
                         else return item;
                     })).ToList();
-                }
-            }
-        }
-
-        private void InsertToTrans(ref List<Transaction> listTrans, Transaction trans, SubTransaction subTrans, bool isForex)
-        {
-            if (listTrans != null && subTrans != null)
-            {
-                var subTransAmount = Convert.ToDouble(subTrans.Amount);
-
-                subTrans.Amount = DNAide.Utils.NumberFormat.DoubleFormat(subTrans.Amount, 2);
-
-                if (isForex)
-                {
-                    var isExistedTrans = (listTrans.Find(item => item.TransDate.Equals(subTrans.TransDate) && (item.ListSubTrans.Count < 2) && IsEqualToRemarkAmount(item.Remark, Convert.ToDouble(item.Total), subTrans.Remark, subTransAmount) && subTrans.IsOwner != item.IsOwner) != null);
-                    if (!isExistedTrans)
-                    {
-                        trans.ListSubTrans = new List<SubTransaction>();
-                        trans.ListSubTrans.Add(subTrans);
-                        listTrans.Add(trans);
-                    }
-                    else
-                    {
-                        listTrans = (listTrans.Select(item =>
-                        {
-                            if (item.TransDate.Equals(trans.TransDate) && (item.ListSubTrans.Count < 2) && IsEqualToRemarkAmount(item.Remark, Convert.ToDouble(item.Total), subTrans.Remark, subTransAmount) && subTrans.IsOwner != item.IsOwner)
-                            {
-                                item.ListSubTrans.Add(subTrans);
-                                if (subTrans.IsOwner)
-                                {
-                                    item.TransId = subTrans.TransId;
-                                }
-                                return item;
-                            }
-                            else return item;
-                        })).ToList();
-                    }
-                }
-                else
-                {
-                    var isExistedTrans = (listTrans.Find(item => item.TransDate.Equals(subTrans.TransDate)) != null);
-                    if (!isExistedTrans)
-                    {
-                        trans.ListSubTrans = new List<SubTransaction>();
-                        trans.ListSubTrans.Add(subTrans);
-                        listTrans.Add(trans);
-                    }
-                    else
-                    {
-                        listTrans = (listTrans.Select(item =>
-                        {
-                            if (item.TransDate.Equals(subTrans.TransDate))
-                            {
-                                item.ListSubTrans.Add(subTrans);
-                                if (subTrans.IsOwner)
-                                {
-                                    item.TransId = subTrans.TransId;
-                                }
-                                return item;
-                            }
-                            else return item;
-                        })).ToList();
-                    }
                 }
             }
         }

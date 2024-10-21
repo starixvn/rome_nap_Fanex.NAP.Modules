@@ -142,7 +142,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
             catch (Exception ex)
             {
                 LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
-                return (ResultReward)ResultReward.ServerError(ex.Message);
+                return new ResultReward(500, ex.Message, 0, string.Empty);
             }
         }
 

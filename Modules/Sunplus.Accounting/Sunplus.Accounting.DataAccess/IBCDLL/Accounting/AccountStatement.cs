@@ -134,14 +134,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <param name="refNo"></param>
         /// <param name="custId"></param>
         /// <param name="userId"></param>
-        public static IbcError Acc_BettransDelTransaction(long refNo, int custId, int userId, string ip)
+        public static IbcError Acc_BettransDelTransaction(long refNo, int custId, int userId, string ip, bool isReward)
         {
             var resultTuple = GetCustIdsByRefNo(refNo);
             var result = resultTuple.Item2;
 
             return result.ErrorCode != 0
                 ? result
-                : Acc_BettransDelTransaction(refNo, custId, userId, ip, resultTuple.Item1);
+                : Acc_BettransDelTransaction(refNo, custId, userId, ip, resultTuple.Item1, isReward);
         }
 
         private static Tuple<IEnumerable<int>, IbcError> GetCustIdsByRefNo(long refNo)
@@ -180,7 +180,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             return Tuple.Create<IEnumerable<int>, IbcError>(custIds, result);
         }
 
-        private static IbcError Acc_BettransDelTransaction(long refNo, int custId, int userId, string ip, IEnumerable<int> custIds)
+        private static IbcError Acc_BettransDelTransaction(long refNo, int custId, int userId, string ip, IEnumerable<int> custIds, bool isReward)
         {
             IbcError result = null;
             IEnumerable<SiteDB> rollbackSiteDBList = Enumerable.Empty<SiteDB>();
