@@ -327,7 +327,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
                            new RewardReverseTransactionCriteria(refNo, custId, userId, siteDB),
                            siteDB.AGIP);
 
-                    if (!rewardResult.IsFailure)
+                    if (!rewardResult.IsFailure && !string.IsNullOrWhiteSpace(rewardResult.LogData))
                     {
                         base.RewardWriteLog(rewardResult.LogData);
                     }
@@ -381,13 +381,26 @@ namespace Fanex.Tarus.Finance.Business.Statement
         {
             foreach (var siteDB in siteDBList)
             {
-                financeStatementAccess.RollbackDeleteTransAccess(
-                    new ReverseTransferRollbackSiteDBCriteria(
-                        refNo,
-                        userId,
-                        Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
-                        siteDB),
-                    siteDB.AGIP);
+                if (isReward)
+                {
+                    financeStatementAccess.RollbackDeleteTransAccess(
+                           new ReverseRewardTransferRollbackSiteDBCriteria(
+                               refNo,
+                               userId,
+                               Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
+                               siteDB),
+                           siteDB.AGIP);
+                }
+                else
+                {
+                    financeStatementAccess.RollbackDeleteTransAccess(
+                        new ReverseTransferRollbackSiteDBCriteria(
+                            refNo,
+                            userId,
+                            Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
+                            siteDB),
+                        siteDB.AGIP);
+                }
             }
         }
 

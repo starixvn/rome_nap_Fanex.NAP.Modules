@@ -167,6 +167,7 @@
       </SubType>
     </Compile>
     <Compile Include="Criteria\GetSiteDBConfigByRefNoCriteria.cs" />
+    <Compile Include="Criteria\ReverseRewardTransferRollbackSiteDBCriteria.cs" />
     <Compile Include="Criteria\ReverseTransferRollbackSiteDBCriteria.cs" />
     <Compile Include="Criteria\RewardWriteLogCriteria.cs" />
     <Compile Include="Criteria\Statement\RewardReverseTransactionCriteria.cs" />
