@@ -15,6 +15,7 @@ namespace Fanex.Tarus.User.DataAccess.Sql
 {
     public class UserInfoAccess : IUserInfoAccess
     {
+        private const int AdminSiteDBGroup = 0;
         public DataTable GetAllDept()
         {
             using (var objDb = new ObjectDb("GroupInfoSel"))
@@ -62,17 +63,38 @@ namespace Fanex.Tarus.User.DataAccess.Sql
             }
         }
 
-        public Result AddAccount(string userName, string firstName, string lastName, int groupId, string password, int userId)
+        public Result RegisterAccount(string userName, out int custId, int roleId)
+        {
+            var result = new Result();
+            var param = new Hashtable
+            {
+                {"username", userName},
+                {"roleid", roleId},
+                {"sitedbgroupid", AdminSiteDBGroup}
+            };
+            using (ObjectDb objDB = new ObjectDb("Acc_CustomerIns_Register"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+                result.ErrorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                result.ErrorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                custId = CastAide.AsInt32(objDB.GetParameterValue("custid"));
+                return result;
+            }
+        }
+
+        public Result AddAccount(string userName, string firstName, string lastName, int groupId,string groupName, string password, int userId, int custId)
         {
             var param = new Hashtable
             {
                 {"groupid", groupId},
+                {"groupname", groupName},
                 {"firstname", firstName},
                 {"lastname", lastName},
                 {"userid", userId},
+                {"custid", custId},
                 {"username", userName},
-                {"userpwd", password},
-                {"custid", 0}
+                {"userpwd", password}
             };
             using (ObjectDb objDB = new ObjectDb("Con_AdminIns"))
             {
@@ -81,6 +103,80 @@ namespace Fanex.Tarus.User.DataAccess.Sql
                 var errorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
                 var errorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
                 return new Result { ErrorCode = errorCode, ErrorMessage = errorMessage };
+            }
+        }
+
+        public void Add_AdminSiteUser(string userName, string password, int custId)
+        {
+            var param = new Hashtable
+            {
+                {"custid", custId},
+                {"username", userName},
+                {"userpwd", password},
+                {"creator", AppSession.AccId},
+            };
+            using (ObjectDb objDB = new ObjectDb("Dot_Admin_Add_AdminSiteUser"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+            }
+        }
+
+        public void CustomerInsUserInfo_Rollback(int custId)
+        {
+            var param = new Hashtable
+            {
+                {"custid", custId}
+            };
+            using (ObjectDb objDB = new ObjectDb("Acc_CustomerInsUserInfo_Rollback"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+            }
+        }
+
+        public void Acc_Con_AdminPolicyIns(int custId, int userId, int groupId)
+        {
+            var param = new Hashtable
+            {
+                {"custid", custId},
+                {"userid", userId},
+                {"groupid", groupId}
+            };
+            using (ObjectDb objDB = new ObjectDb("Acc_Con_AdminPolicyIns"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+            }
+        }
+
+        public Result NAP_Admin_OTPIns(int custId, int userId)
+        {
+            var param = new Hashtable
+            {
+                {"custid", custId},
+                {"userid", userId}
+            };
+            using (ObjectDb objDB = new ObjectDb("NAP_Admin_OTPIns"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+                var errorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                var errorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                return new Result { ErrorCode = errorCode, ErrorMessage = errorMessage };
+            }
+        }
+
+        public void CustomerIns_Rollback(int custId)
+        {
+            var param = new Hashtable
+            {
+                {"custid", custId}
+            };
+            using (ObjectDb objDB = new ObjectDb("Acc_CustomerIns_Rollback"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
             }
         }
 

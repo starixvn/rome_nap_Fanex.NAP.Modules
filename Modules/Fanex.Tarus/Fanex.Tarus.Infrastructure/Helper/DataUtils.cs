@@ -41,6 +41,20 @@ namespace Fanex.Tarus.Infrastructure.Helper
                 return false;
             }
         }
+        public static bool HasColumn(IDataRecord dataReader, string columnName)
+        {
+            for (int i = 0; i < dataReader.FieldCount; i++)
+            {
+                if (dataReader.GetName(i).Equals(columnName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static string GetSPNameWithPrefix(string spName, int sitedbgroupid)
+            => sitedbgroupid == 0 ? spName : $"DBSite{sitedbgroupid}_{spName}";
 
         public static byte ToByte(object value)
         {

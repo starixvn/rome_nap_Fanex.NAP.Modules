@@ -186,12 +186,45 @@ namespace Fanex.Tarus.User.Business.Services
             }
         }
 
-        public Result AddAccount(string userName, string firstName, string lastName, int groupId, string password)
+        public Result AddAccount(string userName, string firstName, string lastName, int groupId,string groupName, string password)
         {
             try
             {
-                return _userInfoAccess.AddAccount(userName, ReplaceSpecifiedCharacter(firstName), ReplaceSpecifiedCharacter(lastName), groupId,
-                                                                IBCUtils.Encryption.CfsEnCode(password), AppSession.AccId);
+                var result = new Result();
+                int custId = 0;
+                result = _userInfoAccess.RegisterAccount(userName, out custId, 6);
+                if (result.ErrorCode > 0)
+                {
+                    return result;
+                }
+                else
+                {
+                    password = IBCUtils.Encryption.CfsEnCode(password);
+                    result = _userInfoAccess.AddAccount(userName, ReplaceSpecifiedCharacter(firstName),
+                        ReplaceSpecifiedCharacter(lastName), groupId, groupName,
+                        password, AppSession.AccId, custId);
+                    if (result.ErrorCode > 0)
+                    {
+                        _userInfoAccess.CustomerIns_Rollback(custId);
+                        return result;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            _userInfoAccess.Add_AdminSiteUser(userName, password, custId);
+                        }
+                        catch (Exception e)
+                        {
+                            _userInfoAccess.CustomerInsUserInfo_Rollback(custId);
+                            _userInfoAccess.CustomerIns_Rollback(custId);
+                            throw;
+                        }
+                        _userInfoAccess.Acc_Con_AdminPolicyIns(custId, AppSession.AccId, groupId);
+                        result = _userInfoAccess.NAP_Admin_OTPIns(custId, AppSession.AccId);
+                        return result;
+                    }
+                }
             }
             catch (Exception ex)
             {

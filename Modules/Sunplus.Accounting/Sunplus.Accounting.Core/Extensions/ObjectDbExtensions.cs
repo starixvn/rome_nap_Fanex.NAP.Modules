@@ -1,5 +1,6 @@
 ﻿using Fanex.Data;
 using Sunplus.Accounting.Core.Cache.Extension;
+using Sunplus.Accounting.Core.Helper;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +12,11 @@ namespace Sunplus.Accounting.Core.Extensions
 {
     public class SiteDB
     {
+        public string Site { get; set; }
+
         public int SiteDBGroupID { get; set; }
+
+        public int CustDBGroupID { get; set; }
 
         public string LinkedServerName { get; set; }
 
@@ -161,31 +166,19 @@ namespace Sunplus.Accounting.Core.Extensions
             return result;
         }
 
+        public static SiteDB GetSiteDBConfigBySite(string site)
+            => GetSiteDBConfig(new Hashtable { { "site", site } }, "Acc_ServerDBConfigSel").FirstOrDefault();
+
         public static SiteDB GetSiteDBConfigByCustId(int custId)
-            => GetSiteDBConfig(new Hashtable { { "custid", custId } }).FirstOrDefault();
+            => GetSiteDBConfig(new Hashtable { { "custid", custId } }, "Acc_ServerDBConfigSelByCust").FirstOrDefault();
 
         public static SiteDB GetSiteDBConfigByUsername(string userName)
-            => GetSiteDBConfig(new Hashtable { { "username", userName } }).FirstOrDefault();
-
-        public static IEnumerable<SiteDB> GetSiteDBConfigBySiteGroupId(int siteGroupId)
-            => GetSiteDBConfig(new Hashtable { { "sitedbgroupid", siteGroupId } });
+            => GetSiteDBConfig(new Hashtable { { "username", userName } }, "Acc_ServerDBConfigSelByCust").FirstOrDefault();
 
         public static IEnumerable<SiteDB> GetAllSiteDBConfig()
-            => GetSiteDBConfig(null);
+            => GetSiteDBConfig(null, "Acc_ServerDBConfigSel");
 
-        public static SiteDB GetSiteDBConfigByCustId_DBCUST(int custId)
-            => GetSiteDBConfig(new Hashtable { { "custid", custId } }, DBCUSTPrefix).FirstOrDefault();
-
-        public static SiteDB GetSiteDBConfigByUsername_DBCUST(string userName)
-            => GetSiteDBConfig(new Hashtable { { "username", userName } }, DBCUSTPrefix).FirstOrDefault();
-
-        public static IEnumerable<SiteDB> GetSiteDBConfigBySiteGroupId_DBCUST(int siteGroupId)
-            => GetSiteDBConfig(new Hashtable { { "sitedbgroupid", siteGroupId } }, DBCUSTPrefix);
-
-        public static IEnumerable<SiteDB> GetAllSiteDBConfig_DBCUST()
-            => GetSiteDBConfig(null, DBCUSTPrefix);
-
-        private static List<SiteDB> GetSiteDBConfig(Hashtable param, string SPNamePrefix = "")
+        private static List<SiteDB> GetSiteDBConfig(Hashtable param, string spName)
         {
             List<SiteDB> siteDBs = null;
             if (IsGetAllSiteDBs(param))
@@ -196,7 +189,7 @@ namespace Sunplus.Accounting.Core.Extensions
             if (siteDBs == null)
             {
                 siteDBs = new List<SiteDB>();
-                using (ObjectDb db = new ObjectDb(SPNamePrefix + "Acc_SiteDBConfigSel", 600))
+                using (ObjectDb db = new ObjectDb(spName, 600))
                 {
                     var reader = db.ExecuteReader(param);
                     while (reader.Read())
@@ -204,9 +197,11 @@ namespace Sunplus.Accounting.Core.Extensions
                         siteDBs.Add(new SiteDB()
                         {
                             SiteDBGroupID = Convert.ToInt32(reader["SiteDBGroupID"]),
+                            CustDBGroupID = Convert.ToInt32(reader["CustDBGroupID"]),
                             AGIP = reader["AGIP"].ToString(),
                             ClientAccessName = reader["ClientAccessName"].ToString(),
-                            LinkedServerName = reader["LinkedServerName"].ToString()
+                            LinkedServerName = reader["LinkedServerName"].ToString(),
+                            Site = DataUtils.HasColumn(reader, "Site") ? reader["Site"].ToString() : null
                         });
                     }
                 }
