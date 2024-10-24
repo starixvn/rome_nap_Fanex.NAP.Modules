@@ -141,20 +141,45 @@ namespace Fanex.Tarus.Finance.Business.Statement
 
                 var isForex = helper.GetForexAccounts().Contains(username);
 
-                statementDetail.ListTrans[0].ListSubTrans = new List<SubTransaction>();
+                var listTrans = new List<Transaction>();
                 if (dtTrans.Tables.Count > 0)
                 {
                     var transTable = dtTrans.Tables[0];
                     foreach (DataRow row in transTable.Rows)
                     {
-                        statementDetail.ListTrans[0].ListSubTrans.Add(new SubTransaction
-                        {
-                            TransDate = row["TransDate"].ToString(),
-                            Amount = row["TotalAmount"].ToString(),
-                            Remark = row["transtype"].ToString().ToUpper() + " <br> -" + row["TransDescription"].ToString(),
-                            IsOwner = CastAide.AsBoolean(row["IsOwner"]),
-                            TransId = row["TransID"].ToString()
-                        });
+                        var subTrans = new SubTransaction();
+                        var trans = new Transaction();
+
+                        var transDate = row["TransDate"].ToString();
+                        var transId = row["TransID"].ToString();
+
+                        trans.TransDate = transDate;
+                        trans.Remark = row["TransDescription"].ToString();
+                        trans.TransId = transId;
+
+                        var isOwner = CastAide.AsBoolean(row["IsOwner"]);
+                        var totalAmount = row["TotalAmount"].ToString();
+
+                        trans.IsOwner = isOwner;
+                        trans.Total = totalAmount;
+
+                        subTrans.TransDate = transDate;
+                        subTrans.Amount = totalAmount;
+                        subTrans.Remark = row["transtype"].ToString().ToUpper() + " <br> -" + row["TransDescription"].ToString();
+                        subTrans.IsOwner = isOwner;
+                        subTrans.TransId = transId;
+
+                        InsertToTrans(ref listTrans, trans, subTrans, isForex);
+                    }
+                }
+                var transCount = statementDetail.ListTrans.Count;
+
+                for (var i = 0; i < transCount; i++)
+                {
+                    var trans = listTrans.Where(t => t.TransId == statementDetail.ListTrans[i].TransId).FirstOrDefault();
+                    if (trans != null)
+                    {
+                        statementDetail.ListTrans[i].ListSubTrans = trans.ListSubTrans;
                     }
                 }
 
@@ -164,7 +189,6 @@ namespace Fanex.Tarus.Finance.Business.Statement
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-
             return new StatementDetail();
         }
 
@@ -193,6 +217,81 @@ namespace Fanex.Tarus.Finance.Business.Statement
                     })).ToList();
                 }
             }
+        }
+
+        private void InsertToTrans(ref List<Transaction> listTrans, Transaction trans, SubTransaction subTrans, bool isForex)
+        {
+            if (listTrans != null && subTrans != null)
+            {
+                var transDateBufferInSecond = 3;
+                var subTransAmount = Convert.ToDouble(subTrans.Amount);
+
+                subTrans.Amount = DNAide.Utils.NumberFormat.DoubleFormat(subTrans.Amount, 2);
+
+                if (isForex)
+                {
+                    var isExistedTrans = (listTrans.Find(item => ConpareDateTimeWithBufferInSecond(item.TransDate, subTrans.TransDate, transDateBufferInSecond) && (item.ListSubTrans.Count < 2) && IsEqualToRemarkAmount(item.Remark, Convert.ToDouble(item.Total), subTrans.Remark, subTransAmount) && subTrans.IsOwner != item.IsOwner) != null);
+                    if (!isExistedTrans)
+                    {
+                        trans.ListSubTrans = new List<SubTransaction>();
+                        trans.ListSubTrans.Add(subTrans);
+                        listTrans.Add(trans);
+                    }
+                    else
+                    {
+                        listTrans = (listTrans.Select(item =>
+                        {
+                            if (ConpareDateTimeWithBufferInSecond(item.TransDate, trans.TransDate, transDateBufferInSecond) && (item.ListSubTrans.Count < 2) && IsEqualToRemarkAmount(item.Remark, Convert.ToDouble(item.Total), subTrans.Remark, subTransAmount) && subTrans.IsOwner != item.IsOwner)
+                            {
+                                item.ListSubTrans.Add(subTrans);
+                                if (subTrans.IsOwner)
+                                {
+                                    item.TransId = subTrans.TransId;
+                                }
+                                return item;
+                            }
+                            else return item;
+                        })).ToList();
+                    }
+                }
+                else
+                {
+                    var isExistedTrans = (listTrans.Find(item => ConpareDateTimeWithBufferInSecond(item.TransDate, subTrans.TransDate, transDateBufferInSecond)) != null);
+                    if (!isExistedTrans)
+                    {
+                        trans.ListSubTrans = new List<SubTransaction>();
+                        trans.ListSubTrans.Add(subTrans);
+                        listTrans.Add(trans);
+                    }
+                    else
+                    {
+                        listTrans = (listTrans.Select(item =>
+                        {
+                            if (ConpareDateTimeWithBufferInSecond(item.TransDate, subTrans.TransDate, transDateBufferInSecond))
+                            {
+                                item.ListSubTrans.Add(subTrans);
+                                if (subTrans.IsOwner)
+                                {
+                                    item.TransId = subTrans.TransId;
+                                }
+                                return item;
+                            }
+                            else return item;
+                        })).ToList();
+                    }
+                }
+            }
+        }
+
+        private bool ConpareDateTimeWithBufferInSecond(string d1, string d2, double bufferInSecond)
+            => this.ConpareDateTimeWithBufferInSecond(DateTime.Parse(d1), DateTime.Parse(d2), bufferInSecond);
+
+        private bool ConpareDateTimeWithBufferInSecond(DateTime d1, DateTime d2, double bufferInSecond)
+        {
+            DateTime fromd1 = d1.AddSeconds(-bufferInSecond);
+            DateTime tod1 = d1.AddSeconds(bufferInSecond);
+            return fromd1 <= d2 && d2 <= tod1;
+
         }
 
         private static bool IsEqualToRemarkAmount(string remark, double transAmount, string subTransRemark, double subTransAmount)
@@ -327,7 +426,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
                            new RewardReverseTransactionCriteria(refNo, custId, userId, siteDB),
                            siteDB.AGIP);
 
-                    if (!rewardResult.IsFailure && !string.IsNullOrWhiteSpace(rewardResult.LogData))
+                    if (!rewardResult.IsFailure)
                     {
                         base.RewardWriteLog(rewardResult.LogData);
                     }
@@ -381,26 +480,13 @@ namespace Fanex.Tarus.Finance.Business.Statement
         {
             foreach (var siteDB in siteDBList)
             {
-                if (isReward)
-                {
-                    financeStatementAccess.RollbackDeleteTransAccess(
-                           new ReverseRewardTransferRollbackSiteDBCriteria(
-                               refNo,
-                               userId,
-                               Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
-                               siteDB),
-                           siteDB.AGIP);
-                }
-                else
-                {
-                    financeStatementAccess.RollbackDeleteTransAccess(
-                        new ReverseTransferRollbackSiteDBCriteria(
-                            refNo,
-                            userId,
-                            Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
-                            siteDB),
-                        siteDB.AGIP);
-                }
+                financeStatementAccess.RollbackDeleteTransAccess(
+                    new ReverseTransferRollbackSiteDBCriteria(
+                        refNo,
+                        userId,
+                        Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
+                        siteDB),
+                    siteDB.AGIP);
             }
         }
 
