@@ -34,13 +34,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Repositories
             }
         }
 
-        public DataTable GetSportBookSettingMember(ICriteria criteria)
-        {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                return db.ExecuteDataSet(criteria.GetSpParams()).Tables[0];
-            }
-        }
 
         public CustomerInfo GetCustomerInfoByUserId(GetCustomerInfoByUserIdCriteria criteria)
         {
@@ -101,32 +94,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Repositories
                         }
                     }
                 }
-            }
-        }
-
-        public Result InsertMember(Hashtable inputParams)
-        {
-            using (var db = new ObjectDb("Acc_CustomerInsMember_Ag"))
-            {
-                db.ExecuteNonQuery(inputParams);
-                var ouputParams = db.GetOuputParams();
-
-                inputParams["custid"] = ouputParams["custid"];
-
-                return GetResult(ouputParams);
-            }
-        }
-
-        public Result CopyExistingSuper(CopyExistingCustomerCriteria criteria)
-        {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-
-                var ouputParams = db.GetOuputParams();
-                criteria.CustId = Convert.ToInt32(ouputParams["custid"]);
-
-                return GetResult(ouputParams);
             }
         }
 

@@ -14,17 +14,11 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Repositories
     {
         IEnumerable<SMACustomerInfo> GetSMACustomerInfo(ICriteria criteria);
 
-        DataTable GetSportBookSettingMember(ICriteria criteria);
-
         CustomerInfo GetCustomerInfoByUserId(GetCustomerInfoByUserIdCriteria criteria);
 
         IEnumerable<Site> GetSitesExistingSuper(ICriteria criteria);
 
         IEnumerable<string> GetExistingUsernames(ICriteria criteria);
-
-        Result InsertMember(Hashtable inputParams);
-
-        Result CopyExistingSuper(CopyExistingCustomerCriteria criteria);
 
         Result ExecuteNonQuery(ICriteria criteria);
     }

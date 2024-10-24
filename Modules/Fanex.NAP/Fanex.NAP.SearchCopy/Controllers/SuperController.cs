@@ -59,50 +59,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Controllers
             return Json(sites, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult CopyExistingSuper(CopyExistingCustomerCriteria criteria, string code)
-        {
-            int creatorId = AppSession.AccId;
-            criteria.Creator = creatorId;
-            criteria.CreatorName = AppSession.AccUserName;
-            criteria.IP = CurrentContext.Instance.Ip4Address;
-            criteria.Userpwd = IBCUtils.Encryption.CfsEnCode(Encryptor.Decrypt(criteria.Userpwd, code));
-            criteria.FirstName = criteria.FirstName ?? string.Empty;
-            criteria.LastName = criteria.LastName ?? string.Empty;
-            criteria.Phone = criteria.Phone ?? string.Empty;
-            criteria.MobilePhone = criteria.MobilePhone ?? string.Empty;
-            criteria.Fax = criteria.Fax ?? string.Empty;
-            criteria.SettingStatus = WebSettings.SettingStatus;
-
-            Result result;
-            var isMember = criteria.CustLevel == 1;
-
-            try
-            {
-                result = isMember
-                    ? _searchCopyService.CopyMember(criteria, SystemId, AppSession.CurrentSession.FromSystem)
-                    : _searchCopyService.CopySuper(criteria, SystemId, AppSession.CurrentSession.FromSystem);
-
-                result.ErrorMessage = result.IsSuccess
-                    ? $"<div class=\"alertboxscc\"><div>{(isMember ? CopyMessageConstant.SuccessMember : CopyMessageConstant.Success)}</div></div>"
-                    : $"<div class=\"alertboxerr\"><div>{(result.ErrorMessage == string.Empty ? (isMember ? CopyMessageConstant.FailedMember : CopyMessageConstant.Failed) : result.ErrorMessage)}</div></div>";
-                
-                return Json(
-                    new CommandResult { Code = result.ErrorCode, Message = result.ErrorMessage },
-                    JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-
-                return Json(
-                    new CommandResult
-                    {
-                        Code = -1,
-                        Message = $"<div class=\"alertboxerr\"><div>{(isMember ? CopyMessageConstant.FailedMember : CopyMessageConstant.Failed)}</div></div>"
-                    },
-                    JsonRequestBehavior.AllowGet);
-            }
-        }
 
         public ActionResult MultipleAccounts(MultipleAccountsViewModel viewModel)
         {

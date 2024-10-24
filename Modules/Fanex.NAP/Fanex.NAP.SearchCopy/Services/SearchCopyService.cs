@@ -92,25 +92,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             return new SearchResult();
         }
 
-        public Hashtable GetSportBookSettingMember(int custId, int uplineId, int userId)
-        {
-            var sportbooksSetting = new Hashtable();
-
-            var memberData = _searchCopyRepository.GetSportBookSettingMember(
-                new GetSportBookSettingMemberCriteria(custId));
-
-            if (memberData.Rows.Count > 0)
-            {
-                var settingCustomer = memberData.Rows[0];
-                var checkConstraintData = new CheckConstraintDataForSportBook();
-
-                checkConstraintData.GenerateInfoAccount(settingCustomer, custId, uplineId, userId, 0, ref sportbooksSetting);
-                checkConstraintData.GenerateBettingLimit(settingCustomer, ref sportbooksSetting);
-                checkConstraintData.GeneratePositionTaking(settingCustomer, ref sportbooksSetting);
-            }
-
-            return sportbooksSetting;
-        }
 
         public CustomerInfo GetCustomerInfoByUserId(int custId, bool isMember, byte settingStatus)
         {
@@ -152,94 +133,6 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
             return existingUsernames.Count == 0
                 ? string.Empty
                 : $"Unavailable username(s): {string.Join(", ", existingUsernames)}";
-        }
-
-        public Result CopyMember(CopyExistingCustomerCriteria criteria, byte systemId, int fromSystem)
-        {
-            var sourceCustId = criteria.ExistingCustId;
-            var uplineId = criteria.UplineId;
-            var actorId = criteria.Creator;
-
-            var customerInfo = GetSportBookSettingMember(sourceCustId, uplineId, actorId);
-            customerInfo["username"] = criteria.UserName;
-            customerInfo["userpwd"] = criteria.Userpwd;
-            customerInfo["firstname"] = criteria.FirstName;
-            customerInfo["lastname"] = criteria.LastName;
-            customerInfo["phone"] = criteria.Phone;
-            customerInfo["mobilephone"] = criteria.MobilePhone;
-            customerInfo["fax"] = criteria.Fax;
-            customerInfo["credit"] = criteria.Credit;
-            customerInfo["custid"] = criteria.CustId;
-            customerInfo["creator"] = actorId;
-            customerInfo["userid"] = actorId;
-            customerInfo["errcode"] = 0;
-            customerInfo["errmsg"] = string.Empty;
-            customerInfo["uplineid"] = uplineId;
-            customerInfo["copyfromcustid"] = sourceCustId;
-            customerInfo["isSearchAndCopy"] = 1;
-            customerInfo["settingstatus"] = criteria.SettingStatus;
-
-            var result = _searchCopyRepository.InsertMember(customerInfo);
-            var custId = (int)customerInfo["custid"];
-
-            if (result.IsSuccess)
-            {
-                criteria.CustId = custId;
-
-                // Init Balance
-                InitBalanceCustomer(custId);
-
-                new DCSSettingCopyInsertMemberService().CorrectMemberPositionTaking(custId, sourceCustId, actorId, criteria.IP, criteria.SettingStatus);          
-            }
-
-            return result;
-        }
-
-        public Result CopySuper(CopyExistingCustomerCriteria criteria, byte systemId, int fromSystem)
-        {
-            var result = _searchCopyRepository.CopyExistingSuper(criteria);
-
-            if (result.IsSuccess)
-            {
-                _serviceBase.AddMsgAfterCreateNewSMA(new AddMsgAfterCreateNewSMACriteria(criteria.CustId, 0, (int)Role.Super));              
-            }
-
-            return result;
-        }
-
-        private void InitBalanceCustomer(int custId)
-        {
-            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
-            var prefixSP = siteDB.IsSiteDB ? $"SiteDB{siteDB.SiteDBGroupID}_" : string.Empty;
-
-            var creditBalance = new InitBalanceCustomerCommand(custId, prefixSP, isCreditBalance: true);
-            using (var db = new ObjectDb(creditBalance.GetSettingKey()))
-            {
-                db.ExecuteNonQueryScaleoutDB(creditBalance.GetSpParams(), siteDB.AGIP);
-                creditBalance.ErrCode = Convert.ToInt32(db.GetOuputParams()["errcode"]);
-            }
-
-            var depositBalance = new InitBalanceCustomerCommand(custId, prefixSP, isCreditBalance: false);
-            using (var db = new ObjectDb(depositBalance.GetSettingKey()))
-            {
-                db.ExecuteNonQueryScaleoutDB(depositBalance.GetSpParams(), siteDB.AGIP);
-                depositBalance.ErrCode = Convert.ToInt32(db.GetOuputParams()["errcode"]);
-            }
-
-            if (creditBalance.ErrCode != 0 || depositBalance.ErrCode != 0)
-            {
-                var removeCreditBalance = new RemoveBalanceCustomerCommand(custId, prefixSP, isCreditBalance: true);
-                using (var db = new ObjectDb(removeCreditBalance.GetSettingKey()))
-                {
-                    db.ExecuteNonQueryScaleoutDB(removeCreditBalance.GetSpParams(), siteDB.AGIP);
-                }
-
-                var removeDepositBalance = new RemoveBalanceCustomerCommand(custId, prefixSP, isCreditBalance: false);
-                using (var db = new ObjectDb(removeDepositBalance.GetSettingKey()))
-                {
-                    db.ExecuteNonQueryScaleoutDB(removeDepositBalance.GetSpParams(), siteDB.AGIP);
-                }
-            }
         }
     }
 }
