@@ -136,7 +136,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
                     db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), agIp);
                     var outputs = db.GetOuputParams();
 
-                    return new ResultReward(Convert.ToInt32(outputs["errcode"]), outputs["errmsg"].ToString(), 0, outputs["PaymentLog"]?.ToString());
+                    return new ResultReward(Convert.ToInt32(outputs["errcode"]), outputs["errmsg"].ToString(), 0, outputs["paymentlog"]?.ToString());
                 }
             }
             catch (Exception ex)
