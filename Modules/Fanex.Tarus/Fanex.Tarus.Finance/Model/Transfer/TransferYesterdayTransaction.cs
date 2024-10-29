@@ -20,6 +20,8 @@ namespace Fanex.Tarus.Finance.Model.Transfer
 
         public string RewardCurrency { get; set; }
 
+        public string ExpenseCurrency { get; set; }
+
         public decimal Amount { get; set; }
 
         public double ExRate { get; set; }

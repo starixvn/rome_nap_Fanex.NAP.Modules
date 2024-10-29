@@ -22,7 +22,6 @@ namespace Fanex.Tarus.Finance.Business.Transfer
     public class CrossTransferService : RewardBaseService, ICrossTransferService
     {
         private readonly ICrossTransferAccess crossTransferAccess;
-        private readonly string RewardCodeCurrency = "RM";
 
         public CrossTransferService(ICrossTransferAccess crossTransferAccess = null)
             => this.crossTransferAccess = crossTransferAccess ?? new CrossTransferAccess();
@@ -135,7 +134,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                             FromUserName = param.FromCustName,
                             ToUserName = param.RewardUserName,
                             FromCurrName = param.RewardCurrency,
-                            ToCurrName = RewardCodeCurrency,
+                            ToCurrName = param.ExpenseCurrency,
                             MaxTransId = param.RewardMaxTransId,
                             Amount = param.RewardAmount,
                             ExchangeRate = param.RewardExRate,
@@ -147,6 +146,8 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                         result.IsMainTransferSuccess = true;
                         base.RewardWriteLog(resultReward.LogData);
                     }
+                    result.ErrorCode = resultReward.ErrorCode;
+                    result.ErrorMessage = "Reward Payment: " + resultReward.ErrorMessage;
                     return result;
                 }
 
@@ -157,7 +158,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                         FromUserName = param.FromCustName,
                         ToUserName = param.RewardUserName,
                         FromCurrName = param.RewardCurrency,
-                        ToCurrName = RewardCodeCurrency,
+                        ToCurrName = param.ExpenseCurrency,
                         MaxTransId = param.RewardMaxTransId,
                         Amount = param.RewardAmount,
                         ExchangeRate = param.RewardExRate,
@@ -175,7 +176,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                             FromUserName = param.FromCustName,
                             ToUserName = param.RewardUserName,
                             FromCurrName = param.RewardCurrency,
-                            ToCurrName = RewardCodeCurrency,
+                            ToCurrName = param.ExpenseCurrency,
                             MaxTransId = param.RewardMaxTransId,
                             Amount = param.RewardAmount,
                             ExchangeRate = param.RewardExRate,
@@ -192,7 +193,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                     }
 
                     result.ErrorCode = toResultReward.ErrorCode;
-                    result.ErrorMessage = toResultReward.ErrorMessage;
+                    result.ErrorMessage = "Reward Payment: " + toResultReward.ErrorMessage;
 
                     if (!result.IsFailure)
                     {
@@ -202,7 +203,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
                 else
                 {
                     result.ErrorCode = fromResultReward.ErrorCode;
-                    result.ErrorMessage = fromResultReward.ErrorMessage;
+                    result.ErrorMessage = "Reward Payment: " + fromResultReward.ErrorMessage;
                 }
             }
 

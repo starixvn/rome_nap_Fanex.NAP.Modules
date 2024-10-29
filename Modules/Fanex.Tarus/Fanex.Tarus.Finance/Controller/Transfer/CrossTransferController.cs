@@ -47,6 +47,16 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
 
             double ExpensiseAmount = string.IsNullOrEmpty(RewardAmount) ? 0.0 : Convert.ToDouble(RewardAmount) * rewardRate;
             double total_YesterdayBalance_RewardPending = !IsShowReward ? 0.0 : RewardAmountValue + AmountValue;
+            string formatedRewardAmount = RewardAmountValue == 0.0
+                ? "0.00"
+                : IBCUtils.FormatHandler.FormatNumber20(RewardAmountValue);
+            string formatedExpensiseAmount =
+                ExpensiseAmount == 0.0 ? "0.00" : IBCUtils.FormatHandler.FormatNumber20(ExpensiseAmount);
+            if (ExpenseCodeRate.currency == "UUS" && RewardCurrency == "UUS")
+            {
+                formatedExpensiseAmount = formatedRewardAmount;
+            }
+
             var crossTransferModel = new CrossTransfer
             {
                 IsHadPermissionOnCrossCurrencyTransfer = Permissions.HasPermission("FinanceTransfer"),
@@ -57,8 +67,8 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
                 ForexAccount = Fanex.Tarus.Infrastructure.Caching.CacheHelper.Get<string>("Transfer_ForexAccount_" + AppSession.AccUserName),
                 IsShowReward = IsShowReward,
                 RewardMaxTransId = rewardMaxTransId,
-                RewardAmount = RewardAmountValue == 0.0 ? "0.00" : IBCUtils.FormatHandler.FormatNumber20(RewardAmountValue),
-                ExpensiseAmount = ExpensiseAmount == 0.0 ? "0.00" : IBCUtils.FormatHandler.FormatNumber20(ExpensiseAmount),
+                RewardAmount = formatedRewardAmount,
+                ExpensiseAmount = formatedExpensiseAmount,
                 Total_YesterdayBalance_RewardPending = IBCUtils.FormatHandler.FormatNumber20(total_YesterdayBalance_RewardPending),
                 RewardExrate = rewardRate.ToString(),
                 RewardCode = RewardPromotionCode,
