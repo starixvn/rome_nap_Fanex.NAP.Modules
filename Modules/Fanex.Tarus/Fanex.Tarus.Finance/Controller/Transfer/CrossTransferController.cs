@@ -36,7 +36,15 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
             bool IsShowReward = !string.IsNullOrEmpty(RewardAmount);
             double RewardAmountValue = string.IsNullOrEmpty(RewardAmount) ? 0.0 : Convert.ToDouble(RewardAmount) * -1;
             double AmountValue = string.IsNullOrEmpty(fromAmount) ? 0.0 : Convert.ToDouble(fromAmount) * -1;
-            double rewardRate =  crossTransferService.SelectCustomerExRate(fromCustName).actualrate;
+            var ExpenseCodeRate = crossTransferService.SelectCustomerExRate(RewardPromotionCode);
+            double rewardRate = 0.0;
+           
+            if (ExpenseCodeRate.actualrate != 0.0)
+            {
+                rewardRate = crossTransferService.SelectCustomerExRate(fromCustName).actualrate /
+                             ExpenseCodeRate.actualrate;
+            }
+
             double ExpensiseAmount = string.IsNullOrEmpty(RewardAmount) ? 0.0 : Convert.ToDouble(RewardAmount) * rewardRate;
             double total_YesterdayBalance_RewardPending = !IsShowReward ? 0.0 : RewardAmountValue + AmountValue;
             var crossTransferModel = new CrossTransfer
@@ -53,7 +61,8 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
                 ExpensiseAmount = ExpensiseAmount == 0.0 ? "0.00" : IBCUtils.FormatHandler.FormatNumber20(ExpensiseAmount),
                 Total_YesterdayBalance_RewardPending = IBCUtils.FormatHandler.FormatNumber20(total_YesterdayBalance_RewardPending),
                 RewardExrate = rewardRate.ToString(),
-                RewardCode = RewardPromotionCode
+                RewardCode = RewardPromotionCode,
+                ExpenseCurrency = ExpenseCodeRate.currency
             };
 
             if (!crossTransferModel.IsHadPermissionOnCrossCurrencyTransfer && !crossTransferModel.IsHadPermissionOnYesterdayTransfer)

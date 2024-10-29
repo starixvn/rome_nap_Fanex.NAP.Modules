@@ -28,6 +28,8 @@ namespace Fanex.Tarus.Finance.Model.Transfer
 
         public string ExpensiseAmount { get; set; }
 
+        public string ExpenseCurrency { get; set; }
+
         public string Total_YesterdayBalance_RewardPending { get; set; }
     }
 }
