@@ -260,28 +260,42 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             custid = 0;
             try
             {
-                using (ObjectDb objdb = new ObjectDb("Acc_CustomerUpdUserName", 600))
+                string ip = HttpContext.Current.Request.UserHostAddress;
+                int roleId = 0;
+                string logData = string.Empty;
+                error = CustomerUpdUserName_Register(oldUname, newUname, out custid, out roleId);
+                if (!error.IsSuccess())
                 {
-                    var hash = new Hashtable();
-                    hash.Add("oldname", oldUname);
-                    hash.Add("newname", newUname);
-                    hash.Add("userid", accId);
-                    hash.Add("returnerrcode", 1);
-                    hash.Add("errcode", 0);
-                    hash.Add("errmsg", "");
-                    hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
+                    return error;
+                }
 
-                    objdb.AssignParamValues(hash);
-                    objdb.ExecuteNonQuery();
+                error = CustomerUpdUserName_Update(oldUname, newUname, roleId, accId, custid, ip, out logData);
+                if (!error.IsSuccess())
+                {
+                    CustomerUpdUserName_RollBackDBGLOB(oldUname, custid);
+                    return error;
+                }
 
-                    custid = Convert.ToInt32(objdb.GetParameterValue("returncustid"));
-                    var errCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
-                    if (errCode != 0)
+                error = CustomerUpdUserName_UpdateCRM(newUname, accId, custid, ip);
+                if (!error.IsSuccess())
+                {
+                    CustomerUpdUserName_RollBackDBCust(oldUname, custid);
+                    CustomerUpdUserName_RollBackDBGLOB(oldUname, custid);
+                    return error;
+                }
+
+                if (roleId > 4)
+                {
+                    error = CustomerUpdUserName_UpdateMemberSite(oldUname, newUname, accId, custid, roleId);
+                    if (!error.IsSuccess())
                     {
-                        error.ErrorCode = errCode;
-                        error.ErrorMsg = string.Format("{0}", objdb.GetParameterValue("errmsg"));
+                        CustomerUpdUserName_RollBackDBCust(oldUname, custid);
+                        CustomerUpdUserName_RollBackDBGLOB(oldUname, custid);
+                        return error;
                     }
                 }
+
+                CustomerUpdUserName_WriteLog(accId, custid, logData);
             }
             catch (Exception ex)
             {
@@ -291,7 +305,160 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             return error;
         }
-       
+
+        private static IbcError CustomerUpdUserName_Register(string oldName, string newName, out int custId, out int roleId)
+        {
+            IbcError result = IbcError.SuccessResult;
+            using (ObjectDb objdb = new ObjectDb("Acc_CustomerEditUserName_Register", 600))
+            {
+                var hash = new Hashtable();
+                hash.Add("oldname", oldName);
+                hash.Add("newname", newName);
+                hash.Add("custid", 0);
+                hash.Add("roleid", 0);
+                hash.Add("errcode", 0);
+                hash.Add("errmsg", string.Empty);
+
+                objdb.ExecuteNonQuery(hash);
+
+                custId = Convert.ToInt32(objdb.GetParameterValue("custid"));
+                roleId = Convert.ToInt32(objdb.GetParameterValue("roleid"));
+                var errCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
+                if (errCode != 0)
+                {
+                    result.ErrorCode = errCode;
+                    result.ErrorMsg = string.Format("{0}", objdb.GetParameterValue("errmsg"));
+                }
+            }
+
+            return result;
+        }
+
+        private static IbcError CustomerUpdUserName_Update(string oldName, string newName, int roleId, string userId, int custId, string ip, out string logData)
+        {
+            IbcError result = IbcError.SuccessResult;
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+
+            using (ObjectDb objdb = new ObjectDb(DataUtils.GetSPNameWithPrefix("Acc_CustomerUpdUserName", siteDB.CustDBGroupID), 600))
+            {
+                var hash = new Hashtable();
+                hash.Add("oldname", oldName);
+                hash.Add("newname", newName);
+                hash.Add("roleid", roleId);
+                hash.Add("userid", userId);
+                hash.Add("custid", custId);
+                hash.Add("ip", ip);
+                hash.Add("logspdata", string.Empty);
+                hash.Add("errcode", 0);
+                hash.Add("errmsg", string.Empty);
+                objdb.ExecuteNonQuery(hash);
+
+                logData = string.Format("{0}", objdb.GetParameterValue("logspdata"));
+                var errCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
+                if (errCode != 0)
+                {
+                    result.ErrorCode = errCode;
+                    result.ErrorMsg = string.Format("{0}", objdb.GetParameterValue("errmsg"));
+                }
+            }
+
+            return result;
+        }
+
+        private static IbcError CustomerUpdUserName_UpdateCRM(string newName, string userId, int custId, string ip)
+        {
+            IbcError result = IbcError.SuccessResult;
+            using (ObjectDb objdb = new ObjectDb("Acc_CRM_CustomerUpdUsername", 600))
+            {
+                var hash = new Hashtable();
+                hash.Add("newusername", newName);
+                hash.Add("custid", custId);
+                hash.Add("userid", userId);
+                hash.Add("ip", ip);
+                hash.Add("errcode", 0);
+                hash.Add("errmsg", string.Empty);
+
+                objdb.ExecuteNonQuery(hash);
+
+                var errCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
+                if (errCode != 0)
+                {
+                    result.ErrorCode = errCode;
+                    result.ErrorMsg = string.Format("{0}", objdb.GetParameterValue("errmsg"));
+                }
+            }
+
+            return result;
+        }
+
+        private static IbcError CustomerUpdUserName_UpdateMemberSite(string oldName, string newName, string userId, int custId, int roleId)
+        {
+            IbcError result = IbcError.SuccessResult;
+            try
+            {
+                using (ObjectDb objdb = new ObjectDb("Dot_Admin_AccountRename_Update", 600))
+                {
+                    var hash = new Hashtable();
+                    hash.Add("username", oldName);
+                    hash.Add("newuser", newName);
+                    hash.Add("custid", custId);
+                    hash.Add("userid", userId);
+                    hash.Add("roleid", roleId);
+
+                    objdb.ExecuteNonQuery(hash);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result.ErrorCode = 500;
+                result.ErrorMsg = ex.Message;
+            }
+
+            return result;
+        }
+
+        private static void CustomerUpdUserName_WriteLog(string userId, int custId, string logData)
+        {
+            using (ObjectDb objdb = new ObjectDb("WriteLog_UserLog_RunSP", 600))
+            {
+                var hash = new Hashtable();
+                hash.Add("custid", custId);
+                hash.Add("userid", userId);
+                hash.Add("actionid", 605);
+                hash.Add("trackingvalue", logData);
+
+                objdb.ExecuteNonQuery(hash);
+            }
+        }
+
+        private static void CustomerUpdUserName_RollBackDBCust(string oldName, int custId)
+        {
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            using (ObjectDb objdb = new ObjectDb(DataUtils.GetSPNameWithPrefix("Acc_CustomerEditUserName_Rollback", siteDB.CustDBGroupID), 600))
+            {
+                var hash = new Hashtable();
+                hash.Add("oldname", oldName);
+                hash.Add("custid", custId);
+
+                objdb.ExecuteNonQuery(hash);
+            }
+
+        }
+
+        private static void CustomerUpdUserName_RollBackDBGLOB(string oldName, int custId)
+        {
+            using (ObjectDb objdb = new ObjectDb("Acc_CustInfoMiniEditUserName_Rollback", 600))
+            {
+                var hash = new Hashtable();
+                hash.Add("oldname", oldName);
+                hash.Add("custid", custId);
+
+                objdb.ExecuteNonQuery(hash);
+            }
+        }
+
+
         public static IbcError UpdClearMemberCreditRpt(string username, string accId, decimal totalAmt)
         {
             var hash = new Hashtable();
