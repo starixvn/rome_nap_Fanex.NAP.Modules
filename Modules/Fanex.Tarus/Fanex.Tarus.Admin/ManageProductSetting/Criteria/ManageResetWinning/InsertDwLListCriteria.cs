@@ -28,7 +28,7 @@
                     builder.Append("Seq = \"" + DwLListItem.Seq + "\" ");
                     builder.Append("ProductID = \"" + DwLListItem.ProductId + "\" ");
                     builder.Append("Product = \"" + DwLListItem.Product + "\" ");
-                    builder.Append("IsDeleted = \"" + DwLListItem.IsDeleted + "\" ");
+                    builder.Append("IsDisabled = \"" + DwLListItem.IsDisabled + "\" ");
                     builder.Append("/>");
                 }
 

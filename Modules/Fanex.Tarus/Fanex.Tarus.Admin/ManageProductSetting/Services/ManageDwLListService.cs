@@ -63,7 +63,7 @@
                         Product = HttpUtility.HtmlEncode(row.GetCell(1) == null ? string.Empty : row.GetCell(1).ToString()),
                         Seq = HttpUtility.HtmlEncode(row.GetCell(2) == null ? string.Empty : row.GetCell(2).ToString()),
                         ProductId = HttpUtility.HtmlEncode(row.GetCell(3) == null ? string.Empty : row.GetCell(3).ToString()),
-                        IsDeleted = HttpUtility.HtmlEncode(row.GetCell(4) == null ? string.Empty : row.GetCell(4).ToString()),
+                        IsDisabled = HttpUtility.HtmlEncode(row.GetCell(4) == null ? string.Empty : row.GetCell(4).ToString()),
                     });
                 }
                 criteria.IsTest = isTest;
@@ -88,7 +88,7 @@
                 Product = request.Product,
                 ProductID = request.ProductID,
                 Username = request.Username,
-                IsDeleted = request.IsDeleted,
+                IsDisabled = request.IsDisabled,
                 IsTest = request.IsTest,
                 
             });
@@ -102,7 +102,7 @@
                 ProductId = request.ProductId,
                 Username = request.Username,
                 Seq = request.Seq,
-                IsDeleted = request.IsDeleted
+                IsDisabled = request.IsDisabled
             };
 
             var criteria = new UpdateDwLListCriteria

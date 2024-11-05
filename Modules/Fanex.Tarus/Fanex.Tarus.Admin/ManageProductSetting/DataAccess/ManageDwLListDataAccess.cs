@@ -42,7 +42,7 @@
                         Seq = DataUtils.ToString(reader["Seq"]),
                         Product = DataUtils.ToString(reader["Product"]),
                         ProductId = DataUtils.ToString(reader["ProductId"]),
-                        IsDeleted = DataUtils.ToString(reader["IsDeleted"])
+                        IsDisabled = DataUtils.ToString(reader["IsDisabled"])
                     });
                 }
 
