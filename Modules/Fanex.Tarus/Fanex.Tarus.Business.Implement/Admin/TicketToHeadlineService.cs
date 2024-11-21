@@ -26,7 +26,7 @@ namespace Fanex.Tarus.Business.Implement.Admin
 
         private readonly string _cacheGetDataCriteria = "TicketToHeadlineCritaria";
 
-        private readonly int[] SupportedNotifyHeadlineProducts = { 1, 3, 5, 27 };
+        private readonly int[] SupportedNotifyHeadlineProducts = { 1, 3, 5, 27, 88 };
 
         public TicketToHeadlineService()
         {
