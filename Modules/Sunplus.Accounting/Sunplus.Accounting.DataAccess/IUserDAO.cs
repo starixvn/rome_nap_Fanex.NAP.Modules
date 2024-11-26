@@ -39,12 +39,12 @@ namespace Sunplus.Accounting.DataAccess
 
         DailyTransactionDTO GetDailyTransaction(DateTime transDate, int status, string type, string creator, string verifyBy);
 
-        bool UpdateVerifyStatus(User user, string refNoList, bool isVerified);
+        bool UpdateVerifyStatus(User user, string refNoList, string rewardRefNoList, bool isVerified);
 
         IEnumerable<SiteDB> GetSiteDBConfigByRefNo(string refNoList);
 
         List<Statement> GetCustomerStatement(User customer, DateTime fromDate, DateTime toDate, DateTime balanceUpDay,
-                                             bool isInlucdeAccBal);
+                                             bool isInlucdeAccBal, bool isReward);
 
         int GetCustIdByUserName(string custname);
 

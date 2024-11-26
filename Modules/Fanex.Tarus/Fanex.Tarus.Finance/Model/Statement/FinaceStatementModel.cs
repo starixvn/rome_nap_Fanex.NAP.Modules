@@ -13,6 +13,7 @@ namespace Fanex.Tarus.Finance.Model.Statement
         private const string Dep = "Dep";
         private const string Wit = "Wit";
         private const string Bal = "Bal";
+        private const string BalR = "BalR";
 
         public string RefNo { get; set; }
 
@@ -29,6 +30,8 @@ namespace Fanex.Tarus.Finance.Model.Statement
         public bool IsExpand { get; set; }
 
         public bool IsAllowReversal { get; set; }
+
+        public bool IsReward => this.ListTrans.Any(i => i.TransType.Trim().Equals("TRANR", StringComparison.InvariantCultureIgnoreCase));
         
         public bool HasMultipleCreator
         {
@@ -63,7 +66,7 @@ namespace Fanex.Tarus.Finance.Model.Statement
                 //return this.RefNo.Equals("0");
                 if (ListTrans.Count.Equals(0))
                     return false;
-                return this.ListTrans[0].TransType.ToLower().Contains(Bal.ToLower()) 
+                return (this.ListTrans[0].TransType.ToLower().Contains(Bal.ToLower()) || this.ListTrans[0].TransType.ToLower().Contains(BalR.ToLower())) 
                     && this.ListTrans[0].Remark.ToLower().Contains(OpeningBalance.ToLower());
             }
         }

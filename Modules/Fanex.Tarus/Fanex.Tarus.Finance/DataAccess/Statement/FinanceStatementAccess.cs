@@ -12,7 +12,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
     using Fanex.Tarus.Infrastructure.Extensions;
     using Sunplus.Accounting.Core.Common;
 
-    public class FinanceStatementAccess : IFinanceStatementAccess
+    public class FinanceStatementAccess : BaseDataAccess, IFinanceStatementAccess
     {
         public DataSet GetFinanceStatementAccess(string refNoParam, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int IncludeAccBall)
         {
@@ -92,10 +92,10 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
                     }
 
                     var outputs = db.GetOuputParams();
-                    var errorCode = Convert.ToInt32(outputs["errCode"]);
+                    var errorCode = Convert.ToInt32(outputs["errcode"]);
                     if (errorCode != 0)
                     {
-                        results.Add(new VerifyResult() { Message = outputs["errMsg"].ToString(), Success = false });
+                        results.Add(new VerifyResult() { Message = outputs["errmsg"].ToString(), Success = false });
                     }
                 }
             }
@@ -124,6 +124,25 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
             {
                 LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
                 return Result.ServerError(ex.Message);
+            }
+        }
+
+        public ResultReward DeleteRewardTransAccess(ICriteria criteria, string agIp)
+        {
+            try
+            {
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), agIp);
+                    var outputs = db.GetOuputParams();
+
+                    return new ResultReward(Convert.ToInt32(outputs["errcode"]), outputs["errmsg"].ToString(), 0, outputs["paymentlog"]?.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
+                return new ResultReward(500, ex.Message, 0, string.Empty);
             }
         }
 

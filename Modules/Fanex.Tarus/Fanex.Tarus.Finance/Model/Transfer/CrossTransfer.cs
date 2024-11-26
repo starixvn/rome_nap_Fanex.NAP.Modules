@@ -13,5 +13,23 @@ namespace Fanex.Tarus.Finance.Model.Transfer
         public string FromAmount { get; set; }
       
         public string FromCustName { get; set; }
+
+        public string RewardCurrency { get; set; }
+
+        public bool IsShowReward { get; set; }
+
+        public string RewardCode { get; set; }
+
+        public string RewardMaxTransId { get; set; }
+
+        public string RewardAmount { get; set; }
+
+        public string RewardExrate { get; set; }
+
+        public string ExpensiseAmount { get; set; }
+
+        public string ExpenseCurrency { get; set; }
+
+        public string Total_YesterdayBalance_RewardPending { get; set; }
     }
 }

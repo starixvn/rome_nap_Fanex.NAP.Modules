@@ -32,5 +32,17 @@ namespace Sunplus.Accounting.Entities.CreditTerm
 
         [DataMember]
         public bool IsGroupHeadline { get; set; }
+
+        [DataMember]
+        public string RewardMaxTransId { get; set; }
+
+        [DataMember]
+        public string Reward { get; set; }
+
+        [DataMember]
+        public string RewardCurrency { get; set; }
+
+        [DataMember]
+        public string Total_YesterdayBalance_Reward { get; set; }
     }
 }

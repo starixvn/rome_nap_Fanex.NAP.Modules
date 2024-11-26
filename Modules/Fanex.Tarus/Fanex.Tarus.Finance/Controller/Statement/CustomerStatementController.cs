@@ -81,18 +81,17 @@ namespace Fanex.Tarus.Finance.Controller.Statement
 
         [AuthenticateHost]
         [HttpPost]
-        public JsonResult UpdateVerifyTrans(string refNo, bool isVerify)
+        public JsonResult UpdateVerifyTrans(string refNo, string rewardRefNo, bool isVerify)
         {
-            var result = financeStatemenetService.VerifyTransactionBusiness(refNo, isVerify, AppSession.AccUserName, AppSession.AccId);
+            var result = financeStatemenetService.VerifyTransactionBusiness(refNo, rewardRefNo, isVerify, AppSession.AccUserName, AppSession.AccId);
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
         }
 
-        [AuthenticateHost]
         [HttpPost]
-        public JsonResult DeleteTrans(long refNo)
-            => Json(financeStatemenetService.DeleteTransBusiness(refNo, AppSession.CustID, AppSession.AccId), JsonRequestBehavior.AllowGet);
+        public JsonResult DeleteTrans(long refNo, bool isReward)
+            => Json(financeStatemenetService.DeleteTransBusiness(refNo, AppSession.CustID, AppSession.AccId, isReward), JsonRequestBehavior.AllowGet);
 
         public void ExportExcelFinanceStatement(string refNo, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int IncludeAccBall, string reportTitle)
         {

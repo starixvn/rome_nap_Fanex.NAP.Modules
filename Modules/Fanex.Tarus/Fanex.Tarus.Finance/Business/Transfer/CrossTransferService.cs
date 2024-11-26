@@ -19,7 +19,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
     using ObjectDbExtensions = Fanex.Tarus.Infrastructure.Extensions.ObjectDbExtensions;
     using SiteDB = Fanex.Tarus.Infrastructure.Extensions.SiteDB;
 
-    public class CrossTransferService : ICrossTransferService
+    public class CrossTransferService : RewardBaseService, ICrossTransferService
     {
         private readonly ICrossTransferAccess crossTransferAccess;
 
@@ -36,16 +36,19 @@ namespace Fanex.Tarus.Finance.Business.Transfer
             var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
             var fromCustId = userService.GetCustomerIdByUsername(param.FromCustName);
 
-            var isFiTransfer = false;
+            var isFiTransfer = true;
             var msg = string.Empty;
-            try
+            if (param.IsTransferYesterday)
             {
-                isFiTransfer = Permissions.IsFiTransfer(fromCustId, param.ToCustName, ref msg);
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-                return Result.ServerError(ex.Message);
+                try
+                {
+                    isFiTransfer = Permissions.IsFiTransfer(fromCustId, param.ToCustName, ref msg);
+                }
+                catch (Exception ex)
+                {
+                    LogExtensions.ExceptionHandler(ex);
+                    return Result.ServerError(ex.Message);
+                }
             }
 
             return isFiTransfer
@@ -56,48 +59,155 @@ namespace Fanex.Tarus.Finance.Business.Transfer
         private Result TransferYesterdayTransactionSiteDB(TransferYesterdayTransaction param, int fromCustId)
         {
             var fromSiteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(fromCustId);
-            var toSiteDB = ObjectDbExtensions.GetSiteDBConfigByUsername(param.ToCustName);
+            var result = new Result(0,String.Empty);
+            result.IsMainTransferSuccess = false;
 
-            if (fromSiteDB.SiteDBGroupID == toSiteDB.SiteDBGroupID)
+            if (param.IsTransferYesterday)
             {
-                return crossTransferAccess.BettransInsertTransfer(
-                    new BetTransInsertTransferCriteria(
-                        param,
-                        fromCustId,
-                        fromSiteDB),
+                var toSiteDB = ObjectDbExtensions.GetSiteDBConfigByUsername(param.ToCustName);
+
+                if (fromSiteDB.SiteDBGroupID == toSiteDB.SiteDBGroupID)
+                {
+                    result = crossTransferAccess.BettransInsertTransfer(
+                        new BetTransInsertTransferCriteria(
+                            param,
+                            fromCustId,
+                            fromSiteDB),
+                        fromSiteDB.AGIP);
+                }
+                else
+                {
+                    // Step 1: transfer at SiteDB FROM
+                    var fromResult = crossTransferAccess.BettransInsertTransferSiteDB(
+                        new BetTransInsertTransferSiteDBCriteria(
+                            param,
+                            fromCustId,
+                            fromSiteDB),
+                        fromSiteDB.AGIP);
+
+                    if (!fromResult.IsFailure)
+                    {
+                        var refNo = fromResult.RefNo;
+                        // Step 2: transfer at SiteDB TO
+                        var toResult = crossTransferAccess.BettransInsertTransferSiteDB(
+                            new BetTransInsertTransferSiteDBCriteria(
+                                param,
+                                fromCustId,
+                                toSiteDB,
+                                refNo),
+                            toSiteDB.AGIP);
+
+                        if (toResult.IsFailure)
+                        {
+                            // Rollback step 1
+                            TransferRollbackSiteDB(refNo.Value, param.UserId, param.IP, fromSiteDB);
+                        }
+
+                        result.ErrorCode = toResult.ErrorCode;
+                        result.ErrorMessage = toResult.ErrorMessage;
+                    }
+                    else
+                    {
+                        result.ErrorCode = fromResult.ErrorCode;
+                        result.ErrorMessage = fromResult.ErrorMessage;
+                    }
+                }
+
+                if (result.ErrorCode > 0)
+                {
+                    return result;
+                }
+
+                result.IsMainTransferSuccess = true;
+            }
+          
+
+            if (param.IsShowReward)
+            {
+                var rewardSiteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(param.RewardCustId);
+            
+                if (fromSiteDB.SiteDBGroupID == rewardSiteDB.SiteDBGroupID)
+                {
+                    var resultReward = crossTransferAccess.RewardInsertTransferSiteDB(
+                        new RewardInsertTransferCriteria( new TransferRewardTransaction()
+                        {
+                            FromUserName = param.FromCustName,
+                            ToUserName = param.RewardUserName,
+                            FromCurrName = param.RewardCurrency,
+                            ToCurrName = param.ExpenseCurrency,
+                            MaxTransId = param.RewardMaxTransId,
+                            Amount = param.RewardAmount,
+                            ExchangeRate = param.RewardExRate,
+                            SiteDBGroupId = fromSiteDB.SiteDBGroupID
+                        }),
+                        fromSiteDB.AGIP);
+                    if (!resultReward.IsFailure)
+                    {
+                        result.IsMainTransferSuccess = true;
+                        base.RewardWriteLog(resultReward.LogData);
+                    }
+                    result.ErrorCode = resultReward.ErrorCode;
+                    result.ErrorMessage = "Reward Payment: " + resultReward.ErrorMessage;
+                    return result;
+                }
+
+                // Step 1: transfer at SiteDB FROM
+                var fromResultReward = crossTransferAccess.RewardInsertTransferSiteDB(
+                    new RewardInsertTransferCriteria(new TransferRewardTransaction()
+                    {
+                        FromUserName = param.FromCustName,
+                        ToUserName = param.RewardUserName,
+                        FromCurrName = param.RewardCurrency,
+                        ToCurrName = param.ExpenseCurrency,
+                        MaxTransId = param.RewardMaxTransId,
+                        Amount = param.RewardAmount,
+                        ExchangeRate = param.RewardExRate,
+                        SiteDBGroupId = fromSiteDB.SiteDBGroupID
+                    }),
                     fromSiteDB.AGIP);
+
+                if (!fromResultReward.IsFailure)
+                {
+                    var refNo = fromResultReward.RefNo;
+                    // Step 2: transfer at SiteDB TO
+                    var toResultReward = crossTransferAccess.RewardInsertTransferSiteDB(
+                        new RewardInsertTransferCriteria(new TransferRewardTransaction()
+                        {
+                            FromUserName = param.FromCustName,
+                            ToUserName = param.RewardUserName,
+                            FromCurrName = param.RewardCurrency,
+                            ToCurrName = param.ExpenseCurrency,
+                            MaxTransId = param.RewardMaxTransId,
+                            Amount = param.RewardAmount,
+                            ExchangeRate = param.RewardExRate,
+                            SiteDBGroupId = rewardSiteDB.SiteDBGroupID,
+                            RefNo = refNo.Value
+                        }),
+                        rewardSiteDB.AGIP);
+
+                    if (toResultReward.IsFailure)
+                    {
+                        // Rollback step 1
+                        crossTransferAccess.RewardRollbackSiteDB(
+                            new RewardRollbackSiteDBCriteria(refNo.Value, param.RewardMaxTransId, fromSiteDB), fromSiteDB.AGIP);
+                    }
+
+                    result.ErrorCode = toResultReward.ErrorCode;
+                    result.ErrorMessage = "Reward Payment: " + toResultReward.ErrorMessage;
+
+                    if (!result.IsFailure)
+                    {
+                        base.RewardWriteLog(fromResultReward.LogData);
+                    }
+                }
+                else
+                {
+                    result.ErrorCode = fromResultReward.ErrorCode;
+                    result.ErrorMessage = "Reward Payment: " + fromResultReward.ErrorMessage;
+                }
             }
 
-            // Step 1: transfer at SiteDB FROM
-            var fromResult = crossTransferAccess.BettransInsertTransferSiteDB(
-                new BetTransInsertTransferSiteDBCriteria(
-                    param,
-                    fromCustId,
-                    fromSiteDB),
-                fromSiteDB.AGIP);
-
-            if (fromResult.IsFailure)
-            {
-                return fromResult;
-            }
-
-            var refNo = fromResult.RefNo;
-            // Step 2: transfer at SiteDB TO
-            var toResult = crossTransferAccess.BettransInsertTransferSiteDB(
-                new BetTransInsertTransferSiteDBCriteria(
-                    param,
-                    fromCustId,
-                    toSiteDB,
-                    refNo),
-                toSiteDB.AGIP);
-
-            if (toResult.IsFailure)
-            {
-                // Rollback step 1
-                TransferRollbackSiteDB(refNo.Value, param.UserId, param.IP, fromSiteDB);
-            }
-
-            return toResult;
+            return result;
         }
 
         public Result CrossCurrencyTransferInsert(FinanceCrossCurrencyTransfer param)

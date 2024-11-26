@@ -153,6 +153,7 @@
   <ItemGroup>
     <Compile Include="Business\Customer\FinanceCustomerListService.cs" />
     <Compile Include="Business\Customer\IFinanceCustomerListService.cs" />
+    <Compile Include="Business\RewardBaseService.cs" />
     <Compile Include="Business\Statement\FinanceStatementBusiness.cs" />
     <Compile Include="Business\Statement\IFinanceStatementBusiness.cs" />
     <Compile Include="Business\Transfer\CrossTransferService.cs" />
@@ -166,12 +167,18 @@
       </SubType>
     </Compile>
     <Compile Include="Criteria\GetSiteDBConfigByRefNoCriteria.cs" />
+    <Compile Include="Criteria\ReverseRewardTransferRollbackSiteDBCriteria.cs" />
     <Compile Include="Criteria\ReverseTransferRollbackSiteDBCriteria.cs" />
+    <Compile Include="Criteria\RewardWriteLogCriteria.cs" />
+    <Compile Include="Criteria\Statement\RewardReverseTransactionCriteria.cs" />
     <Compile Include="Criteria\Statement\BettransDelTransactionCriteria.cs" />
     <Compile Include="Criteria\Statement\CustomerSelByRefnoCriteria.cs" />
+    <Compile Include="Criteria\Statement\RewardTxnUpdCheckerCriteria.cs" />
     <Compile Include="Criteria\Statement\DailyTxnUpdCheckerCriteria.cs" />
+    <Compile Include="Criteria\RewardRollbackSiteDBCriteria.cs" />
     <Compile Include="Criteria\Transfer\BetTransInsertCrossTransferCriteria.cs" />
     <Compile Include="Criteria\Transfer\BetTransInsertCrossTransferSiteDBCriteria.cs" />
+    <Compile Include="Criteria\Transfer\RewardInsertTransferCriteria.cs" />
     <Compile Include="Criteria\Transfer\BetTransInsertTransferCriteria.cs" />
     <Compile Include="Criteria\Transfer\BetTransInsertTransferSiteDBCriteria.cs" />
     <Compile Include="Criteria\Transaction\FinanceCrossTransferBettransInsCriteria.cs" />
@@ -183,6 +190,7 @@
     <Compile Include="Criteria\Transaction\FinanceTransferBettransInsCriteria.cs" />
     <Compile Include="Criteria\Transaction\FinanceTransferBettransInsSiteDBCriteria.cs" />
     <Compile Include="Criteria\Transaction\FinanceTransferMulUpdCriteria.cs" />
+    <Compile Include="DataAccess\BaseDataAccess.cs" />
     <Compile Include="DataAccess\Customer\FinanceCustomerListAccess.cs" />
     <Compile Include="DataAccess\Customer\IFinanceCustomerListAccess.cs" />
     <Compile Include="DataAccess\Statement\FinanceStatementAccess.cs" />
@@ -199,6 +207,7 @@
     <Compile Include="Entities\ForexAccount.cs" />
     <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\ResultDataTable.cs" />
+    <Compile Include="Entities\ResultReward.cs" />
     <Compile Include="Entities\ResultRefNo.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Helper.cs" />
@@ -209,6 +218,7 @@
     <Compile Include="Model\Statement\FinaceStatementModel.cs" />
     <Compile Include="Model\Transfer\CrossTransfer.cs" />
     <Compile Include="Model\Transfer\FinanceCrossCurrencyTransfer.cs" />
+    <Compile Include="Model\Transfer\TransferRewardTransaction.cs" />
     <Compile Include="Model\Transfer\TransferYesterdayTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource\Error.Designer.cs">

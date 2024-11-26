@@ -262,14 +262,15 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             return entityList;
         }
 
-        public bool UpdateVerifyStatus(User user, string refNoList, bool isVerified)
+        public bool UpdateVerifyStatus(User user, string refNoList, string rewardRefNoList, bool isVerified)
         {
             var success = true;
             var siteDBList = GetSiteDBConfigByRefNo(refNoList);
 
             foreach (var siteDB in siteDBList)
             {
-                var result = UpdateVerifyStatus(user, refNoList, isVerified, siteDB);
+                var result = UpdateVerifyStatus(user, refNoList, isVerified, siteDB, false)
+                    && UpdateVerifyStatus(user, rewardRefNoList, isVerified, siteDB, true);
                 if (!result)
                 {
                     success = false;
@@ -279,11 +280,27 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             return success;
         }
 
-        private static bool UpdateVerifyStatus(User user, string refNoList, bool isVerified, SiteDB siteDB)
+        private static bool UpdateVerifyStatus(User user, string refNoList, bool isVerified, SiteDB siteDB, bool isReward)
         {
-            var settingKey = siteDB.IsSiteDB
-                ? $"SiteDB{siteDB.SiteDBGroupID}_Acc_DailyTxn_UpdChecker"
-                : "Acc_DailyTxn_UpdChecker";
+            if (string.IsNullOrEmpty(refNoList))
+            {
+                return true;
+            }
+
+            string settingKey = string.Empty;
+            if (isReward)
+            {
+                settingKey = "Acc_RewardPayment_UpdChecker";
+            }
+            else
+            {
+                settingKey = siteDB.IsSiteDB
+                   ? $"SiteDB{siteDB.SiteDBGroupID}_Acc_DailyTxn_UpdChecker"
+                   : "Acc_DailyTxn_UpdChecker";
+
+            }
+
+            
             var inputParams = new Hashtable
             {
                 ["checkerid"] = user.Id,
@@ -344,7 +361,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         /// <param name="isInlucdeAccBal"></param>
         /// <returns></returns>
         public List<Statement> GetCustomerStatement(User customer, DateTime fromDate, DateTime toDate,
-                                                    DateTime balanceUpDay, bool isInlucdeAccBal)
+                                                    DateTime balanceUpDay, bool isInlucdeAccBal, bool isReward)
         {
             var entityList = new List<Statement>();
 
@@ -356,7 +373,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             p.Add("movebetday", Sunplus.Accounting.DataAccess.Report.ReportUtils.BalanceUp.MoveBetsDay);
             p.Add("includeaccbal", isInlucdeAccBal);
 
-            ObjectDb objectDb = new ObjectDb("AllStatement_Full", 600);
+            ObjectDb objectDb = new ObjectDb(isReward ? "Acc_AllStatementReward_Full" : "AllStatement_Full", 600);
             objectDb.AssignParamValues(p);
             using (var reader = objectDb.ExecuteReader())
             {

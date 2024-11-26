@@ -6,9 +6,21 @@ namespace Fanex.Tarus.Finance.Model.Transfer
 
     public class TransferYesterdayTransaction
     {
+        public bool IsTransferYesterday { get; set; }
+
+        public int FromCustId { get; set; }
+
         public string FromCustName { get; set; }
 
+        public int ToCustId { get; set; }
+
         public string ToCustName { get; set; }
+
+        public string RewardUserName { get; set; }
+
+        public string RewardCurrency { get; set; }
+
+        public string ExpenseCurrency { get; set; }
 
         public decimal Amount { get; set; }
 
@@ -17,6 +29,16 @@ namespace Fanex.Tarus.Finance.Model.Transfer
         public string Remark { get; set; }
 
         public bool IsCollection { get; set; }
+
+        public bool IsShowReward { get; set; }
+
+        public long RewardMaxTransId { get; set; }
+
+        public decimal RewardAmount { get; set; }
+
+        public double RewardExRate { get; set; }
+
+        public int RewardCustId { get; set; }
 
         public int UserId => AppSession.AccId;
 

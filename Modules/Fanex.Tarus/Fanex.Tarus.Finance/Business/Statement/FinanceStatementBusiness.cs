@@ -10,6 +10,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
     using DNAide.Core;
     using DNAide.Utils;
     using ExcelUtil.Spreadsheet;
+    using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Criteria;
     using Fanex.Tarus.Finance.Criteria.Statement;
     using Fanex.Tarus.Finance.DataAccess.Statement;
@@ -20,7 +21,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
     using ObjectDbExtensions = Fanex.Tarus.Infrastructure.Extensions.ObjectDbExtensions;
     using SiteDB = Fanex.Tarus.Infrastructure.Extensions.SiteDB;
 
-    public class FinanceStatementBusiness : IFinanceStatementBusiness
+    public class FinanceStatementBusiness : RewardBaseService, IFinanceStatementBusiness
     {
         private readonly IFinanceStatementAccess financeStatementAccess;
         private readonly Helper helper;
@@ -222,13 +223,14 @@ namespace Fanex.Tarus.Finance.Business.Statement
         {
             if (listTrans != null && subTrans != null)
             {
+                var transDateBufferInSecond = 3;
                 var subTransAmount = Convert.ToDouble(subTrans.Amount);
 
                 subTrans.Amount = DNAide.Utils.NumberFormat.DoubleFormat(subTrans.Amount, 2);
 
                 if (isForex)
                 {
-                    var isExistedTrans = (listTrans.Find(item => item.TransDate.Equals(subTrans.TransDate) && (item.ListSubTrans.Count < 2) && IsEqualToRemarkAmount(item.Remark, Convert.ToDouble(item.Total), subTrans.Remark, subTransAmount) && subTrans.IsOwner != item.IsOwner) != null);
+                    var isExistedTrans = (listTrans.Find(item => ConpareDateTimeWithBufferInSecond(item.TransDate, subTrans.TransDate, transDateBufferInSecond) && (item.ListSubTrans.Count < 2) && IsEqualToRemarkAmount(item.Remark, Convert.ToDouble(item.Total), subTrans.Remark, subTransAmount) && subTrans.IsOwner != item.IsOwner) != null);
                     if (!isExistedTrans)
                     {
                         trans.ListSubTrans = new List<SubTransaction>();
@@ -239,7 +241,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
                     {
                         listTrans = (listTrans.Select(item =>
                         {
-                            if (item.TransDate.Equals(trans.TransDate) && (item.ListSubTrans.Count < 2) && IsEqualToRemarkAmount(item.Remark, Convert.ToDouble(item.Total), subTrans.Remark, subTransAmount) && subTrans.IsOwner != item.IsOwner)
+                            if (ConpareDateTimeWithBufferInSecond(item.TransDate, trans.TransDate, transDateBufferInSecond) && (item.ListSubTrans.Count < 2) && IsEqualToRemarkAmount(item.Remark, Convert.ToDouble(item.Total), subTrans.Remark, subTransAmount) && subTrans.IsOwner != item.IsOwner)
                             {
                                 item.ListSubTrans.Add(subTrans);
                                 if (subTrans.IsOwner)
@@ -254,7 +256,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
                 }
                 else
                 {
-                    var isExistedTrans = (listTrans.Find(item => item.TransDate.Equals(subTrans.TransDate)) != null);
+                    var isExistedTrans = (listTrans.Find(item => ConpareDateTimeWithBufferInSecond(item.TransDate, subTrans.TransDate, transDateBufferInSecond)) != null);
                     if (!isExistedTrans)
                     {
                         trans.ListSubTrans = new List<SubTransaction>();
@@ -265,7 +267,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
                     {
                         listTrans = (listTrans.Select(item =>
                         {
-                            if (item.TransDate.Equals(subTrans.TransDate))
+                            if (ConpareDateTimeWithBufferInSecond(item.TransDate, subTrans.TransDate, transDateBufferInSecond))
                             {
                                 item.ListSubTrans.Add(subTrans);
                                 if (subTrans.IsOwner)
@@ -279,6 +281,17 @@ namespace Fanex.Tarus.Finance.Business.Statement
                     }
                 }
             }
+        }
+
+        private bool ConpareDateTimeWithBufferInSecond(string d1, string d2, double bufferInSecond)
+            => this.ConpareDateTimeWithBufferInSecond(DateTime.Parse(d1), DateTime.Parse(d2), bufferInSecond);
+
+        private bool ConpareDateTimeWithBufferInSecond(DateTime d1, DateTime d2, double bufferInSecond)
+        {
+            DateTime fromd1 = d1.AddSeconds(-bufferInSecond);
+            DateTime tod1 = d1.AddSeconds(bufferInSecond);
+            return fromd1 <= d2 && d2 <= tod1;
+
         }
 
         private static bool IsEqualToRemarkAmount(string remark, double transAmount, string subTransRemark, double subTransAmount)
@@ -340,29 +353,43 @@ namespace Fanex.Tarus.Finance.Business.Statement
                 return Math.Round(number);
         }
 
-        public MultipleVerifyResult VerifyTransactionBusiness(string refNo, bool isVerify, string checkerName, int checkerId)
+        public MultipleVerifyResult VerifyTransactionBusiness(string refNo, string rewardRefNo, bool isVerify, string checkerName, int checkerId)
         {
-            var errorResults = new List<Result>();
-            var siteDBList = financeStatementAccess.GetSiteDBConfigByRefNo(new GetSiteDBConfigByRefNoCriteria(refNo));
+            var siteDBList = financeStatementAccess.GetSiteDBConfigByRefNo(new GetSiteDBConfigByRefNoCriteria(string.Join(",", refNo, rewardRefNo)));
             var multipleVerifyResult = new MultipleVerifyResult();
-
-            var inputRefs = refNo.Split(',').TakeWhile(id => id != "").Count();
-
             try
             {
                 foreach (var siteDB in siteDBList)
                 {
-                    var results = financeStatementAccess.UpdateVerifyStatusAccess(
-                                 new DailyTxnUpdCheckerCriteria(
-                                     checkerId,
-                                     checkerName,
-                                     refNo,
-                                     isVerify,
-                                     Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
-                                     siteDB),
-                                 siteDB.AGIP);
-                    multipleVerifyResult.SuccessRefNos.AddRange(results.Where(result => result.Success).Select(result => result.RefNo));
-                    multipleVerifyResult.ErrorResults.AddRange(results.Where(result => !result.Success));
+                    if (!string.IsNullOrWhiteSpace(refNo))
+                    {
+                        var results = financeStatementAccess.UpdateVerifyStatusAccess(
+                                      new DailyTxnUpdCheckerCriteria(
+                                          checkerId,
+                                          checkerName,
+                                          refNo,
+                                          isVerify,
+                                          Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
+                                          siteDB),
+                                      siteDB.AGIP);
+                        multipleVerifyResult.SuccessRefNos.AddRange(results.Where(result => result.Success).Select(result => result.RefNo));
+                        multipleVerifyResult.ErrorResults.AddRange(results.Where(result => !result.Success));
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(rewardRefNo))
+                    {
+                        var results = financeStatementAccess.UpdateVerifyStatusAccess(
+                                  new RewardTxnUpdCheckerCriteria(
+                                      checkerId,
+                                      checkerName,
+                                      rewardRefNo,
+                                      isVerify,
+                                      Sunplus.Accounting.Core.Helper.Utils.GetClientIP(),
+                                      siteDB),
+                                  siteDB.AGIP);
+                        multipleVerifyResult.SuccessRefNos.AddRange(results.Where(result => result.Success).Select(result => result.RefNo));
+                        multipleVerifyResult.ErrorResults.AddRange(results.Where(result => !result.Success));
+                    }
                 }
 
             }
@@ -372,20 +399,19 @@ namespace Fanex.Tarus.Finance.Business.Statement
                 multipleVerifyResult.ErrorResults.Add(new VerifyResult { Message = "Update Error" });
             }
             return multipleVerifyResult;
-
         }
 
-        public Result DeleteTransBusiness(long refNo, int custId, int userId)
+        public Result DeleteTransBusiness(long refNo, int custId, int userId, bool isReward)
         {
-            var resultTuple = financeStatementAccess.GetCustIdsByRefNo(new CustomerSelByRefnoCriteria(refNo));
+            var resultTuple = financeStatementAccess.GetCustIdsByRefNo(new CustomerSelByRefnoCriteria(refNo, isReward));
             var result = resultTuple.Item2;
 
             return result.IsFailure
                 ? result
-                : DeleteTransBusiness(refNo, custId, userId, resultTuple.Item1);
+                : DeleteTransBusiness(refNo, custId, userId, resultTuple.Item1, isReward);
         }
 
-        private Result DeleteTransBusiness(long refNo, int custId, int userId, IEnumerable<int> custIds)
+        private Result DeleteTransBusiness(long refNo, int custId, int userId, IEnumerable<int> custIds, bool isReward)
         {
             Result result = null;
             IEnumerable<SiteDB> rollbackSiteDBList = Enumerable.Empty<SiteDB>();
@@ -394,9 +420,25 @@ namespace Fanex.Tarus.Finance.Business.Statement
             for (int i = 0, max = uniqueSiteDBArray.Length; i < max; i++)
             {
                 var siteDB = uniqueSiteDBArray[i];
-                result = financeStatementAccess.DeleteTransAccess(
-                    new BettransDelTransactionCriteria(refNo, custId, userId, siteDB),
-                    siteDB.AGIP);
+                if (isReward)
+                {
+                    var rewardResult = financeStatementAccess.DeleteRewardTransAccess(
+                           new RewardReverseTransactionCriteria(refNo, custId, userId, siteDB),
+                           siteDB.AGIP);
+
+                    if (!rewardResult.IsFailure)
+                    {
+                        base.RewardWriteLog(rewardResult.LogData);
+                    }
+
+                    result = (Result)rewardResult;
+                }
+                else
+                {
+                    result = financeStatementAccess.DeleteTransAccess(
+                        new BettransDelTransactionCriteria(refNo, custId, userId, siteDB),
+                        siteDB.AGIP);
+                }
 
                 if (result.IsFailure)
                 {
@@ -411,7 +453,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
 
             if (rollbackSiteDBList.Any())
             {
-                RollbackDeleteTransAccess(refNo, userId, Sunplus.Accounting.Core.Helper.Utils.GetClientIP(), rollbackSiteDBList);
+                RollbackDeleteTransAccess(refNo, userId, Sunplus.Accounting.Core.Helper.Utils.GetClientIP(), rollbackSiteDBList, isReward);
             }
 
             return result ?? new Result();
@@ -434,7 +476,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
             return siteDBDict.Values.ToArray();
         }
 
-        private void RollbackDeleteTransAccess(long refNo, int userId, string ip, IEnumerable<SiteDB> siteDBList)
+        private void RollbackDeleteTransAccess(long refNo, int userId, string ip, IEnumerable<SiteDB> siteDBList, bool isReward)
         {
             foreach (var siteDB in siteDBList)
             {

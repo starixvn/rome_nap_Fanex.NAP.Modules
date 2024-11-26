@@ -8,7 +8,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
     using Fanex.Tarus.Finance.Entities;
     using Fanex.Tarus.Infrastructure.Extensions;
 
-    public class CrossTransferAccess : ICrossTransferAccess
+    public class CrossTransferAccess : BaseDataAccess, ICrossTransferAccess
     {
         public Result CustomerCrossTransferInsert(ICriteria criteria, string agIp)
             => ExecuteNonQuery(criteria, agIp);
@@ -22,7 +22,13 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
         public ResultRefNo BettransInsertTransferSiteDB(ICriteria criteria, string agIp)
             => ExecuteNonQueryWithRefNo(criteria, agIp);
 
+        public ResultReward RewardInsertTransferSiteDB(ICriteria criteria, string agIp)
+            => ExecuteNonQueryWithReward(criteria, agIp);
+
         public Result TransferRollbackSiteDB(ICriteria criteria, string agIp)
+            => ExecuteNonQuery(criteria, agIp);
+
+        public Result RewardRollbackSiteDB(ICriteria criteria, string agIp)
             => ExecuteNonQuery(criteria, agIp);
 
         private static Result ExecuteNonQuery(ICriteria criteria, string agIp)
@@ -67,6 +73,24 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
             }
         }
 
+        private static ResultReward ExecuteNonQueryWithReward(ICriteria criteria, string agIp)
+        {
+            try
+            {
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), agIp);
+
+                    return ToResultReward(db);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.Error(agIp, criteria.GetSettingKey(), criteria.GetSpParams(), ex);
+                return new ResultReward(1, ex.Message, 0 , string.Empty);
+            }
+        }
+
         private static ResultRefNo ToResultTransfer(ObjectDb db)
         {
             var outputs = db.GetOuputParams();
@@ -76,6 +100,18 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
                 Convert.ToInt32(outputs["errcode"]),
                 outputs["errmsg"].ToString(),
                 refNo == null || refNo == DBNull.Value ? default(long?) : Convert.ToInt64(refNo));
+        }
+
+        private static ResultReward ToResultReward(ObjectDb db)
+        {
+            var outputs = db.GetOuputParams();
+            var refNo = outputs["refno"];
+            var logData = outputs["paymentlog"];
+            return new ResultReward(
+                Convert.ToInt32(outputs["errcode"]),
+                outputs["errmsg"].ToString(),
+                refNo == null || refNo == DBNull.Value ? default(long) : Convert.ToInt64(refNo),
+                logData == null || logData == DBNull.Value ? string.Empty : logData.ToString());
         }
 
         public CustomerExRate SelectCustomerExRate(string username)

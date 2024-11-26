@@ -23,6 +23,8 @@ namespace Fanex.Tarus.Finance.Entities
 
         public bool IsFailure => ErrorCode != 0;
 
+        public bool IsMainTransferSuccess { get; set; }
+
         public static Result NotAutherized() => new Result(403, ErrorLanguage.NotAutherizedFunction);
 
         public static Result ServerError(string error) => new Result(500, error);
