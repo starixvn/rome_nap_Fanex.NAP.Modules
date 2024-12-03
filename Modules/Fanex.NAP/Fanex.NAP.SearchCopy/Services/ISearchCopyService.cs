@@ -12,16 +12,10 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Services
     {
         SearchResult SearchExistingCustomer(string username, bool isMember);
 
-        Hashtable GetSportBookSettingMember(int custId, int uplineId, int userId);
-
         CustomerInfo GetCustomerInfoByUserId(int custId, bool isMember, byte settingStatus);
 
         IEnumerable<Site> GetSitesExistingSuper(int userId);
 
         string CheckAvailableUsernames(string usernames);
-
-        Result CopyMember(CopyExistingCustomerCriteria criteria, byte systemId, int fromSystem);
-
-        Result CopySuper(CopyExistingCustomerCriteria criteria, byte systemId, int fromSystem);
     }
 }
