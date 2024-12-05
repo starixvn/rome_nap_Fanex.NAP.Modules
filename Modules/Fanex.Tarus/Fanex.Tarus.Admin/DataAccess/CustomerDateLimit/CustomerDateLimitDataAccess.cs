@@ -79,6 +79,7 @@ namespace Fanex.Tarus.Admin.DataAccess.CustomerDateLimit
         public CustomerDataRangeResult Update(UpdateCustomerDateLimitCriteria criteria)
         {
             var result = new CustomerDataRangeResult();
+            criteria.DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(criteria.UserId);
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {

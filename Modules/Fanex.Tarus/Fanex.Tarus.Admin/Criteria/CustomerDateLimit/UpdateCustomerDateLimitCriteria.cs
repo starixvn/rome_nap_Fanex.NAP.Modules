@@ -26,6 +26,8 @@
 
         public string NoChangeUser { get; set; }
 
+        public string DeniedList { get; set; }
+
         public string GetSettingKey() => "EAS_CustomerDateLimitMultipleUpd";
 
         public Hashtable GetSPParams()
