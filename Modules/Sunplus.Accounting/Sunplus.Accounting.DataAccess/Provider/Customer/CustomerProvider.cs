@@ -31,7 +31,7 @@ namespace Sunplus.Accounting.DataAccess.Provider.Customer
             return (CustomerProvider)CreateInstance(Globals.IBCSetting.Customer.ProviderType, client, source);
         }
 
-        public virtual DbResult GetDownLineList(int custid, int pageSize, int pageIndex)
+        public virtual DbResult GetDownLineList(int custid, bool isDirectDownline, int pageSize, int pageIndex)
         {
             throw new NotImplementedException();
         }

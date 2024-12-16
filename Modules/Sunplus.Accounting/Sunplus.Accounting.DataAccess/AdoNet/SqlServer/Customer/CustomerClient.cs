@@ -15,7 +15,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Customer
 {
     public class CustomerClient : CustomerProvider
     {
-        public override DbResult GetDownLineList(int custid, int pageSize, int pageIndex)
+        public override DbResult GetDownLineList(int custid, bool isDirectDownline, int pageSize, int pageIndex)
         {
             DbResult rs = null;
             try
@@ -24,6 +24,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Customer
                 param.Add("custid", custid);
                 param.Add("pagesize", pageSize);
                 param.Add("pageindex", pageIndex);
+                param.Add("isdirectdownline", isDirectDownline);
                 param.Add("totalpages", 0); // 0: Paging
                 //var spElement = new SpConfig().GetStoreProcedure("CustomerSelDownLineList");
                 //rs = DbHelper.Execute(spElement.Name, param, spElement.DbName);
