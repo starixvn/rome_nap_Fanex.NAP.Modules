@@ -12,6 +12,6 @@
 
         public string Product { get; set; }
 
-        public string IsDeleted { get; set; }
+        public string IsDisabled { get; set; }
     }
 }
