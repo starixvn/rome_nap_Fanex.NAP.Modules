@@ -135,6 +135,19 @@ namespace Fanex.Tarus.User.DataAccess.Sql
             }
         }
 
+        public void Acc_AdminSiteUserIns_Rollback(int custId)
+        {
+            var param = new Hashtable
+            {
+                {"custid", custId}
+            };
+            using (ObjectDb objDB = new ObjectDb("Acc_AdminSiteUserIns_Rollback"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+            }
+        }
+
         public void Acc_Con_AdminPolicyIns(int custId, int userId, int groupId)
         {
             var param = new Hashtable

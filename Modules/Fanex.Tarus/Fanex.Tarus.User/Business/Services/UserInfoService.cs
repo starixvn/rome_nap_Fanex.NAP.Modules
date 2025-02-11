@@ -218,6 +218,7 @@ namespace Fanex.Tarus.User.Business.Services
                         {
                             _userInfoAccess.CustomerInsUserInfo_Rollback(custId);
                             _userInfoAccess.CustomerIns_Rollback(custId);
+                            _userInfoAccess.Acc_AdminSiteUserIns_Rollbacks(custId);
                             throw;
                         }
                         _userInfoAccess.Acc_Con_AdminPolicyIns(custId, AppSession.AccId, groupId);
