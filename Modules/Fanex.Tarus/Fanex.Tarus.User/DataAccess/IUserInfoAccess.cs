@@ -21,7 +21,7 @@ namespace Fanex.Tarus.User.DataAccess
         Result NAP_Admin_OTPIns(int custId, int userId);
         void CustomerInsUserInfo_Rollback(int custId);
         void CustomerIns_Rollback(int custId);
-        void Acc_AdminSiteUserIns_Rollbacks(int custId);
+        void Acc_AdminSiteUserIns_Rollback(int custId);
         Result AddExistedAccount(string custName, int loginId, int groupId);
         Result UpdateAccount(List<PostParam> postParams);
         Result UpdateAdminPolicy(string memberPolicies, string oldMemberPolicies, int custId);
