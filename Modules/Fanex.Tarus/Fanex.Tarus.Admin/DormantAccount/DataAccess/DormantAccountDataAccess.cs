@@ -48,6 +48,7 @@ namespace Fanex.Tarus.Admin.DormantAccount.DataAccess
                         CustId = DataUtils.ToInt32(reader["CustId"]),
                         Username = DataUtils.ToString(reader["Username"]),
                         RoleId = DataUtils.ToInt32(reader["RoleId"]),
+                        Recommend = DataUtils.HasColumn(reader, "recommend") ? DataUtils.ToInt32(reader["recommend"]) :  0,
                         StatusId = DataUtils.ToInt32(reader["StatusId"]),
                         StageId = DataUtils.ToInt32(reader["StageId"]),
                         ToBeClearedGivenCredit = reader["ToBeClearedGivenCredit"] == DBNull.Value ? (Decimal?)null : DataUtils.ToDecimal(reader["ToBeClearedGivenCredit"]),
