@@ -17,6 +17,8 @@ namespace Fanex.CustomerSetting.Module.SearchCopy.Criteria
 
         public int CustDBGroupID { get; }
 
+        public bool IsIncludeDirectMember => false;
+
         public override string GetSettingKey()
             => DataUtils.GetSPNameWithPrefix("Acc_CustomerUplineUserNameSel", CustDBGroupID);
 
