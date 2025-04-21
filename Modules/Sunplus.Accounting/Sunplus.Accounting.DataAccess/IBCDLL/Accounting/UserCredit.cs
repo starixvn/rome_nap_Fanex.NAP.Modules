@@ -81,9 +81,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// store procedure: Acc_CustomerSelUsedCredit_Ag --
         /// @viet hoang
         /// </summary>
-        /// <param name="_agentId"></param>
+        /// <param name="_uplineId"></param>
         /// <returns></returns>
-        public static DataTable SelectAgentCredit(int _agentId)
+        public static DataTable SelectAgentCredit(int _uplineId)
         {
             DataTable dt = new DataTable();
             try
@@ -91,7 +91,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 using (ObjectDb objDB = new ObjectDb("Acc_CustomerSelUsedCredit_Ag", 600))
                 {
                     var param = new Hashtable();
-                    param.Add("agentid", _agentId);
+                    param.Add("uplineid", _uplineId);
 
                     objDB.AssignParamValues(param);
 
@@ -184,19 +184,19 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// SP: Acc_CustomerUpdResetMemberCredit
         /// @viet hoang
         /// </summary>
-        /// <param name="_userId"></param>
-        /// <param name="_agentId"></param>
+        /// <param name="_actorId"></param>
+        /// <param name="_uplineId"></param>
         /// <param name="closedOnly"></param>
         /// <returns></returns>
-        public static void ResetMemberCredit(int _userId, int _agentId, bool closedOnly)
+        public static void ResetMemberCredit(int _actorId, int _uplineId, bool closedOnly)
         {
             try
             {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdResetMemberCredit", 600))
                 {
                     var param = new Hashtable();
-                    param.Add("userid", _userId);
-                    param.Add("agentid", _agentId);
+                    param.Add("userid", _actorId);
+                    param.Add("uplineid", _uplineId);
                     param.Add("closedonly", closedOnly);
                     param.Add("ip", HttpContext.Current.Request.UserHostAddress);
                     param.Add("errcode", 0);

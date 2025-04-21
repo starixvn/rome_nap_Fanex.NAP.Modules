@@ -15,8 +15,23 @@ namespace Fanex.Tarus.Admin.DormantAccount.Models
 
         public int RoleId { get; set; }
 
-        public string RoleText
-        => UserLevelConstant.List.ContainsKey(RoleId) ? UserLevelConstant.List[RoleId] : string.Empty;
+        public int Recommend { get; set; }
+
+        public string RoleText => GetRoleText();
+        private string GetRoleText()
+        {
+            if (Recommend < 0)
+            {
+                return "Direct Member";
+            }
+
+            if (UserLevelConstant.List.TryGetValue(RoleId, out var roleText))
+            {
+                return roleText;
+            }
+
+            return string.Empty;
+        }
 
         public int StatusId { get; set; }
 
