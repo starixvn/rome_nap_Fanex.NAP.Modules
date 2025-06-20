@@ -36,6 +36,7 @@
                     Convert.ToDouble(reader["exchangerate"]),
                     reader["description"].ToString(),
                     Convert.ToBoolean(reader["iscollection"]),
+                    reader["buid"].ToString(),
                     Convert.ToInt32(reader["userid"]),
                     reader["ip"].ToString());
 

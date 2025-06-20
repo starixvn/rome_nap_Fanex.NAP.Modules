@@ -116,7 +116,8 @@
                 new DataColumn("Amount"),
                 new DataColumn("ActualRate"),
                 new DataColumn("Description", typeof(string)),
-                new DataColumn("Collection", typeof(string))
+                new DataColumn("Collection", typeof(string)),
+                new DataColumn("BU ID", typeof(string))
             });
 
             return dataTable;
@@ -124,7 +125,7 @@
 
         private ExcelResult ValidateColumnNames(IRow headerRow)
         {
-            if (headerRow == null || headerRow.LastCellNum < 6)
+            if (headerRow == null || headerRow.LastCellNum < 7)
             {
                 return CreateErrorResult(Labels.InvalidExcelTemplate);
             }
@@ -174,6 +175,14 @@
 
             if (string.IsNullOrEmpty(collection) ||
                 !collection.Equals("Collection", StringComparison.Ordinal))
+            {
+                invalidColumnNames.Add(collection);
+            }
+
+            string BUId = headerRow.Cells[6].ToString();
+
+            if (string.IsNullOrEmpty(BUId) ||
+                !BUId.Equals("BU ID", StringComparison.Ordinal))
             {
                 invalidColumnNames.Add(collection);
             }

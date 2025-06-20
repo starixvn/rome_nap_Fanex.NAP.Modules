@@ -95,6 +95,15 @@
                 invalidColumnNames.Add(collection);
             }
 
+
+            string BUId = headerRow.Cells[6].ToString();
+
+            if (string.IsNullOrEmpty(BUId) ||
+                !BUId.Equals("BU ID", StringComparison.Ordinal))
+            {
+                invalidColumnNames.Add(collection);
+            }
+
             if (invalidColumnNames.Count > 0)
             {
                 return CreateErrorResult(string.Format(Labels.InvalidColumnName, string.Join(", ", invalidColumnNames)));

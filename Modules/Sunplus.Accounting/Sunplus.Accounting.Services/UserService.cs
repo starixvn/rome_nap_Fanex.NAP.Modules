@@ -59,7 +59,7 @@ namespace Sunplus.Accounting.Business
         }
 
         public Result InsDataTmpExcelFinanceCrossTransfer(int userId, string arrFromCust, string arrToCust, string arrFromAmount,
-            string arrToAmount, string arrDescription, string arrCollection)
+            string arrToAmount, string arrDescription, string arrCollection, string arrBUId)
         {
             try
             {
@@ -68,7 +68,8 @@ namespace Sunplus.Accounting.Business
                     arrFromAmount.Length > maxLength ||
                     arrToAmount.Length > maxLength ||
                     arrDescription.Length > maxLength ||
-                    arrCollection.Length > maxLength)
+                    arrCollection.Length > maxLength ||
+                    arrBUId.Length > maxLength)
                 {
                     return new Result()
                     {
@@ -77,7 +78,7 @@ namespace Sunplus.Accounting.Business
                     };
                 }
 
-                return _userDAO.InsDataTmpExcelFinanceCrossTransfer(userId, arrFromCust, arrToCust, arrFromAmount, arrToAmount, arrDescription, arrCollection);
+                return _userDAO.InsDataTmpExcelFinanceCrossTransfer(userId, arrFromCust, arrToCust, arrFromAmount, arrToAmount, arrDescription, arrCollection, arrBUId);
             }
             catch (Exception ex)
             {

@@ -21,7 +21,7 @@ namespace Sunplus.Accounting.Business
         DataSet InsDataTmpExcel(int userId, string xml, ref Hashtable error);
 
         Result InsDataTmpExcelFinanceCrossTransfer(int userId, string arrFromCust, string arrToCust, string arrFromAmount,
-            string arrToAmount, string arrDescription, string arrCollection);
+            string arrToAmount, string arrDescription, string arrCollection, string arrBUId);
 
         bool DelDataTmpExcel(int UserId);
 

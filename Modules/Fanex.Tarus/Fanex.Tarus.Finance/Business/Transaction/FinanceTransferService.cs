@@ -54,10 +54,11 @@ namespace Fanex.Tarus.Finance.Business.Transaction
                 drow[4] = item.ExchangeRate;
                 drow[5] = item.Description;
                 drow[6] = item.IsCollection;
+                drow[7] = item.BUId;
 
                 if (result.IsFailure)
                 {
-                    drow[7] = result.ErrorMessage;
+                    drow[8] = result.ErrorMessage;
                 }
 
                 dataTable.Rows.Add(drow);
@@ -78,6 +79,7 @@ namespace Fanex.Tarus.Finance.Business.Transaction
             dataTable.Columns.Add(new DataColumn("ExchangeRate", typeof(double)));
             dataTable.Columns.Add(new DataColumn("Description", typeof(string)));
             dataTable.Columns.Add(new DataColumn("IsCollection", typeof(bool)));
+            dataTable.Columns.Add(new DataColumn("BUId", typeof(string)));
 
             if (isFailure)
             {
