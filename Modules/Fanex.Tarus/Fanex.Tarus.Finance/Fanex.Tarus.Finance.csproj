@@ -202,6 +202,7 @@
     <Compile Include="Entities\CustomerExRate.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\CustomerTransfer.cs" />
+    <Compile Include="Entities\BusinessUnit.cs" />
     <Compile Include="Entities\Exchange.cs" />
     <Compile Include="Entities\ExchangeRate.cs" />
     <Compile Include="Entities\ForexAccount.cs" />

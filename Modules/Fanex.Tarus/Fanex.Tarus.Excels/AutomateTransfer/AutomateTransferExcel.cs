@@ -117,7 +117,7 @@
                 new DataColumn("ActualRate"),
                 new DataColumn("Description", typeof(string)),
                 new DataColumn("Collection", typeof(string)),
-                new DataColumn("BU ID", typeof(string))
+                new DataColumn("Business Unit", typeof(string))
             });
 
             return dataTable;
@@ -175,14 +175,6 @@
 
             if (string.IsNullOrEmpty(collection) ||
                 !collection.Equals("Collection", StringComparison.Ordinal))
-            {
-                invalidColumnNames.Add(collection);
-            }
-
-            string BUId = headerRow.Cells[6].ToString();
-
-            if (string.IsNullOrEmpty(BUId) ||
-                !BUId.Equals("BU ID", StringComparison.Ordinal))
             {
                 invalidColumnNames.Add(collection);
             }

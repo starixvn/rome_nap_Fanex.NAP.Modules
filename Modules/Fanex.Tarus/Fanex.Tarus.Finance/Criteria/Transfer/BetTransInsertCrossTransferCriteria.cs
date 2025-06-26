@@ -21,6 +21,7 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
             IP = param.IP;
             IsCollection = param.IsCollection;
             SiteDB = siteDB;
+            BUID = param.BUID;
         }
 
         public int FromCustId { get; }
@@ -44,6 +45,8 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
         public string IP { get; }
 
         public bool IsCollection { get; }
+
+        public string BUID { get; }
 
         [SpParam(Ignored = true)]
         public SiteDB SiteDB { get; }

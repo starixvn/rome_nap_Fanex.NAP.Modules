@@ -36,7 +36,7 @@
                     Convert.ToDouble(reader["exchangerate"]),
                     reader["description"].ToString(),
                     Convert.ToBoolean(reader["iscollection"]),
-                    reader["buid"].ToString(),
+                    Convert.ToInt32(reader["buid"]),
                     Convert.ToInt32(reader["userid"]),
                     reader["ip"].ToString());
 
@@ -61,7 +61,8 @@
                        Convert.ToBoolean(reader["iscollection"]),
                        reader["forexusername"].ToString(),
                        Convert.ToInt32(reader["userid"]),
-                       reader["ip"].ToString());
+                       reader["ip"].ToString(),
+                       reader["BUID"].ToString());
 
             var customerTransferList = ExecuteReader(criteria, buildCustomerTransfer, out var result);
             criteria.ErrCode = result.ErrorCode;

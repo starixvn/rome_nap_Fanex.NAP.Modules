@@ -16,7 +16,8 @@ namespace Fanex.Tarus.Finance.Criteria.Transaction
                   param.UserId,
                   param.IP,
                   param.IsCollection,
-                  siteDB)
+                  siteDB,
+                  param.BUId)
         {
         }
 

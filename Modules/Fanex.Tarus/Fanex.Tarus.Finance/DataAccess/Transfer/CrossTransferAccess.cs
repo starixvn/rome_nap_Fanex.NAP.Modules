@@ -2,6 +2,7 @@
 namespace Fanex.Tarus.Finance.DataAccess.Transfer
 {
     using System;
+    using System.Collections.Generic;
     using System.Data;
     using Fanex.Data;
     using Fanex.NAP.Framework.Data;
@@ -10,6 +11,22 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
 
     public class CrossTransferAccess : BaseDataAccess, ICrossTransferAccess
     {
+        public IEnumerable<BusinessUnit> SelectAllBusinessUnit()
+        {
+            using (ObjectDb objDB = new ObjectDb("Acc_Transfer_GetBUList"))
+            {   
+                var result = objDB.ExecuteDataSet();
+                foreach(DataRow row in result.Tables[0].Rows)
+                {
+                    yield return new BusinessUnit
+                    {
+                        Id = DNAide.Core.CastAide.AsInt32(row["BUID"]),
+                        Name = DNAide.Core.CastAide.AsString(row["BusinessUnit"])
+                    };
+                }    
+            }
+        }
+
         public Result CustomerCrossTransferInsert(ICriteria criteria, string agIp)
             => ExecuteNonQuery(criteria, agIp);
 

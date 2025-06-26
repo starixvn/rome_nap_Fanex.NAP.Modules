@@ -8,7 +8,7 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
     internal class BetTransInsertTransferCriteria : CriteriaBase
     {
         public BetTransInsertTransferCriteria(TransferYesterdayTransaction param, int fromCustId, SiteDB siteDB)
-            : this(fromCustId, param.ToCustName, param.Amount, param.ExRate, param.Remark, param.UserId, param.IP, param.IsCollection, siteDB)
+            : this(fromCustId, param.ToCustName, param.Amount, param.ExRate, param.Remark, param.UserId, param.IP, param.IsCollection, siteDB, param.BUID)
         {
         }
 
@@ -21,7 +21,8 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
             int userId,
             string ip,
             bool isCollection,
-            SiteDB siteDB)
+            SiteDB siteDB,
+            int buId)
         {
             FromCustId = fromCustId;
             ToUsername = toUsername;
@@ -32,7 +33,10 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
             IP = ip;
             IsCollection = isCollection;
             SiteDB = siteDB;
+            BUID = buId;
         }
+
+        public int BUID { get; }
 
         public int FromCustId { get; }
 

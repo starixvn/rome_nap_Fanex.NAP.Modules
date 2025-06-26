@@ -19,6 +19,7 @@ namespace Fanex.Tarus.Finance.Criteria.Transaction
             IP = param.IP;
             IsCollection = param.IsCollection;
             SiteDB = siteDB;
+            BUID = param.BUID;
         }
 
         public int FromCustId { get; }
@@ -42,6 +43,7 @@ namespace Fanex.Tarus.Finance.Criteria.Transaction
         [SpParam(Ignored = true)]
         public SiteDB SiteDB { get; }
 
+        public string BUID { get; set; }
         public override string GetSettingKey()
             => SiteDB.IsSiteDB
             ? $"SiteDB{SiteDB.SiteDBGroupID}_Acc_FinanceCrossTransferBettransIns"

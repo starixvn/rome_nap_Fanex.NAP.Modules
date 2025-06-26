@@ -23,6 +23,8 @@ namespace Fanex.Tarus.Finance.Model.Statement
 
         public string CheckerTime { get; set; }
 
+        public string BusinessUnit { get; set; }
+
         public bool IsVerify { get; set; }
 
         public bool IsReverse { get; set; }

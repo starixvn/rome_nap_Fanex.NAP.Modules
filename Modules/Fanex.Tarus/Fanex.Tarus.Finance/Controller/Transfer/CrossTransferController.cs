@@ -10,6 +10,7 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
     using Sunplus.Accounting.Business.Security;
     using Sunplus.Accounting.Core.Common;
     using System;
+    using System.Linq;
     using System.Net;
     using System.Web.Mvc;
 
@@ -72,7 +73,8 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
                 Total_YesterdayBalance_RewardPending = IBCUtils.FormatHandler.FormatNumber20(total_YesterdayBalance_RewardPending),
                 RewardExrate = rewardRate.ToString(),
                 RewardCode = RewardPromotionCode,
-                ExpenseCurrency = ExpenseCodeRate.currency
+                ExpenseCurrency = ExpenseCodeRate.currency,
+                BusinessUnits = crossTransferService.SelectAllBusinessUnit().ToList(),
             };
 
             if (!crossTransferModel.IsHadPermissionOnCrossCurrencyTransfer && !crossTransferModel.IsHadPermissionOnYesterdayTransfer)

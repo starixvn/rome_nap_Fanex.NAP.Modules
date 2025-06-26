@@ -16,5 +16,7 @@ namespace Fanex.Tarus.Finance.Business.Transfer
         List<ForexAccount> SelectAllForexAccount();
 
         List<ExchangeRate> SelectAllExchangeRate();
+
+        IEnumerable<BusinessUnit> SelectAllBusinessUnit();
     }
 }

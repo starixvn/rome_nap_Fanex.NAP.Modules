@@ -4,6 +4,7 @@ using System;
 
 namespace Fanex.Tarus.Finance.DataAccess.Transfer
 {
+    using System.Collections.Generic;
     using System.Data;
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Entities;
@@ -29,5 +30,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Transfer
         DataSet SelectAllForexAccount();
 
         DataSet SelectAllExchangeRate();
+
+        IEnumerable<BusinessUnit> SelectAllBusinessUnit();
     }
 }
