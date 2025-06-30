@@ -67,6 +67,11 @@ namespace Fanex.Tarus.Finance.Controller.Statement
                 statementDetail.CheckerName = string.Empty;
             }
 
+            if(statementDetail.BusinessUnit == null)
+            {
+                statementDetail.BusinessUnit = string.Empty;
+            }
+
             if (statementDetail.CheckerTime == null)
             {
                 statementDetail.CheckerTime = string.Empty;

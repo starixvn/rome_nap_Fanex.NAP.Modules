@@ -54,7 +54,7 @@ namespace Fanex.Tarus.Finance.Business.Transaction
                 drow[4] = item.ExchangeRate;
                 drow[5] = item.Description;
                 drow[6] = item.IsCollection;
-                drow[7] = item.BUId;
+                drow[7] = item.BUInfo;
 
                 if (result.IsFailure)
                 {

@@ -14,7 +14,8 @@
             string forexUsername,
             int userId,
             string ip,
-            string bUID)
+            int bUID,
+            string buInfo)
         {
             FromCustId = fromCustId;
             FromUsername = fromUsername;
@@ -28,9 +29,10 @@
             UserId = userId;
             IP = ip;
             BUID = bUID;
+            BUInfo = buInfo;
         }
-
-        public string BUID { get; set; }
+        public string BUInfo { get; set; }  
+        public int BUID { get; set; }
         public int FromCustId { get; }
 
         public string FromUsername { get; }

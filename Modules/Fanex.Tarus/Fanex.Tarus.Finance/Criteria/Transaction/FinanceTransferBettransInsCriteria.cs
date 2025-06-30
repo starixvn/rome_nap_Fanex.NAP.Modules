@@ -4,6 +4,7 @@ namespace Fanex.Tarus.Finance.Criteria.Transaction
     using Fanex.Tarus.Finance.Criteria.Transfer;
     using Fanex.Tarus.Finance.Entities;
     using Fanex.Tarus.Infrastructure.Extensions;
+    using System.Collections;
 
     internal class FinanceTransferBettransInsCriteria : BetTransInsertTransferCriteria
     {
@@ -19,7 +20,7 @@ namespace Fanex.Tarus.Finance.Criteria.Transaction
                   siteDB,
                   param.BUId)
         {
-        }
+        }        
 
         public override string GetSettingKey()
             => SiteDB.IsSiteDB

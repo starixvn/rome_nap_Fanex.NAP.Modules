@@ -8,7 +8,7 @@
     using Fanex.Tarus.Finance.Criteria.Transaction;
     using Fanex.Tarus.Finance.Entities;
     using Fanex.Tarus.Infrastructure.Extensions;
-
+    using Fanex.Common;
     internal interface IFinanceTransferAccess
     {
         IEnumerable<CustomerTransfer> GetCustomerTransferList(FinanceTransferMulUpdCriteria criteria);
@@ -36,7 +36,8 @@
                     Convert.ToDouble(reader["exchangerate"]),
                     reader["description"].ToString(),
                     Convert.ToBoolean(reader["iscollection"]),
-                    Convert.ToInt32(reader["buid"]),
+                    Converter.ToInt(reader["buid"]),
+                    reader["buinfo"].ToString(),
                     Convert.ToInt32(reader["userid"]),
                     reader["ip"].ToString());
 
@@ -62,7 +63,8 @@
                        reader["forexusername"].ToString(),
                        Convert.ToInt32(reader["userid"]),
                        reader["ip"].ToString(),
-                       reader["BUID"].ToString());
+                       Converter.ToInt(reader["buid"]),
+                       reader["buinfo"].ToString());
 
             var customerTransferList = ExecuteReader(criteria, buildCustomerTransfer, out var result);
             criteria.ErrCode = result.ErrorCode;

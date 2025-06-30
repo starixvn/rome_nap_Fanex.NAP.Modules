@@ -125,7 +125,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 hsParam.Add("arrtoamount", arrToAmount);
                 hsParam.Add("arrdescription", arrDescription);
                 hsParam.Add("arriscollection", arrCollection);
-                hsParam.Add("arrbuid", arrBUId);
+                hsParam.Add("arrbuinfo", arrBUId);
 
                 objDb.AssignParamValues(hsParam);
                 objDb.ExecuteNonQuery();
