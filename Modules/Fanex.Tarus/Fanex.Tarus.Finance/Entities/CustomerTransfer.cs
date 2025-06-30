@@ -11,6 +11,8 @@
             double exchangeRate,
             string description,
             bool isCollection,
+            int bUId,
+            string buInfo,
             int userId,
             string ip)
         {
@@ -22,6 +24,8 @@
             ExchangeRate = exchangeRate;
             Description = description;
             IsCollection = isCollection;
+            BUId = bUId;
+            BUInfo = buInfo;
             UserId = userId;
             IP = ip;
         }
@@ -41,6 +45,10 @@
         public string Description { get; }
 
         public bool IsCollection { get; }
+
+        public int BUId { get; }
+
+        public string BUInfo { get; }
 
         public int UserId { get; }
 

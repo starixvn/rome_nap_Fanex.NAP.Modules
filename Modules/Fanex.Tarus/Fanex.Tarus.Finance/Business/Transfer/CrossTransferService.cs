@@ -307,6 +307,9 @@ namespace Fanex.Tarus.Finance.Business.Transfer
             }
         }
 
+        public IEnumerable<BusinessUnit> SelectAllBusinessUnit()
+            => crossTransferAccess.SelectAllBusinessUnit();
+
         public CustomerExRate SelectCustomerExRate(string username)
             => crossTransferAccess.SelectCustomerExRate(username);
 

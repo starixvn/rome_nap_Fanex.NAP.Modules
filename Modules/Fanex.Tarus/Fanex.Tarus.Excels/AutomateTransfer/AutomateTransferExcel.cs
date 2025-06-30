@@ -47,7 +47,7 @@
                 drow = dt.NewRow();
                 //// Current Row Index
                 var count = 0;
-                var collectionColumn = 5;
+                var collectionColumn = 6;
 
                 for (int i = 0, max = excelRow.LastCellNum; i < max; i++)
                 {
@@ -115,8 +115,9 @@
                 new DataColumn("To Cust", typeof(string)),
                 new DataColumn("Amount"),
                 new DataColumn("ActualRate"),
+                new DataColumn("Business Unit", typeof(string)),
                 new DataColumn("Description", typeof(string)),
-                new DataColumn("Collection", typeof(string))
+                new DataColumn("Collection", typeof(string))                
             });
 
             return dataTable;
@@ -124,7 +125,7 @@
 
         private ExcelResult ValidateColumnNames(IRow headerRow)
         {
-            if (headerRow == null || headerRow.LastCellNum < 6)
+            if (headerRow == null || headerRow.LastCellNum < 7)
             {
                 return CreateErrorResult(Labels.InvalidExcelTemplate);
             }
@@ -162,7 +163,7 @@
                 invalidColumnNames.Add(actualRate);
             }
 
-            string description = headerRow.Cells[4].ToString();
+            string description = headerRow.Cells[5].ToString();
 
             if (string.IsNullOrEmpty(description) ||
                 !description.Equals("Description", StringComparison.Ordinal))
@@ -170,7 +171,7 @@
                 invalidColumnNames.Add(description);
             }
 
-            string collection = headerRow.Cells[5].ToString();
+            string collection = headerRow.Cells[6].ToString();
 
             if (string.IsNullOrEmpty(collection) ||
                 !collection.Equals("Collection", StringComparison.Ordinal))

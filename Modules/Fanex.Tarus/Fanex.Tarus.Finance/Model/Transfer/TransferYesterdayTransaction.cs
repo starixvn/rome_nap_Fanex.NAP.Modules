@@ -43,5 +43,7 @@ namespace Fanex.Tarus.Finance.Model.Transfer
         public int UserId => AppSession.AccId;
 
         public string IP => Utils.GetClientIP();
+
+        public int BUID { get; set; }
     }
 }

@@ -63,6 +63,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
 
                         statementDetail.CheckerName = checkerName == "0" ? string.Empty : checkerName;
                         statementDetail.CheckerTime = String.Format("{0:MM/dd/yyyy HH:mm:ss tt}", row["CheckTime"]);
+                        statementDetail.BusinessUnit = row["BusinessUnit"].ToString();
                         statementDetail.IsVerify = CastAide.AsBoolean(row["IsAllowVerify"]);
                         statementDetail.IsReverse = CastAide.AsBoolean(row["IsReversal"]);
                         statementDetail.IsExpand = CastAide.AsBoolean(row["IsExpand"]);
@@ -577,6 +578,11 @@ namespace Fanex.Tarus.Finance.Business.Statement
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = "Checked time";
             wsReport.Columns[nextCol].Width = 255 * 17;
 
+
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderFormat;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = "Business Unit";
+            wsReport.Columns[nextCol].Width = 255 * 17;
+
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + nextCol).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + nextCol).Style = bgHeaderFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + nextCol).Value = title;
@@ -718,6 +724,16 @@ namespace Fanex.Tarus.Finance.Business.Statement
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Value = statementDetail.CheckerTime;
 
                         #endregion checked time
+
+                        #region Business Unit
+
+                        nextCol += 1;
+                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Merged = true;
+                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Style = bgFormat;
+                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Value = statementDetail.BusinessUnit;
+
+                        #endregion Business Unit
                     }
 
                     detailIndex++;

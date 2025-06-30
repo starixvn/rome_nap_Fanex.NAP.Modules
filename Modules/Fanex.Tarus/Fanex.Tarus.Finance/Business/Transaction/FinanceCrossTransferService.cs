@@ -51,12 +51,13 @@ namespace Fanex.Tarus.Finance.Business.Transaction
                 drow[1] = item.ToUsername;
                 drow[2] = item.FromAmount;
                 drow[3] = item.ToAmount;
-                drow[4] = item.Remark;
-                drow[5] = item.IsCollection;
+                drow[4] = item.BUInfo;
+                drow[5] = item.Remark;
+                drow[6] = item.IsCollection;
 
                 if (result.IsFailure)
                 {
-                    drow[6] = result.ErrorMessage;
+                    drow[7] = result.ErrorMessage;
                 }
 
                 dataTable.Rows.Add(drow);
@@ -74,6 +75,7 @@ namespace Fanex.Tarus.Finance.Business.Transaction
             dataTable.Columns.Add(new DataColumn("ToUserName", typeof(string)));
             dataTable.Columns.Add(new DataColumn("FromAmount", typeof(decimal)));
             dataTable.Columns.Add(new DataColumn("ToAmount", typeof(decimal)));
+            dataTable.Columns.Add(new DataColumn("BUInfo", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Description", typeof(string)));
             dataTable.Columns.Add(new DataColumn("IsCollection", typeof(bool)));
 

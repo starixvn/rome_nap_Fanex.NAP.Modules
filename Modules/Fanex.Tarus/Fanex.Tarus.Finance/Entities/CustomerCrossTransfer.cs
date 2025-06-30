@@ -13,7 +13,9 @@
             bool isCollection,
             string forexUsername,
             int userId,
-            string ip)
+            string ip,
+            int bUID,
+            string buInfo)
         {
             FromCustId = fromCustId;
             FromUsername = fromUsername;
@@ -26,8 +28,11 @@
             ForexUsername = forexUsername;
             UserId = userId;
             IP = ip;
+            BUID = bUID;
+            BUInfo = buInfo;
         }
-
+        public string BUInfo { get; set; }  
+        public int BUID { get; set; }
         public int FromCustId { get; }
 
         public string FromUsername { get; }

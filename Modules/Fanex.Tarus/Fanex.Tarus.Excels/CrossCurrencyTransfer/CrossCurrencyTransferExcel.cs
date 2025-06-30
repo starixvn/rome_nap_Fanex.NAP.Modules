@@ -79,7 +79,7 @@
                 invalidColumnNames.Add(toAmount);
             }
 
-            string remark = headerRow.Cells[4].ToString();
+            string remark = headerRow.Cells[5].ToString();
 
             if (string.IsNullOrEmpty(remark) ||
                 !remark.Equals("Remark", StringComparison.Ordinal))
@@ -87,7 +87,7 @@
                 invalidColumnNames.Add(remark);
             }
 
-            string collection = headerRow.Cells[5].ToString();
+            string collection = headerRow.Cells[6].ToString();
 
             if (string.IsNullOrEmpty(collection) ||
                 !collection.Equals("Collection", StringComparison.Ordinal))
