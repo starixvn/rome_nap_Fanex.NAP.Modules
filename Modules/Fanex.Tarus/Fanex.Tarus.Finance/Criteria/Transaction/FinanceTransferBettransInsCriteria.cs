@@ -17,10 +17,22 @@ namespace Fanex.Tarus.Finance.Criteria.Transaction
                   param.UserId,
                   param.IP,
                   param.IsCollection,
-                  siteDB,
-                  param.BUId)
+                  siteDB)
         {
-        }        
+            BUId = param.BUId;
+        }
+
+        public int BUId { get; set; }
+        public override Hashtable GetSpParams()
+        {
+            var list = base.GetSpParams();
+            if (list.ContainsKey("buid") && list["buid"].ToString() == "0")
+            {
+                list.Remove("buid");
+            }
+
+            return list;
+        }
 
         public override string GetSettingKey()
             => SiteDB.IsSiteDB

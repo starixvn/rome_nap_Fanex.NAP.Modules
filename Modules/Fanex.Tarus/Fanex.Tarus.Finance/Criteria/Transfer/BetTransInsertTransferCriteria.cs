@@ -9,7 +9,7 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
     internal class BetTransInsertTransferCriteria : CriteriaBase
     {
         public BetTransInsertTransferCriteria(TransferYesterdayTransaction param, int fromCustId, SiteDB siteDB)
-            : this(fromCustId, param.ToCustName, param.Amount, param.ExRate, param.Remark, param.UserId, param.IP, param.IsCollection, siteDB, param.BUID)
+            : this(fromCustId, param.ToCustName, param.Amount, param.ExRate, param.Remark, param.UserId, param.IP, param.IsCollection, siteDB)
         {
         }
 
@@ -22,8 +22,7 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
             int userId,
             string ip,
             bool isCollection,
-            SiteDB siteDB,
-            int buId)
+            SiteDB siteDB)
         {
             FromCustId = fromCustId;
             ToUsername = toUsername;
@@ -34,10 +33,10 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
             IP = ip;
             IsCollection = isCollection;
             SiteDB = siteDB;
-            BUID = buId;
+            //BUID = buId;
         }
 
-        public int BUID { get; }
+        //public int BUID { get; }
 
         public int FromCustId { get; }
 
@@ -58,16 +57,16 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
         [SpParam(Ignored = true)]
         public SiteDB SiteDB { get; }
 
-        public override Hashtable GetSpParams()
-        {
-            var list = base.GetSpParams();
-            if (list.ContainsKey("buid") && list["buid"].ToString() == "0")
-            {
-                list.Remove("buid");
-            }
+        //public override Hashtable GetSpParams()
+        //{
+        //    var list = base.GetSpParams();
+        //    if (list.ContainsKey("buid") && list["buid"].ToString() == "0")
+        //    {
+        //        list.Remove("buid");
+        //    }
 
-            return list;
-        }
+        //    return list;
+        //}
 
         public override string GetSettingKey()
             => SiteDB.IsSiteDB
