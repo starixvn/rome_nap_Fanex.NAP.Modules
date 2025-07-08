@@ -35,7 +35,7 @@ namespace Fanex.Tarus.Finance.Model.Transfer
 
         public string Total_YesterdayBalance_RewardPending { get; set; }
 
-        //public List<BusinessUnit> BusinessUnits { get; set; }
+        public List<BusinessUnit> BusinessUnits { get; set; }
 
     }
 }
