@@ -76,14 +76,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 
     public sealed class UserCredit
     {
-        /// <summary>
-        /// Select Agent Credit --
-        /// store procedure: Acc_CustomerSelUsedCredit_Ag --
-        /// @viet hoang
-        /// </summary>
-        /// <param name="_uplineId"></param>
-        /// <returns></returns>
-        public static DataTable SelectAgentCredit(int _uplineId)
+        public static DataTable SelectAgentCredit(int _uplineId, int serviceType)
         {
             DataTable dt = new DataTable();
             try
@@ -92,6 +85,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 {
                     var param = new Hashtable();
                     param.Add("uplineid", _uplineId);
+                    param.Add("servicetype", serviceType);
 
                     objDB.AssignParamValues(param);
 
