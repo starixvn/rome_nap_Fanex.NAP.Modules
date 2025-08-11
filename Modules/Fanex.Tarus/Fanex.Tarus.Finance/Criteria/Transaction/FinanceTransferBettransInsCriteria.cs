@@ -17,12 +17,10 @@ namespace Fanex.Tarus.Finance.Criteria.Transaction
                   param.UserId,
                   param.IP,
                   param.IsCollection,
-                  siteDB)
+                  siteDB,
+                  param.BUId)
         {
-            BUId = param.BUId;
         }
-
-        public int BUId { get; set; }
         public override Hashtable GetSpParams()
         {
             var list = base.GetSpParams();

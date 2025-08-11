@@ -74,7 +74,7 @@ namespace Fanex.Tarus.Finance.Controller.Transfer
                 RewardExrate = rewardRate.ToString(),
                 RewardCode = RewardPromotionCode,
                 ExpenseCurrency = ExpenseCodeRate.currency,
-                //BusinessUnits = crossTransferService.SelectAllBusinessUnit().ToList(),
+                BusinessUnits = crossTransferService.SelectAllBusinessUnit().ToList(),
             };
 
             if (!crossTransferModel.IsHadPermissionOnCrossCurrencyTransfer && !crossTransferModel.IsHadPermissionOnYesterdayTransfer)

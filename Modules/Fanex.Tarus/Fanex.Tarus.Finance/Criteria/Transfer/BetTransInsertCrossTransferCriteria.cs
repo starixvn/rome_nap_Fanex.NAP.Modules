@@ -4,6 +4,8 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Finance.Model.Transfer;
     using Fanex.Tarus.Infrastructure.Extensions;
+    using System;
+    using System.Collections;
 
     internal class BetTransInsertCrossTransferCriteria : CriteriaBase
     {
@@ -21,7 +23,7 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
             IP = param.IP;
             IsCollection = param.IsCollection;
             SiteDB = siteDB;
-            //BUID = param.BUID;
+            BUID = param.BUID;
         }
 
         public int FromCustId { get; }
@@ -46,10 +48,21 @@ namespace Fanex.Tarus.Finance.Criteria.Transfer
 
         public bool IsCollection { get; }
         
-        //private string BUID { get; }
+        public string BUID { get; }
 
         [SpParam(Ignored = true)]
         public SiteDB SiteDB { get; }
+
+        public override Hashtable GetSpParams()
+        {
+            var list = base.GetSpParams();
+            if (list.ContainsKey("buid") && Convert.ToInt32(list["buid"]) == 0)
+            {
+                list.Remove("buid");
+            }
+
+            return list;
+        }
 
         public override string GetSettingKey()
             => SiteDB.IsSiteDB

@@ -62,7 +62,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
                         statementDetail.WinLossDate = winlossDate;
 
                         statementDetail.CheckerName = checkerName == "0" ? string.Empty : checkerName;
-                        statementDetail.CheckerTime = String.Format("{0:MM/dd/yyyy HH:mm:ss tt}", row["CheckTime"]);
+                        statementDetail.CheckerTime = String.Format("{0:MM/dd/yyyy HH:mm:ss}", row["CheckTime"]);
                         statementDetail.BusinessUnit = row["BusinessUnit"].ToString();
                         statementDetail.IsVerify = CastAide.AsBoolean(row["IsAllowVerify"]);
                         statementDetail.IsReverse = CastAide.AsBoolean(row["IsReversal"]);
@@ -82,7 +82,7 @@ namespace Fanex.Tarus.Finance.Business.Statement
                         trans.Remark = trans.TransType.ToUpper() + " <br> -" + row["TransDescription"].ToString();
 
                         DateTime transDatetmp = CastAide.AsDateTime(row["TransDate"]);
-                        var transDate = transDatetmp.DayOfWeek + " <br> " + String.Format("{0:MM/dd/yyyy HH:mm:ss tt}", transDatetmp);
+                        var transDate = transDatetmp.DayOfWeek + " <br> " + String.Format("{0:MM/dd/yyyy HH:mm:ss}", transDatetmp);
                         trans.TransDate = transDate;
 
                         statementDetail.ListTrans.Add(trans);
