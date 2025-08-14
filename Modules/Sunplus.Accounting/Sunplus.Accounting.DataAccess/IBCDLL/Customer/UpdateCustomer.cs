@@ -542,7 +542,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
 
                 objDb.ExecuteNonQueryScaleoutDB(hash, siteDB.AGIP);
 
-                return CastAide.AsInt32(objDb.GetParameterValue("totalamt"));
+                return CastAide.AsDecimal(objDb.GetParameterValue("totalamt"));
             }
         }
 
@@ -557,7 +557,22 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
 
                 objDb.ExecuteNonQuery(hash);
 
-                return CastAide.AsInt32(objDb.GetParameterValue("accumcreditreturn"));
+                return CastAide.AsDecimal(objDb.GetParameterValue("accumcreditreturn"));
+            }
+        }
+
+        public static int GetUplineByCustId(int custId)
+        {
+            using (ObjectDb objDb = new ObjectDb($"Age_CustSetting_GetUplineByCustID", 600))
+            {
+                var hash = new Hashtable
+                {
+                    { "custid", custId }
+                };
+
+                objDb.ExecuteNonQuery(hash);
+
+                return CastAide.AsInt32(objDb.GetParameterValue("uplineid"));
             }
         }
 
