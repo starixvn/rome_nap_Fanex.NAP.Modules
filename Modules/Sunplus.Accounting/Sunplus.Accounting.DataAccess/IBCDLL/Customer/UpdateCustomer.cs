@@ -509,7 +509,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             return error;
         }
-        
+
         public static CustDetail GetCustInfo(string userName)
         {
             using (ObjectDb objDb = new ObjectDb("Acc_CustomerSelInfoByUsername", 600))
@@ -567,7 +567,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             {
                 var hash = new Hashtable
                 {
-                    { "custid", custId }
+                    { "custid", custId },
+                    { "uplineid", 0 }
                 };
 
                 objDb.ExecuteNonQuery(hash);
