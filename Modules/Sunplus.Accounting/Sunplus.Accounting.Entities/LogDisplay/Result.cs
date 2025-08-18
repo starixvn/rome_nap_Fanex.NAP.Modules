@@ -11,7 +11,8 @@ namespace Sunplus.Accounting.Entities.LogDisplay
         Setting = 1,
         Status = 2,
         Credit = 3,
-        Login = 4
+        Login = 4,
+        CashService = 5
     }
 
     public interface IResultLog

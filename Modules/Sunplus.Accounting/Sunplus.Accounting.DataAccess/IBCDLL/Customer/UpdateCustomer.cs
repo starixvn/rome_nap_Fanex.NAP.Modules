@@ -509,7 +509,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             return error;
         }
-        
+
         public static CustDetail GetCustInfo(string userName)
         {
             using (ObjectDb objDb = new ObjectDb("Acc_CustomerSelInfoByUsername", 600))
@@ -542,9 +542,41 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
 
                 objDb.ExecuteNonQueryScaleoutDB(hash, siteDB.AGIP);
 
-                return CastAide.AsInt32(objDb.GetParameterValue("totalamt"));
+                return CastAide.AsDecimal(objDb.GetParameterValue("totalamt"));
             }
         }
+
+        public static decimal GetTotalCashMemberReturnCredit(int agentId)
+        {
+            using (ObjectDb objDb = new ObjectDb($"Age_CashAccumCredit_AgSel", 600))
+            {
+                var hash = new Hashtable
+                {
+                    { "custid", agentId }
+                };
+
+                objDb.ExecuteNonQuery(hash);
+
+                return CastAide.AsDecimal(objDb.GetParameterValue("accumcreditreturn"));
+            }
+        }
+
+        public static int GetUplineByCustId(int custId)
+        {
+            using (ObjectDb objDb = new ObjectDb($"Age_CustSetting_GetUplineByCustID", 600))
+            {
+                var hash = new Hashtable
+                {
+                    { "custid", custId },
+                    { "uplineid", 0 }
+                };
+
+                objDb.ExecuteNonQuery(hash);
+
+                return CastAide.AsInt32(objDb.GetParameterValue("uplineid"));
+            }
+        }
+
         /// <summary>
         /// Nguyen Thi Minh Thu 14/12/2006
         /// call sp CustomerUpdUserGroup for update user group

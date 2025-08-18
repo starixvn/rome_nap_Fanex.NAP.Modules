@@ -130,5 +130,30 @@ namespace Fanex.Tarus.Infrastructure.Configurations
                 return Converter.ToInt(ConfigurationManager.AppSettings["IPInfo:IPV6CacheInMinutes"]);
             }
         }
+
+        public static string CashServiceOfferedSites
+        {
+            get
+            {
+                return Converter.ToString2(ConfigurationManager.AppSettings["CashServiceOfferedSites"]);
+            }
+        }
+
+        public static bool IsSupportCashService(string site)
+        {
+            var cashServiceOfferedSites = CashServiceOfferedSites;
+            if (string.IsNullOrEmpty(cashServiceOfferedSites))
+            {
+                return false;
+            }
+
+            if (string.Equals(cashServiceOfferedSites, "*"))
+            {
+                return true;
+            }
+
+            var cashServiceOfferedSitesArray = cashServiceOfferedSites.Split(',');
+            return cashServiceOfferedSitesArray.Any(s => string.Equals(s, site, StringComparison.OrdinalIgnoreCase));
+        }
     }
 }

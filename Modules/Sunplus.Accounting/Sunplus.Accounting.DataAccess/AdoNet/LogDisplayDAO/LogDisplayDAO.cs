@@ -34,6 +34,10 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.LogDisplayDAO
                         spMaping = "GetLogCredit";
                         break;
 
+                    case "cashService":
+                        spMaping = "GetLogCashService";
+                        break;
+
                     default:
                         break;
                 }
@@ -45,7 +49,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.LogDisplayDAO
                         var ds = db.ExecuteDataSet();
                         if (ds != null && ds.Tables.Count > 0)
                         {
-                            dataTable =  ds.Tables[0];
+                            dataTable = ds.Tables[0];
                         }
                     }
                 }
@@ -76,6 +80,10 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.LogDisplayDAO
 
                     case "credit":
                         spMaping = "GetLogCreditTotal";
+                        break;
+                        
+                    case "cashService":
+                        spMaping = "GetLogCashServiceTotal";
                         break;
 
                     default:
