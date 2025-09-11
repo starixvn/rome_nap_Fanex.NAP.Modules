@@ -194,7 +194,8 @@
                         TransDesc = Converter.ToString2(reader["TransDesc"]),
                         BetdaqId = Converter.To<long>(reader["BetdaqId"]),
                         ExtraInfo = HasColumn(reader, "ExtraInfo") ? Converter.ToString2(reader["ExtraInfo"]) : null,
-                        DeviceType = HasColumn(reader, "DeviceType") && DBNull.Value != reader["DeviceType"] ? Converter.ToInt(reader["DeviceType"]) : (int?)null
+                        DeviceType = HasColumn(reader, "DeviceType") && DBNull.Value != reader["DeviceType"] ? Converter.ToInt(reader["DeviceType"]) : (int?)null,
+                        MatchCode = HasColumn(reader, "MatchCode") ? Converter.ToString2(reader["MatchCode"]) : string.Empty,
                     });
                 }
             }
@@ -251,7 +252,8 @@
                         TransDesc = Converter.ToString2(reader["TransDesc"]),
                         BetdaqId = Converter.To<long>(reader["BetdaqId"]),
                         ExtraInfo = HasColumn(reader, "ExtraInfo") ? Converter.ToString2(reader["ExtraInfo"]) : null,
-                        DeviceType = HasColumn(reader, "DeviceType") && DBNull.Value != reader["DeviceType"] ? Converter.ToInt(reader["DeviceType"]) : (int?)null
+                        DeviceType = HasColumn(reader, "DeviceType") && DBNull.Value != reader["DeviceType"] ? Converter.ToInt(reader["DeviceType"]) : (int?)null,
+                        MatchCode = HasColumn(reader, "MatchCode") ? Converter.ToString2(reader["MatchCode"]) : string.Empty,
                     });
                 }
             }
